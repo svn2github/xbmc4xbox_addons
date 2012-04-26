@@ -1,0 +1,55 @@
+    <!-- (required) guuid: unique identifier of this addon
+    guuids can be generated online at sites such as http://www.famkruithof.net/uuid/uuidgen -->
+    <guid>98015ae0-8ddd-11e1-b0c4-0800200c9a66</guid>
+
+    <!-- (required) type:
+    1:  visualization
+    2:  skin
+    3:  pvrdll
+    4:  script
+    5:  scraper
+    6:  screensaver
+    7:  plugin-pvr
+    8:  plugin-video
+    9:  plugin-music
+    10: plugin-program
+    11: plugin-pictures
+    12: plugin-weather -->
+    <type>8</type>
+
+    <!-- (required) Title -->
+    <title>Mediathek</title>
+
+    <!-- (required) Major.minor.build -->
+    <version>0.2.8</version>
+
+    <!-- (required) author name & email.  at least one author name is required -->
+    <authors>
+        <author name="Raptor 2101" email="raptor2101@gmx.de" />
+    </authors>
+
+    <summary lang="de">Ermöglicht den zugriff auf alle deutschen Mediatheken der öffentlich Rechtlichen</summary>
+    <summary lang="en">Gives acces to the most video-platforms from german public service broadcaster</summary>
+    <description lang="de">Ermöglicht den zugriff auf alle deutschen Mediatheken der öffentlich Rechtlichen.
+Aktuell implementiert sind:
+  3Sat, ARD, ZDF, ARTE, Bayrisches Fernsehen, ORF, WDR, NDR (experimentel), KiKa (ohne Kikaninchen)
+</description>
+    <description lang="en">Gives acces to the most video-platforms from german public service broadcaster.
+Currently implemented:
+  3Sat, ARD, ZDF, ARTE, Bayrisches Fernsehen, ORF, WDR, NDR (experimental), KiKa (without Kikaninchen)
+</description>
+    <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
+    <tags>
+        <tag>Gaming</tag>
+    </tags>
+
+    <!-- minimum revision of xbmc your addon will run on.  Leave blank all for revisions-->
+    <minrevision></minrevision>
+
+    <!--patforms compatible with your addon.   xbox, osx, windows, linux, or all -->
+    <platforms>
+        <platform>all</platform>
+    </platforms>
+
+    <!-- (optional) The License the addon is released under.-->
+    <license>GPL</license>

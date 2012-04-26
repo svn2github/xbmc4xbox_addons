@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting type="lsep" label="30100" />
+    <setting id="Language" type="enum" label="30101" default="0" lvalues="30212|30226" />
+    <setting type="lsep" label="30102" />
+    <setting id="GomTV" type="bool" label="30103" default="true"/>
+    <setting id="Qple" type="bool" label="30104" default="true"/>
+</settings>

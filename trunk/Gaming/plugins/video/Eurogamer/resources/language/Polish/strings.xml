@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Language file translated with Team XBMC Translator-->
+<!--Translator: pajretX-->
+<!--Email: pajret@googlemail.com-->
+<!--Date of translation: 07/10/2009-->
+<!--$Revision$-->
+<strings>
+  <!--
+   * Main
+   -->
+  <string id="30000">Eurogamer TV</string>
+  <string id="30001">Wszystko</string>
+  <string id="30002">Zwiastuny</string>
+  <string id="30003">GamePlay'e</string>
+  <string id="30004">EGTV Show</string>
+  
+  <!-- 
+   * Settings labels 
+   -->
+  <string id="30100">Wersja</string>
+  <string id="30101">Autor</string>
+  <string id="30102">WWW</string>
+  
+  <string id="30200">Odtwarzaj używając</string>
+  <string id="30201">Auto</string>
+  <string id="30202">DVDPlayer</string>
+  <string id="30203">MPlayer</string>
+  
+  <string id="30300">Jakość wideo</string>
+  <string id="30301">Standardowa</string>
+  <string id="30302">HD (jeżeli dostępna)</string>
+  
+  <!--
+   * Texts
+   -->  
+  <string id="30401">Następna strona</string>
+  <string id="30402">Trwa wyszukiwanie pliku...</string>
+</strings>

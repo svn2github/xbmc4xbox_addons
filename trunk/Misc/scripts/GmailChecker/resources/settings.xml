@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting type="lsep" label="Settings" />
+    <setting id="user" type="text"  label="Gmail Username" default=""/>
+    <setting id="pass" type="text" option = "hidden" label="Gmail Password" default=""/>
+ 
+    <setting id="interval" type="enum" label="Auto Check Interval" default="2" values="1 minute|5 minute|10 minute" />
+</settings>

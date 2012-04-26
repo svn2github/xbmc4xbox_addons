@@ -1,0 +1,35 @@
+[B]Version 0.1.9[/B]
+- fix logging of non-ascii characters
+
+[B]Version 0.1.8[/B]
+- fix scraping on non-english site
+- added artists to chart lists
+
+[B]Version 0.1.7[/B]
+- added New Releases
+
+[B]Version 0.1.6[/B]
+- fix channels
+- download on context menu
+
+[B]Version 0.1.5[/B]
+- fix chart listings
+- fix search listings
+- added API key setting
+- muzu can now spell acoustic :-)
+
+[B]Version 0.1.4[/B]
+- fix chart listings
+
+[B]Version 0.1.3[/B]
+- fix unicode logging stupidity
+
+[B]Version 0.1.2[/B]
+- ugly bodge to try and make playlists/jukebox work on 10.1
+
+[B]Version 0.1.1[/B]
+- muzu can't spell acoustic ;-)
+- unicode fix
+
+[B]Version 0.1.0[/B]
+- Initial version

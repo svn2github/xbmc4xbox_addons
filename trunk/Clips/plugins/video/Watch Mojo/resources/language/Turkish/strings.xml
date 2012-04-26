@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!--
+   * Title
+   -->
+  <string id="30000">Watch Mojo</string>
+
+  <!--
+  * Directory
+   -->
+  <string id="30201">Otomobil</string>
+  <string id="30202">İş ve Teknoloji</string>
+  <string id="30203">Komedi</string>
+  <string id="30204">Eğitim</string>
+  <string id="30205">Moda</string>
+  <string id="30206">Film</string>
+  <string id="30208">Sağlık</string>
+  <string id="30209">Yaşam Tarzı</string>
+  <string id="30210">Müzik</string>
+  <string id="30211">Ebeveynlik</string>
+  <string id="30212">Politika ve Tarih</string>
+  <string id="30213">Bilim ve Uzay</string>
+  <string id="30214">Spor</string>
+  <string id="30215">Seyahat</string>
+  <string id="30216">Bilgisayar Oyunları</string>
+</strings>

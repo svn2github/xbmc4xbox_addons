@@ -1,0 +1,49 @@
+    <!-- (required) guuid: unique identifier of this addon
+    guuids can be generated online at sites such as http://www.famkruithof.net/uuid/uuidgen -->
+    <guid>8db25900-8f8a-11e1-b0c4-0800200c9a66</guid>
+
+    <!-- (required) type:
+    1:  visualization
+    2:  skin
+    3:  pvrdll
+    4:  script
+    5:  scraper
+    6:  screensaver
+    7:  plugin-pvr
+    8:  plugin-video
+    9:  plugin-music
+    10: plugin-program
+    11: plugin-pictures
+    12: plugin-weather -->
+    <type>8</type>
+
+    <!-- (required) Title -->
+    <title>Hulu - USA ONLY</title>
+
+    <!-- (required) Major.minor.build -->
+    <version>3.4.5</version>
+
+    <!-- (required) author name & email.  at least one author name is required -->
+    <authors>
+        <author name="BlueCop" email="" />
+    </authors>
+
+    <summary>Hulu video plugin</summary>
+    <description>NOTE: Geo-Locked To USA ONLY.  Videos from Hulu.com   IMPORTANT INFO Thanks to NobodyHere: You need to disable all of these settings - "network pre-roll", "pre-roll ads", "trailing ads", "commercial breaks". You also need to set the Default CDN to "akamai". The only issue I've encountered with these settings is that the Fox network programs do not work. This is seemingly due to the way the episodes are segmented into pieces instead of using one larger stream.</description>
+    <disclaimer>Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+    <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
+    <tags>
+        <tag>TV</tag>
+    </tags>
+
+    <!-- minimum revision of xbmc your addon will run on.  Leave blank all revisions-->
+    <minrevision></minrevision>
+
+    <!--patforms compatible with your addon.   xbox, osx, windows, linux, or all -->
+    <platforms>
+        <platform>all</platform>
+    </platforms>
+
+    <!-- (optional) The License the addon is released under.-->
+    <license>GPL</license>
+</addoninfo>

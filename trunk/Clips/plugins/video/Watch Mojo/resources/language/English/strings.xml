@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!--
+   * Title
+   -->
+  <string id="30000">Watch Mojo</string>
+
+  <!--
+  * Directory
+   -->
+  <string id="30201">Auto</string>
+  <string id="30202">Business &amp; Technology</string>
+  <string id="30203">Comedy</string>
+  <string id="30204">Education</string>
+  <string id="30205">Fashion</string>
+  <string id="30206">Film</string>
+  <string id="30208">Health</string>
+  <string id="30209">Lifestyle</string>
+  <string id="30210">Music</string>
+  <string id="30211">Parenting</string>
+  <string id="30212">Politics &amp; History</string>
+  <string id="30213">Science &amp; Space</string>
+  <string id="30214">Sports</string>
+  <string id="30215">Travel</string>
+  <string id="30216">Video Games</string>
+</strings>

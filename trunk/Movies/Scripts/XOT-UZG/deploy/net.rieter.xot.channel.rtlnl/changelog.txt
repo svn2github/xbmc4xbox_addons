@@ -1,0 +1,6 @@
+[B]Changelog[/B]
+
+Fixed: iRTL channel was broken due to XML changes
+
+Fixed: iRTL did not playback (Issue 302)
+Changed: iRTL now works on XBCM4Xbox again (Issue 300) with very recent XBMC4Xbox builds

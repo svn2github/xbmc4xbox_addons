@@ -1,0 +1,8 @@
+<settings>
+	<setting id="uname" label="30000" type="text" default=""/>
+	<setting id="pwd"   label="30001" type="text" option="hidden" default=""/>
+	<setting id="whatson" label="30002" type="bool" default="true" />
+	<setting id="video_stream" label="30003" type="enum" values="Mobile Quality|Low Quality|Standard Quality|High Quality" default="2" />
+	<setting id="realname" label="30004" type="bool" default="true" />
+	<setting id="autoupdate" label="30005" type="bool" default="false" />
+</settings>

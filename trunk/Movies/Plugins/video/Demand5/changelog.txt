@@ -1,0 +1,12 @@
+Version 1.0.2 (25 Feb 2012)
+
+- Fixed episode parsing problem on some shows (all credit to Spoyser for this patch)
+- Applied a potential solution to a TypeError problem experienced by some users under Eden (somewhat crude workaround)
+
+Version 1.0.1 (14 Jan 2012)
+
+- Updated in response to changes to the Demand 5 service which caused playback and download to fail
+
+Version 1.0.0 (10 Jan 2012)
+
+- Initial release

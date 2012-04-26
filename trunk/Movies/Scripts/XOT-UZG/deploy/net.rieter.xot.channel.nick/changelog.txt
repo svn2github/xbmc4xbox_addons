@@ -1,0 +1,3 @@
+[B]Changelog[/B]
+
+Fixed: Nick Jr. channel (Issue 330)

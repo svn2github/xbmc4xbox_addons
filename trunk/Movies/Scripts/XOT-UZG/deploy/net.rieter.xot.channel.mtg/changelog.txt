@@ -1,0 +1,2 @@
+[B]Changelog[/B]
+Updated: encoding of Swedish channels to UTF-8 to prevent errors on new Pythons.

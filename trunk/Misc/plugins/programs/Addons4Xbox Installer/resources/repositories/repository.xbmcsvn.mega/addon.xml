@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.xbmcsvn.mega" name="xbmcsvn mega repo" version="1.0" provider-name="xbmcsvn">
+   <extension point="xbmc.addon.repository" name="XBMCsvn Mega Repo">
+      <info compressed="false">http://www.sshcs.com/xbmc/downloader/&#63;TFN=addons.xml&#38;DLType=Repos</info>
+      <checksum>http://www.sshcs.com/xbmc/downloader/&#63;TFN=addons.xml.md5&#38;DLType=Repos</checksum>
+      <datadir zip="true">http://www.sshcs.com/xbmc/binaries/Repos/addons</datadir>
+   </extension>
+   <extension point="xbmc.addon.metadata">
+      <summary>The most comprehensive Addon Repo available.</summary>
+      <description>Download and install addons from xbmcsvn.com's Megs Repo. With hundreds of addons from all the major repos. Updated daily.</description>
+      <platform>all</platform>
+   </extension>
+</addon>

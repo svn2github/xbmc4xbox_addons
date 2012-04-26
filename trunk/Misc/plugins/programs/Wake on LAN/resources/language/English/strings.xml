@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!--
+   * Main
+   -->
+  <string id="30000">Wake on LAN</string>
+  <string id="30001">Open...</string>
+  
+  <!-- 
+   * Settings labels 
+   -->
+  <string id="30100">Computers</string>
+  <string id="30101">1</string>
+  <string id="30102">2</string>
+  <string id="30103">3</string>
+  <string id="30104">4</string>
+  <string id="30105">5</string>
+
+  <string id="30201">Name</string>
+  <string id="30202">MAC</string>
+  
+  <!-- 
+   * Labels
+   -->
+  <string id="30901">Wake %s</string>
+  <string id="30902">Waking up...</string>
+   
+</strings>

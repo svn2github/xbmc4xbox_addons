@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.audio.jamendo"
+       name="Jamendo Radio"
+       version="1.0"
+       provider-name="Unknown">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="Default.py">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Listen to Jamendo Radio.</summary>
+    <description>Listen to Jamendo Radio.</description>
+  </extension>
+</addon>

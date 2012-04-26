@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!--
+   * Main
+   -->
+  <string id="30000">GameTrailers</string>
+  <string id="30001">All</string>
+  <string id="30002">Previews</string>
+  <string id="30003">Reviews</string>
+  <string id="30004">Top Media</string>
+  <string id="30005">Gameplay</string>
+  <string id="30006">Platforms</string>
+  <string id="30007">Channels</string>
+  <string id="30008">Search</string>
+  <string id="30009">Search media...</string>
+
+  <string id="30060">All Platforms</string>
+  <string id="30061">PC</string>
+  <string id="30062">PlayStation 3</string>
+  <string id="30063">Xbox 360</string>
+  <string id="30064">Nintendo Wii</string>
+  <string id="30065">PlayStation 2</string>
+  <string id="30066">PSP</string>
+  <string id="30067">Nintendo DS</string>
+  <string id="30068">Mobile</string>
+  
+  <!-- 
+   * Channels 
+   -->
+  <string id="30070">GTTV</string>
+  <string id="30071">Bonus Round</string>
+  <string id="30072">Retrospectives</string>
+  <string id="30073">ScrewAttack</string>
+  <string id="30074">Video Game Vault</string>
+  <string id="30075">Top Ten</string>
+  <string id="30076">Angry Video Game Nerd</string>
+  
+  <!-- 
+   * Settings labels 
+   -->
+  <string id="30100">Version</string>
+  <string id="30101">Author</string>
+  <string id="30102">Website</string>
+
+  <string id="30200">Video player</string>
+  <string id="30201">Auto</string>
+  <string id="30202">DVDPlayer</string>
+  <string id="30203">MPlayer</string>
+
+  <string id="30300">Video format</string>
+  <string id="30301">Flash</string>
+  <string id="30302">Quicktime</string>
+  <string id="30303">Windows Media Video</string>
+  
+  <string id="30400">Video quality</string>
+  <string id="30401">Standard Definition</string>
+  <string id="30402">High Definition (when available)</string>
+    
+  <!--
+   * Texts
+   -->
+  <string id="30501">%s to %s</string>
+  <string id="30502">Page %u</string>
+  <string id="30503">Next page</string>
+  <string id="30504">Getting video location...</string>
+  <string id="30505">No video found.</string>
+  <string id="30506">No media found for:</string>
+</strings>

@@ -1,0 +1,26 @@
+<strings>
+    <!-- MENUS -->
+    <string id="30100">Hide homepage</string>
+    <string id="30101">Enable MetaData</string>
+    <string id="30102">Flatten TV Shows with single seasons</string>
+    <string id="30103">Flatten source type for single type videos</string>
+    <string id="30106">Autoplay next part of source when streaming</string>
+
+
+    <string id="30200">Use Megaupload account</string>
+    <string id="30201">    Username</string>
+    <string id="30202">    Password</string>
+    <string id="30204">Use Megavideo if possible (Low Quality)</string>
+    <string id="30210">RapidPro account</string>
+    <string id="30211">    Username</string>
+    <string id="30212">    Password</string>
+    <string id="30250">Hide successful login notifications</string>
+
+    <!-- DOWNLOADS -->
+    <string id="30300">Downloads folder:</string>
+    <string id="30301">Create directory structures in downloads folder</string>
+    <string id="30302">Delete incomplete downloads</string>
+    
+    <!-- ICEFILMS -->
+    <string id="30400">Icefilms Site URL:</string>
+</strings>

@@ -1,0 +1,10 @@
+[B]Changelog[/B]
+
+Fixed: Special characters at the start of a title were not recognised (Issue 334).
+Fixed: duplicate items in TV4 (Issue 333).
+Added: "Visa fler" folder item.
+
+Added: Audio Only detection to UR play (Issue 329).
+Fixed: Again URPlay (Issue 324). The initial fix was wrong.
+Fixed: SVT.se SWF url (Issue 327)
+Fixed: UR Play missed some videos and folders (Issue 324)

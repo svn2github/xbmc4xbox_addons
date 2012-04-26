@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="0">RSS编辑器</string>
+  <string id="30">设置编辑器</string>
+
+  <string id="1">更改集合</string>
+  <string id="4">信源</string>
+  <string id="5">集合</string>
+  <string id="6">编辑属性</string>
+
+  <string id="11">选择要删除的信源</string>
+  <string id="12">RSS信源网络地址</string>
+  <string id="13">修改间隔</string>
+  <string id="14">输入你的RSS信源路径%s</string>
+
+  <string id="20">什么是集合？</string>
+  <string id="21">在你的皮肤中使用不同的集合，</string>
+  <string id="22">每个集合通过一个唯一的编号被</string>
+  <string id="23">皮肤调用</string>
+  <string id="24">选择一个集合</string>
+  <string id="25">集合编号</string>
+  <string id="26">集合%s已存在</string>
+  <string id="27">为此集合启用从右向左显示文本？</string>
+
+  <string id="40">错误：</string>
+  <string id="41">在这个系统中没有找到，</string>
+  <string id="42">或没有可解析的XML文件。</string>
+  <string id="43">请尝试从userdata目录删除并重启XBMC。</string>
+  <string id="44">删除</string>
+  <string id="45">无法删除集合1</string>
+  <string id="46">集合1必须保留，你不能删除它。</string>
+  <string id="47">将集合1恢复为默认内容？</string>
+  <string id="48">必须重置</string>
+  <string id="49">需要重启XBMC使修改生效</string>
+  <string id="50">集合%s已经存在。</string>
+  <string id="51">你的RSSFeeds.xml文件有冲突。</string>
+  <string id="52">尝试重新生成</string>
+  <string id="53">你将丢弃之前的所有设置</string>
+</strings>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">Stream Quality</string>
+    <string id="30001">Low</string>
+    <string id="30002">Medium</string>
+    <string id="30003">High</string>
+	<string id="30004">Maximum number of pages to load</string>
+	<string id="30005">Show Dutch channels</string>
+	<string id="30006">Show Swedish channels</string>
+	<string id="30007">Show Lithuanian channels</string>
+	<string id="30008">Show Latvian channels</string>
+	<string id="30009">Streams</string>	
+	<string id="30010">Channels</string>		
+	<string id="30011">Requires restart of XOT-Uzg to take effect.</string>
+	<string id="30012">Show other channels</string>
+	<string id="30013">Show French Canadian channels</string>
+	<string id="30014">Show English Canadian channels</string>
+	<string id="30015">Show Norwegian channels</string>	
+	<string id="30016">Sort by</string>
+	<string id="30017">Name</string>
+	<string id="30018">Date</string>
+	<string id="30019">Dim background (%)</string>
+	<string id="30020">Maximum stream bitrate</string>
+	<string id="30021">Subtitle mode</string>
+	<string id="30022">Show if available</string>
+	<string id="30023">Never show</string>
+	<string id="30024">Show Belgium channels</string>
+	<string id="30025">None</string>
+	<string id="30026">Advanced plugin mode with subtitle support (experimental)</string>
+	<string id="30027">Show British channels</string>
+	<string id="30028">Channel Settings</string>
+	<string id="30029">Proxy server(empty = disabled)</string>
+	<string id="30030">Proxy port</string>
+	<string id="30031">Cache HTTP requests (experimental)</string>
+	<string id="30032">Background - Channels</string>
+	<string id="30033">Background - Programs</string>
+	<string id="30034">Backgrounds</string>
+	<string id="30035">Proxy Username</string>
+	<string id="30036">Proxy Password</string>
+	<string id="30037">BBC iPlayer Settings</string>	
+</strings>

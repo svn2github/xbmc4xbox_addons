@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">Stream Kwaliteit</string>
+    <string id="30001">Laag</string>
+    <string id="30002">Gemiddeld</string>
+    <string id="30003">Hoog</string>
+	<string id="30004">Maximaal aantal pagina's om te laden</string>
+	<string id="30005">Toon Nederlands kanalen</string>
+	<string id="30006">Toon Zweedse kanalen</string>
+	<string id="30007">Toon Litouwse kanalen</string>
+	<string id="30008">Toon Letse kanalen</string>
+	<string id="30009">Streams</string>	
+	<string id="30010">Kanalen</string>	
+	<string id="30011">Herstart van XOT-Uzg nodig om te activeren.</string>
+	<string id="30012">Toon overige kanalen</string>
+	<string id="30013">Toon Frans-Canadese kanalen</string>
+	<string id="30014">Toon Engels-Canadese kanalen</string>
+	<string id="30015">Toon Norweegse kanalen</string>
+	<string id="30016">Sorteren op</string>
+	<string id="30017">Naam</string>
+	<string id="30018">Datum</string>
+	<string id="30019">Achtergrond dimmen (%)</string>
+	<string id="30020">Maximale stream bitrate</string>
+	<string id="30021">Subtitle modus</string>
+	<string id="30022">Tonen indien beschikbaar</string>
+	<string id="30023">Nooit tonen</string>
+	<string id="30024">Toon Belgische kanalen</string>
+	<string id="30025">Geen</string>
+	<string id="30026">Geavanceerde plugin mode met ondertitels ondersteuning (experimenteel)</string>
+	<string id="30027">Toon Britse kanalen</string>
+	<string id="30028">Kanaalinstellingen</string>
+	<string id="30029">Proxy server (leeg is uitgeschakeld)</string>
+	<string id="30030">Proxy poort</string>
+	<string id="30031">Cache HTTP berichten (experimenteel)</string>
+	<string id="30032">Achtergrond - Kanalen</string>
+	<string id="30033">Achtergrond - Programma's</string>
+	<string id="30034">Achtergronden</string>
+	<string id="30035">Proxy gebruikersnaam</string>
+	<string id="30036">Proxy wachtwoord</string>
+	<string id="30037">BBC iPlayer instellingen</string>	
+</strings>

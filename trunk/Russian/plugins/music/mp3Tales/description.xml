@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addoninfo>
+    <!-- (required) guuid: unique identifier of this addon
+    guuids can be generated online at sites such as http://www.famkruithof.net/uuid/uuidgen -->
+    <guid>357e7060-8d7e-11e1-b0c4-0800200c9a66</guid>
+
+    <!-- (required) type:
+    1:  visualization
+    2:  skin
+    3:  pvrdll
+    4:  script
+    5:  scraper
+    6:  screensaver
+    7:  plugin-pvr
+    8:  plugin-video
+    9:  plugin-music
+    10: plugin-program
+    11: plugin-pictures
+    12: plugin-weather -->
+    <type>9</type>
+
+    <!-- (required) Title -->
+    <title>mp3 Tales</title>
+
+    <!-- (required) Major.minor.build -->
+    <version>1.0.1</version>
+
+    <!-- (required) author name & email.  at least one author name is required -->
+    <authors>
+        <author name="HD-Lab Team" email="" />
+    </authors>
+
+    <summary>Аудиосказки из вашего детства</summary>
+    <description>Многие помнят пластинки, вырезанные из журналов и купленные в магазине фирмы "Мелодия", проигрыватель с трескучей иголкой. И этот особенный звук. Звук детства. Каждая сказка - целое музыкальное театрализованное представление с актерам, но без кукол. Если пластинки и могли остаться в пыльном шкафу, то проигрыватель - уже редкость. Но теперь сказки доступны для всех. Для взрослых, чтобы вспомнить детство, и сказки для детей.
+На этом сайте вы можете бесплатно послушать аудиосказки онлайн. На сайте собрана коллекция аудиосказок советских времен и не только. Все они оцифрованы с советских детских грампластинок и кассет.
+Для вашего удобства коллекция детских сказок на сайте представлена в виде каталога с названием и описанием сказки, отсортированного в алфавитном порядке. Вы также можете использовать поиск по каталогу аудиосказок. Ко многим сказкам прилагаются обложки от пластинок.
+Для всех аудиосказок доступна возможность онлайн прослушивания прямо на сайте!
+Все размещенные на этом сайте аудиозаписи предназначены исключительно для ознакомительного прослушивания; после прослушивания рекомендуется купить лицензионный продукт во избежание нарушения авторских прав производителя и смежных прав.</description>
+    <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
+    <tags>
+        <tag></tag>
+    </tags>
+
+    <!-- minimum revision of xbmc your addon will run on.  Leave blank all for revisions-->
+    <minrevision></minrevision>
+
+    <!--patforms compatible with your addon.   xbox, osx, windows, linux, or all -->
+    <platforms>
+        <platform>xbox</platform>
+    </platforms>
+
+    <!-- (optional) The License the addon is released under.-->
+    <license>GPLv3</license>
+</addoninfo>

@@ -1,0 +1,14 @@
+[B]Changelog[/B]
+
+Fixed: NOS showed duplicate page numbers.
+Fixed: Slow Regexes
+Fixed: Search did not work
+
+Changed: BETA Uitzending Gemist channel is now the main one, as the old one is offline.
+Fixed: NOS Uitzending Gemist BETA broke in Program mode due to changes
+Added: TOP50 for Uitzendinggemist BETA (Issue 304)
+Added: Search to NOS Uitzendinn Gemist BETA (Issue 304)
+Fixed: NOS Beta does not display shows that start with a number (Issue 303)
+Fixed: NOS Uitzendinggemist BETA (Issue 301). Rearranged the channel.
+Added: Z@pp BETA channel
+Added: Z@ppelin BETA channel

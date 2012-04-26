@@ -1,0 +1,26 @@
+Version 1.1.1
+-------------
+- Fixed: no longer displays blank entries in menu items
+
+Version 1.1.0
+-------------
+- Fixed: plugin now uses the ShoutCastTM API to get genres, subgenres, stations and stream information
+
+
+Version 1.0.3
+-------------
+- Added: Search by station name
+- Added: Search by genre
+Thanks to TracerX for these additions !
+
+Version 1.0.2
+-------------
+- fix for retrieving stations
+
+Version 1.0.1
+-------------
+- Shoutcast.com changed something in the response format, plugin now takes care of it
+
+Version 1.0.0
+-------------
+- Initial release

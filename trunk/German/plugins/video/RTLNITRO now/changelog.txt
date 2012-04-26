@@ -1,0 +1,18 @@
+[B]Version v1.84[/B]
+- defs fixed 
+- 19.04.2012
+
+[B]Version v1.83[/B]
+- nightly regex fixed 
+- 18.04.2012
+
+[B]Version v1.81[/B]
+- playlist-trait
+- thx to the community
+- 12.04.2012
+
+[B]Version v1.80[/B]
+- initial Version
+- thx to the community
+- thx to EggBaconSausageAndSpam :) for slightly recoding ajax/regex
+- 10.04.2012
