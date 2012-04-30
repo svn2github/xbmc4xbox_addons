@@ -21,11 +21,12 @@
     <title>muzu.tv</title>
 
     <!-- (required) Major.minor.build -->
-    <version>0.2.0</version>
+    <version>0.2.1</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
         <author name="notme" email="" />
+		<author name="skatulskijean" email="" />
     </authors>
 
     <!-- (required) Short description of addon. -->

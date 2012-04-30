@@ -26,6 +26,7 @@
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
         <author name="AddonScriptorDE" email="" />
+		<author name="skatulskijean" email="" />
     </authors>
 
     <summary lang="de">DrDish-TV.de</summary>

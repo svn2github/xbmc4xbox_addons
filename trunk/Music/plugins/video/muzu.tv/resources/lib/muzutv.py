@@ -177,10 +177,9 @@ class MuzuTv:
 
     def list_playlists(self, category, country='gb'):
         playlists = []
-        html = self.__get_html('browse/loadPlaylistsByCategory', 
-                               {'ob': category, 'country': country})
+        html = self.__get_html('browse/loadPlaylistsByCategory', {'ob': category, 'country': country})
         for p in re.finditer('data-id="(\d+)" data-network-id="(\d+)".+?title="(.*?)\|(.*?)".+?src="(.+?)"', html, re.DOTALL):
-            playlist_id, network_id, name, network, thumb = p.groups()
+            playlist_id, network_id, name, network, thumb = p.groups()            
             playlists.append({'playlist_id': playlist_id,
                               'network_id': network_id,
                               'name': unicode(name, 'utf8'),
@@ -232,17 +231,15 @@ class MuzuTv:
     
     def get_playlist(self, network_id, playlist_id):
         videos = []
-        xml = self.__get_html('player/networkVideos/%s' % network_id)
+        xml = self.__get_html('browse/loadPlaylistContents', {'pi' : playlist_id})
         videos = self.__parse_playlist(xml, playlist_id)
         return videos
     
-    def search(self, query):
+    def search(self, query, country):
         self.check_API()
 
         videos = []
-        xml = self.__get_html('api/search', {'muzuid': self.__API_KEY,
-                                             'mySearch': query,
-                                             })
+        xml    = self.__get_html('api/search', {'muzuid': self.__API_KEY, 'mySearch': query, 'country' : country })
         return self.__parse_videos(xml)
 
     def browse_videos(self, genre, sort, page, res_per_page, days=0):
@@ -302,22 +299,32 @@ class MuzuTv:
 
 
         
-    def resolve_stream(self, asset_id, hq=True):       
-        #resolved = False
-        vt = 1
-        if hq:
-            vt = 2
+    def resolve_stream(self, asset_id, hq='480p'):       
+        resolved = False
+        
+        vt = int(hq.replace('p', '')) 
 
-        response = self.__get_html('player/requestVideo', {'viewhash': 'GJirdtz3eCmA4ubE4zoQ1RXNKU', 'qv': '360', 'vt' : 'y', 'ai' : asset_id})
-        url      = re.compile('.+?url":"(.+?)"').findall(response)[0]
+        while not resolved:              
+            response = self.__get_html('player/requestVideo', {'viewhash': 'GJirdtz3eCmA4ubE4zoQ1RXNKU', 'qv': vt, 'ai' : asset_id})
+            url      = re.compile('.+?url":"(.+?)"').findall(response)[0]
+            url      = Addon.unescape(url)
 
-        return Addon.unescape(url)
+            if vt == 240:
+                vt = 0
+            elif vt == 360:
+                vt = 240
+            elif vt == 480:
+                vt = 360
+            elif vt == 720:
+                vt = 480
+                         
+            #resolved = (vt == 0) or (url != 'http://www.muzu.tv/player/invalidTerritory') 
+            resolved = (vt == 0) or (not 'invalid' in url) 
 
-        #xml = self.__get_html('player/playAsset', {'assetId': asset_id, 'videoType': vt})
-        #s = re.search('src="(.+?)"', xml)
-        #if s:
-        #    resolved = Addon.unescape(s.group(1))
-        #return resolved
+        if 'invalid' in url:
+            return None
+
+        return url       
 
 
     def __parse_videos(self, xml):
@@ -383,7 +390,40 @@ class MuzuTv:
                            })
         return videos
 
+
     def __parse_playlist(self, xml, playlist_id):
+        videos = []
+        xml = xml.split('id="playlistAssets"')[1]
+
+        list   = xml.split('<li ')
+        nItems = len(list) 
+
+        for i in range(1, nItems):
+            item = list[i] 
+
+            try:
+                id = re.compile('data-id="(.+?)"').findall(item)[0]
+            except:
+                id = ''
+
+            try:
+                artist = re.compile('.+?<h4>(.+?) -').findall(item)[0]
+                title  = re.compile('.+? - (.+?)</h4>').findall(item)[0]
+            except:
+                artist = ''
+                title  = ''
+       
+            videos.append({'duration': 1,
+                           'asset_id': int(id),
+                           'title': title,
+                           'artist': artist,
+                           'description' : '',
+                           'thumb' : ''
+                           })
+        return videos
+
+
+    def __parse_playlist_original(self, xml, playlist_id):
         videos = []
         element = ET.fromstring(xml)
         for channel in element.getiterator('channel'):
@@ -422,11 +462,9 @@ class MuzuTv:
         html = False
         url = self.__build_url(path, queries) 
 
-        #print "*******************************"
-        #url = 'http://www.muzu.tv/player/requestVideo?ni=200290&country=gb&playlistId=0&cn=6&viewhash=GJirdtz3eCmA4ubE4zoQ1RXNKU&qv=360&device=web%2Eonsite&hostName=http%3A%2F%2Fwww%2Emuzu%2Etv&networkVersion=1334919670&tm=0&vt=y&areaName=channel&ai=1222359'
-        #url = 'http://www.muzu.tv/player/requestVideo?viewhash=GJirdtz3eCmA4ubE4zoQ1RXNKU&qv=360&ai=1119519'
-        #url = 'http://www.muzu.tv/player/getPlayer/a/200290/vidId=1222359&la=n'
-        #print url
+        #print "*******************************"       
+        #Addon.log('Fetching URL %s' % url)
+        #print '[plugin.video.muzu.tv] Fetching URL %s' % url
 
         response = self.__fetch(url)
         if response:

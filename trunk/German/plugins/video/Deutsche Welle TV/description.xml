@@ -26,6 +26,7 @@
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
         <author name="Denis" email="" />
+		<author name="skatulskijean" email="" />
     </authors>
 
     <summary>Deutsche Welle TV</summary>

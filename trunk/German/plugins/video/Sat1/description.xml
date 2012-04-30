@@ -1,6 +1,6 @@
     <!-- (required) guuid: unique identifier of this addon
     guuids can be generated online at sites such as http://www.famkruithof.net/uuid/uuidgen -->
-    <guid>935aef30-8ddb-11e1-b0c4-0800200c9a66</guid>
+    <guid>47af2080-92de-11e1-b0c4-0800200c9a66</guid>
 
     <!-- (required) type:
     1:  visualization
@@ -18,10 +18,10 @@
     <type>8</type>
 
     <!-- (required) Title -->
-    <title>Kika 3+</title>
+    <title>Sat1</title>
 
     <!-- (required) Major.minor.build -->
-    <version>0.1</version>
+    <version>0.6</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
@@ -29,14 +29,13 @@
 		<author name="skatulskijean" email="" />
     </authors>
 
-    <summary lang="de">Kika 3+</summary>
-    <summary lang="en">Kika 3+</summary>
-    <description lang="de">Kika 3+</description>
-    <description lang="en">Kika 3+</description>
-
-	<!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
+    <summary lang="de">Sat1</summary>
+    <summary lang="en">Sat1</summary>
+    <description lang="de">Sat1</description>
+    <description lang="en">Sat1</description>
+  <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
-        <tag>TV Movie</tag>
+        <tag>German</tag>
     </tags>
 
     <!-- minimum revision of xbmc your addon will run on.  Leave blank all revisions-->

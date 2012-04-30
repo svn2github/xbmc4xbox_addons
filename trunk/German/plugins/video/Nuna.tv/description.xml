@@ -26,6 +26,7 @@
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
         <author name="membrane" email="" />
+		<author name="skatulskijean" email="" />
     </authors>
 
     <summary lang="de">N24.de</summary>

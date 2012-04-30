@@ -88,16 +88,16 @@ def downloadPath(title, stream_url):
 if mode == 'download' and play:
     Addon.log('download: %s' % play)
 
-    if Addon.get_setting('download_hq') == 'true' or Addon.get_setting('hq') == 'true':
-        hq = True
+    if Addon.get_setting('download_hq') == 'true':
+        hq = '720p'
     else:
-        hq = False
+        hq = Addon.get_setting('hq')
     
     title      = play.split('@', 1)[0]
     assetID    = play.split('@', 1)[1]
     stream_url = muzu.resolve_stream(assetID, hq) 
     savePath   = downloadPath(title, stream_url)
- 
+   
     if savePath:
         t = str(200*len(savePath))
         xbmc.executebuiltin("XBMC.Notification(" + Addon.get_string(30300) + ", Downloading: " + savePath + "," + t + ")")
@@ -105,11 +105,7 @@ if mode == 'download' and play:
     
 elif play:
     Addon.log('play: %s' % play)
-
-    if Addon.get_setting('hq') == 'true':
-        hq = True
-    else:
-        hq = False
+   
     if mode == 'playlist':
         Addon.log('playlist: %s' % play)
         videos = muzu.get_playlist(Addon.plugin_queries['network'], play) 
@@ -136,8 +132,9 @@ elif play:
         xbmc.Player().play(pl)
         mode = 'main'  
     else:
-        stream_url = muzu.resolve_stream(play, hq)                     
-        Addon.resolve_url(stream_url)    
+        stream_url = muzu.resolve_stream(play, Addon.get_setting('hq'))             
+        if stream_url:
+            Addon.resolve_url(stream_url)    
 elif mode == 'browse':
     page = int(Addon.plugin_queries.get('page', 0))
     res_per_page = int(Addon.get_setting('res_per_page'))
@@ -200,10 +197,10 @@ elif mode == 'jukebox':
                 assets = muzu.jukebox(query, country, jam=artist_id)
             
             pl = Addon.get_new_playlist(xbmc.PLAYLIST_VIDEO)
-            if Addon.get_setting('hq') == 'true':
-                hq = True
-            else:
-                hq = False
+            #if Addon.get_setting('hq') == 'true':
+            #    hq = True
+            #else:
+            #    hq = False
             videos = assets.get('videos', False)        
             random.shuffle(videos)
             res_dir = os.path.join(Addon.addon.getAddonInfo('path'), 
@@ -275,11 +272,11 @@ elif mode == 'list_playlists':
 elif mode == 'channels':
     Addon.log(mode)
 
-    network_id = Addon.plugin_queries.get('network_id', False)
-    page       = int(Addon.plugin_queries.get('page', 0))
-    sort       = Addon.plugin_queries.get('sort', False)
+    network_id  = Addon.plugin_queries.get('network_id', False)    
+    page        = int(Addon.plugin_queries.get('page', 0))
+    sort        = Addon.plugin_queries.get('sort', False)
 
-    if network_id:   
+    if network_id:
         playlists = muzu.list_playlists_by_network(network_id, page)
         for p in playlists:
             try:
@@ -336,7 +333,7 @@ elif mode == 'search':
     if (kb.isConfirmed()):
         query = kb.getText()
         if query:
-            videos = muzu.search(query)
+            videos = muzu.search(query, Addon.get_setting('country'))
             for v in videos:
                 title = '%s: %s' % (v['artist'], v['title'])
                 Addon.add_video_item(str(v['asset_id']),
