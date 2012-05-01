@@ -21,7 +21,7 @@
     <title>rtmpGUInoEPG</title>
 
     <!-- (required) Major.minor.build -->
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
