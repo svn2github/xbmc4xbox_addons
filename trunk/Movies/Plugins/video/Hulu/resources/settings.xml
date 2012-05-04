@@ -32,15 +32,15 @@
         <setting id='enable_captions' type ="bool" label="30026" default="false"/>
         <setting type="sep" />
 		<setting id="quality" type="enum" lvalues="30015|30023|30024|30020|30025|30016|30017|30018" label="30004" default="1"/>
-		<setting id="defaultcdn" type="enum" lvalues="30028|30029|30030" label="30027" default="1"/>
+		<setting id="defaultcdn" type="enum" lvalues="30028|30029|30030" label="30027" default="2"/>
 		<!--<setting id="swfverify" type ="bool" label="30031" default="true"/>-->		
 		<setting type="sep" />
 		<setting id="adquality" type="enum" lvalues="30020|30016|30017|30018" label="30037" default="0"/>
-		<setting id='networkpreroll' type ="bool" label="30045" default="true"/>
-		<setting id="prerollads" type="enum" label="30035" values="0|1|2" default="2"/>
-		<setting id="trailads" type="enum" label="30036" values="0|1|2|3" default="1"/>
+		<setting id='networkpreroll' type ="bool" label="30045" default="false"/>
+		<setting id="prerollads" type="enum" label="30035" values="0|1|2" default="0"/>
+		<setting id="trailads" type="enum" label="30036" values="0|1|2|3" default="0"/>
 		<setting type="sep" />
-		<setting id='segmentvideos' type ="bool" label="30038" default="true"/>
+		<setting id='segmentvideos' type ="bool" label="30038" default="false"/>
 		<setting id="adbreaks" type="enum" label="30039" values="0|1|2|3" default="1" enable="!eq(-1,false)"/>
 		<setting type="sep" />
 		<setting id="us_proxy_enable" type="bool" label="30042" default="false"/>
@@ -54,12 +54,12 @@
 	<!-- Export to Library -->
 	<category label="30104">
 		<setting type="sep" />
-		<setting id="enablelibraryfolder" type="bool" label="30033" default="true"/>
+		<setting id="enablelibraryfolder" type="bool" label="30033" default="false"/>
 		<setting id="customlibraryfolder" type="folder" label="30032" default=""/>
-		<setting id="updatelibrary" type="bool" label="30034" default="true"/>
+		<setting id="updatelibrary" type="bool" label="30034" default="false"/>
 		<setting type="sep" />
 		<!-- <setting id="shownfo" type="bool" label="30060" default="false"/> -->
-		<setting id="episodenfo" type="bool" label="30061" default="true"/>
+		<setting id="episodenfo" type="bool" label="30061" default="false"/>
 		<setting id="movienfo" type="bool" label="30062" default="false"/>
 		<setting id="librarysuffix" type="text" label="30063" default="(Hulu)"/>
 		<setting type="sep" />

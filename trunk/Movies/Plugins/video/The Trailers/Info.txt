@@ -1,0 +1,15 @@
+Repository: http://xbmc-addons.googlecode.com/svn/trunk
+
+
+Author:
+nuka1195
+
+
+Comments:
+Theatre Showtimes section doesn't seem to work, I tried with UK postcode.
+(whufclee)
+
+
+About:
+Watch trailers from Apple Move Trailers.
+(whufclee)

@@ -28,6 +28,7 @@
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
         <author name="Rick Phillips" email="" />
+		<author name="skatulskijean" email="" />
     </authors>
 
     <summary lang="en">Browse forums within XBMC</summary>
@@ -35,7 +36,7 @@
 
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
-        <tag>Gmail</tag>
+        <tag>Misc</tag>
 
     </tags>
 

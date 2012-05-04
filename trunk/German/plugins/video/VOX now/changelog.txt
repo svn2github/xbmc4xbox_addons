@@ -1,0 +1,46 @@
+[B]Version v1.84[/B]
+- defs fixed 
+- 19.04.2012
+
+[B]Version v1.83[/B]
+- nightly regex fixed 
+- 18.04.2012
+
+[B]Version v1.80[/B]
+- regex fixed
+- thx to EggBaconSausageAndSpam :) for slightly recoding 
+- 10.04.2012
+
+[B]Version v1.7[/B]
+- vodplayer.swf fixed
+- thx to webneo
+- 16.02.2012
+
+[B]Version v1.51[/B]
+- regexproblems - fixed
+- thx to the community
+- 25.01.2012
+
+[B]Version v1.48[/B]
+- regexproblems - fixed
+- 30.12.2011
+
+[B]Version v1.45[/B]
+- HTTP302 urlstructure slightly changed - fixed
+- videotitle fixed (thx xycl)
+
+[B]Version v1.41[/B]
+- xmlstructure changed - fixed
+
+[B]Version v1.3[/B]
+- thx to Bahrain
+- fixed rtmp-data?!
+
+[B]Version 1.2[/B]
+- fixed : shown as rtlnow
+
+[B]Version 1.1[/B]
+- initial version(!) 
+- streaming functional
+- streaming only in D, CH, A
+- 01.03.2011

@@ -32,8 +32,7 @@
     <summary lang="de">Lachschon.de</summary>
     <summary lang="en">Lachschon.de</summary>
     <description lang="de">Nur die lustigsten Youtube Videos</description>
-    <description lang="en">Only the funniest Youtube clips
-	IMPORTANT INFO: YouTube plugin must be installed for this to work</description>
+    <description lang="en">Only the funniest Youtube clips.	IMPORTANT INFO: YouTube plugin must be installed for this to work</description>
 
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>

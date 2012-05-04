@@ -26,6 +26,7 @@
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
         <author name="AJ" email="" />
+		<author name="skatulskijean" email="" />
     </authors>
 
     <summary>Platform to browse and consume Pakistani media across devices</summary>

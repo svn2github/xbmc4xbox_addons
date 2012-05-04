@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.vox.now"
+       name="VOX now"
+       version="1.84"
+       provider-name="chmee phreekz">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="xbmc.gui" version="2.11"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    	<summary lang="en">VOX now : german free stream content</summary>
+	<summary lang="de">VOX now : kostenlose Serien von der Seite gestreamt</summary>
+    	<description lang="en">only in D CH A</description>
+	<description lang="de">nur in D CH A</description>
+    <platform>all</platform>
+  </extension>
+</addon>
