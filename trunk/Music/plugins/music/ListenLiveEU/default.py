@@ -2,7 +2,7 @@
  A plugin to get radio links from listenlive.eu
 """
 
-import sys, os, os.path
+import sys, os, os.path, xbmcaddon
 import xbmc, xbmcgui, xbmcplugin
 import urllib, re, time
 from shutil import rmtree, copy
@@ -10,43 +10,156 @@ import traceback
 from pprint import pprint
 
 __plugin__ = "ListenLiveEU"
-__version__ = '0.3'
+__version__ = '0.4.4'
 __author__ = 'bootsy [bootsy82@gmail.com]'
-__date__ = '12-09-2009'
-__svn__ = 'http://xbmc-addons.googlecode.com/svn/tags/plugins/music/' + __plugin__
+__date__ = '07-11-2010'
+__svn__ = 'http://xbmc-addons.googlecode.com/svn/addons/plugin.audio.listenliveeu/'
+
 
 BASE_URL = 'http://www.listenlive.eu'
 URL_INDEX = '/'.join( [BASE_URL, 'index.html'] )
 URL_NEW = '/'.join( [BASE_URL, 'new.html'] )
 
-DIR_HOME = os.getcwd().replace(';','')
+addon = xbmcaddon.Addon(id='plugin.audio.listenliveeu')
+DIR_HOME = addon.getAddonInfo('path')
+DIR_HOME = xbmc.translatePath(DIR_HOME)
 FILE_INDEX_PAGE = os.path.join(DIR_HOME, 'index.html')
-FILE_NEW_PAGE = os.path.join(DIR_HOME, 'new.html')
+DIR_SETTINGS = addon.getAddonInfo('profile')
+DIR_SETTINGS = xbmc.translatePath(DIR_SETTINGS)
+FILE_FAVS = os.path.join(DIR_SETTINGS, 'favorites.xml')
+
+dialogProgress = xbmcgui.DialogProgress()
+dialog = xbmcgui.Dialog()
 
 def log(msg):
 	if type(msg) not in (str, unicode):
-		xbmc.output("[%s]: %s" % (__plugin__, type(msg)))
+		xbmc.log("[%s]: %s" % (__plugin__, type(msg)))
 		pprint (msg)
 	else:
-		xbmc.output("[%s]: %s" % (__plugin__, msg))
+		xbmc.log("[%s]: %s" % (__plugin__, msg))
 
 def errorOK(title="", msg=""):
 	e = str( sys.exc_info()[ 1 ] )
 	log(e)
 	if not title:
-		title = __plugin__
+		title = __plugin__ + ' v' + __version__
 	if not msg:
 		msg = "ERROR!"
-	xbmcgui.Dialog().ok( title, msg, e )
+	dialog.ok( title, msg, e )
 	
-dialogProgress = xbmcgui.DialogProgress()
+#######################################################################################################################    
+# write favs file
+#######################################################################################################################    
+def writeFavs():
+	f = open(xbmc.translatePath(FILE_FAVS),"w")
+	f.write('This is your favorites file.' + '\n')
+	f.close()
+
+#######################################################################################################################    
+# add favorite
+#######################################################################################################################    
+def addFav(url):
+	log("> addFav()")
+	if url:
+		try:
+			favoritesRE=re.compile('(?i)name=(.+?)&url=(.+?)\n')
+			favorites = favoritesRE.findall(url)
+			for favorite in favorites:
+				name = favorite[0]
+				url = favorite[1]
+			nameurl = 'name=%s&url=%s%s' % (name, url, '\n')
+			doc = open(FILE_FAVS, "r+")
+			text = doc.read().decode('utf-8')
+			if nameurl in text:
+				doc.close()			
+				dialog.ok( __plugin__ + ' v' + __version__, __language__(30015), '', urllib.unquote_plus(name).decode('utf-8') )
+			else:
+				doc.write(nameurl)
+				doc.close()				
+				dialog.ok( __plugin__ + ' v' + __version__, __language__(30007), '', urllib.unquote_plus(name).decode('utf-8') )
+		except:
+			dialog.ok( __plugin__ + ' v' + __version__, __language__(30008), '', urllib.unquote_plus(name).decode('utf-8') )
+	return True
+
+#######################################################################################################################    
+# remove favorite
+#######################################################################################################################    
+def remFav(url):
+	log("> remFav()")
+	if url:
+		try:
+			favoritesRE=re.compile('(?i)name=(.+?)&url=(.+?)\n')
+			favorites = favoritesRE.findall(url)
+			for favorite in favorites:
+				name = favorite[0]
+				url = favorite[1]
+			nameurl = 'name=%s&url=%s%s' % (name, url, '\n')
+			if dialog.yesno( __plugin__ + ' v' + __version__, __language__(30009), '', urllib.unquote_plus(name).decode('utf-8') ):
+				doc = open(FILE_FAVS, "rU")
+				text = doc.read().decode('utf-8')
+				doc.close()
+				doc = open(FILE_FAVS, "w")
+				doc.write(text.replace(nameurl, ''))
+				doc.close()	
+				xbmc.executebuiltin('Container.Refresh')
+				dialog.ok( __plugin__ + ' v' + __version__, __language__(30010), '', urllib.unquote_plus(name).decode('utf-8') )
+				doc = open(FILE_FAVS).read().decode('utf-8')
+				if doc == 'This is your favorites file.\n':
+					dialog.ok( __plugin__ + ' v' + __version__, __language__(30016) )
+		except:
+			dialog.ok( __plugin__ + ' v' + __version__, __language__(30011), '', urllib.unquote_plus(name).decode('utf-8') )
+	return True
+
+#######################################################################################################################    
+# remove all favs
+######################################################################################################
+def remallFavs(url):
+	log("> remallFavs()")
+	if dialog.yesno(__plugin__ + ' v' + __version__, __language__(30012) ):
+		try:
+			doc = open(FILE_FAVS).read().decode('utf-8')
+			if doc == 'This is your favorites file.\n':
+				dialog.ok( __plugin__ + ' v' + __version__, __language__(30017) )
+			else:
+				deleteFile(FILE_FAVS)
+				dialog.ok( __plugin__ + ' v' + __version__, __language__(30013) )
+				xbmc.executebuiltin('Container.Refresh')
+				writeFavs()
+		except:
+			dialog.ok( __plugin__ + ' v' + __version__, __language__(30014) )
+	return True
+		
+#######################################################################################################################    
+# get favorite
+######################################################################################################
+def getFavorites(url):
+	log("> getFavorites()")
+	doc = open(url).read()
+	if doc:
+		try:
+			favoritesRE=re.compile('(?i)name=(.+?)&url=(.+?)\n')
+			favorites = favoritesRE.findall(doc)
+			for favorite in favorites:
+				name = favorite[0]
+				url = favorite[1]
+				infolabels = {}
+				addDirectoryItem(urllib.unquote_plus(name).decode('utf-8'), urllib.unquote_plus(url), 3, infoLabels=infolabels, isFolder=False)
+			xbmcplugin.addSortMethod( handle=int( sys.argv[ 1 ] ), sortMethod=xbmcplugin.SORT_METHOD_LABEL )
+		except:
+			errorOK("getFavorites()")
+	log("< getFavorites()")
+	return True
 
 #######################################################################################################################    
 # get initial root category
 #######################################################################################################################    
 def getRootCats():
-	log("> getRootCats()")
-	items = ( (__lang__(1010), "new"), (__lang__(1020),"country"), (__lang__(1030),"genre"), )
+	log("> getRootCats()")	
+	doc = open(FILE_FAVS).read().decode('utf-8')
+	if doc == 'This is your favorites file.\n':
+		items = ( (__language__(30000), "new"), (__language__(30001),"country"), (__language__(30002),"genre"), )
+	else:
+		items = ( (__language__(30000), "new"), (__language__(30003),"favorites"), (__language__(30001),"country"), (__language__(30002),"genre"), )
 
 	for title, url in items:
 		addDirectoryItem(title, url, 0)
@@ -72,7 +185,8 @@ def getCats(byCountry):
 				sectionRE = baseRE.replace('$SECTION','country')
 			else:
 				sectionRE = baseRE.replace('$SECTION','genre')
-			section = re.search(sectionRE, doc, re.IGNORECASE + re.MULTILINE + re.DOTALL).group(1)
+			#section = re.search(sectionRE, doc, re.IGNORECASE + re.MULTILINE + re.DOTALL).group(1)
+			section = re.search('(?ims)' + sectionRE, doc).group(1)
 
 			# parse info from section
 			p=re.compile('<a href="(.+?)".*?>(.+?)</a', re.IGNORECASE)
@@ -89,27 +203,27 @@ def getCats(byCountry):
 	log("< getCats() ok=%s" % ok)
 	return ok
 
-
 ######################################################################################################
 def getStreams(url):
 	log("> getStreams()")
 	ok = False
 
-	#doc = open('/'.join( [DIR_HOME, 'top40.html'] ) ).read()				# frig for dev only
+	#doc = open('/'.join( [DIR_HOME, 'top40.html'] ) ).read()
+	
 	doc = getURL(url)
 	if doc:
 		try:
 			log("parsing doc ...")
 			doc=doc.replace('<br />','')
 			# get all table rows, one staion per row - with possible multiple streams
-			stationsRE=re.compile('(<tr>.*?</tr>)', re.IGNORECASE + re.MULTILINE + re.DOTALL)
+			stationsRE=re.compile('(?ims)(<tr>.*?</tr>)')
 
 			# url, name, loc, stream(s), genre
-			#stationRE=re.compile('<td><a href=".*?"><b>(.*?)</b>.*?<td>(.*?)</td>.*?alt=".*?".*?<td>(<a href=.*?</td>).*?(?:<td>(.*?)</td>|</tr>)', re.IGNORECASE + re.MULTILINE + re.DOTALL)
-			stationRE=re.compile('<td.+?<a href=".*?"><b>(.*?)</b>.*?<td>(.*?)</td>.*?alt=".*?".*?<td>(<a href=.*?</td>).*?(?:<td>(.*?)</td>|</tr>)', re.IGNORECASE + re.MULTILINE + re.DOTALL)
+			#stationRE=re.compile('(?ims)<td><a href=".*?"><b>(.*?)</b>.*?<td>(.*?)</td>.*?alt=".*?".*?<td>(<a href=.*?</td>).*?(?:<td>(.*?)</td>|</tr>)')
+			stationRE=re.compile('(?ims)<td.+?<a href=".*?"><b>(.*?)</b>.*?<td>(.*?)</td>.*?alt=".*?".*?<td>(<a href=.*?</td>).*?(?:<td>(.*?)</td>|</tr>)')
 
-			#streamsRE=re.compile('href="(.*?)">(.*?)<', re.IGNORECASE)
-			streamsRE=re.compile('href="([^"]+)">(\d+ +[^"]+|\d+[.]\d+ +[^"]+)</a>', re.IGNORECASE)
+			#streamsRE=re.compile('(?i)href="(.*?)">(.*?)<')
+			streamsRE=re.compile('(?i)href="([^"]+)">(\d+ +[^"]+|\d+[.]\d+ +[^"]+)</a>')
 
 			# get all stations
 			stations = stationsRE.findall(doc)
@@ -119,7 +233,7 @@ def getStreams(url):
 				#print station
 
 				# get station details
-				stationInfo = re.search(stationRE, station, re.IGNORECASE + re.MULTILINE + re.DOTALL)
+				stationInfo = re.search(stationRE, station)
 				if not stationInfo:
 					log("stationInfo re not matched - ignore station")
 					continue
@@ -185,7 +299,7 @@ def getStreams(url):
 # fetch webpage or open filename if exists
 ######################################################################################################
 def getURL(url, fn=''):
-	""" read a doc from a url and save to file (if required) """
+	""" read a doc from an url and save to file (if required) """
 	
 	try:
 		doc = ''
@@ -224,7 +338,6 @@ def get_params():
 	""" extract params from argv[2] to make a dict (key=value) """
 	paramDict = {}
 	try:
-		print "get_params() argv=", sys.argv
 		if sys.argv[2]:
 			paramPairs=sys.argv[2][1:].split( "&" )
 			for paramsPair in paramPairs:
@@ -240,9 +353,25 @@ def addDirectoryItem(name, url, mode, label2='', infoType="Music", infoLabels = 
 	liz=xbmcgui.ListItem(name, label2)
 	if not infoLabels:
 		infoLabels = {"Title": name }
-	
 	liz.setInfo( infoType, infoLabels )
-	#u = "%s?url=%s&mode=%s&name=%s" % (sys.argv[0], urllib.quote_plus(url), mode, urllib.quote_plus(name), )
+	
+	v = "?name=%s&url=%s" % (urllib.quote_plus(name.encode('utf-8')), urllib.quote_plus(url.encode('utf-8')), )
+	action1 = 'XBMC.RunPlugin(plugin://plugin.audio.listenliveeu/?add%s%s)' % (v, '\n')
+	action2 = 'XBMC.RunPlugin(plugin://plugin.audio.listenliveeu/?remfav%s%s)' % (v, '\n')
+	action3 = 'XBMC.RunPlugin(plugin://plugin.audio.listenliveeu/?removeall)'
+	
+	if mode==2:
+		try:
+			liz.addContextMenuItems([(__language__(30004), action1), (__language__(30006), action3)])
+		except:
+			errorOK("addDirectoryItem()")
+		
+	elif mode==3:
+		try:
+			liz.addContextMenuItems([(__language__(30005), action2), (__language__(30006), action3)])
+		except:
+			errorOK("addDirectoryItem()")
+
 	u = "%s?url=%s&mode=%s&name=%s" % (sys.argv[0], urllib.quote_plus(url), mode, urllib.quote_plus(name.encode('utf-8')), )
 	log("%s" % u)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=isFolder)
@@ -271,18 +400,24 @@ def deleteFile(fn):
 # BEGIN !
 #######################################################################################################################
 try:
-	__lang__ = xbmc.Language( DIR_HOME ).getLocalizedString
+	__settings__ = xbmcaddon.Addon(id='plugin.audio.listenliveeu')
+	__language__ = __settings__.getLocalizedString
 except:
 	errorOK()
+
+if not os.path.exists(DIR_SETTINGS):
+	os.mkdir(DIR_SETTINGS)
+if not os.path.exists(FILE_FAVS):
+	writeFavs()
 
 #######################################################################################################################    
 # get settings
 #######################################################################################################################
 
-list_loc = xbmcplugin.getSetting( "list_loc" )
-list_genre = xbmcplugin.getSetting( "list_genre" )
-list_rate = xbmcplugin.getSetting( "list_rate" )
-min_rate = xbmcplugin.getSetting( "min_rate" )
+list_loc = __settings__.getSetting( "list_loc" )
+list_genre = __settings__.getSetting( "list_genre" )
+list_rate = __settings__.getSetting( "list_rate" )
+min_rate = __settings__.getSetting( "min_rate" )
 
 #######################################################################################################################
 params=get_params()
@@ -293,20 +428,31 @@ log("Mode: %s" % mode)
 log("URL: %s" % url)
 log("Name: %s" % name)
 
-if not sys.argv[ 2 ] or not url:
-	# new start - cleanup old files
-	deleteFile(FILE_INDEX_PAGE)
-	deleteFile(FILE_NEW_PAGE)
+if "?add" in sys.argv[ 2 ] :
+	ok = addFav(sys.argv[ 2 ])
+elif "?remfav" in sys.argv[ 2 ] :
+	ok = remFav(sys.argv[ 2 ])
+elif "?removeall" in sys.argv[ 2 ] :
+	ok = remallFavs(url)
 
-	ok = getRootCats()
-elif url == "new":
-	ok = getStreams(URL_NEW)
-elif url == "country":
-	ok = getCats(True)
-elif url == "genre":
-	ok = getCats(False)
-elif mode==1:
-	ok = getStreams(url)
-elif mode==2:
-	ok = playStream(url)
-xbmcplugin.endOfDirectory(int(sys.argv[1]), ok)
+if not "?add" in sys.argv[ 2 ] and not "?remfav" in sys.argv[ 2 ] and not "?removeall" in sys.argv[ 2 ]:
+	if not sys.argv[ 2 ] or not url:
+		# new start - cleanup old files
+		deleteFile(FILE_INDEX_PAGE)
+
+		ok = getRootCats()
+	elif url == "new":
+		ok = getStreams(URL_NEW)
+	elif url == "favorites":
+		ok = getFavorites(FILE_FAVS)
+	elif url == "country":
+		ok = getCats(True)
+	elif url == "genre":
+		ok = getCats(False)
+	elif mode==1:
+		ok = getStreams(url)
+	elif mode==2:
+		ok = playStream(url)
+	elif mode==3:
+		ok = playStream(url)
+	xbmcplugin.endOfDirectory(int(sys.argv[1]), ok)

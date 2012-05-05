@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.itv"
-       name="ITV Catchup"
-       version="1.0.3 READ INFO BEFORE INSTALL"
-       provider-name="">
+       name="ITV"
+       version="1.0.7"
+       provider-name="dlake02">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>
@@ -12,7 +12,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary>Plugin for ITV Player - Must create subtitles and images folders, read info.txt</summary>
-    <description>ITV Player  - Must create subtitles and images folders, read info.txt</description>
+    <summary>Plugin for ITV Player</summary>
+    <description>ITV Player Front End</description>
   </extension>
 </addon>

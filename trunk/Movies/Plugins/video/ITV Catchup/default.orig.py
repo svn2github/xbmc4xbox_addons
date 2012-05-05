@@ -15,6 +15,13 @@ __addon__ = __addoninfo__["addon"]
 __settings__   = xbmcaddon.Addon(id=__scriptid__)
 
 
+DIR_CACHE = xbmc.translatePath(os.path.join( "T:"+os.sep,"plugin_data", __scriptname__,'cache' ))  
+if not os.path.isdir(DIR_CACHE):
+    try:
+        os.makedirs(DIR_CACHE)
+    except:
+        DIR_CACHE = os.path.join(os.getcwd(),'cache')
+        os.makedirs(DIR_CACHE)
 
 DIR_USERDATA   = xbmc.translatePath(__addoninfo__["profile"])
 SUBTITLES_DIR  = os.path.join(DIR_USERDATA, 'Subtitles')
@@ -70,6 +77,7 @@ def get_httplib():
 http = get_httplib()
 
 
+http.cache = httplib2.FileCache(DIR_CACHE, safe=lambda x: md5.new(x).hexdigest())
        
 # what OS?        
 environment = os.environ.get( "OS", "xbox" )
@@ -77,8 +85,6 @@ environment = os.environ.get( "OS", "xbox" )
 
 ############## SUBS #################
 
-def chomps(s):
-    return s.rstrip('\n')
 
 def httpget(url):
 	resp = ''
@@ -89,68 +95,124 @@ def httpget(url):
 
 
 def download_subtitles(url, offset):
-		# Download and Convert the TTAF format to srt
-		# SRT:
-		#1
-		#00:01:22,490 --> 00:01:26,494
-		#Next round!
-		#
-		#2
-		#00:01:33,710 --> 00:01:37,714
-		#Now that we've moved to paradise, there's nothing to eat.
-		#
+    # Download and Convert the TTAF format to srt
+    # SRT:
+    #1
+    #00:01:22,490 --> 00:01:26,494
+    #Next round!
+    #
+    #2
+    #00:01:33,710 --> 00:01:37,714
+    #Now that we've moved to paradise, there's nothing to eat.
+    #
     
-		# TT:
-		#<p begin="0:01:12.400" end="0:01:13.880">Thinking.</p>
+    # TT:
+    #<p begin="0:01:12.400" end="0:01:13.880">Thinking.</p>
     
-	logging.info('subtitles at =%s' % url)
-	outfile = os.path.join(SUBTITLES_DIR, 'itv.srt')
-	fw = open(outfile, 'w')
+    logging.info('subtitles at =%s' % url)
+    outfile = os.path.join(SUBTITLES_DIR, 'itv.srt')
+    fw = open(outfile, 'w')
     
-	if not url:
-		fw.write("1\n0:00:00,001 --> 0:01:00,001\nNo subtitles available\n\n")
-		fw.close() 
-		return outfile
-	txt = httpget(url)
-	try:
-		txt = txt.decode("utf-16")
-	except UnicodeDecodeError:
-		txt = txt[:-1].decode("utf-16")
-	txt = txt.encode('latin-1')
-	p= re.compile('^\s*<p.*?begin=\"(.*?)\.([0-9]+)\"\s+.*?end=\"(.*?)\.([0-9]+)\"\s*>(.*?)</p>')
-	i=0
-	prev = None
+    if not url:
+        fw.write("1\n0:00:00,001 --> 0:01:00,001\nNo subtitles available\n\n")
+        fw.close() 
+        return
+    
+    txt = httpget(url)
+        
+    p= re.compile('^\s*<p.*?begin=\"(.*?)\.([0-9]+)\"\s+.*?end=\"(.*?)\.([0-9]+)\"\s*>(.*?)</p>')
+    i=0
+    prev = None
 
-		# some of the subtitles are a bit rubbish in particular for live tv
-		# with lots of needless repeats. The follow code will collapse sequences
-		# of repeated subtitles into a single subtitles that covers the total time
-		# period. The downside of this is that it would mess up in the rare case
-		# where a subtitle actually needs to be repeated 
-	entry = None
-	for line in txt.splitlines():
-		subtitles1 = re.findall('<p.*?begin="(...........)" end="(...........)".*?">(.*?)</p>',line)
-		if subtitles1:
-			for start_time, end_time, text in subtitles1:
-				r = re.compile('<[^>]*>')
-				text = r.sub('',text)
-				start_hours = re.findall('(..):..:..:..',start_time)
-				start_mins = re.findall('..:(..):..:..', start_time)
-				start_secs = re.findall('..:..:(..):..', start_time)
-				start_msecs = re.findall('..:..:..:(..)',start_time)
-#				start_mil = start_msecs +'0'
-				end_hours = re.findall('(..):..:..:..',end_time)
-				end_mins = re.findall('..:(..):..:..', end_time)
-				end_secs = re.findall('..:..:(..):..', end_time)
-				end_msecs = re.findall('..:..:..:(..)',end_time)
-#				end_mil = end_msecs +'0'
-				entry = "%d\n%s:%s:%s,%s --> %s:%s:%s,%s\n%s\n\n" % (i, start_hours[0], start_mins[0], start_secs[0], start_msecs[0], end_hours[0], end_mins[0], end_secs[0], end_msecs[0], text)
-				i=i+1
-				print "ENTRY" + entry
-		if entry: 
-			fw.write(entry)
+    # some of the subtitles are a bit rubbish in particular for live tv
+    # with lots of needless repeats. The follow code will collapse sequences
+    # of repeated subtitles into a single subtitles that covers the total time
+    # period. The downside of this is that it would mess up in the rare case
+    # where a subtitle actually needs to be repeated 
+    for line in txt.split('\n'):
+        entry = None
+        m = p.match(line)
+        if m:
+            start_mil = "%s000" % m.group(2) # pad out to ensure 3 digits
+            end_mil   = "%s000" % m.group(4)
+            
+            ma = {'start'     : m.group(1), 
+                  'start_mil' : start_mil[:3], 
+                  'end'       : m.group(3), 
+                  'end_mil'   : start_mil[:3], 
+                  'text'      : m.group(5)}
+
+
+
     
-	fw.close()    
-	return outfile
+            ma['text'] = ma['text'].replace('&amp;', '&')
+            ma['text'] = ma['text'].replace('&gt;', '>')
+            ma['text'] = ma['text'].replace('&lt;', '<')
+            ma['text'] = ma['text'].replace('<br />', '\n')
+            ma['text'] = ma['text'].replace('<br/>', '\n')
+            ma['text'] = re.sub('<.*?>', '', ma['text'])
+            ma['text'] = re.sub('&#[0-9]+;', '', ma['text'])
+            #ma['text'] = ma['text'].replace('<.*?>', '')
+    
+            if not prev:
+                # first match - do nothing wait till next line
+                prev = ma
+                continue
+            
+            if prev['text'] == ma['text']:
+                # current line = previous line then start a sequence to be collapsed
+                prev['end'] = ma['end']
+                prev['end_mil'] = ma['end_mil']
+            else:
+                i += 1
+		l = (prev['start']).split(':')
+		start_seconds = int(l[0]) * 3600 + int(l[1]) * 60 + int(l[2])
+		start_seconds = start_seconds + offset
+		m = (prev['end']).split(':')
+		end_seconds = int(m[0]) * 3600 + int(m[1]) * 60 + int(m[2])
+		end_seconds = end_seconds + offset
+	
+
+
+		start_mins, start_secs = divmod(start_seconds, 60)
+		start_hours, start_mins = divmod(start_mins, 60)
+
+                end_mins, end_secs = divmod(end_seconds, 60)
+                end_hours, end_mins = divmod(end_mins, 60)
+
+                #entry = "%d\n%s,%s --> %s,%s\n%s\n\n" % (i, prev['start'], prev['start_mil'], prev['end'], prev['end_mil'], prev['text'])
+		#if (i==1):
+		#	start_hours=00
+		#	start_mins=00
+		#	start_secs=00
+
+		entry = "%d\n%02d:%02d:%02d,%s --> %02d:%02d:%02d,%s\n%s\n\n" % (i, start_hours, start_mins, start_secs, prev['start_mil'], end_hours, end_mins, end_secs, prev['end_mil'], prev['text'])
+                prev = ma
+        elif prev:
+            i += 1
+            l = (prev['start']).split(':')
+            start_seconds = int(l[0]) * 3600 + int(l[1]) * 60 + int(l[2])
+	    start_seconds = start_seconds + offset
+            m = (prev['end']).split(':')
+            end_seconds = int(m[0]) * 3600 + int(m[1]) * 60 + int(m[2])
+	    end_seconds = end_seconds + offset
+            start_mins, start_secs = divmod(start_seconds, 60)
+            start_hours, start_mins = divmod(start_mins, 60)
+
+            end_mins, end_secs = divmod(end_seconds, 60)
+            end_hours, end_mins = divmod(end_mins, 60)
+
+            #entry = "%d\n%s,%s --> %s,%s\n%s\n\n" % (i, prev['start'], prev['start_mil'], prev['end'], prev['end_mil'], prev['text'])
+	    #if(i==1):
+	#	start_hours=00
+	#	start_mins=00
+	#	start_secs=00
+            entry = "%d\n%02d:%02d:%02d,%s --> %02d:%02d:%02d,%s\n%s\n\n" % (i, start_hours, start_mins, start_secs, prev['start_mil'], end_hours, end_mins, end_secs, prev['end_mil'], prev['text'])
+            
+        if entry: fw.write(entry)
+    
+    fw.close()    
+    return outfile
 
 def CATS():
         SHOWS('http://www.itv.com/_data/xml/CatchUpData/CatchUp360/CatchUpMenu.xml')
@@ -206,14 +268,14 @@ def SHOWS(url):
 
 def EPS(url):
         response = get_url("http://www.itv.com/_app/Dynamic/CatchUpData.ashx?ViewType=1&Filter=%s&moduleID=115107"%url)
-#        print response
+        #print response
         soup = BeautifulSoup(response,convertEntities="html")
         for episode in soup.findAll('div', attrs={'class' : re.compile('^listItem')}):
             thumb = str(episode.div.a.img['src'])
             pid = re.findall('.+?Filter=(.+?)$', str(episode.div.a['href']))[0]
 	    image_name = pid + '.jpg'
 	    outfile = os.path.join(IMAGE_DIR, image_name)
-	    fw = open(outfile, 'wb')
+	    fw = open(outfile, 'w')
 	    txt = httpget(thumb)
 	    fw.write(txt)
 	    fw.close()
@@ -225,8 +287,6 @@ def EPS(url):
 
 def VIDEO(url):
 	#print "URL: " + url
-        pDialog = xbmcgui.DialogProgress()
-        pDialog.create('ITV Stream', 'Loading stream info')
 	pid = url
 	SM_TEMPLATE = """<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	  <SOAP-ENV:Body>
@@ -299,7 +359,7 @@ def VIDEO(url):
         title2= title1[1].split("</ProgrammeTitle>")
 
 
-#	print res
+	#print res
 	res = re.search('<VideoEntries>.+?</VideoEntries>', res, re.DOTALL).group(0)
 	rendition_offset= res.split("rendition-offset=")
 	offset_seconds = rendition_offset[1].split(":")
@@ -309,34 +369,31 @@ def VIDEO(url):
 
 	mediafile =  res.split("<MediaFile delivery=")
 	cc1 = res.split("ClosedCaptioningURIs>")
-	there_are_subtitles=0
+	there_are_subtitles=1
 	if len(cc1)>1:
 		pattern = re.compile(r'\s+')
 		cc2 = re.sub(pattern, ' ', cc1[1])
 		cc3 = cc2.split(" <URL><![CDATA[")
 		cc_url_all = cc3[1].split("]]></URL> </")
-		print "Caption: ", cc_url_all[0]
-		cc_url = cc_url_all[0]
-#		cc_url_long = (cc_url_all[0].split("xml"))
-#		cc_url = cc_url_long[0] + "xml"
-		print "Subtitles URL " + cc_url
-		print "Offset %d", offset
-		if __settings__.getSetting('subtitles_control') == 'true':
-			subtitles_file = download_subtitles(cc_url, offset)
-			print "Subtitles at ", subtitles_file
-			there_are_subtitles=1
+		#print "Caption: ", cc_url_all[0]
+		#cc_url = cc_url_all[0]
+		cc_url_long = (cc_url_all[0].split("xml"))
+		cc_url = cc_url_long[0] + "xml"
+		print "Subtitles URL ", cc_url
+		subtitles_file = download_subtitles(cc_url, offset)
+		print "Subtitles at ", subtitles_file
+		there_are_subtitles=1
 	else:
 		print "No Captions\n"
-		outfile = os.path.join(SUBTITLES_DIR, 'itv.srt')
+    		outfile = os.path.join(SUBTITLES_DIR, 'itv.srt')
 		subtitles_file = outfile
-		fw = open(outfile, 'w')
-		if __settings__.getSetting('subtitles_control') == 'true':
-			fw.write("1\n0:00:00,001 --> 0:01:00,001\n<font color='Red'>No subtitles available\n</font>\n")
-		fw.close()
-		there_are_subtitles=0
+    		fw = open(outfile, 'w')
+        	fw.write("1\n0:00:00,001 --> 0:01:00,001\n<font color='Red'>No subtitles available\n</font>\n")
+        	fw.close()
+		#there_are_subtitles=0
 
 	for index in range(len(mediafile)):
-		print ("MEDIA ENTRY %d %s"),index, mediafile[index]
+        	print ("MEDIA ENTRY %d %s"),index, mediafile[index]
 
 
 	quality = int(__settings__.getSetting('video_stream'))
@@ -395,10 +452,10 @@ def VIDEO(url):
 	play.clear()
 	play.add(url,listitem)
 	player.play(play)
-	if (there_are_subtitles == 1):
+	if (there_are_subtitles==1):
 		player.setSubtitles(subtitles_file)
-			#xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(url, item)
-			#xbmc.executebuiltin('XBMC.ActivateWindow(fullscreenvideo)')
+        #xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(url, item)
+        #xbmc.executebuiltin('XBMC.ActivateWindow(fullscreenvideo)')
 
 
 
@@ -517,7 +574,7 @@ def addLink(name,url):
 def addDir(name,url,mode,iconimage,plot='',isFolder=True):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
         ok=True
-#        print "addDir " + name
+        print "addDir " + name
         liz=xbmcgui.ListItem(name,iconImage="DefaultVideo.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": plot} )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=isFolder)

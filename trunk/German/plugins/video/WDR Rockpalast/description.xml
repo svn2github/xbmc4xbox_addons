@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addoninfo>
     <!-- (required) guuid: unique identifier of this addon
     guuids can be generated online at sites such as http://www.famkruithof.net/uuid/uuidgen -->
-    <guid>bcad66c0-8d7b-11e1-b0c4-0800200c9a66</guid>
+    <guid>8d97dab0-96b2-11e1-a8b0-0800200c9a66</guid>
 
     <!-- (required) type:
     1:  visualization
@@ -17,22 +15,22 @@
     10: plugin-program
     11: plugin-pictures
     12: plugin-weather -->
-    <type>9</type>
+    <type>8</type>
 
     <!-- (required) Title -->
-    <title>ListenLiveEU</title>
+    <title>WDR Rockpalast</title>
 
     <!-- (required) Major.minor.build -->
-    <version>0.4.4</version>
+    <version>1.0.3</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="bootsy" email="bootsy82@gmail.com" />
+        <author name="xycl" email="" />
     </authors>
-    <summary lang="en">European radio stations streaming live on the internet</summary>
-    <summary lang="hu">Európai internetes rádiók</summary>
-    <description lang="en">Welcome to listenlive.eu, a web radio directory showcasing over 4000 radio stations from across Europe streaming live on the internet.</description>
-    <description lang="hu">A listenlive.eu több mint 4000 élo rádióadást tartalmaz Európából, melyeket az interneten keresztül érhetsz el.</description>
+    <summary lang="de">Zugriff auf die WDR Rockpalast Konzerte</summary>
+    <summary lang="en">Plays WDR Rockpalast concerts</summary>
+    <description lang="de">Zugriff auf die WDR Rockpalast Konzerte</description>
+    <description lang="en">Plays WDR Rockpalast concerts</description>
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
         <tag>Music</tag>
@@ -43,9 +41,9 @@
 
     <!--patforms compatible with your addon.   xbox, osx, windows, linux, or all -->
     <platforms>
-        <platform>xbox</platform>
+        <platform>all</platform>
     </platforms>
 
     <!-- (optional) The License the addon is released under.-->
-    <license>GPLv3</license>
+    <license>GPL</license>
 </addoninfo>

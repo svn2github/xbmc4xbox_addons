@@ -23,15 +23,15 @@
     <title>ITV Catchup</title>
 
     <!-- (required) Major.minor.build -->
-    <version>1.0.3</version>
+    <version>1.0.7</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="unknown, possibly Voinage" email="" />
+        <author name="dlake02" email="" />
     </authors>
 
     <summary>ITV Player</summary>
-    <description>ITV Player.  IMPORTANT INFO: Before first use you must enter plugin settings, you don't need to change anything just make sure you press OK.  Now try to run the plugin and you should get a script error when trying to play something - this will intall the correct folders. Now go to Q:\Userdata\Plugin_Data\video\ITV\ and creaet subtitles and images folders.  MAKE SURE YOU DO THIS IN THE PLUGIN_DATA\VIDEO\ITV FOLDER AND NOT THE PLUGIN_DATA\ITV FOLDER.</description>
+    <description>Catchup with shows from UK network ITV.  NOTE: This geo-locked to UK ONLY.</description>
  
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
