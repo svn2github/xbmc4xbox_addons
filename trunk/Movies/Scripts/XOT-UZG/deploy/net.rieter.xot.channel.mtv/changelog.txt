@@ -1,4 +1,0 @@
-[B]Changelog[/B]
-
-Fixed: Southpark.nl did not play more than one act (Issue 309).
-Fixed: Southpark.nl SWF path updated (you need a very recent LibRTMP version that support SWF Verification Type 2)

@@ -1,3 +1,0 @@
-[B]Changelog[/B]
-
-Fixed: "Een.be" channel had wrong videos (Issue 305)

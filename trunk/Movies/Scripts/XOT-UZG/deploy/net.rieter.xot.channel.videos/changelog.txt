@@ -1,6 +1,0 @@
-[B]Changelog[/B]
-
-Added: Current/Past/.... categories to Channel 9 (Issue 320)
-
-Fixed: Dumpert.nl (Issue 326)
-Fixed: MSDN Channel 9 did not show all content (Issue 320)

@@ -1,3 +1,0 @@
-De meeste streams van RTL Gemist zijn beschermd 
-met behulp van DRM. Dit wordt niet ondersteund
-door XBMC. Deze streams zullen scrambled afspelen.

@@ -1,3 +1,0 @@
-Be advised that the BBC iPlayer is only available
-to people inside the UK. If you live outside, a
-proxy can be configured in the Add-on settings.
