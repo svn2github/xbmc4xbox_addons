@@ -28,6 +28,20 @@ pluginQuery = sys.argv[2]
 __settings__ = xbmcaddon.Addon(id='plugin.video.veetle')
 __language__ = __settings__.getLocalizedString
 
+# Categories
+V_Cats = [('All', '0'),
+          ('Animation', '60'),
+          ('Comedy', '50'),
+          ('Education', '90'),
+          ('Gaming', '40'),
+          ('Mobile', '110'),
+          ('Entertainment', '10'),
+          ('Shows', '20'),
+          ('Sports', '80'),
+          ('Music', '70'),
+          ('News', '30'),
+          ('Religion', '100')]
+
 BASE_URL = 'http://www.veetle.com'
 CHANNEL_LISTING = BASE_URL + '/channel-listing-cross-site.js'
 
@@ -100,6 +114,59 @@ class VeetleSchedule:
             t = t + item['durationInSeconds']
         return playlist
 
+def build_home_directory():
+    for category, categoryId in V_Cats:
+        url = pluginUrl + '?cat=' + categoryId
+        listitem = xbmcgui.ListItem(category, iconImage='', 
+                                    thumbnailImage='')
+        #infoLabels = {'title': category}
+        #listitem.setInfo('video', infoLabels)
+        #listitem.setProperty('IsPlayable', 'true')
+        xbmcplugin.addDirectoryItem(pluginHandle, url, listitem, 
+                                    isFolder=True)
+    xbmcplugin.endOfDirectory(pluginHandle)
+
+def build_category_directory(categoryID):
+    #Load the channel list
+    response = urllib2.urlopen(CHANNEL_LISTING)
+    channels = json.loads(response.read())
+
+    print 'Total veetle.com Channels: %d' % len(channels)
+
+    #only list channels we can stream
+    channels = [channel for channel in channels if channel.get('flashEnabled', 
+                            False) and channel.get('categoryId', '') == categoryID]
+                                                               
+    print 'Flash Enabled veetle.com Channels: %d' % len(channels)
+
+    do_grab = False #__settings__.getSetting('grab_schedule')
+    for channel in channels:
+        url = pluginUrl + '?play=' + channel['channelId']
+        sm = channel['logo'].get('sm', '')
+        lg = channel['logo'].get('lg', '')
+        if lg:
+            thumb = lg
+        else:
+            thumb = sm
+
+        if do_grab == 'true':
+            channel_info = get_channel_info(channel['channelId'])            
+            if channel_info['programme']['success']:
+                schedule = VeetleSchedule(channel_info['programme']['payload'], 
+                                          channel_info['broadcastStartedTime'],
+                                          channel_info['referenceClock'])
+                channel['title'] += ' ' + schedule.get_now_playing()
+                channel['description'] += '\n' + schedule.get_schedule()
+        
+        listitem = xbmcgui.ListItem(channel['title'], iconImage=thumb, 
+                                    thumbnailImage=thumb)
+        infoLabels = {'title': channel['title']}
+        listitem.setInfo('video', infoLabels)
+        listitem.setProperty('IsPlayable', 'true')
+        xbmcplugin.addDirectoryItem(pluginHandle, url, listitem, 
+                                    isFolder=False, totalItems=len(channels))
+    xbmcplugin.endOfDirectory(pluginHandle)
+    
 
 if pluginQuery.startswith('?play='):
     #Play a stream with the given channel id
@@ -114,9 +181,13 @@ if pluginQuery.startswith('?play='):
                                   xbmcgui.ListItem())
         dialog = xbmcgui.Dialog()
         ok = dialog.ok(__language__(30000), __language__(30001))   
-
+elif pluginQuery.startswith('?cat='):
+    catID = pluginQuery[5:].strip()
+    print 'veetle Category ID: ' + catID
+    build_category_directory(catID)
 else:
-    #Load the channel list
+    build_home_directory()
+    '''#Load the channel list
     response = urllib2.urlopen(CHANNEL_LISTING)
     channels = json.loads(response.read())
 
@@ -124,7 +195,7 @@ else:
 
     #only list channels we can stream
     channels = [channel for channel in channels if channel.get('flashEnabled', 
-                                                               False)]
+                            False) and channel.get('categoryId', '') == '40']
                                                                
     print 'Flash Enabled veetle.com Channels: %d' % len(channels)
 
@@ -155,4 +226,4 @@ else:
         xbmcplugin.addDirectoryItem(pluginHandle, url, listitem, 
                                     isFolder=False, totalItems=len(channels))
     xbmcplugin.endOfDirectory(pluginHandle)
-
+    '''
