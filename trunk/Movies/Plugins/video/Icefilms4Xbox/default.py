@@ -1797,6 +1797,7 @@ def PART(scrap,sourcenumber,args,cookie):
      #check if source exists
      sourcestring='Source #'+sourcenumber
      checkforsource = re.search(sourcestring, scrap)
+     
      megapic=handle_file('megapic','')
      shared2pic=handle_file('shared2pic','')
      rapidpic=handle_file('rapidpic','')
@@ -1817,7 +1818,7 @@ def PART(scrap,sourcenumber,args,cookie):
           multiple_part = re.search('<p>Source #'+sourcenumber+':', scrap)
           
           if multiple_part is not None:
-               #print sourcestring+' has multiple parts'
+               print sourcestring+' has multiple parts'
                #get all text under source if it has multiple parts
                multi_part_source=re.compile('<p>Source #'+sourcenumber+': (.+?)PART 1(.+?)</i><p>').findall(scrap)
 
@@ -1825,8 +1826,10 @@ def PART(scrap,sourcenumber,args,cookie):
                for sourcescrape1,sourcescrape2 in multi_part_source:
                     scrape=sourcescrape1+'PART 1'+sourcescrape2
                     pair = re.compile("onclick='go\((\d+)\)'>PART\s+(\d+)").findall(scrape)
+                    
                     for id, partnum in pair:
                         url = GetSource(id, args, cookie)
+                        
                         # check if source is megaupload or 2shared, and add all parts as links
                         ismega = re.search('\.megaupload\.com/', url)
                         is2shared = re.search('\.2shared\.com/', url)
