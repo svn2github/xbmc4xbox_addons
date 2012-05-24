@@ -12,7 +12,8 @@ import xbmc,xbmcplugin,xbmcgui,xbmcaddon
 import unicodedata
 import random
 import copy
-
+import pysqlite2
+import simplejson
 #imports of things bundled with addon
 import clean_dirs,htmlcleaner, rapidroutines
 from xgoogle.BeautifulSoup import BeautifulSoup,BeautifulStoneSoup
@@ -147,6 +148,12 @@ def handle_file(filename,getmode=''):
           return_file = xbmcpath(art,'uploadorb.png')
      elif filename == 'sharebeespic':
           return_file = xbmcpath(art,'sharebees.png')
+     elif filename == 'glumbopic':
+          return_file = xbmcpath(art,'glumbo.png')
+     elif filename == 'jumbopic':
+          return_file = xbmcpath(art,'jumbo.png')
+     elif filename == 'movreelpic':
+          return_file = xbmcpath(art,'movreel.png')
      elif filename == 'localpic':
           return_file = xbmcpath(art,'local_file.jpg')
 
@@ -618,6 +625,172 @@ def resolve_sharebees(url):
         print '**** ShareBees Error occured: %s' % e
         raise        
 			   
+def resolve_glumbouploads(url):
+
+    try:
+
+        #Show dialog box so user knows something is happening
+        dialog = xbmcgui.DialogProgress()
+        dialog.create('Resolving', 'Resolving GlumboUploads Link...')       
+        dialog.update(0)
+        
+        print 'GlumboUploads - Requesting GET URL: %s' % url
+        html = net.http_GET(url).content
+        
+        dialog.update(50)
+        
+        #Set POST data values
+        op = re.search('''<Form method="POST" action=''>.+?<input type="hidden" name="op" value="(.+?)">''', html, re.DOTALL).group(1)
+        usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
+        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+        fname = re.search("""input\[name="fname"\]'\).attr\('value', '(.+?)'""", html).group(1)
+        method_free = re.search('<input class="slowdownload" title="Slow download" type="submit" name="method_free" value="(.+?)">', html).group(1)
+
+        
+        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
+        
+        print 'GlumboUploads - Requesting POST URL: %s DATA: %s' % (url, data)
+        html = net.http_POST(url, data).content
+        
+        dialog.update(100)
+        
+        #sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
+        #sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
+        #sPattern += '\s+?</script>'
+
+        link = None
+        sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
+        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+        
+        if r:
+            sJavascript = r.group(1)
+            sUnpacked = jsunpack.unpack(sJavascript)
+            print(sUnpacked)
+            
+            #Grab first portion of video link, excluding ending 'video.xxx' in order to swap with real file name
+            #Note - you don't actually need the filename, but for purpose of downloading via Icefilms it's needed so download video has a name
+            sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)video.+'
+            sPattern += '"custommode='
+            r = re.search(sPattern, sUnpacked)              
+            
+            #Video link found
+            if r:
+                    link = r.group(1) + fname
+                    dialog.close()
+                    finalUrl = [1]
+                    finalUrl[0] = link
+        
+                    return finalUrl
+
+        if not link:
+            print '***** GlumboUploads - Link Not Found'
+            raise Exception("Unable to resolve GlumboUploads")
+
+    except Exception, e:
+        print '**** GlumboUploads Error occured: %s' % e
+        raise
+
+def resolve_jumbofiles(url):
+
+    try:
+
+        #Show dialog box so user knows something is happening
+        dialog = xbmcgui.DialogProgress()
+        dialog.create('Resolving', 'Resolving JumboFiles Link...')       
+        dialog.update(0)
+        
+        print 'JumboFiles - Requesting GET URL: %s' % url
+        html = net.http_GET(url).content
+        
+        dialog.update(50)
+        
+        #Check page for any error msgs
+        if re.search('This server is in maintenance mode', html):
+            print '***** JumboFiles - Site reported maintenance mode'
+            raise Exception('File is currently unavailable on the host')
+
+        #Set POST data values
+        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
+        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+        method_free = re.search('<input type="hidden" name="method_free" value="(.*?)">', html).group(1)
+        down_direct = re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1)
+                
+        data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct}
+        
+        print 'JumboFiles - Requesting POST URL: %s DATA: %s' % (url, data)
+        html = net.http_POST(url, data).content
+
+        dialog.update(100)
+        link = re.search('<FORM METHOD="LINK" ACTION="(.+?)">', html).group(1)
+        dialog.close()
+        finalUrl = [1]
+        finalUrl[0] = link
+        
+        return finalUrl
+        
+
+    except Exception, e:
+        print '**** JumboFiles Error occured: %s' % e
+        raise
+
+def resolve_movreel(url):
+
+    try:
+
+        #Show dialog box so user knows something is happening
+        dialog = xbmcgui.DialogProgress()
+        dialog.create('Resolving', 'Resolving Movreel Link...')       
+        dialog.update(0)
+        
+        print 'Movreel - Requesting GET URL: %s' % url
+        html = net.http_GET(url).content
+        
+        dialog.update(33)
+        
+        #Check page for any error msgs
+        if re.search('This server is in maintenance mode', html):
+            print '***** Movreel - Site reported maintenance mode'
+            raise Exception('File is currently unavailable on the host')
+
+        #Set POST data values
+        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
+        usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
+        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
+        method_free = re.search('<input type="submit" name="method_free" style=".+?" value="(.+?)">', html).group(1)
+        
+        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'referer': url, 'fname': fname, 'method_free': method_free}
+        
+        print 'Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
+        html = net.http_POST(url, data).content
+
+        dialog.update(66)
+        
+        #Set POST data values
+        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
+        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+        method_free = re.search('<input type="hidden" name="method_free" value="(.+?)">', html).group(1)
+        
+        data = {'op': op, 'id': postid, 'rand': rand, 'referer': url, 'method_free': method_free}
+
+        print 'Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
+        html = net.http_POST(url, data).content
+        
+        dialog.update(100)
+        link = re.search('<div class="t_download"></div></a> -->.+?<a href="(.+?)"><div class="t_download"></div></a>', html, re.DOTALL).group(1)
+        dialog.close()
+        finalUrl = [1]
+        finalUrl[0] = link
+        
+        return finalUrl
+		
+        
+
+    except Exception, e:
+        print '**** Movreel Error occured: %s' % e
+        raise
 def Startup_Routines(selfAddon):
      
      # avoid error on first run if no paths exists, by creating paths
@@ -1632,6 +1805,9 @@ def PART(scrap,sourcenumber,args,cookie):
      vihogpic=handle_file('vihogpic','')
      uploadorbpic=handle_file('uploadorbpic','')
      sharebeespic=handle_file('sharebeespic','')
+     glumbopic=handle_file('glumbopic','')
+     jumbopic=handle_file('jumbopic','')
+     movreelpic=handle_file('movreelpic','')
      
      #if source exists proceed.
      if checkforsource is not None:
@@ -1660,6 +1836,9 @@ def PART(scrap,sourcenumber,args,cookie):
                         isvidhog = re.search('vidhog\.com/', url)
                         isuploadorb = re.search('uploadorb\.com/', url)
                         issharebees = re.search('sharebees\.com/',url)
+                        isglumbo = re.search('glumbouploads\.com/', url)
+                        isjumbo = re.search('jumbofiles\.com/', url)
+                        ismovreel = re.search('movreel\.com/', url)
                         if ismega is not None:
                               partname='Part '+partnum
                               fullname=sourcestring+' | MU | '+partname
@@ -1687,6 +1866,15 @@ def PART(scrap,sourcenumber,args,cookie):
                         elif issharebees:
                               fullname=sourcestring+' | SB | '+partname
                               Add_Multi_Parts(fullname,url,sharebeespic)
+                        elif isglumbo:
+                              fullname=sourcestring+' | GU | '+partname
+                              Add_Multi_Parts(fullname,url,glumbopic)
+                        elif isjumbo:
+                              fullname=sourcestring+' | JF | '+partname
+                              Add_Multi_Parts(fullname,url,jumbopic)
+                        elif ismovreel:
+                              fullname=sourcestring+' | MR | '+partname
+                              Add_Multi_Parts(fullname,url,movreelpic)            
           # if source does not have multiple parts...
           elif multiple_part is None:
                # print sourcestring+' is single part'
@@ -1703,6 +1891,9 @@ def PART(scrap,sourcenumber,args,cookie):
                     isvidhog = re.search('vidhog\.com/', url)
                     isuploadorb = re.search('uploadorb\.com/', url)
                     issharebees = re.search('sharebees\.com/',url)                    
+                    isglumbo = re.search('glumbouploads\.com/', url)
+                    isjumbo = re.search('jumbofiles\.com/', url)
+                    ismovreel = re.search('movreel\.com/', url)   
                     
                     if ismega is not None:
                          # print 'Source #'+sourcenumber+' is hosted by megaupload'
@@ -1735,7 +1926,15 @@ def PART(scrap,sourcenumber,args,cookie):
                     elif issharebees is not None:
                          fullname=sourcestring+' | SB | Full'
                          addExecute(fullname,url,200,sharebeespic)                         
-                                                                 
+                    elif isglumbo is not None:
+                         fullname=sourcestring+' | GU | Full'
+                         addExecute(fullname,url,200,glumbopic)
+                    elif isjumbo is not None:
+                         fullname=sourcestring+' | JF | Full'
+                         addExecute(fullname,url,200,jumbopic)
+                    elif ismovreel is not None:
+                         fullname=sourcestring+' | MR | Full'
+                         addExecute(fullname,url,200,movreelpic)                                              
 
 
 def GetSource(id, args, cookie):
@@ -2065,6 +2264,9 @@ def Handle_Vidlink(url):
      isvidhog = re.search('vidhog\.com/', url)
      isuploadorb = re.search('uploadorb\.com/', url)
      issharebees = re.search('sharebees\.com/', url)     
+     isglumbo = re.search('glumbouploads\.com/', url)
+     isjumbo = re.search('jumbofiles\.com/', url)
+     ismovreel = re.search('movreel\.com/', url)
      if ismega is not None:
           WaitIf()
           
@@ -2092,7 +2294,13 @@ def Handle_Vidlink(url):
           return resolve_uploadorb(url)
      elif issharebees:
           return resolve_sharebees(url)
-	 
+     
+     elif isglumbo:
+          return resolve_glumbouploads(url)
+     elif isjumbo:
+          return resolve_jumbofiles(url)
+     elif ismovreel:
+          return resolve_movreel(url)
      
      elif israpid:
           selfAddon = xbmcaddon.Addon(id='plugin.video.icefilms')
