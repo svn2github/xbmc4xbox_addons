@@ -1842,10 +1842,12 @@ def PART(scrap,sourcenumber,args,cookie):
                         isglumbo = re.search('glumbouploads\.com/', url)
                         isjumbo = re.search('jumbofiles\.com/', url)
                         ismovreel = re.search('movreel\.com/', url)
+                        
+                        partname='Part '+partnum
+                        
                         if ismega is not None:
-                              partname='Part '+partnum
                               fullname=sourcestring+' | MU | '+partname
-                              Add_Multi_Parts(fullname,url,megapic)
+                              Add_Multi_Parts(fullname,url,megapic)                             
                         elif is2shared is not None:
                               partname='Part '+partnum
                               fullname=sourcestring+' | 2S  | '+partname
