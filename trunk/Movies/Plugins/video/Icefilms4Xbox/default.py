@@ -154,6 +154,8 @@ def handle_file(filename,getmode=''):
           return_file = xbmcpath(art,'jumbo.png')
      elif filename == 'movreelpic':
           return_file = xbmcpath(art,'movreel.png')
+     elif filename == 'billionpic':
+          return_file = xbmcpath(art,'billionuploads.png')     
      elif filename == 'localpic':
           return_file = xbmcpath(art,'local_file.jpg')
 
@@ -790,6 +792,49 @@ def resolve_movreel(url):
 
     except Exception, e:
         print '**** Movreel Error occured: %s' % e
+        raise
+
+def resolve_billionuploads(url):
+
+    try:
+
+        #Show dialog box so user knows something is happening
+        dialog = xbmcgui.DialogProgress()
+        dialog.create('Resolving', 'Resolving BillionUploads Link...')       
+        dialog.update(0)
+        
+        print 'BillionUploads - Requesting GET URL: %s' % url
+        html = net.http_GET(url).content
+        
+        dialog.update(50)
+        
+        #Check page for any error msgs
+        if re.search('This server is in maintenance mode', html):
+            print '***** BillionUploads - Site reported maintenance mode'
+            raise Exception('File is currently unavailable on the host')
+
+        #Set POST data values
+        op = re.search('<Form name="F1" method="POST" action="" onSubmit=".+?">.+?<input type="hidden" name="op" value="(.+?)">', html, re.DOTALL).group(1)
+        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+        method_free = re.search('<input type="hidden" name="method_free" value="(.*?)">', html).group(1)
+        down_direct = re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1)
+                
+        data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct}
+        
+        print 'BillionUploads - Requesting POST URL: %s DATA: %s' % (url, data)
+        html = net.http_POST(url, data).content
+
+        dialog.update(100)
+        link = re.search('<a href="(.+?)">Download</a>', html).group(1)
+        dialog.close()
+        finalUrl = [1]
+        finalUrl[0] = link
+        
+        return finalUrl
+
+    except Exception, e:
+        print '**** BillionUploads Error occured: %s' % e
         raise
 def Startup_Routines(selfAddon):
      
@@ -1809,6 +1854,7 @@ def PART(scrap,sourcenumber,args,cookie):
      glumbopic=handle_file('glumbopic','')
      jumbopic=handle_file('jumbopic','')
      movreelpic=handle_file('movreelpic','')
+     billionpic=handle_file('billionpic','')
      
      #if source exists proceed.
      if checkforsource is not None:
@@ -1842,6 +1888,7 @@ def PART(scrap,sourcenumber,args,cookie):
                         isglumbo = re.search('glumbouploads\.com/', url)
                         isjumbo = re.search('jumbofiles\.com/', url)
                         ismovreel = re.search('movreel\.com/', url)
+                        isbillion = re.search('billionuploads\.com/', url)                        
                         
                         partname='Part '+partnum
                         
@@ -1880,7 +1927,10 @@ def PART(scrap,sourcenumber,args,cookie):
                         elif ismovreel:
                               fullname=sourcestring+' | MR | '+partname
                               Add_Multi_Parts(fullname,url,movreelpic)            
-          # if source does not have multiple parts...
+                        elif isbillion:
+                              fullname=sourcestring+' | BU | '+partname          
+                              Add_Multi_Parts(fullname,url,billionpic
+                # if source does not have multiple parts...
           elif multiple_part is None:
                # print sourcestring+' is single part'
                # find corresponding '<a rel=?' entry and add as a one-link source
@@ -1899,6 +1949,7 @@ def PART(scrap,sourcenumber,args,cookie):
                     isglumbo = re.search('glumbouploads\.com/', url)
                     isjumbo = re.search('jumbofiles\.com/', url)
                     ismovreel = re.search('movreel\.com/', url)   
+                    isbillion = re.search('billionuploads\.com/', url)                    
                     
                     if ismega is not None:
                          # print 'Source #'+sourcenumber+' is hosted by megaupload'
@@ -1940,8 +1991,9 @@ def PART(scrap,sourcenumber,args,cookie):
                     elif ismovreel is not None:
                          fullname=sourcestring+' | MR | Full'
                          addExecute(fullname,url,200,movreelpic)                                              
-
-
+                    elif isbillion not None:
+                         fullname=sourcestring+' | BU | Full'
+                         addExecute(fullname,url,200,billionpic)
 def GetSource(id, args, cookie):
     m = random.randrange(100, 300) * -1
     s = random.randrange(5, 50)
@@ -2272,6 +2324,8 @@ def Handle_Vidlink(url):
      isglumbo = re.search('glumbouploads\.com/', url)
      isjumbo = re.search('jumbofiles\.com/', url)
      ismovreel = re.search('movreel\.com/', url)
+     isbillion = re.search('billionuploads\.com/', url)
+     
      if ismega is not None:
           WaitIf()
           
@@ -2306,6 +2360,8 @@ def Handle_Vidlink(url):
           return resolve_jumbofiles(url)
      elif ismovreel:
           return resolve_movreel(url)
+     elif isbillion:
+          return resolve_billionuploads(url)   
      
      elif israpid:
           selfAddon = xbmcaddon.Addon(id='plugin.video.icefilms')
