@@ -1930,7 +1930,7 @@ def PART(scrap,sourcenumber,args,cookie):
                         elif isbillion:
                               fullname=sourcestring+' | BU | '+partname          
                               Add_Multi_Parts(fullname,url,billionpic
-                # if source does not have multiple parts...
+          # if source does not have multiple parts...
           elif multiple_part is None:
                # print sourcestring+' is single part'
                # find corresponding '<a rel=?' entry and add as a one-link source
