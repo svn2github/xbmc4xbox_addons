@@ -551,59 +551,58 @@ def resolve_uploadorb(url):
 
 def resolve_sharebees(url):
 
-    try:
+	try:
 
-        #Show dialog box so user knows something is happening
-        dialog = xbmcgui.DialogProgress()
-        dialog.create('Resolving', 'Resolving ShareBees Link...')       
-        dialog.update(0)
-        
-        print 'ShareBees - Requesting GET URL: %s' % url
-        html = net.http_GET(url).content
-        
-        dialog.update(50)
-        
-        #Set POST data values
-        op = re.search('''<Form method="POST" action=''>.+?<input type="hidden" name="op" value="(.+?)">''', html, re.DOTALL).group(1)
-        usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
-        method_free = re.search('<input type="submit" name="method_free" value="Free Download" class="(.+?)">', html).group(1)
-        
-        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
-        
-        print 'ShareBees - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-        
-        dialog.update(100)
-        
-        #sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
-        #sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
-        #sPattern += '\s+?</script>'
+		#Show dialog box so user knows something is happening
+		dialog = xbmcgui.DialogProgress()
+		dialog.create('Resolving', 'Resolving ShareBees Link...')       
+		dialog.update(0)
 
-        link = None
-        sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-        
-        if r:
-            sJavascript = r.group(1)
-            sUnpacked = jsunpack.unpack(sJavascript)
-            print(sUnpacked)
-            
-            #Grab first portion of video link, excluding ending 'video.xxx' in order to swap with real file name
-            #Note - you don't actually need the filename, but for purpose of downloading via Icefilms it's needed so download video has a name
-            sPattern  = '''("video/divx"src="|addVariable\('file',')(.+?)video[.]'''
-            r = re.search(sPattern, sUnpacked)              
-            
-            #Video link found
-            if r:
-                link = r.group(2) + fname
-                dialog.close()
-                finalUrl = [1]
-                finalUrl[0] = link
+		print 'ShareBees - Requesting GET URL: %s' % url
+		html = net.http_GET(url).content
 
-                return finalUrl
+		dialog.update(50)
 
+		#Set POST data values
+		op = re.search('''<Form method="POST" action=''>.+?<input type="hidden" name="op" value="(.+?)">''', html, re.DOTALL).group(1)
+		usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
+		postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+		fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
+		method_free = re.search('<input type="submit" name="method_free" value="Free Download" class="(.+?)">', html).group(1)
+
+		data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
+
+		print 'ShareBees - Requesting POST URL: %s DATA: %s' % (url, data)
+		html = net.http_POST(url, data).content
+
+		dialog.update(100)
+
+		#sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
+		#sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
+		#sPattern += '\s+?</script>'
+
+		link = None
+		sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
+		r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+
+		if r:
+			sJavascript = r.group(1)
+			sUnpacked = jsunpack.unpack(sJavascript)
+			print(sUnpacked)
+
+			#Grab first portion of video link, excluding ending 'video.xxx' in order to swap with real file name
+			#Note - you don't actually need the filename, but for purpose of downloading via Icefilms it's needed so download video has a name
+			sPattern  = '''("video/divx"src="|addVariable\('file',')(.+?)video[.]'''
+			r = re.search(sPattern, sUnpacked)              
+
+			#Video link found
+			if r:
+				link = r.group(2) + fname
+				dialog.close()
+				finalUrl = [1]
+				finalUrl[0] = link
+
+				return finalUrl
 
 		if not link:
 			print '***** ShareBees - Link Not Found'
@@ -611,6 +610,69 @@ def resolve_sharebees(url):
 
 	except Exception, e:
 		print '**** ShareBees Error occured: %s' % e
+		raise
+
+
+def resolve_glumbouploads(url):
+
+	try:
+
+		#Show dialog box so user knows something is happening
+		dialog = xbmcgui.DialogProgress()
+		dialog.create('Resolving', 'Resolving GlumboUploads Link...')       
+		dialog.update(0)
+
+		print 'GlumboUploads - Requesting GET URL: %s' % url
+		html = net.http_GET(url).content
+
+		dialog.update(50)
+
+		#Set POST data values
+		op = re.search('''<Form method="POST" action=''>.+?<input type="hidden" name="op" value="(.+?)">''', html, re.DOTALL).group(1)
+		usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
+		postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+		fname = re.search("""input\[name="fname"\]'\).attr\('value', '(.+?)'""", html).group(1)
+		method_free = re.search('<input class="slowdownload" title="Slow download" type="submit" name="method_free" value="(.+?)">', html).group(1)
+
+
+		data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
+
+		print 'GlumboUploads - Requesting POST URL: %s DATA: %s' % (url, data)
+		html = net.http_POST(url, data).content
+
+		dialog.update(100)
+
+		#sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
+		#sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
+		#sPattern += '\s+?</script>'
+
+		link = None
+		sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
+		r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+
+		if r:
+			sJavascript = r.group(1)
+			sUnpacked = jsunpack.unpack(sJavascript)
+			print(sUnpacked)
+
+			#Grab first portion of video link, excluding ending 'video.xxx' in order to swap with real file name
+			#Note - you don't actually need the filename, but for purpose of downloading via Icefilms it's needed so download video has a name
+			sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)video.+'
+			sPattern += '"custommode='
+			r = re.search(sPattern, sUnpacked)              
+
+			#Video link found
+			if r:
+				link = r.group(1) + fname
+				dialog.close()
+				return link
+
+		if not link:
+			print '***** GlumboUploads - Link Not Found'
+			raise Exception("Unable to resolve GlumboUploads")
+
+	except Exception, e:
+		print '**** GlumboUploads Error occured: %s' % e
 		raise        
 
 def resolve_glumbouploads(url):
@@ -1877,9 +1939,9 @@ def PART(scrap,sourcenumber,args,cookie):
 					isjumbo = re.search('jumbofiles\.com/', url)
 					ismovreel = re.search('movreel\.com/', url)
 					isbillion = re.search('billionuploads\.com/', url)
-					
+
 					partname='Part '+partnum
-					
+
 					if ismega is not None:
 						fullname=sourcestring+' | MU | '+partname
 						Add_Multi_Parts(fullname,url,megapic)
@@ -1918,7 +1980,7 @@ def PART(scrap,sourcenumber,args,cookie):
 					elif isbillion:
 						fullname=sourcestring+' | BU | '+partname
 						Add_Multi_Parts(fullname,url,billionpic)						
-						
+
 		# if source does not have multiple parts...
 		elif multiple_part is None:
 			# print sourcestring+' is single part'
