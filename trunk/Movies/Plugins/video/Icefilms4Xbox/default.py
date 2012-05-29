@@ -551,72 +551,58 @@ def resolve_uploadorb(url):
 
 def resolve_sharebees(url):
 
-	try:
+    try:
 
-		#Show dialog box so user knows something is happening
-		dialog = xbmcgui.DialogProgress()
-		dialog.create('Resolving', 'Resolving ShareBees Link...')       
-		dialog.update(0)
+        #Show dialog box so user knows something is happening
+        dialog = xbmcgui.DialogProgress()
+        dialog.create('Resolving', 'Resolving ShareBees Link...')       
+        dialog.update(0)
+        
+        print 'ShareBees - Requesting GET URL: %s' % url
+        html = net.http_GET(url).content
+        
+        dialog.update(50)
+        
+        #Set POST data values
+        op = re.search('''<Form method="POST" action=''>.+?<input type="hidden" name="op" value="(.+?)">''', html, re.DOTALL).group(1)
+        usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
+        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
+        method_free = re.search('<input type="submit" name="method_free" value="Free Download" class="(.+?)">', html).group(1)
+        
+        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
+        
+        print 'ShareBees - Requesting POST URL: %s DATA: %s' % (url, data)
+        html = net.http_POST(url, data).content
+        
+        dialog.update(100)
+        
+        #sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
+        #sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
+        #sPattern += '\s+?</script>'
 
-		print 'ShareBees - Requesting GET URL: %s' % url
-		html = net.http_GET(url).content
+        link = None
+        sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
+        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+        
+        if r:
+            sJavascript = r.group(1)
+            sUnpacked = jsunpack.unpack(sJavascript)
+            print(sUnpacked)
+            
+            #Grab first portion of video link, excluding ending 'video.xxx' in order to swap with real file name
+            #Note - you don't actually need the filename, but for purpose of downloading via Icefilms it's needed so download video has a name
+            sPattern  = '''("video/divx"src="|addVariable\('file',')(.+?)video[.]'''
+            r = re.search(sPattern, sUnpacked)              
+            
+            #Video link found
+            if r:
+                link = r.group(2) + fname
+                dialog.close()
+                finalUrl = [1]
+                finalUrl[0] = link
 
-		dialog.update(50)
-
-		#Set POST data values
-		op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-		usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
-		postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-		fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
-		method_free = re.search('<input class="form-submit" type="submit" name="method_free" value="(.+?)">', html).group(1)
-
-		data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
-
-		print 'ShareBees - Requesting POST URL: %s DATA: %s' % (url, data)
-		html = net.http_POST(url, data).content
-
-		dialog.update(100)
-
-		#sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
-		#sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
-		#sPattern += '\s+?</script>'
-
-		link = None
-		sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-		r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-
-		if r:
-			sJavascript = r.group(1)
-			sUnpacked = jsunpack.unpack(sJavascript)
-			print(sUnpacked)
-
-			#They have 2 known scripts - one for avi files and another for mp4's
-			sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)video.avi'
-			sPattern += '"custommode='
-			r = re.search(sPattern, sUnpacked)
-
-			#AVI file found   
-			if r:
-				link = r.group(1) + fname
-				dialog.close()
-				finalUrl = [1]
-				finalUrl[0] = link
-
-				return finalUrl
-
-
-			#Search for MP4 file
-			else:
-				sPattern = "'file','(.+?)video.mp4'"
-				r = re.search(sPattern, sUnpacked)
-
-				if r:
-					link = r.group(1) + fname
-					dialog.close()
-					finalUrl = [1]
-					finalUrl[0] = link
-
-					return finalUrl
+                return finalUrl
 
 
 		if not link:
