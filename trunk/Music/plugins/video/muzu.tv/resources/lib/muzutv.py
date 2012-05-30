@@ -175,6 +175,23 @@ class MuzuTv:
             assets['artist_ids'].append(artist_id)
         return assets
 
+    def user_playlists(self, username, country='gb'):
+        playlists = []
+        html = self.__get_html('user/%s/playlists/' % username)
+        for p in re.finditer('data-id="(\d+)" data-title="(.*?)" class="myPlaylistSelectItem', html, re.DOTALL):
+            playlist_id, name = p.groups()  
+            print "Playlist ID = " + str(playlist_id)
+            print "Name = " + name
+
+
+            playlists.append({'playlist_id': playlist_id,
+                             'network_id': username,
+                             'name': unicode(name, 'utf8'),
+                             'network': '',
+                             'thumb': ''})
+
+        return playlists
+
     def list_playlists(self, category, country='gb'):
         playlists = []
         html = self.__get_html('browse/loadPlaylistsByCategory', {'ob': category, 'country': country})
@@ -463,7 +480,7 @@ class MuzuTv:
         url = self.__build_url(path, queries) 
 
         #print "*******************************"       
-        #Addon.log('Fetching URL %s' % url)
+        Addon.log('Fetching URL %s' % url)
         #print '[plugin.video.muzu.tv] Fetching URL %s' % url
 
         response = self.__fetch(url)

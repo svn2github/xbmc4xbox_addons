@@ -21,12 +21,11 @@
     <title>DrDish-TV.de</title>
 
     <!-- (required) Major.minor.build -->
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="AddonScriptorDE" email="" />
-		<author name="skatulskijean" email="" />
+        <author name="AddonScriptorDE,xboxFork-skatulskijean" email="" />
     </authors>
 
     <summary lang="de">DrDish-TV.de</summary>
@@ -35,7 +34,7 @@
     <description lang="en">The Multimedia Channel</description>
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
-        <tag>TV</tag>
+        <tag>German</tag>
     </tags>
 
     <!-- minimum revision of xbmc your addon will run on.  Leave blank all for revisions-->

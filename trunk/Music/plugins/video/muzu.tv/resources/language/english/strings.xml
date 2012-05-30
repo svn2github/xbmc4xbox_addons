@@ -67,4 +67,6 @@
     <string id="30303">You have not set your muzu.tv API key</string>
     <string id="30304">Please update the addon settings and try again.</string>
     <string id="30305">Download Folder</string>
+    <string id="30306">Username</string>
+    <string id="30307">Automatically start playlists</string>
 </strings>

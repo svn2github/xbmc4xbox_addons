@@ -1,11 +1,16 @@
-0.2.8 - ADD: KIKA (Without Kikaninchen)
+0.4.2 - FIX: WDR add search function, add stream duration, add "pageSize" optioni (Soern)
+        FIX: bayrisches FS podcasts eingefügt, Auswahl nach Sendungen, Suche (Soern)
+0.4.1 - FIX: Soern completed the NDR implementation
+0.4.0 - FIX: Commit FIX from soern 
+0.3.9 - ADD: KIKA (Without Kikaninchen)
+0.3.8 - FIX: 3SAT Broken Link
         ADD: NDR
-        FIX: 3SAT Broken Link
-0.2.7 - FIX: ORF
-0.2.6 - FIX: WDR
-0.2.5 - FIX: BayernFS
-0.2.4 - FIX: ARTE
-0.2.3 - ADD: BR-Alpha
+0.3.7 - FIX: ORF
+0.3.6 - FIX: WDR
+0.3.5 - FIX: BayernFS
+0.3.4 - FIX: ARTE
+0.3.3 - ADD: BR-Alpha
+0.3.2 - Version bump for eden pre
 0.2.2 - ADD: WDR Mediathek
         FIX: ZDF Mediathek will now ignore mp3 files
         FIX: OfflineCache removed

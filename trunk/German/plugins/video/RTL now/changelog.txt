@@ -1,3 +1,7 @@
+[B]Version v1.84[/B]
+- XML regex fixed
+- 15.05.2012
+
 [B]Version v1.83[/B]
 - nightly regex fixed in v1.82
 - 18.04.2012

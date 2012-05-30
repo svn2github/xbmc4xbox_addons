@@ -1,15 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import urllib,urllib2,re,xbmcplugin,xbmcgui,sys
+import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmcaddon
 
 pluginhandle = int(sys.argv[1])
 
+settings = xbmcaddon.Addon(id='plugin.video.lachschon_de')
+translation = settings.getLocalizedString
+
 def index():
-        addDir("Neueste Videos","http://www.lachschon.de/gallery/trend/?set_gallery_type=video&set_image_type=small&page=1",1,"")
-        addDir("Meiste Stimmen","http://www.lachschon.de/gallery/mostvoted/?set_gallery_type=video&set_image_type=small&page=1",1,"")
-        addDir("Beste Bewertung","http://www.lachschon.de/gallery/top/?set_gallery_type=video&set_image_type=small&page=1",1,"")
+        addDir(translation(30001),"http://www.lachschon.de/gallery/trend/?set_gallery_type=video&set_image_type=small&page=1",1,"")
+        addDir(translation(30002),"http://www.lachschon.de/gallery/top/?set_gallery_type=video&set_image_type=small&page=1",1,"")
+        addDir(translation(30003),"http://www.lachschon.de/gallery/random/?set_gallery_type=video&set_image_type=small&page=1",1,"")
+        addDir(translation(30004),"SEARCH",3,"")
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(50)')
+
+def search():
+        keyboard = xbmc.Keyboard('', str(translation(30004)))
+        keyboard.doModal()
+        if keyboard.isConfirmed() and keyboard.getText():
+          search_string = keyboard.getText().replace(" ","+")
+          listVideos("http://www.lachschon.de/gallery/search_item/?set_gallery_type=video&set_image_type=small&q="+search_string)
 
 def listVideos(url):
         content = getUrl(url)
@@ -28,27 +38,25 @@ def listVideos(url):
             thumb=match[0]
             match=re.compile('<span class="subtitle">(.+?)</span>', re.DOTALL).findall(entry)
             title=match[0]
+            title=cleanTitle(title)
             addLink(title,"http://www.lachschon.de"+url,2,thumb)
-        match=re.compile('<a class="direction" href="?page=(.+?)">weiter <img', re.DOTALL).findall(content)
         if urlNextPage!="":
           addDir("Next Page",urlNextPage,1,'')
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(500)')
 
 def playVideo(url):
         content = getUrl(url)
-        match=re.compile('src="http://www.youtube.com/embed/(.+?)?', re.DOTALL).findall(content)
         id=content[content.find('http://www.youtube.com/embed/')+29:]
         id=id[:id.find('?')]
-        #match=re.compile('<title>(.+?) -', re.DOTALL).findall(content)
-        #title=match[0]
         fullData = "plugin://video/YouTube/?path=/root/video&action=play_video&videoid=" + id
         listitem = xbmcgui.ListItem(path=fullData)
         return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-        #xbmc.executebuiltin('XBMC.Notification(Info, '+media+';'+ref+';'+typeRef+', 1000)')
-        #fh = open("d:\\html.txt", 'w')
-        #fh.write(content)  
-        #fh.close()
+
+def cleanTitle(title):
+        title=title.replace("&lt;","<").replace("&gt;",">").replace("&amp;","&").replace("&#039;","\\").replace("&#39;","\\").replace("&quot;","\"").replace("&szlig;","ß").replace("&ndash;","-")
+        title=title.replace("&Auml;","Ä").replace("&Uuml;","Ü").replace("&Ouml;","Ö").replace("&auml;","ä").replace("&uuml;","ü").replace("&ouml;","ö")
+        title=title.strip()
+        return title
 
 def getUrl(url):
         req = urllib2.Request(url)
@@ -107,3 +115,5 @@ elif mode==1:
         listVideos(url)
 elif mode==2:
         playVideo(url)
+elif mode==3:
+        search()

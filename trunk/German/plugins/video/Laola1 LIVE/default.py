@@ -1,6 +1,8 @@
 # -*- coding: utf8 -*-
+
 import urllib,urllib2,re,xbmcplugin,xbmcgui
 import xbmcaddon
+
 pluginhandle = int(sys.argv[1])
 __settings__ = xbmcaddon.Addon(id='plugin.video.laola1live')
 
@@ -20,10 +22,26 @@ elif (__settings__.getSetting("location") == '1'):
 elif (__settings__.getSetting("location") == '2'):
 	livestream_url = 'http://www.laola1.tv/en/int/home/'
 	videos_url = 'http://www.laola1.tv/en/int/home/'
+#if xbmcplugin.getSetting(pluginhandle,"quality") == '0':
+	#quality = '0'
+#elif xbmcplugin.getSetting(pluginhandle,"quality") == '1':
+	#quality = '1'
+#elif xbmcplugin.getSetting(pluginhandle,"quality") == '2':
+	#quality = '2'
+
+#if xbmcplugin.getSetting(pluginhandle,"location") == '0':
+	#livestream_url = 'http://www.laola1.tv/de/at/home/'
+	#videos_url = 'http://www.laola1.tv/de/at/home/'
+#elif xbmcplugin.getSetting(pluginhandle,"location") == '1':
+	#livestream_url = 'http://www.laola1.tv/de/de/home/'
+	#videos_url = 'http://www.laola1.tv/de/de/home/'
+#elif xbmcplugin.getSetting(pluginhandle,"location") == '2':
+	#livestream_url = 'http://www.laola1.tv/en/int/home/'
+	#videos_url = 'http://www.laola1.tv/en/int/home/'
 
 #xip = xbmcplugin.getSetting(pluginhandle,"ip")
 #print 'xip: '+xip
-
+                       
 #if xbmcplugin.getSetting(pluginhandle,"inside") == 'false':
 #	print 'laola: use trick'
 
@@ -45,7 +63,7 @@ def INDEX():
                         addDir(name,url,1,'')
 
 
-
+                
 def TOPICSELECTION(url):
         #print url
         req = urllib2.Request(url)
@@ -55,14 +73,14 @@ def TOPICSELECTION(url):
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        match1=re.compile("<td style=\".+?\" width=\".+?\"><h2><a href=\"(.+?)\" style=\".+?\">(.+?)</a></h2></td>").findall(link)
+        match1=re.compile("<td style=\".+?\" width=\".+?\"><h2><a href=\"(.+?)\" style=\".+?\">(.+?)</a></h2></td>").findall(link) 
         for url,name in match1:
                 #print 'url :'+url
                 #print 'name'+name
                 addDir(name,url,2,'')
                 ##<td style="padding-left:15px;" width="316"><h2><a href="http://www.laola1.tv/de/de/erste-bank-eishockey-liga-live/video/222-1154-.html" style="color:#ffffff; font-weight:bold; font-size:12pt;">Erste Bank Eishockey Liga LIVE</a></h2></td>
-
-
+                
+                
 def VIDEOSELECTION(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -106,7 +124,7 @@ def VIDEOLINKS(url,name):
         for playkey1,playkey2 in match_playkey:
 		print 'stage 1'
                 #print 'playkey1 '+playkey1
-                #print 'playkey2 '+playkey2
+                #print 'playkey2 '+playkey2                
                 req = urllib2.Request('http://www.laola1.tv/server/ondemand_xml_esi.php?playkey='+playkey1+'-'+playkey2)
                 #print 'http://www.laola1.tv/server/ondemand_xml_esi.php?playkey='+playkey1+'-'+playkey2
                 ##http://www.laola1.tv/server/ondemand_xml_esi.php?playkey=47060-Gut1cOWmlyix.
@@ -173,7 +191,12 @@ def VIDEOLINKS(url,name):
 						swf = ' swfUrl=http://www.laola1.tv/swf/player.v12.4.swf swfVfy=true'
 						app = ' app='+servertype+'?_fcs_vhost='+server+'&auth='+auth+'&aifp='+aifp+'&slist='+stream
 						page = ' pageUrl='+pageurl
-						playpath = ' playpath=mp4:'+stream
+
+						if '.mp4' in stream:
+							playpath = ' playpath=mp4:'+stream
+						else:
+							playpath = ' playpath='+stream #fix for beachvolleyball
+
 						flashver = ' flashver=LNX\ 10,3,162,29'
 						rtmppath = rtmpbody+swf+app+page+playpath
 						rtmppath = rtmppath.replace('&amp;','&')
@@ -184,10 +207,10 @@ def VIDEOLINKS(url,name):
                                                         ##rtmp://213.198.95.204:1935/ondemand?_fcs_vhost=cp77154.edgefcs.net&auth=db.cibycHcwdEbhaKa4a3bUc7cIbpbLdtal-bnKofS-cOW-eS-CkBwmc-m6ke&p=&e=&u=&t=ondemandvideo&l=&a=
                                                         ##&aifp=v001&slist=77154/flash/2011/ebel/20102011/110327_vic_rbs_high
                                                         ##rtmp://213.198.95.204:1935/ondemand?_fcs_vhost=cp77154.edgefcs.net&auth=db.cibycHcwdEbhaKa4a3bUc7cIbpbLdtal-bnKofS-cOW-eS-CkBwmc-m6ke&p=&e=&u=&t=ondemandvideo&l=&a=&aifp=v001&slist=77154/flash/2011/ebel/20102011/110327_vic_rbs_high
-
+                                                
 
                                                         ##...yeah
-
+        
 
 
 
@@ -196,8 +219,8 @@ def LIVESELECTION(url):
         #print url
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-	if (__settings__.getSetting("inside") == 'false'):
-		req.add_header('X-Forwarded-For', xip)
+	#if xbmcplugin.getSetting(pluginhandle,"inside") == 'false':
+		#req.add_header('X-Forwarded-For', xip)
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
@@ -293,11 +316,11 @@ def VIDEOLIVELINKS(url,name):
 #        if match_over[0] == '1':
 #                addDir('vorbei/zu frueh',' ',5,'')
         ##"playkey=47060-Gut1cOWmlyix.&adv=laola1.tv/de/eishockey/ebel&adi=laola1.tv/de/eishockey/ebel&aps=Video1&szo=eishockey&deutschchannel=true&channel=222&teaser=1153&play=47060&fversion=player.v10.2"
-	else:
+	else:        
 		print 'laola: use streamtype 2'
 		for playkey1,playkey2 in match_playkey:
         	        print 'playkey1 '+playkey1
-        	        print 'playkey2 '+playkey2
+        	        print 'playkey2 '+playkey2                
         	        req = urllib2.Request('http://www.laola1.tv/server/ondemand_xml_esi.php?playkey='+playkey1+'-'+playkey2)
         	        #print 'http://www.laola1.tv/server/ondemand_xml_esi.php?playkey='+playkey1+'-'+playkey2
         	        ##http://www.laola1.tv/server/ondemand_xml_esi.php?playkey=47060-Gut1cOWmlyix.
@@ -324,7 +347,7 @@ def VIDEOLIVELINKS(url,name):
         	                        print 'title '+title
         	                        req = urllib2.Request('http://streamaccess.laola1.tv/flash/1/'+playkey1+'_high.xml')
         	                        #req = urllib2.Request('http://streamaccess.laola1.tv/flash/1/'+playkey1+'_'+streamquality+'.xml')
-
+        	                        
         	                        #print 'http://streamaccess.laola1.tv/flash/1/'+playkey1+'_'+streamquality+'.xml'
         	                        ##http://streamaccess.laola1.tv/flash/1/47327_high.xml?partnerid=1&streamid=47327
         	                        ##http://streamaccess.laola1.tv/flash/vod/22/47060_high.xml
@@ -372,7 +395,7 @@ def VIDEOLIVELINKS(url,name):
          	                                               ##rtmp://213.198.95.204:1935/ondemand?_fcs_vhost=cp77154.edgefcs.net&auth=db.cibycHcwdEbhaKa4a3bUc7cIbpbLdtal-bnKofS-cOW-eS-CkBwmc-m6ke&p=&e=&u=&t=ondemandvideo&l=&a=&aifp=v001&slist=77154/flash/2011/ebel/20102011/110327_vic_rbs_high
          	                                       #elif streamquality == 'low':
          	                                               #addLink('Low: '+name,'rtmp://'+ip+':1935/'+servertype+'?_fcs_vhost='+server+'/'+playpath+'?auth='+auth+'&aifp='+aifp,'')
-
+	
 
          	                                               ##...yeah
 def LIVE(url):
@@ -390,7 +413,7 @@ def LIVE(url):
 
 
 
-
+                
 def get_params():
         param=[]
         paramstring=sys.argv[2]
@@ -406,7 +429,7 @@ def get_params():
                         splitparams=pairsofparams[i].split('=')
                         if (len(splitparams))==2:
                                 param[splitparams[0]]=splitparams[1]
-
+                                
         return param
 
 
@@ -436,8 +459,8 @@ def addDir(name,url,mode,iconimage):
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok
-
-
+        
+              
 params=get_params()
 url=None
 name=None
@@ -463,29 +486,29 @@ print "Name: "+str(name)
 if mode==None or url==None or len(url)<1:
         print ""
         INDEX()
-
+       
 elif mode==1:
         print ""+url
         TOPICSELECTION(url)
-
+        
 elif mode==2:
         print ""+url
-        VIDEOSELECTION(url)
+        VIDEOSELECTION(url)            
 
 elif mode==3:
         print ""+url
         VIDEOLINKS(url,name)
-
+        
 elif mode==4:
         print ""+url
         LIVESELECTION(url)
-
+        
 elif mode==5:
         print ""+url
-        VIDEOLIVELINKS(url,name)
+        VIDEOLIVELINKS(url,name)        
 
 elif mode==6:
         print ""+url
-        LIVE(url)
-
+        LIVE(url)   
+  
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

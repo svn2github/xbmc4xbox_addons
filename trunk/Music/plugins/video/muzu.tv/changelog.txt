@@ -1,3 +1,14 @@
+xbox spezifische fixes addon.py by skatulskijean
+fix unicode error by skatulskijean
+
+[B]Version 0.2.3[/B]
+- added option to start playlist automatically or view as a list
+
+[B]Version 0.2.2[/B]
+- added user playlists - created on www.muzu.tv
+- removed unnecessary 'Watch' text from New Releases
+- added 'Play 1-40' and 'Play 40-1' mode to Charts
+
 [B]Version 0.2.1[/B]
 - added selectable video quality (240p, 360p, 480p and 720p)
 - added country to search to filter out unplayable items

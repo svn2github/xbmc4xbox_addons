@@ -10,10 +10,12 @@
     <setting type="lsep" label="30104" />
     <setting id="country" type="text" label="30105" default="gb" />
     <setting id="random_pl" type="bool" label="30106" default="true" />
+    <setting id="auto_pl" type="bool" label="30307" default="true" />
   </category>
   <category label="30300">
     <setting type="lsep" label="30301" />
     <setting id="api" type="text" label="30302" default="" />
+    <setting id="username" type="text" label="30306" default="" />
   </category>
   <category label="Downloads">
     <setting id="download_folder" type="folder" label="Default download folder"  default=""/>

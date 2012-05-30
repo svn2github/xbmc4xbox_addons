@@ -25,7 +25,7 @@ ajaxUrl = "/xajaxuri.php"
 regexContent = '<div class="seriennavi_free" style=""><a href="(.*?)".*?>FREE.*?</div>.*?<div style="" class="seriennavi_link">.*?">(.*?)</a>.*?</div>'
 regexSeries = '<div class="line (even|odd)"><div onclick="link\(\'(.*?)\'\); return false;".*?<a href=".*?" title=".*?">(.*?)</a>.*?class="time">(.*?</div>.*?)</div>.*?class="minibutton">(.*?)</a></div></div>'
 regexVideoData = "data:'(.*?)'"
-regexXML = 'delivery="streaming"><!\[CDATA\[(.*?)\]\]></filename>'
+regexXML = '<filename.*?><!\[CDATA\[(.*?)\]\]></filename>'
 regexTextOnly = '<\s*\/?\s*\s*.*?>'
 regexTabVars = '<select\s*?onchange.*?xajax_show_top_and_movies.*?\'(.*?)\'.*?\'(.*?)\'.*?\'(.*?)\'.*?\'(.*?)\'.*?\'(.*?)\'.*?>(.*?)</select>'
 regexTabEntry = '<option.*?value=\'(\d)\'.*?>'
@@ -122,11 +122,12 @@ def postUrl(url, values):
     return link
 
 def getUrl(url):
-    req = urllib2.Request(url)
-    response = urllib2.urlopen(req)
-    link=response.read()
-    response.close()
-    return link
+	req = urllib2.Request(url)
+	req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+	response = urllib2.urlopen(req)
+	link=response.read()
+	response.close()
+	return link
 
 def addDirectoryItem(name, parameters={},pic=""):
     li = xbmcgui.ListItem(name,iconImage="DefaultFolder.png", thumbnailImage=pic)

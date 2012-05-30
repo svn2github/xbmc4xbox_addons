@@ -21,12 +21,11 @@
     <title>Mediathek</title>
 
     <!-- (required) Major.minor.build -->
-    <version>0.2.8</version>
+    <version>0.4.2</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="Raptor 2101" email="raptor2101@gmx.de" />
-		<author name="skatulskijean" email="" />
+        <author name="Raptor 2101,xboxFork-skatulskijean" email="raptor2101@gmx.de" />
     </authors>
 
     <summary lang="de">Ermöglicht den zugriff auf alle deutschen Mediatheken der öffentlich Rechtlichen</summary>
@@ -35,7 +34,7 @@
     <description lang="en">Gives acces to the most video-platforms from german public service broadcaster. Currently implemented: 3Sat, ARD, ZDF, ARTE, Bayrisches Fernsehen, ORF, WDR, NDR (experimental), KiKa (without Kikaninchen)</description>
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
-        <tag>Gaming</tag>
+        <tag>German</tag>
     </tags>
 
     <!-- minimum revision of xbmc your addon will run on.  Leave blank all for revisions-->

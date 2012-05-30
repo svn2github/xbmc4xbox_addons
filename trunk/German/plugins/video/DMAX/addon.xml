@@ -2,7 +2,7 @@
 <addon id="plugin.video.dmax"
        name="DMAX"
        version="0.0.2"
-       provider-name="dethfeet">
+       provider-name="dethfeet,xboxFork-skatulskijean">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="xbmc.gui" version="2.11"/>

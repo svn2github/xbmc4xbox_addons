@@ -1,19 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmcaddon
-import socket
 
 pluginhandle = int(sys.argv[1])
 
-settings = xbmcaddon.Addon(id='plugin.video.mtv_de')
+settings = xbmcaddon.Addon(id='plugin.video.giga_de')
 translation = settings.getLocalizedString
 
 def index():
         addDir("Top Videos","http://www.giga.de/tv/",'listVideosTop',"")
-        addDir("All Videos","http://www.giga.de/tv/alle-videos/",'listVideos',"")
+        addDir(translation(30001),"http://www.giga.de/tv/alle-videos/",'listVideos',"")
         addDir("Giga Live","http://www.giga.de/giga-tv/archiv/",'listVideos',"")
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(50)')
 
 def listVideosTop(url):
         content = getUrl(url)
@@ -29,7 +27,6 @@ def listVideosTop(url):
             title=cleanTitle(title)
             addLink(title,url,'playVideo',thumb)
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(500)')
 
 def listVideos(url):
         content = getUrl(url)
@@ -53,7 +50,6 @@ def listVideos(url):
         if len(match)>0:
           addDir("Next Page",match[0],'listVideos',"")
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(500)')
 
 def playVideo(url):
         if url.find("http://")>=0:
@@ -66,13 +62,13 @@ def playVideo(url):
             xbmc.executebuiltin('XBMC.Notification(Achtung:,Video nicht verfügbar!, 5000)')
         if url!="":
           content = getUrl("http://video.giga.de/xml/"+url+".xml")
-          match1=re.compile('<high width="1280" height="720">(.+?)<filename>(.+?)</filename>', re.DOTALL).findall(content)
-          match2=re.compile('<medium width="640" height="360">(.+?)<filename>(.+?)</filename>', re.DOTALL).findall(content)
+          match1=re.compile('medium width="640" height="360">(.+?)<filename>(.+?)</filename>', re.DOTALL).findall(content)
+          #match2=re.compile('<medium width="640" height="360">(.+?)<filename>(.+?)</filename>', #re.DOTALL).findall(content)
           url=""
           if len(match1)==1:
             url=match1[0][1]
-          elif len(match2)==1:
-            url=match2[0][1]
+          #elif len(match2)==1:
+            #url=match2[0][1]
           listitem = xbmcgui.ListItem(path="http://video.giga.de/data/"+url)
           return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
@@ -82,12 +78,10 @@ def cleanTitle(title):
 def getUrl(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:11.0) Gecko/20100101 Firefox/11.0')
-        socket.setdefaulttimeout(5)
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
         return link
-
 
 def parameters_string_to_dict(parameters):
         ''' Convert parameters encoded in a URL to a dict. '''
@@ -116,7 +110,7 @@ def addDir(name,url,mode,iconimage):
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok
-
+         
 params=parameters_string_to_dict(sys.argv[2])
 mode=params.get('mode')
 url=params.get('url')

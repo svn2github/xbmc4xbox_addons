@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #-------------LicenseHeader--------------
 # plugin.video.Mediathek - Gives acces to the most video-platforms from german public service broadcaster
-# Copyright (C) 2010  Raptor 2101 [raptor2101@gmx.de]
+# Copyright (C) 2010 Raptor 2101 [raptor2101@gmx.de]
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -10,11 +10,11 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 import re, time;
 from mediathek import *
 
@@ -25,24 +25,24 @@ class ARDMediathek(Mediathek):
     self.menuTree = (
                       TreeNode("0","Neuste Videos",self.rootLink+"/ard/servlet/content/3474442",True),
                       TreeNode("1","Kategorien","",False,(
-                        TreeNode("1.0",u"Nachrichten",self.rootLink+"/ard/servlet/content/3516690?documentId=506",True),
-                        TreeNode("1.1",u"Politik & Zeitgeschehen",self.rootLink+"/ard/servlet/content/3516690?documentId=206",True),
-                        TreeNode("1.2",u"Wirtschaft & Börse",self.rootLink+"/ard/servlet/content/3516690?documentId=726",True),
-                        TreeNode("1.3",u"Sport",self.rootLink+"/ard/servlet/content/3516690?documentId=618",True),
-                        TreeNode("1.4",u"Ratgeber & Technik",self.rootLink+"/ard/servlet/content/3516690?documentId=636",True),
-                        TreeNode("1.5",u"Gesundheit & Ernährung",self.rootLink+"/ard/servlet/content/3516690?documentId=548",True),
-                        TreeNode("1.6",u"Kultur & Gesellschaft",self.rootLink+"/ard/servlet/content/3516690?documentId=564",True),
-                        TreeNode("1.7",u"Musik",self.rootLink+"/ard/servlet/content/3516690?documentId=1062",True),
-                        TreeNode("1.8",u"Literatur",self.rootLink+"/ard/servlet/content/3516690?documentId=1228",True),
-                        TreeNode("1.9",u"Medien",self.rootLink+"/ard/servlet/content/3516690?documentId=1230",True),
-                        TreeNode("1.10",u"Filme & Serien",self.rootLink+"/ard/servlet/content/3516690?documentId=546",True),
-                        TreeNode("1.11",u"Unterhaltung & Lifestyle",self.rootLink+"/ard/servlet/content/3516690?documentId=1232",True),
-                        TreeNode("1.12",u"Comedy & Satire",self.rootLink+"/ard/servlet/content/3516690?documentId=544",True),
-                        TreeNode("1.13",u"Wissen & Bildung",self.rootLink+"/ard/servlet/content/3516690?documentId=568",True),
-                        TreeNode("1.14",u"Natur & Freizeit",self.rootLink+"/ard/servlet/content/3516690?documentId=920",True),
-                        TreeNode("1.15",u"Kinder & Familie",self.rootLink+"/ard/servlet/content/3516690?documentId=608",True),
-                        TreeNode("1.16",u"Religion & Kirche",self.rootLink+"/ard/servlet/content/3516690?documentId=678",True),
-                        TreeNode("1.17",u"In der Region",self.rootLink+"/ard/servlet/content/3516690?documentId=550",True),
+                        TreeNode("1.0",u"Nachrichten",self.rootLink+"/kategorien/nachrichten?clipFilter=fernsehen&documentId=506",True),
+                        TreeNode("1.1",u"Politik & Zeitgeschehen",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=206",True),
+                        TreeNode("1.2",u"Wirtschaft & Börse",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=726",True),
+                        TreeNode("1.3",u"Sport",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=618",True),
+                        TreeNode("1.4",u"Ratgeber & Technik",self.rootLink+"/kategorien/ratgeber-und-technik?clipFilter=fernsehen&documentId=636",True),
+                        TreeNode("1.5",u"Gesundheit & Ernährung",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=548",True),
+                        TreeNode("1.6",u"Kultur & Gesellschaft",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=564",True),
+                        TreeNode("1.7",u"Musik",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=1062",True),
+                        TreeNode("1.8",u"Literatur",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=1228",True),
+                        TreeNode("1.9",u"Medien",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=1230",True),
+                        TreeNode("1.10",u"Filme & Serien",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=546",True),
+                        TreeNode("1.11",u"Unterhaltung & Lifestyle",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=1232",True),
+                        TreeNode("1.12",u"Comedy & Satire",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=544",True),
+                        TreeNode("1.13",u"Wissen & Bildung",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=568",True),
+                        TreeNode("1.14",u"Natur & Freizeit",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=920",True),
+                        TreeNode("1.15",u"Kinder & Familie",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=608",True),
+                        TreeNode("1.16",u"Religion & Kirche",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=678",True),
+                        TreeNode("1.17",u"In der Region",self.rootLink+"/ard/servlet/content/3516690?clipFilter=fernsehen&documentId=550",True),
                         )),
                       TreeNode("2","Sendungen von A-Z","",False,(
                         TreeNode("2.0","0-9",self.rootLink+"/ard/servlet/ajax-cache/3474820/view=list/initial=0-9/index.html",True),
@@ -75,16 +75,16 @@ class ARDMediathek(Mediathek):
                         )),
                       )
       
-    videoDocument_link_Regex = "/ard/servlet/content/\\d*\\?documentId=\\d*"
-    metaInfo_link_Regex = "/ard/servlet/ajax-cache/\\d*/view=ajax/index.html"
-    ajaxDocumentLink = "/ard/servlet/ajax-cache/\\d*/view=(switch|ajax|list)(/documentId=\\d*){0,1}/index.html"
+    videoDocument_link_Regex = "/(.*?)documentId=\\d*"
+    metaInfo_link_Regex = "/ard/servlet/ajax-cache/\\d*/view=ajax(/clipFilter=fernsehen){0,1}(/isFromList=true){0,1}/index.html"
+    ajaxDocumentLink = "/ard/servlet/ajax-cache/\\d*/view=(switch|ajax|list)(/clipFilter=fernsehen){0,1}(/content=fernsehen){0,1}(/documentId=\\d*){0,1}/index.html"
 
     #Regex für das Parsen der hauptseiten
     self.regex_ajaxLinkTag = re.compile("<a href=\""+ajaxDocumentLink+"\" title=\"\"><span>Neueste Clips</span></a>")
     self.regex_ajaxLink = re.compile(ajaxDocumentLink);
     self.regex_videoLinks = re.compile("<a href=\""+videoDocument_link_Regex+"\" class=\".*\" rel=\""+metaInfo_link_Regex+"\">");
     self.regex_videoSeriesLinks = re.compile("<a id=\".*\" class=\".*\" rel=\""+metaInfo_link_Regex+"\" href=\""+videoDocument_link_Regex+"\">");
-    self.regex_subLinks = re.compile("<a class=\"mt-box_preload mt-box-overflow\" href=\""+ajaxDocumentLink+"\">");
+    self.regex_subLinks = re.compile("<a class=\"mt-box_preload.*?\" href=\""+ajaxDocumentLink+"\">");
     self.regex_videoDocumentLink = re.compile(videoDocument_link_Regex);
     self.regex_MetaInfo = re.compile(metaInfo_link_Regex);
     self.regex_Date = re.compile("\\d{2}\\.\\d{2}\\.\\d{2}");
@@ -94,12 +94,13 @@ class ARDMediathek(Mediathek):
     
     #regex für die MetaInfos
     self.regex_pictureLink = re.compile("ard/[^\"]*");
+    self.regex_title = re.compile("<h3.*?><a.*?>.*?</a></h3>")
     self.regex_title = re.compile("<h3 class=\"mt-title\">.*<a.*>[^<]*?</a>")
     self.regex_category = re.compile("<p class=\"mt-source\">.*</p>");
-    self.regex_description = re.compile("<p class=\"mt-description\">.*?</p>",re.DOTALL);
+    self.regex_description = re.compile("<p.*?>.*?</p>",re.DOTALL);
     
     #regex für das extrahieren des Medialinks
-    self.regex_MediaCollection = re.compile("mediaCollection\\.addMediaStream\\(\\d*, \\d*, \".*\", \".*\"\\);");
+    self.regex_MediaCollection = re.compile("mediaCollection\\.addMediaStream\\(\\d*, \\d*, \".*\", \".*\", \".*?\"\\);");
     self.regex_findLinks = re.compile("\".*?\"");
     self.searchLink = "http://www.ardmediathek.de/ard/servlet/content/3517006?detail=%d&s=%s"
     
@@ -122,15 +123,15 @@ class ARDMediathek(Mediathek):
   
   def searchSendungen(self, searchText):
     searchLink = self.searchLink%(10,searchText);
-    self.gui.log(searchLink);   
+    self.gui.log(searchLink);
     resultPage = self.loadPage(searchLink);
     return list(self.regex_videoLinks.finditer(resultPage));
   
   def searchClips(self, searchText):
     searchLink = self.searchLink%(40,searchText);
-    self.gui.log(searchLink);   
+    self.gui.log(searchLink);
     resultPage = self.loadPage(searchLink);
-    return list(self.regex_videoLinks.finditer(resultPage));  
+    return list(self.regex_videoLinks.finditer(resultPage));
   
   def buildSearchResultLink(self, element, isPlayable, elementCount):
     element = element.group()
@@ -148,7 +149,7 @@ class ARDMediathek(Mediathek):
     
     
   def buildPageMenu(self, link, initCount, subLink = False):
-    self.gui.log(link);    
+    self.gui.log(link);
     mainPage = self.loadPage(link);
     
     try:
@@ -188,9 +189,10 @@ class ARDMediathek(Mediathek):
       metaInfoLink = self.regex_MetaInfo.search(element).group();
       
       displayObject = self.extractMetaInfo(self.rootLink+metaInfoLink);
-      displayObject.link = self.rootLink+videoDocumentLink;
-      displayObject.isPlayable = False;
-      self.gui.buildVideoLink(displayObject, self, counter);
+      if displayObject is not None:
+        displayObject.link = self.rootLink+videoDocumentLink;
+        displayObject.isPlayable = False;
+        self.gui.buildVideoLink(displayObject, self, counter);
     return counter;
   
   def extractVideoObjects(self,mainPage):
@@ -212,7 +214,12 @@ class ARDMediathek(Mediathek):
     self.gui.log(link);
     metaInfoPage = self.loadPage(link);
     
-    pictureLink = self.regex_pictureLink.search(metaInfoPage).group();
+    if not metaInfoPage.find("Livestream") == -1:
+      print "Livestream"
+      return None
+    
+    #pictureLink = self.regex_pictureLink.search(metaInfoPage).group();
+    pictureLink = ""
     title = self.regex_title.search(metaInfoPage).group()
     title = self.replace_html.sub("",title);
     title = unicode(title,"UTF-8");

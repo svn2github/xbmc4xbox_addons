@@ -21,18 +21,16 @@
     <title>Best Of YouTube</title>
 
     <!-- (required) Major.minor.build -->
-    <version>1.0.0</version>
+    <version>1.0.5</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="AddonScriptorDE" email="" />
-		<author name="skatulskijean" email="" />
+        <author name="AddonScriptorDE,xboxFork-skatulskijean" email="" />
     </authors>
 
     <summary lang="en">BestOfYoutube.com</summary>
     <summary lang="de">BestOfYoutube.com</summary>
-    <description lang="en">Only the best Youtube clips
-	IMPORTANT INFO: YouTube plugin must be installed for this to work</description>
+    <description lang="en">Only the best Youtube clips.  IMPORTANT INFO: YouTube plugin must be installed for this to work</description>
     <description lang="de">Nur die besten Youtube Videos</description>
 
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->

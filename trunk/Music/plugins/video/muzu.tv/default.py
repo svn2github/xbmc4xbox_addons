@@ -16,7 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
-from resources.lib import Addon, muzutv 
+from resources.lib import Addon
+from resources.lib import muzutv
 import os.path
 import random
 import sys
@@ -111,30 +112,46 @@ elif play:
         videos = muzu.get_playlist(Addon.plugin_queries['network'], play) 
         if Addon.get_setting('random_pl') == 'true':
             random.shuffle(videos)
-        pl = Addon.get_new_playlist(xbmc.PLAYLIST_VIDEO)
-        res_dir = os.path.join(Addon.addon.getAddonInfo('path'), 
+
+        if Addon.get_setting('auto_pl') == 'true':
+            pl = Addon.get_new_playlist(xbmc.PLAYLIST_VIDEO)
+            res_dir = os.path.join(Addon.addon.getAddonInfo('path'), 
                                'resources')
-        videos.insert(0, {'artist': 't0mm0', 
+            videos.insert(0, {'artist': 't0mm0', 
                           'title': 'muzu.tv',
                           'asset_id': 'file://%s/bodge.mp4' % res_dir,
                           'description': 'bodging auto playlist...',
                           'duration': 1,
                           'thumb': 'file://%s/bodge.png' % res_dir})
-        for v in videos:
-            title = '%s: %s' % (v['artist'], v['title'])
-            Addon.add_video_item(str(v['asset_id']),
-                                 {'title': title,
-                                  'plot': v['description'],
-                                  'duration': str(v['duration']),
+            for v in videos:
+                title = '%s: %s' % (v['artist'], v['title'])            
+                Addon.add_video_item(str(v['asset_id']),
+#xboxfix unicode problem
+#{'title': title,
+                                 {'title': title.decode('utf-8'),
+
+                                  #'plot': v['description'],
+                                  #'duration': str(v['duration']),
                                  },
                                  img=v['thumb'],
                                  playlist=pl)  
-        xbmc.Player().play(pl)
-        mode = 'main'  
+            xbmc.Player().play(pl)
+            mode = 'toplevel_playlist'  
+        else:
+            for v in videos:
+                title = '%s: %s' % (v['artist'], v['title'])            
+                Addon.add_video_item(str(v['asset_id']),
+                                 {'title': title,
+                                  #'plot': v['description'],
+                                  #'duration': str(v['duration']),                                  
+                                 },
+                                 img=v['thumb'])  
+        
     else:
         stream_url = muzu.resolve_stream(play, Addon.get_setting('hq'))             
         if stream_url:
-            Addon.resolve_url(stream_url)    
+            Addon.resolve_url(stream_url)  
+  
 elif mode == 'browse':
     page = int(Addon.plugin_queries.get('page', 0))
     res_per_page = int(Addon.get_setting('res_per_page'))
@@ -223,17 +240,48 @@ elif mode == 'jukebox':
             else:
                 Addon.show_error([Addon.get_string(30037), query])
 
-elif mode == 'chart':
+elif mode == 'chart_up' or mode == 'chart_down':
+    Addon.log(mode)
+    chart = Addon.plugin_queries.get('chart', '')
+    rev   = mode == 'chart_down'
+    mode  = 'chart'    
+    if chart:
+        videos = muzu.get_chart(chart)
+
+        if rev:           
+            videos.reverse()
+
+        pl      = Addon.get_new_playlist(xbmc.PLAYLIST_VIDEO)
+        res_dir = os.path.join(Addon.addon.getAddonInfo('path'), 'resources')
+        videos.insert(0, {'artist': 't0mm0', 
+                              'title': 'muzu.tv',
+                              'asset_id': 'file://%s/bodge.mp4' % res_dir,
+                              'pos': 0,
+                              'last_pos': 0,                              
+                              'thumb': 'file://%s/bodge.png' % res_dir})
+        
+        for v in videos:
+            title = unicode('%s (%s): %s' % 
+                            (v['pos'], v['last_pos'], v['title']), 'utf8')            
+            Addon.add_video_item(str(v['asset_id']),
+                                 {'title': title,},
+                                 img=v['thumb'],
+                                 playlist=pl)
+        xbmc.Player().play(pl)
+
+if mode == 'chart':
     Addon.log(mode)
     chart = Addon.plugin_queries.get('chart', '')    
-    if chart:
+    if chart and mode == 'chart':
+        Addon.add_directory({'mode': 'chart_up',   'chart' : int(chart)}, 'Play 1-40')
+        Addon.add_directory({'mode': 'chart_down', 'chart' : int(chart)}, 'Play 40-1')
         videos = muzu.get_chart(chart)
         for v in videos:
             title = unicode('%s (%s): %s' % 
                             (v['pos'], v['last_pos'], v['title']), 'utf8')            
             Addon.add_video_item(str(v['asset_id']),
                                  {'title': title,},
-                                 img=v['thumb'])
+                                 img=v['thumb'])            
     else:
         Addon.add_directory({'mode': 'chart', 'chart': 1}, 
                             Addon.get_string(30042))
@@ -247,27 +295,48 @@ elif mode == 'chart':
                             Addon.get_string(30046))
 
 elif mode == 'list_playlists':
-    Addon.log(mode)
+    Addon.log(mode) 
+
     ob = Addon.plugin_queries.get('ob', False)
-    if ob:
+
+    if ob and ob == Addon.get_setting('username'):
         country = Addon.get_setting('country')
-        playlists = muzu.list_playlists(ob, country)
-        for p in playlists:
+        playlists = muzu.user_playlists(ob, country)
+        for p in playlists:           
+            label = p['name']
+            if p['network']:
+                label = label + ' (%s)' % p['network']
             Addon.add_directory({'play': p['playlist_id'],
                                  'network': p['network_id'], 
                                  'mode': 'playlist'}, 
-                                '%s (%s)' % (p['name'], p['network']))
+                                 label)
+    elif ob:
+        country = Addon.get_setting('country')
+        playlists = muzu.list_playlists(ob, country)
+        for p in playlists:
+            label = p['name']
+            if p['network']:
+                label = label + ' (%s)' % p['network']
+            Addon.add_directory({'play': p['playlist_id'],
+                                 'network': p['network_id'], 
+                                 'mode': 'playlist'}, 
+                                 label)
     else:
-        Addon.add_directory({'mode': 'list_playlists', 'ob': 'featured'}, 
-                            Addon.get_string(30048))
-        Addon.add_directory({'mode': 'list_playlists', 'ob': 'festivals'}, 
-                            Addon.get_string(30049))
-        Addon.add_directory({'mode': 'list_playlists', 'ob': 'views'}, 
-                            Addon.get_string(30050))
-        Addon.add_directory({'mode': 'list_playlists', 'ob': 'recent'}, 
-                            Addon.get_string(30051))
-        #Addon.add_directory({'mode': 'channels'}, 
-        #                    Addon.get_string(30052))
+        mode = 'toplevel_playlist'
+
+if mode == 'toplevel_playlist':
+    Addon.log(mode)
+
+    username = Addon.get_setting('username')
+
+    if username:
+        Addon.add_directory({'mode': 'list_playlists', 'ob': username}, username)
+
+    Addon.add_directory({'mode': 'list_playlists', 'ob': 'featured'},  Addon.get_string(30048))
+    Addon.add_directory({'mode': 'list_playlists', 'ob': 'festivals'}, Addon.get_string(30049))
+    Addon.add_directory({'mode': 'list_playlists', 'ob': 'views'},     Addon.get_string(30050))
+    Addon.add_directory({'mode': 'list_playlists', 'ob': 'recent'},    Addon.get_string(30051))
+    #Addon.add_directory({'mode': 'channels'}, Addon.get_string(30052))
 
 elif mode == 'channels':
     Addon.log(mode)
@@ -347,18 +416,44 @@ elif mode == 'search':
     else:
         mode = 'main'
 
-elif mode == 'new_releases':
+elif mode == 'new_releases_all':
+    Addon.log(mode)
+
+    network_id = 'newreleases/'
+    mode       = 'new_releases'
+    page       = int(Addon.plugin_queries.get('page', 0))
+    sort       = Addon.plugin_queries.get('sort', False)
+
+    if network_id: 
+        playlists = muzu.list_playlists_by_network(network_id, page)
+
+
+        pl      = Addon.get_new_playlist(xbmc.PLAYLIST_VIDEO)
+        res_dir = os.path.join(Addon.addon.getAddonInfo('path'), 'resources')
+        playlists.insert(0, { 'name' : 'muzu.tv',
+                              'id'   : 'file://%s/bodge.mp4' % res_dir,                                                            
+                              'thumb': 'file://%s/bodge.png' % res_dir})
+        for p in playlists:
+            Addon.add_video_item(p['id'], {'title': p['name']}, img=p['thumb'], playlist=pl)
+            
+        xbmc.Player().play(pl)
+        
+if mode == 'new_releases':
     Addon.log(mode)
 
     network_id = 'newreleases/'
     page       = int(Addon.plugin_queries.get('page', 0))
     sort       = Addon.plugin_queries.get('sort', False)
 
-    if network_id:   
+    if network_id: 
+        #Addon.add_directory({'mode': 'new_releases_all', 'page' : page}, 'Play All')  
         playlists = muzu.list_playlists_by_network(network_id, page)
         for p in playlists:
-            try:                
-                Addon.add_video_item(p['id'], {'title': p['name']}, img=p['thumb'])
+            try:      
+                title = p['name']      
+                if title.startswith('Watch '):
+                    title = title[6:]
+                Addon.add_video_item(p['id'], {'title': title}, img=p['thumb'])                
             except:
                pass
 

@@ -21,13 +21,12 @@
     <title>muzu.tv</title>
 
     <!-- (required) Major.minor.build -->
-    <version>0.2.1</version>
+    <version>0.2.3</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="notme" email="" />
-		<author name="skatulskijean" email="" />
-    </authors>
+        <author name="t0mm0 , xboxfork skatulskijean" email="" />
+	</authors>
 
     <!-- (required) Short description of addon. -->
     <summary>Watch music videos from muzu.tv</summary>

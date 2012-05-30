@@ -1,0 +1,9 @@
+Repository: http://passion-xbmc.googlecode.com/svn/trunk/
+
+
+Author:
+Temhil (temhil@gmail.com)
+
+
+About:
+A shortcut which will take you from "\\plugins\programs\" to "scripts"

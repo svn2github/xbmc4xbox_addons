@@ -1,13 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import urllib,urllib2,re,xbmcplugin,xbmcgui,sys
-import socket
+import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmcaddon
 
 pluginhandle = int(sys.argv[1])
+settings = xbmcaddon.Addon(id='plugin.video.filmstarts_de')
+translation = settings.getLocalizedString
 
 def index():
-        addDir('Trailer: Aktuell im Kino','http://www.filmstarts.de/trailer/aktuell_im_kino.html?version=1',1,'')
-        addDir('Trailer: Demnächst im Kino','http://www.filmstarts.de/trailer/bald_im_kino.html?version=1',1,'')
+        addDir('Trailer: '+translation(30001),'http://www.filmstarts.de/trailer/aktuell_im_kino.html?version=1',1,'')
+        addDir('Trailer: '+translation(30002),'http://www.filmstarts.de/trailer/bald_im_kino.html?version=1',1,'')
         addDir('Trailer: Archiv','http://www.filmstarts.de/trailer/archiv.html?version=1',1,'')
         addDir('Filmstarts: Fünf Sterne','http://www.filmstarts.de/videos/shows/funf-sterne',3,'')
         addDir('Filmstarts: Fehlerteufel','http://www.filmstarts.de/videos/shows/filmstarts-fehlerteufel',3,'')
@@ -15,7 +16,6 @@ def index():
         addDir('Video-Interviews','http://www.filmstarts.de/trailer/interviews/',4,'')
         addDir('Serien-Trailer','http://www.filmstarts.de/trailer/serien/',5,'')
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(50)')
 
 def listVideos(urlFull):
         content = getUrl(urlFull)
@@ -77,7 +77,6 @@ def listVideos(urlFull):
             urlNew=urlFull + "?page="+str(currentPage+1)
           addDir('Next Page',urlNew,mode,'')
         xbmcplugin.endOfDirectory(pluginhandle)
-        if (xbmc.getSkinDir() == "skin.confluence" or xbmc.getSkinDir() == "skin.touched"): xbmc.executebuiltin('Container.SetViewMode(500)')
 
 def playVideo(url):
         content = getUrl(url)
@@ -100,7 +99,6 @@ def playVideo(url):
 def getUrl(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:11.0) Gecko/20100101 Firefox/11.0')
-        socket.setdefaulttimeout(5)
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
