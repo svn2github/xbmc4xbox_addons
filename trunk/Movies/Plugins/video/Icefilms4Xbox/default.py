@@ -1982,7 +1982,7 @@ def PART(scrap,sourcenumber,args,cookie):
 				elif ismovreel is not None:
 					fullname=sourcestring+' | MR | Full'
 					addExecute(fullname,url,200,movreelpic)
-				elif ismovreel is not None:
+				elif isbillion is not None:
 					fullname=sourcestring+' | BU | Full'
 					addExecute(fullname,url,200,billionpic)					
 
