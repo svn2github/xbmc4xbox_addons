@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Category strings -->
+    <string id="30000">Česká rádia online</string>
+
+    <!-- Progress bar strings -->
+    <string id="30050">Spouštím online rádio</string>
+    <string id="30051">Stahuji podrobnosti</string>
+    <string id="30052">Stahuji parametry</string>
+    <string id="30053">Stahuji playlist</string>
+    <string id="30054">Přehrávám</string>
+</strings>
+

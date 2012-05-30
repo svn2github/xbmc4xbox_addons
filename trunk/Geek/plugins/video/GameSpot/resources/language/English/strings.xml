@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!--
+     * Main
+     -->
+   <string id="30000">GameSpot Videos</string>
+   <string id="30001">All</string>
+   <string id="30002">Trailers</string>
+   <string id="30003">Gameplay</string>
+   <string id="30004">Reviews</string>
+   <string id="30005">Shows</string>
+   <string id="30006">Interviews</string>
+   <string id="30007">User</string>
+
+    <!-- 
+     * Settings labels 
+     -->
+    <string id="30100">Version</string>
+    <string id="30101">Author</string>
+    <string id="30102">Website</string>
+
+    <string id="30200">Video player</string>
+    <string id="30201">Auto</string>
+    <string id="30202">DVDPlayer</string>
+    <string id="30203">MPlayer</string>
+
+    <string id="30300">Video quality</string>
+    <string id="30301">Standard</string>
+    <string id="30302">High Definition (if available)</string>
+    
+    <!--
+     * Texts
+     -->
+    <string id="30401">Page %u of %u</string>
+    <string id="30402">Next page</string>
+    <string id="30403">Getting video location...</string>
+</strings>

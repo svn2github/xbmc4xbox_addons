@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.tapetv"
+       name="tape.tv"
+       version="0.0.1"
+       provider-name="dethfeet">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.gui" version="2.11"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    	<summary lang="en">tape.tv</summary>
+	<summary lang="de">tape.tv</summary>
+    	<description lang="en">tape.tv</description>
+	<description lang="de">tape.tv</description>
+    <platform>all</platform>
+  </extension>
+</addon>

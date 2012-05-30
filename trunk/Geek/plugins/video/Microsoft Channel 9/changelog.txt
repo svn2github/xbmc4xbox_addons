@@ -1,0 +1,18 @@
+Microsoft Channel 9
+
+v2.4 (Saturday, 15 January 2011):
+ - only parse the top LI entries ("All" category script error);
+
+v2.3 (Friday, 23 October 2010):
+ - new website layout;
+
+v2.21 :
+ - HTML entities in list descriptions;
+ - display current / total pages (certain skins);
+
+v2.2 :
+ - crashing when no video URL found for entry (skip);
+
+v2.1 :
+ - plugin crashing in XBMC 9.04 alpha 1;
+ - update simplejson to version 2.0.9;

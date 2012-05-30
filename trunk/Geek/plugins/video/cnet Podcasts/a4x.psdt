@@ -1,0 +1,25 @@
+(dp0
+S'date'
+p1
+cdatetime
+datetime
+p2
+(S'\x07\xdc\x04\x15\x01\x03\r\n\xec\xe0'
+p3
+tp4
+Rp5
+sS'version'
+p6
+S'1.0.1'
+p7
+sS'installer_version'
+p8
+S'0.9.3'
+p9
+sS'name'
+p10
+S'cnet Podcasts'
+p11
+sS'repository'
+p12
+Ns.

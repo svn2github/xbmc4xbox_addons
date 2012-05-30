@@ -1,0 +1,53 @@
+    <!-- (required) guuid: unique identifier of this addon
+    guuids can be generated online at sites such as http://www.famkruithof.net/uuid/uuidgen -->
+    <guid>09f0e760-8be5-11e1-b0c4-0800200c9a66</guid>
+
+    <!-- (required) type:
+    1:  visualization
+    2:  skin
+    3:  pvrdll
+    4:  script
+    5:  scraper
+    6:  screensaver
+    7:  plugin-pvr
+    8:  plugin-video
+    9:  plugin-music
+    10: plugin-program
+    11: plugin-pictures
+    12: plugin-weather -->
+    <type>8</type>
+
+    <!-- (required) Title -->
+    <title>RuTube</title>
+
+    <!-- (required) Major.minor.build -->
+    <version>1.0.6</version>
+
+    <!-- (required) author name & email.  at least one author name is required -->
+    <authors>
+        <author name="Stacked" email="" />
+    </authors>
+
+    <!-- (required) Short description of addon. -->
+    <summary>Лучшие онлайн видео ролики, приколы, аниме и клипы.</summary>
+
+    <!-- Longer descrption of addon.  Usage instructions should go here if required. -->
+    <description>На RuTube Вы всегда сможете найти интересные ролики, новые клипы, anime и другое интересное видео. Каждый день наши пользователи загружают на сайт более 3500 новых роликов, лучшие из которых редакция сайта отбирает на главную страницу.
+Особой популярностью пользуются авторские видеоприколы. Если Вы снимаете действительно смешное видео и не боитесь выставить себя или друзей в нелепом свете - то быстро станете звездой RuTube. При загрузке видео желательно указать категорию, к которой он относится (например, "Юмор, развлечения"), чтобы пользователи, интересующиеся этой темой, могли быстро найти ваш видеоролик.
+RuTube - отличная стартовая площадка для независимых студий, начинающих кинорежиссеров и музыкальных групп. Концертное видео всегда привлекает внимание меломанов, которые любят слушать музыку онлайн и смотреть на выступление своей любимой команды. Помимо видео с концертов на RuTube есть музыкальные клипы, а также видео блоги популярных исполнителей, которые всегда рады непосредственному общению со своими фанатами. Один из самых популярных разделов RuTube - раздел кинотрейлеров. Раздел обновляется каждую неделю, в нем вы всегда можете посмотреть свежие трейлеры самых актуальных фильмов. Не обделены вниманием и мультики. Есть все: anime, современные интернет мульты, а также классические советские мультфильмы
+Видео хостинг RuTube занимает лидирующие позиции среди российских видео сайтов и входит в десятку самых посещаемых сайтов рунета. Здесь можно посмотреть видео ролики на любой вкус: от интервью с деятелями культуры и серьезных политических передач до видео приколов, записей автокатастроф и аварий. Смотрите в онлайн аниме, передачу "Наша Раша" и самое смешное видео из репертуара Comedy Club.</description>
+    <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
+    <tags>
+        <tag>Russian</tag>
+    </tags>
+
+    <!-- minimum revision of xbmc your addon will run on.  Leave blank all for revisions-->
+    <minrevision></minrevision>
+
+    <!--patforms compatible with your addon.   xbox, osx, windows, linux, or all -->
+    <platforms>
+        <platform>all</platform>
+    </platforms>
+
+    <!-- (optional) The License the addon is released under.-->
+    <license>GPL</license>
