@@ -32,7 +32,7 @@
     <string id="30027">Chiudi</string>
 
     <!-- settings -->
-    <string id="30500">Controlla aggiornamenti</string>
+    <string id="30500">*Controlla aggiornamenti*</string>
     <string id="30510">Aggiornamenti: Mostra add-on non presenti nell'SVN?</string>
     <string id="30520">Aggiornamenti: Mostra add-on senza versione?</string>
     <string id="30530">Leggi ReadMe</string>

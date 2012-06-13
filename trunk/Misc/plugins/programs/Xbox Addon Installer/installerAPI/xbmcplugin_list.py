@@ -1,5 +1,5 @@
 """
-svn repo installer plugin
+Xbox Addon Installer plugin
 
 Nuka1195
 """
@@ -239,7 +239,7 @@ class Main:
 					url = '%s?%s' % ( sys.argv[ 0 ], url_args, )
 					
 				# add uninstall item
-				if ( not isFolder and not "SVN%20Repo%20Installer" in item and os.path.isfile( path ) ):
+				if ( not isFolder and not "Xbox%20Addon%20Installer" in item and os.path.isfile( path ) ):
 					cm +=  [ ( xbmc.getLocalizedString( 30022 ), "XBMC.RunPlugin(%s?delete=%s&title=%s&delete_from_list=True)" % ( sys.argv[ 0 ], urllib.quote_plus( repr( os.path.dirname( path ) ) ), repr( urllib.quote_plus( item[ : -1 ] ) ), ), ) ]
 					
 				# set the default icon

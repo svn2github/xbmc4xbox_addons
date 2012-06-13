@@ -32,7 +32,7 @@
     <string id="30027">Fermer</string>
 
     <!-- settings -->
-    <string id="30500">Recherche mises à jour</string>
+    <string id="30500">*Recherche mises à jour*</string>
     <string id="30510">Mises à jour: Montrer les Addons non dans SVN?</string>
     <string id="30520">Mises à jour: Montrer les Addons sans version?</string>
     <string id="30530">Voir Readme</string>

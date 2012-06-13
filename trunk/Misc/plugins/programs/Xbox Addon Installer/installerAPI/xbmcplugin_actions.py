@@ -1,5 +1,5 @@
 """
-	SVN Repo Installer - Actions
+	Xbox Addon Installer - Actions
 """
 
 import sys, os

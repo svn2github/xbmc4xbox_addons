@@ -23,20 +23,21 @@
     <title>Xbox Addon Installer</title>
 
     <!-- (required) Major.minor.build -->
-    <version>0.1.31</version>
+    <version>0.1.32</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
         <author name="nuka1195" email="nuka1195@xbmc.org" />
         <author name="BigBellyBilly" email="BigBellyBilly@gmail.com" />
 		<author name="whufclee" email="englishnproud@gmail.com" />
+		<author name="thanks to Xphazer for artwork and KozzBC for continued work on repo." email="" />
     </authors>
 
     <!-- (required) Short description of addon. -->
     <summary>XBMC Addon installer from various SVN Repositories</summary>
 
     <!-- Longer descrption of addon.  Usage instructions should go here if required. -->
-    <description>XBMC Addon installer from various SVN Repositories.  Browse for New or Check for Updates across the included SVN Repositories.%0a This installer is a mod of the great SVN Repo Installer.  See ReadMe for additional information.</description>
+    <description>XBMC Addon installer from various SVN Repositories.  Browse for New or Check for Updates across the included SVN Repositories.  See ReadMe for additional information.</description>
 
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
@@ -44,7 +45,7 @@
     </tags>
 
     <!-- minimum revision of xbmc your addon will run on.  Leave blank all for revisions-->
-    <minrevision></minrevision>
+    <minrevision>19001</minrevision>
 
     <!--patforms compatible with your addon.   xbox, osx, windows, linux, or all -->
     <platforms>

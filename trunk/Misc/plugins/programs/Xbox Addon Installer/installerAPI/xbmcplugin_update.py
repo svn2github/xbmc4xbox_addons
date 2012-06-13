@@ -242,7 +242,7 @@ class Main:
 				labelColour = "FFFFFFFF"
 
 				# add ContextMenu: Delete (unless already deleted status)
-				if "SVN Repo Installer" not in category:
+				if "Xbox Addon Installer" not in category:
 					cm =  self._contextMenuItem( 30022, { "delete": filepath, "title": category } )	# 'Delete'
 				else:
 					cm = []
@@ -261,11 +261,11 @@ class Main:
 					path = '%s?%s' % ( sys.argv[ 0 ], url_args, )
 				elif (svn_xbmc_rev and self.XBMC_REVISION and self.XBMC_REVISION >= svn_xbmc_rev) or \
 					(not svn_xbmc_rev or not self.XBMC_REVISION):
-					# Compatible, NEW AVAILABLE - setup callback url for plugin SVN Repo Installer
+					# Compatible, NEW AVAILABLE - setup callback url for plugin Xbox Addon Installer
 					# assume compatible if no svn xbmc_revision found.
 					verState = "v%s (%s)" % ( svn_ver, xbmc.getLocalizedString( 30014 ) )        # eg. !New! v1.1
 					trunk_url = re.search('(/(?:trunk|branch|tag).*?)$', svn_url, re.IGNORECASE).group(1)
-#['plugin://programs/SVN Repo Installer/', '-1', '?download_url="%2Ftrunk%2Fplugins%2Fmusic/iTunes%2F"&repo=\'xbmc-addons\'&install=""&ioffset=2&voffset=0']
+#['plugin://programs/Xbox Addon Installer/', '-1', '?download_url="%2Ftrunk%2Fplugins%2Fmusic/iTunes%2F"&repo=\'xbmc-addons\'&install=""&ioffset=2&voffset=0']
 					info['download_url'] = "download_url=%s&repo=%s&install=%s&ioffset=%s&voffset=%s" % \
 								(repr(urllib.quote_plus(trunk_url + "/")),
 								repr(urllib.quote_plus(repo)),
@@ -276,7 +276,7 @@ class Main:
 					url_args = "show_info=%s" % urllib.quote_plus( repr(filepath) )
 
 					# exclude self update from "update all"
-					if "SVN Repo Installer" not in category:
+					if "Xbox Addon Installer" not in category:
 						updateAllItems.append("?" + info['download_url'])
 					path = '%s?%s' % ( sys.argv[ 0 ], url_args, )
 				else:

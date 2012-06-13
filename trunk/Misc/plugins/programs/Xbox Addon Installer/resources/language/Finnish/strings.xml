@@ -33,7 +33,7 @@
     <string id="30028">Alusta:</string>
 
     <!-- settings -->
-    <string id="30500">Tarkista päivitykset</string>
+    <string id="30500">*Tarkista päivitykset*</string>
     <string id="30510">Päivitykset: Näytä laajennukset, joita ei ole SVN:ssä</string>
     <string id="30520">Päivitykset: Näytä laajennukset ilman versionumeroa</string>
     <string id="30530">Näytä ohje</string>

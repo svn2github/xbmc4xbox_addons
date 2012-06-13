@@ -32,7 +32,7 @@
     <string id="30027">关闭</string>
 
     <!-- settings -->
-    <string id="30500">检查更新</string>
+    <string id="30500">*检查更新*</string>
     <string id="30510">更新：插件未见于 SVN？</string>
     <string id="30520">更新：插件无版本号？</string>
     <string id="30530">浏览自述文件</string>

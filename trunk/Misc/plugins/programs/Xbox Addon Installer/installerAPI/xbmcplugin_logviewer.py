@@ -1,5 +1,5 @@
 """
-	SVN Repo Installer Log Viewer
+	Xbox Addon Installer Log Viewer
 """
 
 import os
@@ -224,7 +224,7 @@ if ( __name__ == "__main__" ):
 	if ( not DEBUG ):
 		Main()
 	else:
-		parser = ChangelogParser( "xbmc-addons", "SVN Repo Installer" )
+		parser = ChangelogParser( "xbmc-addons", "Xbox Addon Installer" )
 		parser.fetch_changelog()
 		print parser.log
 

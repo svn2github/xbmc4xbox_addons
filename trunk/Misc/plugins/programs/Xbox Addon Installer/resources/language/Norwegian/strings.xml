@@ -31,7 +31,7 @@
     <string id="30027">Lukk</string>
 
     <!-- settings -->
-    <string id="30500">Sjekk for oppdateringer</string>
+    <string id="30500">*Sjekk for oppdateringer*</string>
     <string id="30510">Oppdateringer: Vis tillegg som ikke er i SVN?</string>
     <string id="30520">Oppdateringer: Vis tillegg uten versjon?</string>
     <string id="30530">Vis Readme</string>

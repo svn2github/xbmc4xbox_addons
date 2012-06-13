@@ -208,7 +208,7 @@ class Main:
 			buttons['install'] = False
 
 		# set UNINSTALL button
-		if not os.path.exists(info.get('filepath','')) or "SVN Repo Installer" in info['title']:
+		if not os.path.exists(info.get('filepath','')) or "Xbox Addon Installer" in info['title']:
 			buttons['uninstall'] = False
 
 		while info:
@@ -219,7 +219,7 @@ class Main:
 			elif action == "install":
 				# install
 				url_args = info['download_url']
-				if "SVN Repo Installer" in info['title']:
+				if "Xbox Addon Installer" in info['title']:
 					url_args = "self_update=True&" + url_args
 				path = '%s?%s' % ( sys.argv[ 0 ], url_args, )
 				command = 'XBMC.RunPlugin(%s)' % path
