@@ -38,9 +38,11 @@ class Plugin(object):
         self._argv0, self._argv1, self._argv2 = args
         self.handle = int(self._argv1)
 
-        self.qs_args = parse_qs(self._argv2.lstrip('?'))
+        #self.qs_args = parse_qs(self._argv2.lstrip('?'))
+        self.qs_args = ''
 
-        self.scheme, self.netloc, self.path = urlparse(self._argv0)
+        #self.scheme, self.netloc, self.path = urlparse(self._argv0)
+        self.scheme, self.netloc, self.path = urlparse(self._argv2)
 
         self._cache_path = xbmc.translatePath('special://profile/addon_data/%s/.cache' % self._plugin_id)
 
@@ -118,7 +120,8 @@ class Plugin(object):
             raise AmbiguousUrlException
 
         pathqs = rule.make_path_qs(items)
-        return 'plugin://%s%s' % (self._plugin_id, pathqs)
+        #return 'plugin://%s%s' % (self._plugin_id, pathqs)
+        return '%s?url=%s' % (sys.argv[0], pathqs)
 
     def dispatch(self, path):
         for rule in self._routes:
@@ -156,6 +159,10 @@ class Plugin(object):
         #if pickled_value:
             #return self._plugin.setSetting(key, pickle.dumps(val))
         return self._plugin.setSetting(id=key, value=val)
+
+    def open_settings(self):
+        '''Opens the settings dialog within XBMC'''
+        self._plugin.openSettings()
 
     def _make_listitem(self, label, label2='', iconImage='', thumbnail='',
                        path='', **options):
@@ -256,7 +263,8 @@ class Plugin(object):
             self._argv2 = ''
 
         self.qs_args = parse_qs(self._argv2.lstrip('?'))
-        self.scheme, self.netloc, self.path = urlparse(self._argv0)
+        #self.scheme, self.netloc, self.path = urlparse(self._argv0)
+        self.scheme, self.netloc, self.path = urlparse(sys.argv[2])
 
         # Now run the actual selection's view
         return self.dispatch(self.path)

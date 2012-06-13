@@ -21,11 +21,11 @@
     <title>xbmcswift</title>
 
     <!-- (required) Major.minor.build -->
-    <version>0.1.2</version>
+    <version>0.1.3</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="Jonathan Beluch (jbel)" email="" />
+        <author name="Jonathan Beluch (jbel) and skatulskijean" email="" />
     </authors>
 
 		<summary>xbmcswift</summary>
