@@ -21,11 +21,11 @@
     <title>4OD</title>
 
     <!-- (required) Major.minor.build -->
-    <version>1.0.1</version>
+    <version>1.0.5</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="nibor" email="" />
+        <author name="nibor and mossy" email="" />
     </authors>
 
     <summary>Channel 4 On Demand</summary>
