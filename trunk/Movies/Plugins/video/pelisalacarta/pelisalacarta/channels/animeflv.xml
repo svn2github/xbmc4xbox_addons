@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<version>
+	<name>animeflv</name>
+	<tag>3</tag>
+	<date>15/06/2012</date>
+	<changes>Desactivada la búsqueda de vídeos como si tuvieras el plugin</changes>
+</version>
