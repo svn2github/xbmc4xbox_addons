@@ -10,27 +10,34 @@ __phpurl__ = ii [ 8 ] . Ii ( "WVQvbHNDPXB3L3dyOUtJXVg1c3ApNHFpeC5qdj9fcTtUZmh6UF
 __cachefolder__ = "addon_data"
 __settings__ = ii [ 9 ] . Addon ( id = 'plugin.video.tvcatchup' )
 __addon__ = ii [ 9 ].Addon('plugin.video.tvcatchup')
+
+SETTINGS = {
+ 'cache.path' : ii[7].translatePath(__addon__.getAddonInfo('profile'))
+ }
+
 if 16 - 16: iI11I1II1I1I + iiiii % ii1I - II1 - O0ooooo00oOO - ooOoO
-def o0Oo ( ) :
- i1IiI1I11 = ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "T:" + ii [ 3 ] . sep , __cachefolder__ ) )
- IIiIiII11i = i1IiI1I11 + ii [ 3 ] . sep + __scriptname__
- if not ii [ 3 ] . path . isdir ( IIiIiII11i ) :
-  try :
-   print "%s doesn't exist, creating" % IIiIiII11i
-   ii [ 3 ] . makedirs ( IIiIiII11i )
-  except IOError , o0oOOo0O0Ooo :
-   print "Couldn't create %s, %s" % ( IIiIiII11i , str ( o0oOOo0O0Ooo ) )
-   raise
- IIiIiII11i = i1IiI1I11 + ii [ 3 ] . sep + __scriptname__ + ii [ 3 ] . sep + 'TVC_cache'
- if not ii [ 3 ] . path . isdir ( IIiIiII11i ) :
-  try :
-   print "%s doesn't exist, creating" % IIiIiII11i
-   ii [ 3 ] . makedirs ( IIiIiII11i )
-  except IOError , o0oOOo0O0Ooo :
-   print "Couldn't create %s, %s" % ( IIiIiII11i , str ( o0oOOo0O0Ooo ) )
-   raise
- i1IiI1I11 = ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "T:" + ii [ 3 ] . sep , __cachefolder__ , __scriptname__ ) )
- I1ii11iIi11i = ii [ 3 ] . path . join ( i1IiI1I11 , 'TVC_cache' )
+def o0Oo ( ) : 
+ if not ii[3].path.exists(SETTINGS['cache.path']):
+  ii[3].makedirs(SETTINGS['cache.path'])
+## i1IiI1I11 = ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "T:" + ii [ 3 ] . sep , __cachefolder__ ) )
+## IIiIiII11i = i1IiI1I11 + ii [ 3 ] . sep + __scriptname__
+## if not ii [ 3 ] . path . isdir ( IIiIiII11i ) :
+##  try :
+##   print "%s doesn't exist, creating" % IIiIiII11i
+##   ii [ 3 ] . makedirs ( IIiIiII11i )
+##  except IOError , o0oOOo0O0Ooo :
+##   print "Couldn't create %s, %s" % ( IIiIiII11i , str ( o0oOOo0O0Ooo ) )
+##   raise
+## IIiIiII11i = i1IiI1I11 + ii [ 3 ] . sep + __scriptname__ + ii [ 3 ] . sep + 'TVC_cache'
+## if not ii [ 3 ] . path . isdir ( IIiIiII11i ) :
+##  try :
+##   print "%s doesn't exist, creating" % IIiIiII11i
+##   ii [ 3 ] . makedirs ( IIiIiII11i )
+##  except IOError , o0oOOo0O0Ooo :
+##   print "Couldn't create %s, %s" % ( IIiIiII11i , str ( o0oOOo0O0Ooo ) )
+##   raise
+## i1IiI1I11 = ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "T:" + ii [ 3 ] . sep , __cachefolder__ , __scriptname__ ) )
+## I1ii11iIi11i = ii [ 3 ] . path . join ( i1IiI1I11 , 'TVC_cache' )
  I1IiI = __settings__ . getSetting ( 'uname' )
  o0OOO = __settings__ . getSetting ( 'pwd' )
  if o0OOO . find ( '.enc.' ) < 0 :
@@ -115,16 +122,16 @@ def i1IIi11111i ( authkey , name ) :
   str_list = []
   str_list.append("T:")
   str_list.append(ii [ 3 ] . sep)
-  i1IiI1I11 = ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "".join(str_list) , __cachefolder__ , __scriptname__ ) )
-  OOooO = ii [ 3 ] . path . join ( i1IiI1I11 , 'TVC_cache' , chanident[0] + "enabled.png" )
+  i1IiI1I11 = SETTINGS['cache.path'] #ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "".join(str_list) , __cachefolder__ , __scriptname__ ) )
+  OOooO = ii [ 3 ] . path . join ( i1IiI1I11 , chanident[0] + "enabled.png" )
   iiiI11 . setThumbnailImage ( OOooO )
   ii [ 7 ] . executebuiltin ( "xbmc.Notification('Now Playing...'," + IiII1I1i1i1ii[0] + " , 10000, %s)" % ( ii [ 3 ] . path . join (i1IiI1I11 , 'TVC_cache' , chanident[0] + "enabled.png" ) , ) )
   ii [ 7 ] . Player ( ii [ 7 ] . PLAYER_CORE_DVDPLAYER ) . play ( o000o0o00o0Oo[0] , iiiI11 )
   if 58 - 58: i11iiII + OooooO0oOO + oOo0 / oo0Ooo0
 def I1I11I1I1I ( ) :
  Ooo = Oo ( )
- i1IiI1I11 = ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "T:" + ii [ 3 ] . sep , __cachefolder__ , __scriptname__ ) )
- I1ii11iIi11i = ii [ 3 ] . path . join ( i1IiI1I11 , 'TVC_cache' )
+ #i1IiI1I11 = ii [ 7 ] . translatePath ( ii [ 3 ] . path . join ( "T:" + ii [ 3 ] . sep , __cachefolder__ , __scriptname__ ) )
+ I1ii11iIi11i = SETTINGS['cache.path']#ii [ 3 ] . path . join ( i1IiI1I11 , 'TVC_cache' )
  iI111iI = __settings__ . getSetting ( 'whatson' )
  iIiiiI = ii [ 1 ] . urlopen ( __phpurl__ + "?permcode=granted&func=channels" )
  OooO0OO = iIiiiI . read ( )

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.tvcatchup"
        name="TVCatchup"
-       version="1.4.4"
+       version="1.4.5"
        provider-name="dj_gerbil and the guys at TVC">
     <requires>
         <import addon="xbmc.python" version="1.0"/>
