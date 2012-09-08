@@ -10,7 +10,7 @@ import xbmcplugin
 import urllib
 import time
 import datetime
-from xml.dom import minidom
+from BeautifulSoup import BeautifulSoup, SoupStrainer
 from xbmcsvn_utils import HTTPCommunicator
 from xbmcsvn_utils import HTML2Text
 import xbmcsvn_utils
@@ -26,10 +26,6 @@ class Main:
         # Constants
         self.DEBUG       = False
         
-        # Parse parameters...
-        params           = dict(part.split('=', 1) for part in sys.argv[ 2 ][ 1: ].split('&'))
-        self.category    = params[ "category" ] 
-
         #
         # Get the videos...
         #
@@ -44,60 +40,60 @@ class Main:
         # Init
         #
         html2text     = HTML2Text()
-        os_platform   = os.environ.get("OS")
 
         # Xbox only (anyways)
-        rss_url = "http://sshcs.com/xbmc/?mode=RSS&a=XBOX"            
+        html_url = "http://www.xbmc4xbox.org.uk/nightly/"            
         
         #
         # Get RSS feed...
         #
         try :
             httpCommunicator = HTTPCommunicator()
-            xmlText          = httpCommunicator.get( rss_url )
-            xmlDom           = minidom.parseString( xmlText )
+            htmlData         = httpCommunicator.get( html_url )
+            
+            soupStrainer     = SoupStrainer( "pre" )
+            beautifulSoup    = BeautifulSoup( htmlData, soupStrainer )
         except Exception, e :
             title = "%s - %s" % ( xbmc.getLocalizedString(30000), xbmc.getLocalizedString(257).upper() )
-            xbmcgui.Dialog().ok( title, rss_url, str(e) )
+            xbmcgui.Dialog().ok( title, html_url, str(e) )
             return
+        
         
         #
         # Parse XML...
         #
-        for node in xmlDom.getElementsByTagName("item") :
+        for a_node in beautifulSoup.findAll( "a" ):
             #
             # Init
             #
             title       = ""
             link        = ""
-            pubDate     = ""
+            date        = ""
             description = ""
             
             #
             # Parse entry details...
             #
-            for childNode in node.childNodes:
-                if childNode.nodeName == "title" :
-                    title = childNode.firstChild.data
-                elif childNode.nodeName == "link" :
-                    link  = childNode.firstChild.data
-                elif childNode.nodeName == "pubDate" :
-                    pubDate = childNode.firstChild.data
-                elif childNode.nodeName == "description" :
-                    description = childNode.firstChild.data
+            title = a_node.text
+            if (title == "../") :
+                continue
 
             # Title
-            revision = title[ title.rfind("r") + 1 : ]
-            title    = title[ : title.rfind("r") ].strip()
-            title    = "%s [COLOR=FFe2ff43]r%s[/COLOR]" % ( title, revision )
+            revision = title[ title.rfind("r") + 1 : ].replace( ".zip", "" )
+            title    = "XBMC4Xbox [COLOR=FFe2ff43]r%s[/COLOR]" % ( revision )
+            
+            # Link
+            link     = html_url + a_node[ "href" ]
             
             # Date
-            date_elements = time.strptime(pubDate, "%a, %d %b %Y %H:%M:%S CST")
-            date          = "%02u-%02u-%04u" % ( date_elements[2], date_elements[1], date_elements[0] )
-            
+            text_after_a_node = a_node.nextSibling.string.strip()
+            pubDate           = text_after_a_node[ : text_after_a_node.find(" ") ]
+            date_elements     = time.strptime(pubDate, "%d-%b-%Y")
+            date              = "%02u-%02u-%04u" % ( date_elements[2], date_elements[1], date_elements[0] )
+                        
             # Description
-            description       = self.parseDescription( description )
-
+            description       = text_after_a_node + "\n\n" + link
+            
             #
             # View build URL...
             #
@@ -135,12 +131,9 @@ class Main:
         #
         xbmc.executebuiltin( "XBMC.Notification(XBMC4Xbox,%s (%s),10000)" % ( xbmcsvn_utils.XBMC_BUILD_VERSION, xbmcsvn_utils.XBMC_BUILD_DATE ) )
         
-        #   
-        # Label (top-right)...
         #
-        xbmcplugin.setPluginCategory( handle=int( sys.argv[ 1 ] ), category=( "%s" % self.category ) )
-
         # Sorting...
+        #
         xbmcplugin.addSortMethod( int( sys.argv[ 1 ]), sortMethod=xbmcplugin.SORT_METHOD_DATE )
 
         # End of directory...
@@ -150,35 +143,37 @@ class Main:
     # Convert HTML to readable strings...
     #
     def parseDescription ( self, description ):
-        xmlString = description[description.find("<log>") : description.find("</log>") + 6 ]
-        xmlDom    = minidom.parseString( xmlString )
-        
-        text = ""
-        for node in xmlDom.getElementsByTagName("logentry") :
-            revision = node.attributes[ "revision" ].value
-            author   = ""
-            date     = ""
-            msg      = ""
+        description = ""
+
+        xmlString = description[description.find("<log>") : description.find("</log>") + 6 ]		
+        if xmlString != "" :
+            xmlDom    = minidom.parseString( xmlString )
             
-            for childNode in node.childNodes:
-                if childNode.nodeName == "author" :
-                    author = childNode.firstChild.data
-                elif childNode.nodeName == "date" :
-                    date   = childNode.firstChild.data
-                elif childNode.nodeName == "msg" :
-                    msg   = childNode.firstChild.data.strip()
-            
-            # Date display...
-            date          = date[ : date.find(".") ]
-            date_elements = time.strptime(date, "%Y-%m-%dT%H:%M:%S")
-            date_format   = xbmc.getRegion( "datelong" ).replace( "DDDD", "%a" ).replace( "D", "%d" ).replace( "MMMM", "%b" ).replace("YYYY", "%Y").strip()
-            date_display  = datetime.date( date_elements[0], date_elements[1], date_elements[2] ).strftime( date_format )
-            
-             
-            # Add change entry...
-            text = text + "Revision %s - %s\n"                  % ( revision, msg )
-            text = text + "%s - [COLOR=FFe2ff43]%s[/COLOR]\n\n" % ( date_display, author )
+            for node in xmlDom.getElementsByTagName("logentry") :
+                revision = node.attributes[ "revision" ].value
+                author   = ""
+                date     = ""
+                msg      = ""
+                
+                for childNode in node.childNodes:
+                    if childNode.nodeName == "author" :
+                        author = childNode.firstChild.data
+                    elif childNode.nodeName == "date" :
+                        date   = childNode.firstChild.data
+                    elif childNode.nodeName == "msg" :
+                        msg   = childNode.firstChild.data.strip()
+                
+                # Date display...
+                date          = date[ : date.find(".") ]
+                date_elements = time.strptime(date, "%Y-%m-%dT%H:%M:%S")
+                date_format   = xbmc.getRegion( "datelong" ).replace( "DDDD", "%a" ).replace( "D", "%d" ).replace( "MMMM", "%b" ).replace("YYYY", "%Y").strip()
+                date_display  = datetime.date( date_elements[0], date_elements[1], date_elements[2] ).strftime( date_format )
+                
+                 
+                # Add change entry...
+                description = description + "Revision %s - %s\n"                  % ( revision, msg )
+                description = description + "%s - [COLOR=FFe2ff43]%s[/COLOR]\n\n" % ( date_display, author )
 
         # Return value            
-        return text
+        return description
 

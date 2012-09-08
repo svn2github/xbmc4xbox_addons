@@ -3,7 +3,7 @@
 # XBMC SVN Installer - Program plugin for XBMC
 # http://www.xbmcsvn.com/
 #
-# Version 2.0 beta 1
+# Version 2.1
 # 
 # Author(s):
 #
@@ -23,8 +23,8 @@
 __plugin__  = "XBMC SVN Installer"
 __author__  = "Dan Dar3 <dan.dar33@gmail.com>"
 __url__     = "http://dandar3.blogspot.com"
-__date__    = "08 October 2011"
-__version__ = "2.0 beta 1"
+__date__    = "15 July 2012"
+__version__ = "2.1"
 
 #
 # Imports
@@ -39,33 +39,9 @@ sys.path.append (LIB_DIR)
 # Main block
 #
 
-# News
-if ( "action=news" in sys.argv[ 2 ] ) :
-    import xbmcsvn_news as plugin
-    try:
-        gui = plugin.GUI( "DialogTextViewer.xml", os.getcwd(), "default" )
-        del gui
-    except :
-        gui = plugin.GUI( "DialogScriptInfo.xml", os.getcwd(), "default" )
-        del gui
-    
-# Skins - List
-elif ( "action=skins-list" in sys.argv[ 2 ] ):
-    import xbmcsvn_skin_list as plugin
-    plugin.Main()
-    
-# Skin - View details
-elif ( "action=skin-view" in sys.argv[ 2 ] ):
-    import xbmcsvn_skin_info as plugin
-    gui = plugin.GUI( "xbmcsvn_skin_info.xml", os.getcwd(), "default" )
-
-# Skin - Install
-elif ( "action=skin-install" in sys.argv[ 2 ] ):
-    import xbmcsvn_skin_install as plugin
-    plugin.Main()
 
 # Build - List
-elif ( "action=build-list" in sys.argv[ 2 ] ):
+if ( "action=build-list" in sys.argv[ 2 ] ):
     import xbmcsvn_build_list as plugin
     plugin.Main()
 
@@ -98,5 +74,5 @@ elif ( "action=build-delete" in sys.argv[ 2 ]) :
 else:
     xbmc.log( "[PLUGIN] %s v%s (%s)" % ( __plugin__, __version__, __date__ ), xbmc.LOGNOTICE )
     
-    import xbmcsvn_main as plugin
+    import xbmcsvn_build_list as plugin
     plugin.Main()

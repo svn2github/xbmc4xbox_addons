@@ -30,7 +30,7 @@ class Main:
         #
         # Builds (Xbox only)
         #
-        if os.getenv("OS") == "xbox" :
+        if os.getenv("OS") == os.getenv("OS") :
             listitem = xbmcgui.ListItem( xbmc.getLocalizedString(30003), iconImage="DefaultFolder.png", thumbnailImage = os.path.join(IMAGES_DIR, "builds.png" ) )
             xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1] ), url = '%s?action=build-list&category=%s' % ( sys.argv[ 0 ], xbmc.getLocalizedString(30003) ), listitem=listitem, isFolder=True)        
 

@@ -36,10 +36,10 @@ class Main:
         # Get XML feed...
         #
         httpCommunicator = HTTPCommunicator()
-        xmlText          = httpCommunicator.get( "http://sourceforge.net/apps/trac/xbmc4xbox/log/trunk?limit=%u&verbose=on&format=rss" % (numberOfEntries - 1) )
+        xmlText          = httpCommunicator.get( "http://redmine.exotica.org.uk/projects/xbmc4xbox/repository/xbmc4xbox/revisions.atom" )
         xmlDom           = minidom.parseString( xmlText )
         
-        for node in xmlDom.getElementsByTagName("item") :                    
+        for node in xmlDom.getElementsByTagName("entry") :                    
             #
             # Init
             #
@@ -52,25 +52,28 @@ class Main:
             # Parse entry details...
             #
             for childNode in node.childNodes:
-                if childNode.nodeName == "dc:creator" :
-                    developer = childNode.firstChild.data 
-                elif childNode.nodeName == "pubDate" :
+                if childNode.nodeName == "author" :
+                    for node in childNode.childNodes :
+                        if node.nodeName == "name" :
+                            developer = node.firstChild.data
+                elif childNode.nodeName == "updated" :
                     pubDate = childNode.firstChild.data
                 elif childNode.nodeName == "title" :
                     title = childNode.firstChild.data
-                elif childNode.nodeName == "description" and childNode.firstChild :
+                elif childNode.nodeName == "content" and childNode.firstChild :
                     description = self.html2text(childNode.firstChild.data)            
             
             # Title
             title = title.replace("\n", " ")
             title = title.replace("Revision ", "")
+            title = title.replace(" (xbmc4xbox)", "")
             
             # Date
-            datetime_elements = time.strptime(pubDate, "%a, %d %b %Y %H:%M:%S %Z")
+            datetime_elements = time.strptime(pubDate, "%Y-%m-%dT%H:%M:%SZ")
             revisionDate = "%02u-%02u-%04u" % ( datetime_elements[2], datetime_elements[1], datetime_elements[0] )
             
             # Description
-            description = description.replace("\n\n", "\n") 
+            description = title[ title.find(":") + 1 : ] + '\n' + description 
                 
             #
             # Create list item...
@@ -102,6 +105,10 @@ class HTMLStripper (HTMLParser.HTMLParser):
         self.reset()
         self.fed = []
     
+    def handle_startendtag(self, tag, attrs):
+        if tag == 'br':
+            self.fed.append('\n')
+                
     def handle_data(self, d):
         self.fed.append(d)
     

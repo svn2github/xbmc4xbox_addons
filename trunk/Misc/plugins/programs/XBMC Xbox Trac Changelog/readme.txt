@@ -1,6 +1,10 @@
 XBMC Xbox Trac Changelog
 http://sourceforge.net/apps/trac/xbmc4xbox/log/trunk
 
+v1.7 (15 July 2012) :
+ * Change feed address to:
+   http://redmine.exotica.org.uk/projects/xbmc4xbox/repository/xbmc4xbox/revisions.atom
+
 v1.6 (06 November 2010):
  * Confluence skin (details);
 
