@@ -23,7 +23,7 @@
     <title>Icefilms.info</title>
 
     <!-- (required) Major.minor.build -->
-    <version>1.1.0</version>
+    <version>1.1.20</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
@@ -47,7 +47,7 @@
 
     <!--platforms compatible with your addon.   xbox, osx, windows, linux, or all -->
     <platforms>
-        <platform>all</platform>
+        <platform>xbox</platform>
     </platforms>
 
     <!--list any dependancies (such as another addon,  your addon may have.  minversion and maxversion are optional-->
@@ -57,7 +57,7 @@
 
     <!-- (optional) Whatever is put in disclaimer will be shown before download in an ok/cancel dialog.
     Keep it short and to the point. -->
-    <disclaimer>The author is not to be held liable for any copyrights that megaupload or 2shared may have infringed on</disclaimer>
+    <disclaimer>The author is not to be held liable for any copyrights that megaupload or 2shared or any other hosting service may have infringed on</disclaimer>
 
     <!-- (optional) The License the addon is released under.-->
     <license>GPL</license>
