@@ -27,8 +27,10 @@
 	<date>12/04/12</date>
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="anarchintosh" email="" />
+        <author name="Anarchintosh" email="" />
         <author name="daledude" email="" />
+		<author name="Eldorado" email="" />
+		<author name="Kozz" email="" />
     </authors>
 
     <!-- (required) Short description of addon. -->
