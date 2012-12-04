@@ -24,11 +24,11 @@
 
     <!-- (required) Major.minor.build -->
     <version>1.1.20</version>
-
+	<date>Dec 4 2012</date>
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="anarchintosh" email="j48antialias@gmail.com" />
-        <author name="daledude" email="dale.dewd@gmail.com" />
+        <author name="anarchintosh" />
+        <author name="daledude" />
     </authors>
 
     <!-- (required) Short description of addon. -->
@@ -39,7 +39,7 @@
 
     <!-- user defined tags e.g. <tags><tag>Example</tag></tags> -->
     <tags>
-        <tag></tag>
+        <tag>Ported By: Kozz</tag>
     </tags>
 
     <!-- minimum revision of xbmc your addon will run on.  Leave blank all revisions-->
