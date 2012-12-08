@@ -15,7 +15,8 @@
 from urllib import unquote_plus, quote_plus
 from urlparse import urlparse
 from cStringIO import StringIO
-import urllib2
+#import urllib2
+import mechanize
 import asyncore, socket
 from urlparse import urlparse
 import pickle
@@ -78,7 +79,7 @@ def unpickle_dict(items):
 
 def download_page(url, data=None):
     # Must check cache using httplib2 here!
-    u = urllib2.urlopen(url, data)
+    u = mechanize.urlopen(url, data)
     r = u.read()
     u.close()
     return r

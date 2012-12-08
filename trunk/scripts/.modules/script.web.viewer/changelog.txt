@@ -1,6 +1,45 @@
 Web Viewer Changelog
 
-Current Version : 0.8.3
+Current Version : 0.9.1
+
+*** 0.9.1 ***
+
+Added an option to getWebResult() to pass in a mechanize.Browser instance for WebViewer to use
+Updated mechanize
+Fixed relative URL handling
+When simple controls are enabled (ie ATV2), the parent directory (backspace on the keyboard) action will now exit when there are no more pages in the history.
+
+*** 0.9.0 ***
+
+Now on ATV2 systems, automatically detects ATV2 and sets simple controls to true if unset.
+
+*** 0.8.9 ***
+
+When viewing from another addon, the parent directory (backspace on the keyboard) action will now exit when there are no more pages in the history.
+
+*** 0.8.8 ***
+
+Handle alternate code for 'Previous Menu' action
+
+*** 0.8.7 ***
+
+Fix broken skin for image viewer
+
+*** 0.8.6 ***
+
+Remove autoforms logging that could print passwords to the log in plain text
+Added logging of version and python version
+
+*** 0.8.5 ***
+
+Fixed a bug causing downloads to fail
+
+*** 0.8.4 ***
+
+Handle more complex <br /> tags
+Added Read View to sub-options menu (For viewing pages without selectable elements or with widely spaced selectable elements.
+Parse file:// out of links so they display properly in local links
+Fix for pages without elements
 
 *** 0.8.3 ***
 

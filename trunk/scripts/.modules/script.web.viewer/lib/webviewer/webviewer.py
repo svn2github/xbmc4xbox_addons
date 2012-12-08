@@ -9,7 +9,7 @@ __plugin__ = 'Web Viewer'
 __author__ = 'ruuk (Rick Phillips)'
 __url__ = 'http://code.google.com/p/webviewer-xbmc/'
 __date__ = '01-19-2011'
-__version__ = '0.8.3'
+__version__ = '0.9.1'
 __addon__ = xbmcaddon.Addon(id='script.web.viewer')
 __language__ = __addon__.getLocalizedString
 
@@ -24,6 +24,7 @@ ACTION_PAGE_DOWN = 6
 ACTION_SELECT_ITEM = 7
 ACTION_HIGHLIGHT_ITEM = 8
 ACTION_PARENT_DIR = 9
+ACTION_PARENT_DIR2 = 92
 ACTION_PREVIOUS_MENU = 10
 ACTION_SHOW_INFO = 11
 ACTION_PAUSE = 12
@@ -56,6 +57,11 @@ def ERROR(message):
 def LOG(message):
 	print 'WEBVIEWER: %s' % ENCODE(str(message))
 
+LOG('Version: ' + __version__)
+LOG('Python Version: ' + sys.version)
+ATV2 = xbmc.getCondVisibility('System.Platform.ATV2')
+if ATV2: LOG('Running on ATV2')
+
 def clearDirFiles(filepath):
 	if not os.path.exists(filepath): return
 	for f in os.listdir(filepath):
@@ -83,8 +89,12 @@ class WebReader:
 		self.browser.addheaders = [('User-agent', 'Mozilla/3.0 (compatible)')]
 		#self.browser.addheaders = [('User-agent','Mozilla/5.0 (X11; Linux i686; rv:2.0.1) Gecko/20100101 Firefox/4.0.1')]
 		
+	def setBrowser(self,browser):
+		LOG('Using Alternate Browser')
+		self.browser = browser
+		
 	def getWebPage(self, url, callback=None):
-		LOG(url)
+		LOG('Getting Page at URL: ' + url)
 		if not callback: callback = self.fakeCallback
 		resData = ResponseData(url)
 		id = ''
@@ -260,6 +270,9 @@ class WebReader:
 class WebPage:
 	def __init__(self, resData, id='', forms=[]):
 		self.url = resData.url
+		end = ''
+		#if not '<a ' in resData.data and not '<img ' in resData.data and not '<form ' in resData.data: 
+		#	end = '<a href="#END">END OF PAGE</a><a name="#END"></a>'
 		self.html = resData.data
 		self.content = resData.content
 		self.contentDisp = resData.contentDisp
@@ -287,6 +300,16 @@ class WebPage:
 			self.forms.append(Form(f, ct))
 			ct += 1
 		if self.html: self.processPage()
+		#Fix for pages without elements
+		if not self.elements:
+			element = Link(HC.linkFilter.search('<a href="#END">NO LINKS ON PAGE</a>'), self.url, 0)
+			element.elementIndex = 0
+			element.displayPageIndex = len(self._display)
+			element.lineNumber = len(self.forDisplay().split('[CR]'))-1
+			self._links.append(element)
+			self.elements.append(element)
+			self._display += HC.linkFilter.sub(HC.linkConvert,'[CR]<a href="#END"> </a>')
+			self._displayWithIDs += HC.linkFilter.sub(HC.linkConvert,'[CR]<a href="#END"> </a>')
 		
 	def getFileName(self):
 		fn_m = re.search('filename="([^"]*)"', self.contentDisp)
@@ -457,7 +480,7 @@ class WebPage:
 		if name:
 			idx = 0
 			for f in self.forms:
-				if name == f.form.name:
+				if name == f.form.name or name == f.form.attrs.get('id'):
 					if index != None:
 						if index != idx: continue
 					return f
@@ -577,21 +600,24 @@ class Link(PageElement, LinkBase):
 		return self._isImage
 
 def fullURL(baseUrl, url):
-		if url.startswith('ftp://') or url.startswith('http://') or url.startswith('https://'): return url
-		pre = baseUrl.split('://', 1)[0] + '://'
-		if not url.startswith(pre):
-			base = baseUrl.split('://', 1)[-1]
-			base = base.rsplit('/', 1)[0]
-			domain = base.split('/', 1)[0]
-			if url.startswith('/'):
-				if url.startswith('//'):
-					return pre.split('/', 1)[0] + url
-				else:
-					return pre + domain + url
+	if url.startswith('ftp://') or url.startswith('http://') or url.startswith('https://') or url.startswith('file:/'): return url
+	if not (baseUrl.startswith('file://') or baseUrl.startswith('file:///')) and baseUrl.startswith('file:/'): baseUrl = baseUrl.replace('file:/','file:///')
+	pre = baseUrl.split('://', 1)[0] + '://'
+	if not url.startswith(pre):
+		base = baseUrl.split('://', 1)[-1]
+		base = base.rsplit('/', 1)[0]
+		domain = base.split('/', 1)[0]
+		if url.startswith('/'):
+			if url.startswith('//'):
+				url =  pre.split('/', 1)[0] + url
 			else:
-				if not base.endswith('/'): base += '/'
-				return pre + base + url
-		return url
+				url =  pre + domain + url
+		elif url.startswith('.'):
+			if not base.endswith('/'): base += '/'
+			url =  pre + base + url
+		else:
+			url =  pre + domain + '/' + url
+	return url
 
 class URLHistory:
 	def __init__(self, first):
@@ -801,13 +827,13 @@ class BaseWindow(ThreadWindow):
 	def __init__(self, *args, **kwargs):
 		self._progMessageSave = ''
 		ThreadWindow.__init__(self)
-		xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+		xbmcgui.WindowXMLDialog.__init__(self)
 	
 	def onClick(self, controlID):
 		return ThreadWindow.onClick(self, controlID)
 			
 	def onAction(self, action):
-		if action == ACTION_PARENT_DIR:
+		if action == ACTION_PARENT_DIR or action == ACTION_PARENT_DIR2:
 			action = ACTION_PREVIOUS_MENU
 		if ThreadWindow.onAction(self, action): return
 		xbmcgui.WindowXMLDialog.onAction(self, action)
@@ -833,7 +859,7 @@ class BaseWindow(ThreadWindow):
 class ImageDialog(BaseWindow, xbmcgui.WindowXMLDialog):
 	def __init__(self, *args, **kwargs):
 		self.image = kwargs.get('image')
-		xbmcgui.WindowXML.__init__(self, *args, **kwargs)
+		xbmcgui.WindowXML.__init__(self)
 	
 	def onInit(self):
 		self.showImage()
@@ -848,7 +874,7 @@ class ImageDialog(BaseWindow, xbmcgui.WindowXMLDialog):
 		pass
 	
 	def onAction(self, action):
-		if action == ACTION_PARENT_DIR:
+		if action == ACTION_PARENT_DIR or action == ACTION_PARENT_DIR2:
 			action = ACTION_PREVIOUS_MENU
 		xbmcgui.WindowXMLDialog.onAction(self, action)
 		
@@ -872,7 +898,7 @@ class SourceDialog(BaseWindow, xbmcgui.WindowXMLDialog):
 		pass
 	
 	def onAction(self, action):
-		if action == ACTION_PARENT_DIR:
+		if action == ACTION_PARENT_DIR or action == ACTION_PARENT_DIR2:
 			action = ACTION_PREVIOUS_MENU
 		elif action == ACTION_PAGE_UP or action == 104:
 			action = ACTION_MOVE_UP
@@ -972,7 +998,11 @@ class ViewerWindow(BaseWindow):
 		self.first = True
 		
 		self.isBoxee = self._isBoxee()
-		self.simpleControls = __addon__.getSetting('simple_controls') == 'true'
+		if ATV2:
+			if not __addon__.getSetting('simple_controls'):
+				LOG('ATV2: Setting unset simple_controls to: true')
+				__addon__.setSetting('simple_controls','true')
+		self.simpleControls = __addon__.getSetting('simple_controls') == 'true'			
 		self.imageReplace = 'IMG #%s: %s'
 		self.page = None
 		self.history = URLHistory(HistoryLocation(self.url))
@@ -993,6 +1023,7 @@ class ViewerWindow(BaseWindow):
 		self.formFocused = False
 		self.lastPageSearch = ''
 		self.bmManger = BookmarksManager(os.path.join(xbmc.translatePath(__addon__.getAddonInfo('profile')), 'bookmarks'))
+		self.standalone = True
 		BaseWindow.__init__(self, *args, **kwargs)
 		
 	def onInit(self):
@@ -1012,9 +1043,10 @@ class ViewerWindow(BaseWindow):
 		self.getControl(310).setVisible(False)
 		
 	def back(self):
-		if not self.history.canGoBack(): return
+		if not self.history.canGoBack(): return False
 		hloc = self.history.goBack(self.pageList.getSelectedPosition())
 		self.gotoHistory(hloc)
+		return True
 
 	def forward(self):
 		if not self.history.canGoForward(): return
@@ -1490,7 +1522,6 @@ class ViewerWindow(BaseWindow):
 		
 		self.selectionChanged(self.pageList.getSelectedPosition(), -1)
 		for fd in self.autoForms:
-			LOG(fd)
 			f = self.page.getForm(url=fd.get('url'), name=fd.get('name'), action=fd.get('action'), index=fd.get('index'))
 			if f:
 				submit = fd.get('autosubmit') == 'true'
@@ -1524,10 +1555,10 @@ class ViewerWindow(BaseWindow):
 		for link in self.page.links():
 			item = xbmcgui.ListItem(link.text or link.url, link.urlShow())
 			if link.isImage():
-				LOG(link.fullURL())
+				#LOG(link.fullURL())
 				item.setIconImage(link.fullURL())
 			elif link.image:
-				LOG(link.image)
+				#LOG(link.image)
 				item.setIconImage(link.image)
 			else:
 				item.setIconImage('webviewer-link.png')
@@ -1537,7 +1568,8 @@ class ViewerWindow(BaseWindow):
 		self.getControl(150).reset()
 		i = 0
 		for url in self.page.imageURLs():
-			url = fullURL(self.url, url)
+			#Replace file:// so images display properly in xbmc
+			url = fullURL(self.url, url).replace('file://','')
 			i += 1
 			item = xbmcgui.ListItem(self.imageReplace % (i, url), iconImage=url)
 			item.setProperty('url', url)
@@ -1643,6 +1675,7 @@ class ViewerWindow(BaseWindow):
 			#xbmcgui.Dialog().ok(__language__(30052),__language__(30146),fname,__language__(30147) % ftype)
 		
 	def showImage(self, url):
+		LOG('SHOWING IMAGE: ' + url)
 		base = os.path.join(xbmc.translatePath(__addon__.getAddonInfo('profile')), 'imageviewer')
 		if not os.path.exists(base): os.makedirs(base)
 		clearDirFiles(base)
@@ -1784,9 +1817,11 @@ class ViewerWindow(BaseWindow):
 				self.doMenu()
 				return
 			
-		if action == ACTION_PARENT_DIR or action == ACTION_PLAYER_REWIND:
-			self.back()
-			return
+		if action == ACTION_PARENT_DIR or action == ACTION_PARENT_DIR2 or action == ACTION_PLAYER_REWIND:
+			if not self.back() and (not self.standalone or self.simpleControls):
+				action == ACTION_PREVIOUS_MENU
+			else:
+				return
 		elif action == ACTION_PLAYER_FORWARD:
 			self.forward()
 			return
@@ -1805,7 +1840,7 @@ class ViewerWindow(BaseWindow):
 	def downloadLink(self, url, fname=None):
 		base = xbmcgui.Dialog().browse(3, __language__(30128), 'files')
 		if not base: return
-		fname, ftype = Downloader(message=__language__(30129)).downloadURL(base, url, fname, open=WR.browser.open)
+		fname, ftype = Downloader(message=__language__(30129)).downloadURL(base, url, fname, opener=WR.browser.open)
 		if not fname: return
 		xbmcgui.Dialog().ok(__language__(30109), __language__(30130), fname, __language__(30115) % ftype)
 		
@@ -1864,7 +1899,7 @@ class ViewerWindow(BaseWindow):
 		
 	def settings(self):
 		dialog = xbmcgui.Dialog()
-		idx = dialog.select(__language__(30110), [__language__(30133), __language__(30142), __language__(30157)])
+		idx = dialog.select(__language__(30110), [__language__(30133), __language__(30142), __language__(30157), __language__(30162)])
 		if idx < 0: return
 		
 		if idx == 0:
@@ -1874,6 +1909,8 @@ class ViewerWindow(BaseWindow):
 			xbmcgui.Dialog().ok(__language__(30109), __language__(30143), self.page.getTitle())
 		elif idx == 2:
 			self.viewPageSource()
+		elif idx == 3:
+			self.viewReadMode()
 	
 	def openSettings(self):
 		__addon__.openSettings()
@@ -1887,6 +1924,11 @@ class ViewerWindow(BaseWindow):
 		#import codecs
 		#codecs.open('/home/ruuk/test.txt','w',encoding='utf-8').write(source)
 		w = SourceDialog("script-webviewer-source.xml" , __addon__.getAddonInfo('path'), THEME, source=source)
+		w.doModal()
+		del w
+		
+	def viewReadMode(self):
+		w = SourceDialog("script-webviewer-source.xml" , __addon__.getAddonInfo('path'), THEME, source=self.page.forDisplay())
 		w.doModal()
 		del w
 		
@@ -2091,7 +2133,7 @@ def doKeyboard(prompt, default='', hidden=False):
 ################################################################################
 # getWebResult
 ################################################################################
-def getWebResult(url, autoForms=[], autoClose=None, dialog=False, runFromSubDir=None,clearCookies=False):
+def getWebResult(url, autoForms=[], autoClose=None, dialog=False, runFromSubDir=None,clearCookies=False,browser=None):
 	LOG('getWebResult() - STARTED')
 	"""Open a url and get the result
 	
@@ -2124,9 +2166,10 @@ def getWebResult(url, autoForms=[], autoClose=None, dialog=False, runFromSubDir=
 	Setting the dialog parameter to true will cause the browser to open as a dialog instead as a normal window.
 	
 	"""
+	if browser: WR.setBrowser(browser)
 	if clearCookies: WR.browser._ua_handlers["_cookies"].cookiejar.clear()
 	if runFromSubDir: __addon__.setAddonPath(runFromSubDir)
-	apath = xbmc.translatePath(__addon__.getAddonInfo('path'))
+	apath = 'Q:\\scripts\\.modules\\script.web.viewer\\'
 	if not os.path.exists(os.path.join(apath,'resources','skins','Default','720p','script-webviewer-page.xml')):
 		apath = 'Q:\\scripts\\.modules\\script.web.viewer\\' #for XBMC4Xbox when used as a module
 	
@@ -2134,6 +2177,7 @@ def getWebResult(url, autoForms=[], autoClose=None, dialog=False, runFromSubDir=
 		w = ViewerWindowDialog("script-webviewer-page.xml" , apath, THEME, url=url, autoForms=autoForms, autoClose=autoClose)
 	else:
 		w = ViewerWindowNormal("script-webviewer-page.xml" , apath, THEME, url=url, autoForms=autoForms, autoClose=autoClose)
+	w.standalone = False
 	w.doModal()
 	if w.page:
 		url = w.page.url
