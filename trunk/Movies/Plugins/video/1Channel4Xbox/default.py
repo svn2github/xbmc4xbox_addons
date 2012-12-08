@@ -23,7 +23,7 @@ import sys
 import urllib2
 import mechanize
 import urllib
-#import urlresolver
+import urlresolver
 import zipfile
 import xbmcgui
 import xbmcplugin
