@@ -353,7 +353,7 @@ def AddonMenu():  #homescreen
 	print '1Channel menu'
 	AddOption('Movies',  True, 500, section=None, img='movies.jpg')
 	AddOption('TV shows',True, 500, section='tv', img='television.jpg')
-	AddOption('Broken Resolver Settings',True, 9999, img='settings.jpg')
+	AddOption('Advanced Resolver Settings',True, 9999, img='settings.jpg')
 	xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def BrowseListMenu(section=None): #500
