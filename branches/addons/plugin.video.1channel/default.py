@@ -25,7 +25,7 @@ import urlresolver
 import zipfile
 import xbmcgui
 import xbmcplugin
-import xbmc, xbmcvfs
+import xbmc
 import HTMLParser
 import time
 
@@ -33,7 +33,7 @@ from t0mm0.common.addon import Addon
 from t0mm0.common.net import Net
 from metahandler import metahandlers
 from metahandler import metacontainers
-from operator import itemgetter, methodcaller
+from operator import itemgetter
 
 import metapacks
 import playback
@@ -186,7 +186,7 @@ def GetURL(url, params=None, referrer=BASE_URL, silent=False, cache_limit=8):
     if referrer: req.add_header('Referer', referrer)
     
     try:
-        response = urllib2.urlopen(req, timeout=10)
+        response = urllib2.urlopen(req)
         body = response.read()
         body = unicode(body,'iso-8859-1')
         h = HTMLParser.HTMLParser()
@@ -504,7 +504,7 @@ def Search(section, query):
                                 thumbnailImage=img)
                 listitem.setInfo('video', meta)
                 listitem.setProperty('fanart_image', fanart)
-                listitem.addContextMenuItems(cm, replaceItems=True)
+                listitem.addContextMenuItems(cm)
                 queries = {'mode':nextmode, 'title':title, 'url':BASE_URL + resurl,
                            'img':thumb, 'imdbnum':meta['imdb_id'],
                            'video_type':video_type, 'year':year}
@@ -670,7 +670,7 @@ def GetFilteredResults(section=None, genre=None, letter=None, sort='alphabet', p
                             thumbnailImage=img)
             listitem.setInfo('video', meta)
             listitem.setProperty('fanart_image', fanart)
-            listitem.addContextMenuItems(cm, replaceItems=True)
+            listitem.addContextMenuItems(cm)
             queries = {'mode':nextmode, 'title':title, 'url':BASE_URL + resurl,
                        'img':thumb, 'imdbnum':meta['imdb_id'],
                        'video_type':video_type, 'year':year}
@@ -848,7 +848,7 @@ def TVShowEpisodeList(ShowTitle, season, imdbnum, tvdbnum): #5000
                                     thumbnailImage=img)
         listitem.setInfo('video', meta)
         listitem.setProperty('fanart_image', fanart)
-        listitem.addContextMenuItems(cm, replaceItems=True)
+        listitem.addContextMenuItems(cm)
         xbmcplugin.addDirectoryItem(int(sys.argv[1]), li_url, listitem,
                                         isFolder=folder)
         # addon.add_directory({'mode':'GetSources', 'url':url, 'imdbnum':imdbnum, 'title':ShowTitle, 'img':img},
@@ -995,7 +995,7 @@ def GetByLetter(letter, section):
                         thumbnailImage=meta['cover_url'])
         listitem.setInfo('video', meta)
         listitem.setProperty('fanart_image', fanart)
-        listitem.addContextMenuItems(cm, replaceItems=True)
+        listitem.addContextMenuItems(cm)
         url = '%s/%s' %(BASE_URL,resurl)
         queries = {'mode':nextmode, 'title':title, 'url':url,
                    'img':meta['cover_url'], 'imdbnum':meta['imdb_id'],
@@ -1099,13 +1099,14 @@ def zipdir(basedir, archivename):
     from contextlib import closing
     from zipfile import ZipFile, ZIP_DEFLATED
     assert os.path.isdir(basedir)
-    with closing(ZipFile(archivename, "w", ZIP_DEFLATED)) as z:
-        for root, dirs, files in os.walk(basedir):
-            #NOTE: ignore empty directories
-            for fn in files:
-                absfn = os.path.join(root, fn)
-                zfn = absfn[len(basedir)+len(os.sep):] #XXX: relative path
-                z.write(absfn, zfn)
+    archive = ZipFile(archivename, "w", ZIP_DEFLATED)
+    for root, dirs, files in os.walk(basedir):
+        #NOTE: ignore empty directories
+        for fn in files:
+            absfn = os.path.join(root, fn)
+            zfn = absfn[len(basedir)+len(os.sep):] #XXX: relative path
+            z.write(absfn, zfn)
+    archive.close
 
 def extract_zip(src, dest):
         try:
@@ -1558,7 +1559,7 @@ def ManageSubscriptions():
                 thumbnailImage=img)
         listitem.setInfo('video', meta)
         listitem.setProperty('fanart_image', fanart)
-        listitem.addContextMenuItems(cm, replaceItems=True)
+        listitem.addContextMenuItems(cm)
         queries = {'mode':'TVShowSeasonList', 'title':sub[1], 'url':sub[0],
                    'img':img, 'imdbnum':meta['imdb_id'],
                    'video_type':'tvshow', 'year':sub[3]}
@@ -1585,10 +1586,16 @@ def multikeysort(items, columns, functions={}, getter=itemgetter):
     """
     comparers = []
     for col in columns:
-        column = col[1:] if col.startswith('-') else col
+        if col.startswith('-'):
+            column = col[1:]
+        else:
+            colume = col
         if not column in functions:
             functions[column] = getter(column)
-        comparers.append((functions[column], 1 if column == col else -1))
+        if column == col:
+            comparers.append((functions[column], 1))
+        else:
+            comparers.append((functions[column], -1))
 
     def comparer(left, right):
         for func, polarity in comparers:
