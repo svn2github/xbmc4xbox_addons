@@ -20,7 +20,7 @@ import sys
 import urllib
 
 
-class YouTubeNavigation():
+class YouTubeNavigation:
     def __init__(self):
         self.xbmc = sys.modules["__main__"].xbmc
         self.xbmcgui = sys.modules["__main__"].xbmcgui
@@ -143,8 +143,6 @@ class YouTubeNavigation():
             self.removeSubscription(params)
         if (get("action") == "add_subscription"):
             self.addSubscription(params)
-        if (get("action") == "download"):
-            self.downloadVideo(params)
         if (get("action") == "play_video"):
             self.player.playVideo(params)
         if (get("action") == "queue_video"):
@@ -530,8 +528,6 @@ class YouTubeNavigation():
             if get("contact"):
                 contact = get("contact")
             cm.append((self.language(30521), "XBMC.RunPlugin(%s?path=%s&action=play_all&user_feed=%s&contact=%s&videoid=%s&)" % (sys.argv[0], item("path"), get("user_feed"), contact, item("videoid"))))
-
-        cm.append((self.language(30501), "XBMC.RunPlugin(%s?path=%s&action=download&videoid=%s)" % (sys.argv[0], item("path"), item("videoid"))))
 
         if (self.settings.getSetting("username") != "" and self.settings.getSetting("oauth2_access_token")):
             if (get("user_feed") == "favorites" and not get("contact")):

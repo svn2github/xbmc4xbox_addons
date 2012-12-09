@@ -20,7 +20,7 @@ import sys
 import urllib
 
 
-class YouTubeScraper():
+class YouTubeScraper:
     urls = {}
     urls['disco_main'] = "http://www.youtube.com/disco"
     urls['disco_mix_list'] = "http://www.youtube.com/watch?v=%s&feature=disco&playnext=1&list=%s"

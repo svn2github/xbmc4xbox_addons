@@ -20,7 +20,7 @@ import sys
 import  urllib
 
 
-class YouTubeFeeds():
+class YouTubeFeeds:
     # YouTube General Feeds
     urls = {}
     urls['playlist'] = "http://gdata.youtube.com/feeds/api/playlists/%s"

@@ -88,8 +88,6 @@ if (__name__ == "__main__" ):
     subtitles = YouTubeSubtitleControl.YouTubeSubtitleControl()
     import YouTubePlayer
     player = YouTubePlayer.YouTubePlayer()
-    import SimpleDownloader as downloader
-    downloader = downloader.SimpleDownloader()
     import YouTubeScraper
     scraper = YouTubeScraper.YouTubeScraper()
     import YouTubePlaylistControl

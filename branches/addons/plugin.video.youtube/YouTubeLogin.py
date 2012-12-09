@@ -28,7 +28,7 @@ except ImportError: import json
 # 500 = uncaught error
 
 
-class YouTubeLogin():
+class YouTubeLogin:
     APIKEY = "AI39si6hWF7uOkKh4B9OEAX-gK337xbwR9Vax-cdeF9CF9iNAcQftT8NVhEXaORRLHAmHxj6GjM-Prw04odK4FxACFfKkiH9lg"
 
     urls = {}

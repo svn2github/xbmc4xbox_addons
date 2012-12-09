@@ -48,7 +48,7 @@ class url2request(urllib2.Request):
             return urllib2.Request.get_method(self)
 
 
-class YouTubeCore():
+class YouTubeCore:
     APIKEY = "AI39si6hWF7uOkKh4B9OEAX-gK337xbwR9Vax-cdeF9CF9iNAcQftT8NVhEXaORRLHAmHxj6GjM-Prw04odK4FxACFfKkiH9lg"
 
     #===============================================================================

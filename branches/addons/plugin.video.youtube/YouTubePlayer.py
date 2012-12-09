@@ -24,7 +24,7 @@ except ImportError: import json
 import urllib
 
 
-class YouTubePlayer():
+class YouTubePlayer:
     fmt_value = {
         5: "240p h263 flv container",
         18: "360p h264 mp4 container | 270 for rtmpe?",

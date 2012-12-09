@@ -19,7 +19,7 @@
 import sys
 
 
-class YouTubePlaylistControl():
+class YouTubePlaylistControl:
 
     def __init__(self):
         self.xbmc = sys.modules["__main__"].xbmc
