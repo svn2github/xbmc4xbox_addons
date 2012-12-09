@@ -21,11 +21,11 @@
     <title>xbmcaddon</title>
 
     <!-- (required) Major.minor.build -->
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <!-- (required) author name & email.  at least one author name is required -->
     <authors>
-        <author name="blank" email="" />
+        <author name="Updated By BuZz" email="" />
     </authors>
 
     <summary lang="en">Collection of commonly used addon routines</summary>
