@@ -20,12 +20,11 @@ import sys
 import urllib
 import urllib2
 import re
-import io
 import inspect
 import time
 import HTMLParser
 #import chardet
-import json
+import simplejson as json
 
 version = u"1.4.0"
 plugin = u"CommonFunctions-" + version
@@ -523,10 +522,10 @@ def openFile(filepath, options=u"r"):
 
     try:
         log("Trying normal: %s" % options)
-        return io.open(filepath, options)
+        return open(filepath, options)
     except:
         log("Fallback to binary: %s" % alternate)
-        return io.open(filepath, alternate)
+        return open(filepath, alternate)
 
 
 def log(description, level=0):
