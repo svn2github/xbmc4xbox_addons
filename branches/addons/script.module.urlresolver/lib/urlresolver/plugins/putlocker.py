@@ -30,7 +30,7 @@ from urlresolver.plugnplay import Plugin
 from threading import Thread
 
 class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
-    implements = [UrlResolver, PluginSettings]
+	implements = [UrlResolver, PluginSettings]
 	name = "putlocker/sockshare"
 	profile_path = common.profile_path
 	cookie_file = os.path.join(profile_path, 'putlocker.cookies')
