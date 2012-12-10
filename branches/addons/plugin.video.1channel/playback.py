@@ -80,7 +80,7 @@ class Player(xbmc.Player):
 			sql = sql.replace('?','%s')
 			db = database.connect(DB_NAME, DB_USER, DB_PASS, DB_ADDRESS, buffered=True)
 		else:
-			db = database.connect(DB)
+			db = database.connect(db_dir)
 		cur = db.cursor()
 		cur.execute(sql, (self.video_type, self.title, self.season, self.episode, self.year))
 		bookmark = cur.fetchone()
