@@ -14,19 +14,20 @@
 <addon id="plugin.video.1channel" version="1.0.0" name="1Channel" provider-name="Bstrdsmkr">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.xbmcaddon"    version="1.1.0"/>
         <import addon="script.module.urlresolver"  version="0.0.1"/>
-	<import addon="script.module.simplejson"   version="2.0.0"/>
+        <import addon="script.module.simplejson"   version="2.0.0"/>
         <import addon="script.module.t0mm0.common" version="1.1.0"/>
-	<import addon="script.module.metahandler"  version="1.0.0"/>
-	<import addon="script.module.pysqlite2"    version="1.0.0"/>
-	<import addon="script.module.elementtree"  version="1.2.0"/>
-	<import addon="script.module.myconnpy"     version="0.3.2"/>
+        <import addon="script.module.metahandler"  version="1.0.0"/>
+        <import addon="script.module.pysqlite2"    version="1.0.0"/>
+        <import addon="script.module.elementtree"  version="1.2.0"/>
+        <import addon="script.module.myconnpy"     version="0.3.2"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.service" library="service.py" start="startup">
-	</extension>
+        </extension>
     <extension point="xbmc.addon.metadata">
         <summary>Browse 1channel.ch</summary>
         <description>Play a wide selection of movies and TV shows from 1channel.ch</description>
@@ -43,6 +44,18 @@
         <platform>xbox</platform>
         <summary lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</summary>
         <description lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</description>
+    </extension>
+</addon>
+
+<addon id="script.module.xbmcaddon" name="xbmcaddon emulator" version="1.1.0" provider-name="Team XBMC4XBOX">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>xbox</platform>
+        <summary lang="en">Module emulates XBMC xbmcaddon module.</summary>
+        <description lang="en">Module emulates XBMC xbmcaddon module.</description>
     </extension>
 </addon>
 
