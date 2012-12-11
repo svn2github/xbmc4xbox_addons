@@ -34,7 +34,7 @@ class YoutubeResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         #just call youtube addon
-        plugin = 'plugin://plugin.video.youtube/?action=play_video&videoid=' +\
+        plugin = 'plugin://video/YouTube/?action=play_video&videoid=' +\
                  media_id
         return plugin
 
