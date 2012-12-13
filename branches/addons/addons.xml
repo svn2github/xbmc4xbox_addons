@@ -149,4 +149,22 @@
 Turns your XBMC into an instant free on-demand media-center. Stream and download to your library pure AVI scene releases, in DVD and HD720p quality. Browse and search the library of over 77,000 videos with metadata and posters. Never experience the frustration of dead video links!</description>
     </extension>
 </addon>
+<addon id='plugin.video.bliptv' version='0.7.0' name='BlipTV' provider-name='TheCollective'>
+  <requires>
+    <import addon='xbmc.python' version='2.0'/>
+    <import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon='script.module.xbmcvfs' version='1.0.1'/>
+  </requires>
+  <extension point='xbmc.python.pluginsource'
+            library='default.py'>
+        <provides>video</provides>
+  </extension>
+  <extension point='xbmc.addon.metadata'>
+    <platform>all</platform>
+    <summary lang='en'>Bliptv video plugin</summary>
+    <description lang='en'>Plugin that let's you browse and play videos from BlipTV!</description>
+    <summary lang='bg'>Видео добавка за Bliptv</summary>
+    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от BlipTV!</description>
+  </extension>
+</addon>
 </addons>
