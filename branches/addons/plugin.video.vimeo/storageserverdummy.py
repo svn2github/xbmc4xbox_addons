@@ -4,7 +4,7 @@
 '''
 
 
-class StorageServer():
+class StorageServer:
     def __init__(self, table=False):
         return None
 
