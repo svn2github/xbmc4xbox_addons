@@ -31,7 +31,7 @@ import urllib2
 # 500 = uncaught error
 
 
-class VimeoLogin():
+class VimeoLogin:
     def __init__(self):
         self.xbmc = sys.modules["__main__"].xbmc
         self.v = sys.modules["__main__"].client
