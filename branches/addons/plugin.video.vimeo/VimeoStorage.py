@@ -56,9 +56,9 @@ class VimeoStorage:
             alternate = options.replace("b", "")
 
         try:
-            return io.open(filepath, options)
+            return open(filepath, options)
         except:
-            return io.open(filepath, alternate)
+            return open(filepath, alternate)
 
     def getStoredSearches(self, params={}):
         get = params.get
