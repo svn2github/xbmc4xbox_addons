@@ -205,7 +205,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <language>en</language>
   </extension>
 </addon>
-<addon id="plugin.script.navi-x"
+<addon id="plugin.script.Navi-X"
        name="Navi-X"
        version="3.74"
        provider-name="Navi-X team">
