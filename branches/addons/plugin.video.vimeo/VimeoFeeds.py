@@ -19,7 +19,7 @@
 import sys
 import urllib
 
-class VimeoFeeds():
+class VimeoFeeds:
     urls = {}
     
     def __init__(self):
