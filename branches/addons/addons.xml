@@ -241,6 +241,20 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     </extension>
 </addon>
 
+<addon id="script.module.simplejson"
+       name="simplejson"
+       version="2.0.10"
+       provider-name="code.google.com/simplejson">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="script.module.urlresolver"
 	     name="urlresolver"
 	     version="1.0.3"
