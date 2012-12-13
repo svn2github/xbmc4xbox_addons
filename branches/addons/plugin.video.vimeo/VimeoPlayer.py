@@ -28,7 +28,7 @@ try: import simplejson as json
 except ImportError: import json
 
 
-class VimeoPlayer():
+class VimeoPlayer:
 
     # Vimeo Playback Feeds
     urls = {}
