@@ -60,7 +60,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.free.cable"
+<addon id="plugin.video.freecable"
        name="Free Cable"
        version="0.5.2"
        provider-name="BlueCop">
@@ -80,9 +80,6 @@
     <platform>all</platform>
   </extension>
 </addon>
-
-## Cut from original ##
-## <import addon="script.module.free.cable.database" version="0.0.3"/>
 
 <addon id="plugin.video.icefilms"
        name="Icefilms"
