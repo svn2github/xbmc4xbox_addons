@@ -205,5 +205,21 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <language>en</language>
   </extension>
 </addon>
+<addon id="plugin.script.navi-x"
+       name="Navi-X"
+       version="3.74"
+       provider-name="Navi-X team">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <minversion>28764</minversion>
+    <summary lang="en">Media browser</summary>
+    <description lang="en">Media browser</description>
+  </extension>
+</addon>
 
 </addons>
