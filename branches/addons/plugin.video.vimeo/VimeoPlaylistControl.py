@@ -18,7 +18,7 @@
 
 import sys
 
-class VimeoPlaylistControl():
+class VimeoPlaylistControl:
 
     def __init__(self):
         self.xbmc = sys.modules["__main__"].xbmc
