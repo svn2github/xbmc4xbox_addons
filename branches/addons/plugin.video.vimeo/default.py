@@ -59,8 +59,6 @@ if (__name__ == "__main__" ):
     import CommonFunctions as common
     common.plugin = plugin
 
-    import SimpleDownloader as downloader
-    downloader = downloader.SimpleDownloader()
 
     import VimeoUtils
     utils = VimeoUtils.VimeoUtils()
