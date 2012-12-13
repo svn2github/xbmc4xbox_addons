@@ -68,7 +68,7 @@
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
     <import addon="script.module.demjson" version="1.4"/>
-    <import addon="script.module.free.cable.database" version="0.0.3"/>
+#   <import addon="script.module.free.cable.database" version="0.0.3"/>
     <import addon="script.module.coveapi" version="0.2"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
@@ -167,6 +167,34 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary lang='bg'>Видео добавка за YouTube</summary>
     <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на на всички видео сайт!</description>
     <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
+  </extension>
+</addon>
+
+<addon id="script.module.coveapi"
+       name="Cove API"
+       version="0.2"
+       provider-name="github.com/pbs/python-coveapi">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="script.module.demjson"
+       name="demjson"
+       version="1.4"
+       provider-name="deron.meranda.us">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
   </extension>
 </addon>
 
