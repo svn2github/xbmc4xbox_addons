@@ -122,9 +122,9 @@
         <platform>all</platform>
     </extension>
 </addon>
-<addon id="plugin.video.icefilms"
+<addon id="plugin.video.Icefilms"
        name="Icefilms"
-       version="1.1.17"
+       version="1.1.20"
        provider-name="Eldorado (originator: anarchintosh)">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
