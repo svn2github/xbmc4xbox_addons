@@ -7,7 +7,6 @@
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
     <import addon="script.module.demjson" version="1.4"/>
-#   <import addon="script.module.free.cable.database" version="0.0.3"/>
     <import addon="script.module.coveapi" version="0.2"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
@@ -20,3 +19,6 @@
     <platform>all</platform>
   </extension>
 </addon>
+
+## Cut from original ##
+## <import addon="script.module.free.cable.database" version="0.0.3"/>
