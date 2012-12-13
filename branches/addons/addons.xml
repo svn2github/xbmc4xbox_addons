@@ -60,6 +60,24 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.crackle2"
+       name="Crackle2"
+       version="0.0.1"
+       provider-name="newatv2user">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Crackle</summary>
+    <description lang="en">Shows and Movies from Crackle.</description>
+     <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.freecable"
        name="Free Cable"
        version="0.5.2"
