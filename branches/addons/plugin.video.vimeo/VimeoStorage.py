@@ -20,7 +20,7 @@ import sys
 import urllib
 import io
 
-class VimeoStorage():
+class VimeoStorage:
     def __init__(self):
         self.xbmc = sys.modules["__main__"].xbmc
         self.settings = sys.modules["__main__"].settings
