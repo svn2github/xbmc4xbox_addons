@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id='script.module.parsedom' version='1.4.0' name='Parsedom for xbmc plugins' provider-name='TheCollective'>
+<addon id="script.navi-x"
+       name="Navi-X"
+       version="3.74"
+       provider-name="Navi-X team">
   <requires>
-    <import addon='xbmc.python' version='2.0'/>
+    <import addon="xbmc.python" version="1.0"/>
   </requires>
-  <extension point='xbmc.addon.metadata'>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang='en'>Parsedom for xbmc plugins.</summary>
+    <minversion>28764</minversion>
+    <summary lang="en">Media browser</summary>
+    <description lang="en">Media browser</description>
   </extension>
-  <extension point='xbmc.python.module' library='lib' />
 </addon>
 
 <addon id="plugin.video.1channel" version="1.0.0" name="1Channel" provider-name="Bstrdsmkr">
@@ -35,56 +41,111 @@
     </extension>
 </addon>
 
-<addon id="script.module.pysqlite2" name="Python SQLite2 library for XBOX" version="1.0.0" provider-name="Gerhard Haring">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-    </requires>
-    <extension point="xbmc.python.module" library="lib"/>
-    <extension point="xbmc.addon.metadata">
-        <platform>xbox</platform>
-        <summary lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</summary>
-        <description lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</description>
-    </extension>
-</addon>
-
-<addon id="script.module.xbmcaddon" name="xbmcaddon emulator" version="1.1.0" provider-name="Team XBMC4XBOX">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-    </requires>
-    <extension point="xbmc.python.module" library="lib"/>
-    <extension point="xbmc.addon.metadata">
-        <platform>xbox</platform>
-        <summary lang="en">Module emulates XBMC xbmcaddon module.</summary>
-        <description lang="en">Module emulates XBMC xbmcaddon module.</description>
-    </extension>
-</addon>
-
-<addon id="script.module.urlresolver"
-	     name="urlresolver"
-	     version="1.0.3"
-	     provider-name="XBMCHub.com">
-  <requires>
-    <import addon="xbmc.python" version="2.0" />
-    <import addon="script.module.t0mm0.common" version="1.0.0"/>
-    <import addon="plugin.video.youtube"/>
-  </requires>
-  <extension point="xbmc.python.module" library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Resolve common video host URL's to be playable in XBMC.</summary>
-    <description lang="en">Resolve common video host URL's to be playable in XBMC, simplify addon development of video plugins requiring multi video hosts.</description>
-  </extension>
-</addon>
-
-<addon id='script.module.parsedom' version='1.4.0' name='Parsedom for xbmc plugins' provider-name='TheCollective'>
+<addon id='plugin.video.bliptv' version='0.7.0' name='BlipTV' provider-name='TheCollective'>
   <requires>
     <import addon='xbmc.python' version='2.0'/>
+    <import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon='script.module.xbmcvfs' version='1.0.1'/>
   </requires>
+  <extension point='xbmc.python.pluginsource'
+            library='default.py'>
+        <provides>video</provides>
+  </extension>
   <extension point='xbmc.addon.metadata'>
     <platform>all</platform>
-    <summary lang='en'>Parsedom for xbmc plugins.</summary>
+    <summary lang='en'>Bliptv video plugin</summary>
+    <description lang='en'>Plugin that let's you browse and play videos from BlipTV!</description>
+    <summary lang='bg'>Видео добавка за Bliptv</summary>
+    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от BlipTV!</description>
   </extension>
-  <extension point='xbmc.python.module' library='lib' />
+</addon>
+
+<addon id="plugin.video.free.cable"
+       name="Free Cable"
+       version="0.5.2"
+       provider-name="BlueCop">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.module.demjson" version="1.4"/>
+    <import addon="script.module.free.cable.database" version="0.0.3"/>
+    <import addon="script.module.coveapi" version="0.2"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>US station aggregator</summary>
+    <description>"Free Cable is the ultimate aphrodisiac" - The Cable Guy</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.icefilms"
+       name="Icefilms"
+       version="1.1.22"
+       provider-name="Eldorado (originator: anarchintosh)">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson"/>
+        <import addon="script.module.elementtree"/>
+        <import addon="script.module.beautifulsoup"/>
+        <import addon="script.module.metahandler" version="1.0.0"/>
+        <import addon="script.module.t0mm0.common" version="1.1.0"/>
+        <import addon="script.common.plugin.cache" version="0.9.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Stream and download scene releases from the links listed on Icefilms.info</summary>
+        <description>Visit www.xbmchub.com for support.
+
+Turns your XBMC into an instant free on-demand media-center. Stream and download to your library pure AVI scene releases, in DVD and HD720p quality. Browse and search the library of over 77,000 videos with metadata and posters. Never experience the frustration of dead video links!</description>
+    </extension>
+</addon>
+
+<addon id="plugin.video.twit"
+       name="TWiT"
+       version="1.1.0"
+       provider-name="divingmule,thanks to Adam B.">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.common.plugin.cache" version="1.0.0"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>audio video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>TWiT</summary>
+    <description>Videos from the TWiT Network</description>
+    <platform>all</platform>
+    <language>en</language>
+  </extension>
+</addon>
+
+<addon id='plugin.video.vimeo' version='2.4.0' name='Vimeo' provider-name='TheCollective'>
+  <requires>
+    <import addon='xbmc.python' version='2.0'/>
+    <import addon='script.common.plugin.cache' version='1.3.0'/>
+    <import addon='script.module.parsedom' version='1.3.0'/>
+  </requires>
+  <extension point='xbmc.python.pluginsource' library='default.py'>
+        <provides>video</provides>
+  </extension>
+  <extension point='xbmc.addon.metadata'>
+    <platform>all</platform>
+    <summary lang='en'>Vimeo video plugin</summary>
+    <description lang='en'>Plugin that allows you to browse and view videos from everybodys favorite alternative video site!</description>
+    <summary lang='bg'>Видео добавка за Vimeo</summary>
+    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на всички алтернативен видео сайт!</description>
+  </extension>
 </addon>
 
 <addon id='plugin.video.youtube' version='3.3.0' name='YouTube' provider-name='TheCollective'>
@@ -109,6 +170,58 @@
   </extension>
 </addon>
 
+<addon id='script.module.parsedom' version='1.4.0' name='Parsedom for xbmc plugins' provider-name='TheCollective'>
+  <requires>
+    <import addon='xbmc.python' version='2.0'/>
+  </requires>
+  <extension point='xbmc.addon.metadata'>
+    <platform>all</platform>
+    <summary lang='en'>Parsedom for xbmc plugins.</summary>
+  </extension>
+  <extension point='xbmc.python.module' library='lib' />
+</addon>
+
+<addon id="script.module.pysqlite2" name="Python SQLite2 library for XBOX" version="1.0.0" provider-name="Gerhard Haring">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>xbox</platform>
+        <summary lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</summary>
+        <description lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</description>
+    </extension>
+</addon>
+
+<addon id="script.module.urlresolver"
+	     name="urlresolver"
+	     version="1.0.3"
+	     provider-name="XBMCHub.com">
+  <requires>
+    <import addon="xbmc.python" version="2.0" />
+    <import addon="script.module.t0mm0.common" version="1.0.0"/>
+    <import addon="plugin.video.youtube"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Resolve common video host URL's to be playable in XBMC.</summary>
+    <description lang="en">Resolve common video host URL's to be playable in XBMC, simplify addon development of video plugins requiring multi video hosts.</description>
+  </extension>
+</addon>
+
+<addon id="script.module.xbmcaddon" name="xbmcaddon emulator" version="1.1.0" provider-name="Team XBMC4XBOX">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>xbox</platform>
+        <summary lang="en">Module emulates XBMC xbmcaddon module.</summary>
+        <description lang="en">Module emulates XBMC xbmcaddon module.</description>
+    </extension>
+</addon>
+
 <addon id="script.module.xbmcvfs" name="xbmcvfs emulator"
        version="1.0.1" provider-name="Frost (passion-xbmc.org)">
     <requires>
@@ -122,104 +235,4 @@
         <platform>all</platform>
     </extension>
 </addon>
-<addon id="plugin.video.icefilms"
-       name="Icefilms"
-       version="1.1.22"
-       provider-name="Eldorado (originator: anarchintosh)">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson"/>
-        <import addon="script.module.elementtree"/>
-        <import addon="script.module.beautifulsoup"/>
-        <import addon="script.module.metahandler" version="1.0.0"/>
-        <import addon="script.module.t0mm0.common" version="1.1.0"/>
-		<import addon="script.module.pysqlite2"/>
-		<import addon="script.module.xbmcvfs"/>
-        <import addon="script.common.plugin.cache" version="0.9.0"/> 
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary>Stream and download scene releases from the links listed on Icefilms.info</summary>
-        <description>Visit www.xbmchub.com for support.
-        
-Turns your XBMC into an instant free on-demand media-center. Stream and download to your library pure AVI scene releases, in DVD and HD720p quality. Browse and search the library of over 77,000 videos with metadata and posters. Never experience the frustration of dead video links!</description>
-    </extension>
-</addon>
-<addon id='plugin.video.bliptv' version='0.7.0' name='BlipTV' provider-name='TheCollective'>
-  <requires>
-    <import addon='xbmc.python' version='2.0'/>
-    <import addon='script.module.parsedom' version='1.3.0'/>
-	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-  </requires>
-  <extension point='xbmc.python.pluginsource'
-            library='default.py'>
-        <provides>video</provides>
-  </extension>
-  <extension point='xbmc.addon.metadata'>
-    <platform>all</platform>
-    <summary lang='en'>Bliptv video plugin</summary>
-    <description lang='en'>Plugin that let's you browse and play videos from BlipTV!</description>
-    <summary lang='bg'>Видео добавка за Bliptv</summary>
-    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от BlipTV!</description>
-  </extension>
-</addon>
-<addon id='plugin.video.vimeo' version='2.4.0' name='Vimeo' provider-name='TheCollective'>
-  <requires>
-    <import addon='xbmc.python' version='2.0'/>
-    <import addon='script.common.plugin.cache' version='1.3.0'/>
-    <import addon='script.module.parsedom' version='1.3.0'/>
-  </requires>
-  <extension point='xbmc.python.pluginsource' library='default.py'>
-        <provides>video</provides>
-  </extension>
-  <extension point='xbmc.addon.metadata'>
-    <platform>all</platform>
-    <summary lang='en'>Vimeo video plugin</summary>
-    <description lang='en'>Plugin that allows you to browse and view videos from everybodys favorite alternative video site!</description>
-    <summary lang='bg'>Видео добавка за Vimeo</summary>
-    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на всички алтернативен видео сайт!</description>
-  </extension>
-</addon>
-<addon id="plugin.video.twit"
-       name="TWiT"
-       version="1.1.0"
-       provider-name="divingmule,thanks to Adam B.">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-    <import addon="script.common.plugin.cache" version="1.0.0"/>
-    <import addon="script.module.simplejson" version="2.0.10"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>audio video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>TWiT</summary>
-    <description>Videos from the TWiT Network</description>
-    <platform>all</platform>
-    <language>en</language>
-  </extension>
-</addon>
-<addon id="plugin.script.Navi-X"
-       name="Navi-X"
-       version="3.74"
-       provider-name="Navi-X team">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.script"
-             library="default.py" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <minversion>28764</minversion>
-    <summary lang="en">Media browser</summary>
-    <description lang="en">Media browser</description>
-  </extension>
-</addon>
-
 </addons>
