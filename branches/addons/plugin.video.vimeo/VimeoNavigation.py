@@ -30,7 +30,6 @@ class VimeoNavigation:
         self.login = sys.modules["__main__"].login
         self.common = sys.modules["__main__"].common
         self.storage = sys.modules["__main__"].storage
-        self.downloader = sys.modules["__main__"].downloader
         self.playlist = sys.modules["__main__"].playlist
 
         self.xbmc = sys.modules["__main__"].xbmc
