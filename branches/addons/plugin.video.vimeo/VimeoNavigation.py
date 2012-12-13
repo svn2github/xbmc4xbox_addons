@@ -21,7 +21,7 @@ import urllib
 import os
 
 
-class VimeoNavigation():
+class VimeoNavigation:
     def __init__(self):
         self.utils = sys.modules["__main__"].utils
         self.player = sys.modules["__main__"].player
