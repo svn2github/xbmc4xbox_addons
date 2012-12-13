@@ -18,7 +18,7 @@
 
 import sys
 import urllib
-import io
+
 
 class VimeoStorage:
     def __init__(self):
