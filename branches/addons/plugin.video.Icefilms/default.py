@@ -150,6 +150,8 @@ def handle_file(filename,getmode=''):
      #bad python code to add a get file routine.
      if filename == 'smallicon':
           return_file = xbmcpath(art,'smalltransparent2.png')
+     elif filename == 'mirror':
+          return_file = xbmcpath(datapath,'MirrorPageSource.txt')
      elif filename == 'homepage':
           return_file = xbmcpath(art,'homepage.png')
      elif filename == 'movies':
@@ -832,51 +834,44 @@ def resolve_glumbouploads(url):
         print 'GlumboUploads - Requesting GET URL: %s' % url
         html = net.http_GET(url).content
         
-        dialog.update(50)
+        dialog.update(33)
         
         #Set POST data values
-        op = re.search('''<Form method="POST" action=''>.+?<input type="hidden" name="op" value="(.+?)">''', html, re.DOTALL).group(1)
+        op = 'download1'
         usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
         postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
         fname = re.search("""input\[name="fname"\]'\).attr\('value', '(.+?)'""", html).group(1)
-        method_free = re.search('<input class="slowdownload" title="Slow download" type="submit" name="method_free" value="(.+?)">', html).group(1)
-
+        method_free = 'Free Download'
         
         data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
         
         print 'GlumboUploads - Requesting POST URL: %s DATA: %s' % (url, data)
         html = net.http_POST(url, data).content
+
+        dialog.update(66)
+        
+        countdown = re.search('var cdnum = ([0-9]+);', html).group(1)
+
+        #They need to wait for the link to activate in order to get the proper 2nd page
+        dialog.close()
+        do_wait('Waiting on link to activate', '', int(countdown))
+        dialog.create('Resolving', 'Resolving GlumboUploads Link...') 
+        dialog.update(66)
+
+        #Set POST data values
+        op = 'download2'
+        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+        
+        data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': 1}
+        
+        print 'GlumboUploads - Requesting POST URL: %s DATA: %s' % (url, data)
+        html = net.http_POST(url, data).content
         
         dialog.update(100)
+        link = re.search('This download link will work for your IP for 24 hours<br><br>.+?<a href="(.+?)">', html, re.DOTALL).group(1)
+        dialog.close()
         
-        #sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>(eval\('
-        #sPattern += 'function\(p,a,c,k,e,d\)(?!.+player_ads.+).+np_vid.+?)'
-        #sPattern += '\s+?</script>'
-
-        link = None
-        sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-        r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
-        
-        if r:
-            sJavascript = r.group(1)
-            sUnpacked = jsunpack.unpack(sJavascript)
-            print(sUnpacked)
-            
-            #Grab first portion of video link, excluding ending 'video.xxx' in order to swap with real file name
-            #Note - you don't actually need the filename, but for purpose of downloading via Icefilms it's needed so download video has a name
-            sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)video.+'
-            sPattern += '"custommode='
-            r = re.search(sPattern, sUnpacked)              
-            
-            #Video link found
-            if r:
-                link = r.group(1) + fname
-                dialog.close()
-                return link
-
-        if not link:
-            print '***** GlumboUploads - Link Not Found'
-            raise Exception("Unable to resolve GlumboUploads")
+        return link
 
     except Exception, e:
         print '**** GlumboUploads Error occured: %s' % e
@@ -969,6 +964,12 @@ def resolve_movreel(url):
         print 'Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
         html = net.http_POST(url, data).content
 
+        #Check for download limit error msg
+        if re.search('<p class="err">.+?</p>', html):
+            print '***** Download limit reached'
+            errortxt = re.search('<p class="err">(.+?)</p>', html).group(1)
+            raise Exception(errortxt)
+
         dialog.update(66)
         
         #Set POST data values
@@ -977,13 +978,13 @@ def resolve_movreel(url):
         rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
         method_free = re.search('<input type="hidden" name="method_free" value="(.+?)">', html).group(1)
         
-        data = {'op': op, 'id': postid, 'rand': rand, 'referer': url, 'method_free': method_free}
+        data = {'op': op, 'id': postid, 'rand': rand, 'referer': url, 'method_free': method_free, 'down_direct': 1}
 
         print 'Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
         html = net.http_POST(url, data).content
         
         dialog.update(100)
-        link = re.search('<div class="t_download"></div></a> -->.+?<a href="(.+?)"><div class="t_download"></div></a>', html, re.DOTALL).group(1)
+        link = re.search('<a id="lnk_download" href="(.+?)">Download Original Video</a>', html, re.DOTALL).group(1)
         dialog.close()
         
         return link
@@ -1419,7 +1420,13 @@ def check_video_meta(name, metaget):
         episode_info = re.search('([0-9]+)x([0-9]+)', name)
         season = int(episode_info.group(1))
         episode = int(episode_info.group(2))
-        episode_title = re.search('(.+?) [0-9]+x[0-9]+', name).group(1)
+        
+        #Grab episode title, check for regex on it both ways
+        episode_title = re.search('(.+?) [0-9]+x[0-9]+', name)
+        if not episode_title:
+            episode_title = re.search('[0-9]+x[0-9]+ (.+)', name)
+
+        episode_title = episode_title.group(1)
         tv_meta = metaget.get_meta('tvshow',episode_title)
         meta=metaget.get_episode_meta(episode_title, tv_meta['imdb_id'], season, episode)
     else:
@@ -2103,7 +2110,10 @@ def GETMIRRORS(url,link):
     print "getting mirrors for: %s" % url
         
     #hacky method -- save page source to cache
-    cache.set('mirror', link)
+    #cache.delete('mirror')
+    #cache.set('mirror', link)
+    mirrorfile=handle_file('mirror','')
+    save(mirrorfile, link)
     
     #check for the existence of categories, and set values.
     if re.search('<div class=ripdiv><b>DVDRip / Standard Def</b>', link) is not None: dvdrip = 1
@@ -2389,7 +2399,7 @@ def SOURCE(page, sources):
               'cap': ''
           }
 
-          sec = re.search("f\.lastChild\.value=\"([^']+)\",a", page).group(1)
+          sec = re.search("f\.lastChild\.value=\"(.+?)\",a", page).group(1)
           t = re.search('"&t=([^"]+)",', page).group(1)
 
           args['sec'] = sec
@@ -2433,32 +2443,36 @@ def SOURCE(page, sources):
           setView(None, 'default-view')
 
 def DVDRip(url):
-        link=cache.get('mirror')
-#string for all text under standard def border
+        #link=cache.get('mirror')
+        link=handle_file('mirror','open')
+        #string for all text under standard def border
         defcat=re.compile('<div class=ripdiv><b>DVDRip / Standard Def</b>(.+?)</div>').findall(link)
         for scrape in defcat:
                 SOURCE(link, scrape)
         setView(None, 'default-view')
 
 def HD720p(url):
-        link=cache.get('mirror')
-#string for all text under hd720p border
+        #link=cache.get('mirror')
+        link=handle_file('mirror','open')
+        #string for all text under hd720p border
         defcat=re.compile('<div class=ripdiv><b>HD 720p</b>(.+?)</div>').findall(link)
         for scrape in defcat:
                 SOURCE(link, scrape)
         setView(None, 'default-view')
 
 def DVDScreener(url):
-        link=cache.get('mirror')
-#string for all text under dvd screener border
+        #link=cache.get('mirror')
+        link=handle_file('mirror','open')
+        #string for all text under dvd screener border
         defcat=re.compile('<div class=ripdiv><b>DVD Screener</b>(.+?)</div>').findall(link)
         for scrape in defcat:
                 SOURCE(link, scrape)
         setView(None, 'default-view')
         
 def R5R6(url):
-        link=cache.get('mirror')
-#string for all text under r5/r6 border
+        #link=cache.get('mirror')
+        link=handle_file('mirror','open')
+        #string for all text under r5/r6 border
         defcat=re.compile('<div class=ripdiv><b>R5/R6 DVDRip</b>(.+?)</div>').findall(link)
         for scrape in defcat:
                 SOURCE(link, scrape)
@@ -4375,7 +4389,7 @@ elif mode==12:
         TVSEASONS(url,imdbnum)
 
 elif mode==13:
-        print ""+url
+        print ""+ str(url)
         TVEPISODES(name,url,None,imdbnum)
 
 # Some tv shows will not be correctly identified, so to load their sources need to check on mode==14
