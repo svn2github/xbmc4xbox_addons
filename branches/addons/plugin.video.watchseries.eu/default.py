@@ -24,8 +24,8 @@ from t0mm0.common.net import Net
 import urlresolver
 import os
 
-addon = Addon('plugin.video.watchserieseu', sys.argv)
-xaddon = xbmcaddon.Addon(id='plugin.video.watchserieseu')
+addon = Addon('plugin.video.watchseries.eu', sys.argv)
+xaddon = xbmcaddon.Addon(id='plugin.video.watchseries.eu')
 net = Net()
 profile_path = addon.get_profile()
 ##### Queries ##########

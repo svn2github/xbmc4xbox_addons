@@ -168,7 +168,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
   </extension>
 </addon>
 
-<addon id="plugin.video.watchserieseu" version="0.1.3" name="watchseries.eu" provider-name="mscreations">
+<addon id="plugin.video.watchseries.eu" version="0.1.3" name="watchseries.eu" provider-name="mscreations">
     <requires>
         <import addon="xbmc.python" version="1.0"/>
         <import addon="script.module.urlresolver" version="0.0.1"/>
