@@ -67,6 +67,7 @@
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="script.module.xbmcvfs"/>
+    <import addon=script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
             library="default.py">
