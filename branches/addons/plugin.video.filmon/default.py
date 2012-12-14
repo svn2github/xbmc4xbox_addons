@@ -23,7 +23,7 @@ from datetime import date
 from datetime import datetime
 import settings
 from hashlib import md5
-import json
+import simplejson as json
 from threading import Timer
 from t0mm0.common.net import Net
 
