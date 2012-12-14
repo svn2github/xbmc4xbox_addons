@@ -10,7 +10,7 @@
             <width>1280</width>
             <height>720</height>
             <fadetime>500</fadetime>
-            <!--texture>background1.png</texture-->
+            <!--texture>background1.jpg</texture-->
         </control>
   
         <control type="videowindow" id="101">	
