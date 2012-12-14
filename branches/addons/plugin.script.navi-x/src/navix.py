@@ -29,7 +29,7 @@ import shutil
 import zipfile
 import copy
 
-addon = xbmcaddon.Addon(id='script.navi-x')
+addon = xbmcaddon.Addon(id='plugin.script.navi-x')
 root_path = addon.getAddonInfo('path')
 sys.path.append(os.path.join(root_path.replace(";",""),'src'))
 
