@@ -4,6 +4,9 @@
 '''
 
 class StorageServer:
+    def __init__(self, table, timeout=24):
+        return None
+		
     def cacheFunction(self, funct = False, *args):
         return funct(*args)
     
