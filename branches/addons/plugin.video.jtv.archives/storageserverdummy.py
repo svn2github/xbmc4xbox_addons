@@ -3,7 +3,7 @@
      Version: 1.0
 '''
 
-class StorageServer():
+class StorageServer:
     def cacheFunction(self, funct = False, *args):
         return funct(*args)
     
