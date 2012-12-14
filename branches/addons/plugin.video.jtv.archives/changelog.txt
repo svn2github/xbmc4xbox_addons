@@ -1,0 +1,23 @@
+Version 0.3.6
+fix error when selecting "All" catagory with XBMC-Frodo
+
+Version 0.3.5
+fix error when selecting "All" catagory
+added view mode setting for "Media Info 3"
+added setting to only show live "Justin.tv User Favorites / Follows"
+
+Version 0.3.4
+fix archived videos page-nation
+
+Version 0.3.3
+added "Blacklist Channel" to the context menu
+added "Bad Password" notification
+other bug fixes and error handling
+
+Version 0.3.2
+small change/fix for stream selection
+
+Version 0.3.1
+added page-nation to archived videos
+added setting "Set default stream quality", most channels only have "Live, iPhone High, and iPhone Low",
+    setting "720p - 240p" will result in "Live" if not listed, if you need a lower bitrate stream use an iPhone setting

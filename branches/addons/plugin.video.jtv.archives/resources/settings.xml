@@ -1,0 +1,19 @@
+<settings>
+  <category label="General">
+    <setting id="lang" type="select" label="Filter by Language" values="None|Arabic|Catalan|Chinese|ChineseTW|Croatian|Czech|Danish|Dutch|English|Finnish|French|German|Greek|Hindi|Hungarian|Indonesian|Italian|Japanese|Korean|Latvian|Lithuanian|Norwegian|Polish|Portuguese|PortugueseBrazil|Romanian|Russian|Serbian|Slovak|Spanish|Swedish|Tagalog|Turkish|Ukrainian|Vietnamese" default="None" />
+    <setting id="lang1" type="select" label="Include Second Language" values="None|Arabic|Catalan|Chinese|ChineseTW|Croatian|Czech|Danish|Dutch|English|Finnish|French|German|Greek|Hindi|Hungarian|Indonesian|Italian|Japanese|Korean|Latvian|Lithuanian|Norwegian|Polish|Portuguese|PortugueseBrazil|Romanian|Russian|Serbian|Slovak|Spanish|Swedish|Tagalog|Turkish|Ukrainian|Vietnamese" default="None" visible="!eq(-1,None)"/>
+    <setting id="stream_quality" type="enum" label="Set default stream quality" values="Live|720p|480p|360p|240p|iPhone High|iPhone Low" default="0" />  
+    <setting id="save_search" type="bool" label="Save Search Queries" default="true"/>
+    <setting id="save_passwords" type="bool" label="Save Passwords" default="true"/>
+    <setting id="debug" type="bool" label="Enable Debugging" default="false"/>
+  </category>
+  <category label="View Options">
+    <setting id="use_channel_icon" type="enum" label="Thumbnails" values="Use Channel Thumbnails|Use Screen Capture Thumbnails" default="0"/>
+    <setting id="fanart" type="bool" label="Enable Fanart" default="true"/>
+    <setting id="view_mode" type="enum" label="Set View Mode For Channels(Confluence only)" values="Default|List|Big List|Thumbnail|Poster Wrap|Fanart|Media Info|Media Info 2|Media Info 3" default="0" />
+  </category>
+    <category label="Justin.tv User Favorites / Follows">
+    <setting id="j_user" type="text" label="Enter Username" default=""/>
+    <setting id="live_only" type="bool" label="Only Show Live Channels" default="false"/>
+  </category>
+</settings>
