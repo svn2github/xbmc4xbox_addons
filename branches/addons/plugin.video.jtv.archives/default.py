@@ -113,7 +113,7 @@ def addon_log(string):
 def get_request(url, headers=None):
         try:
             if headers is None:
-                headers = {'User-agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0',
+                headers = {'User-agent' : 'Mozilla',
                            'Referer' : 'http://www.justin.tv/'}
             req = urllib2.Request(url,None,headers)
             response = urllib2.urlopen(req)
@@ -303,7 +303,7 @@ def Index(data, subCat, catId, page):
 
 
 def getVideos(name, url=None, page=None):
-        headers = {'User-agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0',
+        headers = {'User-agent' : 'Mozilla',
                    'Referer' : 'http://www.justin.tv/'+name}
         if url is None:
             url = 'http://api.justin.tv/api/channel/archives/'+name+'.json'
@@ -340,7 +340,7 @@ def getVideos(name, url=None, page=None):
 
 def playLive(name, play=False, password=None):
         swf_url = getSwfUrl(name)
-        headers = {'User-agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0',
+        headers = {'User-agent' : 'Mozilla',
                    'Referer' : swf_url}
         url = 'http://usher.justin.tv/find/'+name+'.json?type=any&group=&channel_subscription='
         if not password is None:
@@ -380,7 +380,7 @@ def playLive(name, play=False, password=None):
 def getSwfUrl(channel_name):
         """Helper method to grab the swf url, resolving HTTP 301/302 along the way"""
         base_url = 'http://www.justin.tv/widgets/live_embed_player.swf?channel=%s' % channel_name
-        headers = {'User-agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0',
+        headers = {'User-agent' : 'Mozilla',
                    'Referer' : 'http://www.justin.tv/'+channel_name}
         req = urllib2.Request(base_url, None, headers)
         response = urllib2.urlopen(req)
