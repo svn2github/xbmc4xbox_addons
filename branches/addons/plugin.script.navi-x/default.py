@@ -37,7 +37,7 @@ __url__ = "http://code.google.com/p/navi-x/"
 __credits__ = "Navi-X team"
 __version__ = "3.75"
 
-addon = xbmcaddon.Addon(id='script.navi-x')
+addon = xbmcaddon.Addon(id='plugin.script.navi-x')
 RootDir = addon.getAddonInfo('path')
 sys.path.append(os.path.join(RootDir.replace(";",""),'src'))
 
