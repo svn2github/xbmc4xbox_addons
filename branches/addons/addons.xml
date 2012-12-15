@@ -43,6 +43,26 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.burningseries"
+	   name="Burning Series"
+	   version="0.98"
+	   provider-name="chmee phreekz">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="xbmc.gui" version="2.11"/>
+	<import addon="script.module.urlresolver"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+			 library="default.py">
+    	<provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>burning-series.to player</summary>
+    <description>series, a lot, generally in german</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.canada.on.demand" name="Canada On Demand" version="0.7.4" provider-name="andre">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
