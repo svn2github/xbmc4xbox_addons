@@ -20,7 +20,7 @@
 from xbmcswift2 import Plugin, xbmc
 from resources.lib.api import ShoutcastApi, NetworkError
 
-plugin = Plugin()
+plugin = Plugin(addon_id='plugin.audio.shoutcast')
 api = ShoutcastApi('sh1t7hyn3Kh0jhlV')
 my_stations = plugin.get_storage('my_stations.json', file_format='json')
 

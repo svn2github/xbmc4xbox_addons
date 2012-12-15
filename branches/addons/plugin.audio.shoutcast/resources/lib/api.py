@@ -31,7 +31,7 @@ class NetworkError(Exception):
     pass
 
 
-class ShoutcastApi():
+class ShoutcastApi:
 
     USER_AGENT = 'XBMC ShoutcastApi'
 
