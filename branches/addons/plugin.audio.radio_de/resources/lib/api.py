@@ -25,7 +25,7 @@ class RadioApiError(Exception):
     pass
 
 
-class RadioApi():
+class RadioApi:
 
     MAIN_URLS = {
         'english': 'http://rad.io/info',

@@ -42,7 +42,7 @@ STRINGS = {
 }
 
 
-plugin = Plugin()
+plugin = Plugin(addon_id='plugin.audio.radio_de')
 radio_api = RadioApi()
 my_stations = plugin.get_storage('my_stations.json', file_format='json')
 
