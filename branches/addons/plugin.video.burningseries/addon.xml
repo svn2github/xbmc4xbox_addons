@@ -5,8 +5,7 @@
 	   provider-name="chmee phreekz">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
-    <import addon="xbmc.gui" version="2.11"/>
-	<import addon="script.module.urlresolver"/>
+    <import addon="script.module.urlresolver"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
 			 library="default.py">
