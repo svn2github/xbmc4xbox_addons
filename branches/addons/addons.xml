@@ -84,6 +84,24 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.c64-longplays"
+       name="C64-Longplays"
+       version="0.2.0"
+       provider-name="Jools">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="addon.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">The C64 Gamevideoarchive</summary>
+    <description lang="en">... presents a cross section of the most popular and obscure games for the C64 sorted by year of release all of which superseed the videos of THE ORIGINAL SERIES. Any questions concerning the archive are most likey answered in the FAQ. If you want more info on a game before downloading the video just click on the lemon to go the the game's detail page over at Lemon 64. If you want to contribute please check out which game videos are still wanted or have been submitted already.</description>
+  </extension>
+</addon>
+
 <addon id="plugin.video.canada.on.demand" name="Canada On Demand" version="0.7.4" provider-name="andre">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
