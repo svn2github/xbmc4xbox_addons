@@ -8,7 +8,8 @@
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
     <import addon="script.module.demjson" version="1.4"/>
     <import addon="script.module.mechanize" version="0.2.5"/>
-	<import addon="script.module.pysqlite2"/> 
+	<import addon="script.module.pysqlite2"/>
+    <import addon="plugin.video.youtube"/>	
   </requires>
   <extension point="xbmc.python.pluginsource"
             library="default.py">
