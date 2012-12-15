@@ -142,7 +142,10 @@ class _Storage(UserDict.DictMixin, _PersistentDictMixin):
 
     def __len__(self):
         return self._items.__len__
-
+	
+	def keys(self):
+	    return self.iterkeys()
+		
     def raw_dict(self):
         '''Returns the wrapped dict'''
         return self._items
