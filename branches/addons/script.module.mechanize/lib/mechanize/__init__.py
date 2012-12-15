@@ -161,7 +161,7 @@ if sys.version_info[:2] > (2,4):
     else:
         from _firefox3cookiejar import Firefox3CookieJar
 from _mozillacookiejar import MozillaCookieJar
-from _msiecookiejar import MSIECookieJar
+#from _msiecookiejar import MSIECookieJar
 
 # forms
 from _form import (
