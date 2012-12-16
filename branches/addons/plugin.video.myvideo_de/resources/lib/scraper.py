@@ -23,7 +23,8 @@ from base64 import b64decode
 from BeautifulSoup import BeautifulSoup
 from binascii import unhexlify
 from urllib import unquote, urlencode
-from urllib2 import urlopen, Request, HTTPError, URLError
+from urllib2 import HTTPError, URLError
+import mechanize
 
 MAIN_URL = 'http://www.myvideo.de/'
 
@@ -574,13 +575,13 @@ def __start():
 
 def __get_url(url, referer=None):
     __log('__get_url opening url: %s' % url)
-    req = Request(url)
+    req = mechanize.Request(url)
     if referer:
         req.add_header('Referer', referer)
     req.add_header('Accept', ('text/html,application/xhtml+xml,'
                               'application/xml;q=0.9,*/*;q=0.8'))
     req.add_header('User-Agent', UA)
-    html = urlopen(req).read()
+    html = mechanize.urlopen(req).read()
     __log('__get_url got %d bytes' % len(html))
     return html
 
