@@ -61,7 +61,7 @@ def getVideoFile(link):
     youtube_iframe = tree.find('iframe', {'src': re_youtube})
     if youtube_iframe:
         yotube_id = re.search(re_youtube, youtube_iframe['src']).group(1)
-        return ('plugin://plugin.video.youtube/'
+        return ('plugin://plugin/video/YouTube/'
                 '?action=play_video&videoid=%s' % yotube_id)
 
     print 'Still no luck. But there could also be some ugly JS HTML5'
