@@ -32,7 +32,7 @@ class Plugin_adv(Plugin):
             return []
 
 
-plugin = Plugin_adv('Dump.com', 'plugin.video.dump', __file__)
+plugin = Plugin_adv('Dump.com', 'plugin.video.dump')
 
 
 @plugin.route('/', default=True)
