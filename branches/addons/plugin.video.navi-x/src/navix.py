@@ -108,7 +108,7 @@ import zipfile
 import copy
 #import threading
 
-sys.path.append(os.path.join(xbmcaddon.Addon(id='plugin.navi-x').getAddonInfo('path').replace(";",""),'src'))
+sys.path.append(os.path.join(xbmcaddon.Addon(id='plugin.video.navi-x').getAddonInfo('path').replace(";",""),'src'))
 from libs2 import *
 from settings import *
 from CPlayList import *
