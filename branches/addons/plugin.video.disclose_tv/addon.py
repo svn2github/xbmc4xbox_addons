@@ -24,7 +24,7 @@ STRINGS = {
     'page': 30001
 }
 
-plugin = Plugin()
+plugin = Plugin(addon_id='plugin.video.disclose_tv')
 scraper = Scraper()
 
 
