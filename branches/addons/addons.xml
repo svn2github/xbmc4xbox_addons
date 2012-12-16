@@ -362,6 +362,23 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
   </extension>
 </addon>
 
+<addon id="plugin.navi-x" name="Navi-X"
+	version="0.3.6" provider-name="cbb">
+	<requires>
+		<import addon="xbmc.python" version="1.0" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+	<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Media browser</summary>
+		<description lang="en">
+			Media browser
+		</description>
+	</extension>
+</addon>
+
 <addon id="plugin.video.recordedamigagames"
        name="Recorded Amiga Games"
        version="0.3.0"
