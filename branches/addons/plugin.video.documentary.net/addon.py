@@ -15,7 +15,7 @@ from resources.lib.api import  get_categories, get_category_posts
 
 PLUGIN_NAME = 'Documentary.net'
 PLUGIN_ID = 'plugin.video.documentary.net'
-plugin = Plugin(PLUGIN_NAME, PLUGIN_ID, __file__)
+plugin = Plugin(PLUGIN_NAME, PLUGIN_ID)
 
 
 def video_url(host, video_id):
@@ -23,8 +23,8 @@ def video_url(host, video_id):
     items. This functions returns the playable URL given a host and a video_id.
     '''
     ptns = {
-        'youtube': 'plugin://plugin.video.youtube/?action=play_video&videoid=%s',
-        'vimeo': 'plugin://plugin.video.vimeo/?action=play_video&videoid=%s',
+        'youtube': 'plugin://video/YouTube/?action=play_video&videoid=%s',
+        'vimeo': 'plugin://video/vimeo/?action=play_video&videoid=%s',
     }
     if host in ptns.keys():
         return ptns[host] % video_id

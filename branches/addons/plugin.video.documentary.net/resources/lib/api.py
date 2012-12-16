@@ -8,7 +8,7 @@
     :copyright: (c) 2012 by Jonathan Beluch
     :license: GPLv3, see LICENSE.txt for more details.
 '''
-import json
+import simplejson as json
 import urllib2
 import HTMLParser
 from urlparse import urljoin
