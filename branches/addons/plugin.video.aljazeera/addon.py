@@ -20,17 +20,14 @@ from BeautifulSoup import BeautifulSoup as BS
 from urllib import urlencode
 from urlparse import urljoin
 import re
-try:
-    import json
-except ImportError:
-    import simplejson as json
+import simplejson as json
 
 
 PLUGIN_NAME = 'AlJazeera'
 PLUGIN_ID = 'plugin.video.aljazeera'
 
 
-plugin = Plugin(PLUGIN_NAME, PLUGIN_ID, __file__)
+plugin = Plugin(PLUGIN_NAME, PLUGIN_ID)
 plugin.register_module(playlist, url_prefix='/_playlist')
 
 
@@ -39,7 +36,7 @@ def full_url(path):
     return urljoin(BASE_URL, path)
 
 
-YOUTUBE_PTN = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s'
+YOUTUBE_PTN = 'plugin://video/YouTube/?action=play_video&videoid=%s'
 def youtube_url(videoid):
     return YOUTUBE_PTN % (videoid)
 
