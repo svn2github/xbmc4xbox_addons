@@ -362,7 +362,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
   </extension>
 </addon>
 
-<addon id="plugin.navi-x" name="Navi-X"
+<addon id="plugin.video.navi-x" name="Navi-X"
 	version="0.3.6" provider-name="cbb">
 	<requires>
 		<import addon="xbmc.python" version="1.0" />
