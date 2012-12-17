@@ -27,7 +27,7 @@ class NetworkError(Exception):
     pass
 
 
-class WimpApi():
+class WimpApi:
 
     API_URL = 'http://m.wimp.com/apiv2/'
 
