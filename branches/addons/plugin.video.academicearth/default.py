@@ -81,7 +81,7 @@ def show_course_info(url):
 @plugin.route('/lectures/<url>/')
 def play_lecture(url):
     lecture = Lecture.from_url(url)
-    url = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s' % lecture.youtube_id
+    url = 'plugin://video/YouTube/?action=play_video&videoid=%s' % lecture.youtube_id
     plugin.log.info('Playing url: %s' % url)
     plugin.set_resolved_url(url)
 
