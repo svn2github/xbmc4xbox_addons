@@ -20,7 +20,7 @@
 from xbmcswift2 import Plugin, xbmc
 from resources.lib.api import WimpApi, NetworkError
 
-plugin = Plugin()
+plugin = Plugin(addon_id='plugin.video.wimp')
 api = WimpApi()
 
 STRINGS = {
