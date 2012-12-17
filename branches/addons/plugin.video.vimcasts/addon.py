@@ -19,7 +19,7 @@ from xbmcswift2 import Plugin
 
 PLUGIN_NAME = 'VimCasts'
 PLUGIN_ID = 'plugin.video.vimcasts'
-plugin = Plugin(PLUGIN_NAME, PLUGIN_ID, __file__)
+plugin = Plugin(PLUGIN_NAME, PLUGIN_ID)
 
 
 def get_json_feed():
