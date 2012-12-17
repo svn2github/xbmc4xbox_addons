@@ -99,7 +99,7 @@ def get_videos(movie_id):
                 log('No resolutions found: %s' % movie_id)
                 continue
             try:
-                source = __detect_source(resolutions.values()[0])
+                source = __detect_source(resolutions.values()[1])
             except NotImplementedError, video_url:
                 log('Skipping: %s - %s' % (movie_id, video_url))
                 continue

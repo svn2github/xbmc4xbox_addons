@@ -30,7 +30,7 @@ STRINGS = {
     'coming_soon': 30007
 }
 
-plugin = Plugin()
+plugin = Plugin(addon_id='plugin.video.hdtrailers_net')
 
 
 @plugin.route('/')
