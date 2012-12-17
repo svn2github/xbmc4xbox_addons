@@ -20,7 +20,7 @@ from resources.lib.academicearth.api import (AcademicEarth, Subject, Course,
 
 PLUGIN_NAME = 'Academic Earth'
 PLUGIN_ID = 'plugin.video.academicearth'
-plugin = Plugin(PLUGIN_NAME, PLUGIN_ID, __file__)
+plugin = Plugin(PLUGIN_NAME, PLUGIN_ID)
 
 
 @plugin.route('/')
