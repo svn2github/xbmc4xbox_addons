@@ -32,7 +32,7 @@ STRINGS = {
     'title': 30201
 }
 
-plugin = Plugin()
+plugin = Plugin(addon_id='plugin.video.nasa')
 
 
 @plugin.route('/')
