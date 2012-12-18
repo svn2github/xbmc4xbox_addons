@@ -63,7 +63,7 @@ def load_page(url):
     return link
 
 def addDirectoryItem(name, parameters={}, pic="", folder=True):
-    li = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=pic)
+    li = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage="")
     if not folder:
         li.setProperty('IsPlayable', 'true')
     url = sys.argv[0] + '?' + urllib.urlencode(parameters)

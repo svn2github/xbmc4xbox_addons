@@ -48,13 +48,13 @@ def showEpisodeBip(videoItem):
     
     blipId = feedURL[feedURL.rfind("/") + 1:]
     
-    stream_url = "plugin://plugin.video.bliptv/?action=play_video&videoid=" + blipId
+    stream_url = "plugin://video/BlipTV/?action=play_video&videoid=" + blipId
     item = xbmcgui.ListItem(path=stream_url)
     return xbmcplugin.setResolvedUrl(thisPlugin, True, item)
 
 def showEpisodeYoutube(videoItem):
     youTubeId = videoItem.group(2)
-    stream_url = "plugin://plugin.video.youtube/?action=play_video&videoid=" + youTubeId
+    stream_url = "plugin://video/YouTube/?action=play_video&videoid=" + youTubeId
     item = xbmcgui.ListItem(path=stream_url)
     xbmcplugin.setResolvedUrl(thisPlugin, True, item)
     return False
