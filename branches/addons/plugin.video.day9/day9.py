@@ -2,6 +2,7 @@ import urllib, urllib2, re, sys, os
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin
 
 import CommonFunctions
+import mechanize
 from BeautifulSoup import BeautifulSoup
 
 pluginhandle=int(sys.argv[1])
@@ -138,7 +139,7 @@ class Day9:
         link = response.read()
         response.close()
 
-        stream_url = "plugin://plugin.video.youtube/?action=play_video&videoid=" + youTubeId
+        stream_url = "plugin://video/YouTube/?action=play_video&videoid=" + youTubeId
         item = xbmcgui.ListItem(path=stream_url)
         item.setProperty("IsPlayable","true")
         xbmcplugin.setResolvedUrl(pluginhandle, True, item)
@@ -188,9 +189,9 @@ class Day9:
         return paramsFinal
 
     def getRequest(self, url):
-        req = urllib2.Request(url)
+        req = mechanize.Request(url)
         req.add_header('User-Agent', self.USERAGENT)
-        response = urllib2.urlopen(req)
+        response = mechanize.urlopen(req)
         link=response.read()
         response.close()
         return link
