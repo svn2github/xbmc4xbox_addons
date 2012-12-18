@@ -48,7 +48,7 @@ class BorsenTVAddon(object):
         xbmcplugin.endOfDirectory(HANDLE)
 
 if __name__ == '__main__':
-    ADDON = xbmcaddon.Addon()
+    ADDON = xbmcaddon.Addon(id="plugin.video.borsentv.dk")
     HANDLE = int(sys.argv[1])
     ICON = os.path.join(ADDON.getAddonInfo('path'), 'icon.png')
     FANART = os.path.join(ADDON.getAddonInfo('path'), 'fanart.jpg')
