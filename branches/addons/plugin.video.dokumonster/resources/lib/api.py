@@ -32,7 +32,7 @@ class ApiError(Exception):
     pass
 
 
-class DokuMonsterApi():
+class DokuMonsterApi:
 
     USER_AGENT = 'XBMC DokuMonsterApi'
 
