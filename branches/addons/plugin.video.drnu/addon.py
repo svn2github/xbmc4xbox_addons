@@ -20,7 +20,7 @@
 import pickle
 import os
 import sys
-import urlparse
+from cgi import parse_qs
 import urllib2
 import re
 import datetime
@@ -494,10 +494,10 @@ class NuAddon(object):
         xbmcgui.Dialog().ok(heading, line1, line2, message)
 
 if __name__ == '__main__':
-    ADDON = xbmcaddon.Addon()
+    ADDON = xbmcaddon.Addon(id='plugin.video.drnu')
     PATH = sys.argv[0]
     HANDLE = int(sys.argv[1])
-    PARAMS = urlparse.parse_qs(sys.argv[2][1:])
+    PARAMS = parse_qs(sys.argv[2][1:])
 
     CACHE_PATH = xbmc.translatePath(ADDON.getAddonInfo("Profile"))
     if not os.path.exists(CACHE_PATH):
