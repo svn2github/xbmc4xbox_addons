@@ -24,7 +24,7 @@ from resources.lib.api import DokuMonsterApi, NetworkError
 
 PER_PAGE = 50
 
-plugin = Plugin()
+plugin = Plugin(addon_id='plugin.video.dokumonster')
 api = DokuMonsterApi(default_count=PER_PAGE)
 
 STRINGS = {
@@ -145,18 +145,18 @@ def play(docu_id):
     if source == 'youtube.com':
         if media_type == 'video':
             playback_url = (
-                'plugin://plugin.video.youtube/'
+                'plugin://video/YouTube/'
                 '?action=play_video&videoid=%s' % media.get('id')
             )
         elif media_type == 'playlist':
             playback_url = (
-                'plugin://plugin.video.youtube/'
+                'plugin://video/YouTube/'
                 '?action=play_all&playlist=%s' % media.get('id')
             )
     elif source == 'vimeo.com':
         if media_type == 'video':
             playback_url = (
-                'plugin://plugin.video.vimeo/'
+                'plugin://video/Vimeo/'
                 '?action=play_video&videoid=%s' % media.get('id')
             )
     if playback_url:
@@ -170,7 +170,7 @@ def play(docu_id):
 def __finish_paginate(endpoint, api_func, *args, **kwargs):
     is_update = 'page' in plugin.request.args
     page = plugin.request.args.get('page', ['1'])[0]
-    docus, total_count = api_func(*args, page=page, **kwargs)
+    docus, total_count = api_func(*args, **kwargs)
     items = __format_docus(docus)
     if int(page) > 1:
         p = str(int(page) - 1)
