@@ -21,7 +21,7 @@ import os
 import re
 import sys
 import simplejson
-import urlparse
+from cgi import parse_qs 
 import urllib2
 from htmlentitydefs import name2codepoint
 import buggalo
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     ADDON = xbmcaddon.Addon(id = 'plugin.video.dr.dk.bonanza')
     PATH = sys.argv[0]
     HANDLE = int(sys.argv[1])
-    PARAMS = urlparse.parse_qs(sys.argv[2][1:])
+    PARAMS = parse_qs(sys.argv[2][1:])
 
     ICON = os.path.join(ADDON.getAddonInfo('path'), 'icon.png')
     FANART = os.path.join(ADDON.getAddonInfo('path'), 'fanart.jpg')
