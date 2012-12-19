@@ -19,8 +19,8 @@
 #
 import sys
 import os
-import urlparse
 import urllib2
+from cgi import parse_qs 
 
 import xbmcaddon
 import xbmcgui
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     ADDON = xbmcaddon.Addon(id='plugin.video.dr.dk.live')
     PATH = sys.argv[0]
     HANDLE = int(sys.argv[1])
-    PARAMS = urlparse.parse_qs(sys.argv[2][1:])
+    PARAMS = parse_qs(sys.argv[2][1:])
 
     FANART = os.path.join(ADDON.getAddonInfo('path'), 'fanart.jpg')
     ICON = os.path.join(ADDON.getAddonInfo('path'), 'icon.png')
