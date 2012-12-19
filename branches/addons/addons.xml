@@ -371,6 +371,22 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.dmax" name="DMAX Videotheke" version="0.0.3" provider-name="dethfeet">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">DMAX (german television)</summary>
+	<summary lang="de">DMAX Videotheke</summary>
+    <description lang="en">DMAX (german television)</description>
+	<description lang="de">DMAX Videotheke</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.documentary.net" name="Documentary.net" provider-name="Jonathan Beluch (jbel)" version="1.1.1">
   <requires>
     <import addon="xbmc.python" version="2.0" />
