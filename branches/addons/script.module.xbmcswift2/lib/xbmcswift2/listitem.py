@@ -29,7 +29,7 @@ class ListItem(object):
         }
         #kwargs = dict((key, val) for key, val in locals().items() if val is
         #not None and key != 'self')
-        kwargs = dict((key, val) for key, val in kwargs.items()
+        kwargs = dict((key, val.encode(utf-8)) for key, val in kwargs.items()
                       if val is not None)
         self._listitem = xbmcgui.ListItem(**kwargs)
 
