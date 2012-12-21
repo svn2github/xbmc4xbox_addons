@@ -496,7 +496,7 @@ def playVideo(params):
     
     ''' call the youtube player '''
     url = "plugin://video/YouTube?path=/root&action=play_video&videoid=%s" % params.get( "videoId")
-    
+    #xbox fix youtube pfad
     listitem=xbmcgui.ListItem(label=params.get("videoId"), iconImage=params.get('thumbnail'), thumbnailImage=params.get('thumbnail'), path=url)
     xbmcplugin.setResolvedUrl(handle=__handle__, succeeded=True, listitem=listitem)
     
