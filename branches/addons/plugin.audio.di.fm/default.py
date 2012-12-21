@@ -36,16 +36,12 @@ import time
 from xml.dom import minidom
 from httpcomm import HTTPComm
 from ConfigParser import SafeConfigParser
-
-# Import JSON - compatible with Python<v2.6
-try:
-    import json
-except ImportError:
-    import simplejson as json
+import simplejson as json
 
 # Config parser
 parser = SafeConfigParser()
-parser.read( os.path.dirname(__file__) + "/config.ini" )
+pluginpath = os.getcwd().replace(';', '')
+parser.read( pluginpath + "/config.ini" )
 
 # Various constants used throughout the script
 HANDLE = int(sys.argv[1])
@@ -60,7 +56,7 @@ __date__         = parser.get('plugin', 'date')
 __version__      = ADDON.getAddonInfo('version')
 
 class musicAddonXbmc:
-	_addonProfilePath = xbmc.translatePath( ADDON.getAddonInfo('profile') ).decode('utf-8') # Dir where plugin settings and cache will be stored
+	_addonProfilePath = xbmc.translatePath("special://profile/plugin_data/music/Digitally Imported/").decode('utf-8') # Dir where plugin settings and cache will be stored
 
 	_cacheStreams	= _addonProfilePath + "cache_streamlist.dat"
 	_cacheListenkey	= _addonProfilePath + "cache_listenkey.dat"
