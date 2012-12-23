@@ -21,7 +21,7 @@ __icons__=os.path.join(__home__,'resources')
 icon = xbmc.translatePath( os.path.join( __home__, 'icon.png' ) )
 searchicon = xbmc.translatePath( os.path.join( __home__,'resources', 'search.png' ) )
 playicon = xbmc.translatePath( os.path.join( __home__,'resources', 'play.png' ) )
-downloadpath= __settings__.getSetting('download_path')#__profile__
+downloadpath= xbmcplugin.getSetting('download_path')
 phomepath=xbmc.translatePath( os.path.join( __home__, 'default.py' ) )
 debug=False
 
@@ -49,9 +49,26 @@ def getPageParam(page,param):
         return 'N/F'
 
 
-def downloadAudio(urlx,title,targetpath):
-        paramsd = { "url": replaceUrlSpecial(urlx), "download_path": targetpath, "Title": title }
-        downloader.download(title+'.mp3', paramsd)
+def downloadAudio(urlx,dest,title):
+        dp = xbmcgui.DialogProgress()
+        dp.create("Mp3 Search","Downloading Mp3",title)
+        url = replaceUrlSpecial(urlx)
+        Titel = title
+        dest = downloadpath+title+'.mp3'
+        urllib.urlretrieve(url,dest,lambda nb, bs, fs: _pbhook(nb,bs,fs,url,dp))
+ 
+def _pbhook(numblocks, blocksize, filesize, url=None,dp=None):
+    try:
+        percent = min((numblocks*blocksize*100)/filesize, 100)
+        print percent
+        dp.update(percent)
+    except:
+        percent = 100
+        dp.update(percent)
+    if dp.iscanceled(): 
+        print "DOWNLOAD CANCELLED" # need to get this part working
+        dp.close()
+        downloadAudio(url,dest)
 
 
 
@@ -261,8 +278,7 @@ elif mode == "searchnext":
   doSearch(param1,int(param2),False)
     
 elif mode=='down':
-        downloadAudio(buurl,namet,downloadpath)
-
+        downloadAudio(buurl,downloadpath,namet)
 else:
   addDir(__language__(30000)+' >','','search','','','DefaultFolder.png')
   addDir(__language__(30001)+' >','','searched','','','DefaultFolder.png')
