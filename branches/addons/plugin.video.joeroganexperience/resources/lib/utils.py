@@ -16,7 +16,8 @@ import storageserverdummy as StorageServer
 from elementtree import ElementTree as ET
 
 ### get addon info
-__addon__             = xbmcaddon.Addon()
+addon_id = 'plugin.video.joeroganexperience'
+__addon__             = xbmcaddon.Addon(id=addon_id)
 __addonid__           = __addon__.getAddonInfo('id')
 __addonidint__        = int(sys.argv[1])
 __addondir__          = xbmc.translatePath(__addon__.getAddonInfo('path'))
