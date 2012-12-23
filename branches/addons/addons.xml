@@ -64,6 +64,28 @@
 	</extension>
 </addon>
 
+<addon id="plugin.audio.mp3search"
+       name="MP3 Search"
+       version="0.2.3"
+       provider-name="ghua@seznam.cz">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.simple.downloader" version="0.9.2"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+             provides="audio"
+             library="default.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary lang="en">Search,play and download mp3's </summary>
+    <description lang="en">With this addon you can search for mp3's, listen and download them.</description>
+    <disclaimer></disclaimer>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.audio.radio_de" name="Radio" version="2.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -888,6 +910,27 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary lang="en">Recorded Amiga Games</summary>
     <description lang="en">Recorded Amiga Games</description>
   </extension>
+</addon>
+
+<addon
+    id="plugin.video.the.trailers"
+    name="The Trailers"
+    version="0.1.1"
+    provider-name="Martijn (orginal: nuka1195) Xbox Version Skatulskijean">
+    <!-- Code taken from AMT-L and original creator ="nuka1195" -->
+    <requires>
+        <import addon="xbmc.python"                 version="2.0"/>
+        <import addon="script.module.elementtree"   version="1.2.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"     library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Watch movie trailers</summary>
+        <description lang="en">Watch current movie trailers from[CR]- http://trailers.apple.com[CR]</description>
+        <disclaimer lang="en">Only the most recent 100 or so trailers are listed.</disclaimer>
+    </extension>
 </addon>
 
 <addon id="plugin.video.twit"
