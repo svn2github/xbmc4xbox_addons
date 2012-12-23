@@ -15,6 +15,7 @@ from xbmc import LOGERROR
 
 SITE_IDENTIFIER = 'kinox_to'
 SITE_NAME = 'Kinox.to'
+SITE_ICON = 'kinox.png'
 
 URL_MAIN = 'http://kinox.to'
 URL_CINEMA_PAGE = 'http://kinox.to/Cine-Films.html'
