@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 import urllib,urllib2,re,xbmc,xbmcgui,xbmcplugin,sys,os,xbmcaddon,string
 
-import SimpleDownloader as downloader
-downloader = downloader.SimpleDownloader()
+
 
 
 # plugin constants
