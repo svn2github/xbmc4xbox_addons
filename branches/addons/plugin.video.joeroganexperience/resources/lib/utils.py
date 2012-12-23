@@ -11,7 +11,7 @@ import xbmcaddon
 import xbmcgui
 import xbmcplugin
 
-import StorageServer
+import storageserverdummy as StorageServer
 
 from elementtree import ElementTree as ET
 

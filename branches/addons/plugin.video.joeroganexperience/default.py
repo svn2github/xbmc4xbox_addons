@@ -1,7 +1,7 @@
 import urllib
 import re
 import sys
-import StorageServer
+import storageserverdummy as StorageServer
 import xbmcaddon
 
 from resources.lib import joerogan
