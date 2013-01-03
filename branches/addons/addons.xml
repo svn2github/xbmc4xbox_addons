@@ -756,7 +756,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <import addon="plugin.video.youtube" version="3.3.0" />
   </requires>
   <extension point="xbmc.python.pluginsource"
-            library="Default.py">
+            library="default.py">
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
