@@ -1045,12 +1045,13 @@ Play a wide selection of TV shows from watchseries.eu</description>
 
 <addon id="plugin.video.xstream"
 	name="xStream"
-	version="2.0.16"
+	version="2.0.17"
 	provider-name="MaxMustermann">
   <requires>
-    <import addon="script.module.urlresolver" version="1.0.3" />
+    <import addon="script.module.urlresolver" version="1.0.0" />
 	<import addon="script.module.t0mm0.common" version="1.1.0" />
-	<import addon="script.module.mechanize" version="0.2.5" />
+	<import addon='script.module.simplejson' version='2.0.10'/>
+	<import addon='script.module.mechanize' version='0.2.5'/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
