@@ -1,0 +1,21 @@
+[B]Version 1.0.5[/B]
+- Added streamcloud
+- Added zooupload
+- Fixed divxstage - handle url with .net
+- Fixed flashx.tv - new pattern and embed code
+- Fixed vidstream - new url
+- Fixed ecostream - new embed url pattern
+
+[B]Version 1.0.4[/B]
+- Updated putlocker and vidxden resolvers
+- Updated real-debrid
+
+[B]Version 1.0.3[/B]
+- Fixed putlocker
+
+[B]Version 1.0.2[/B]
+- Fixed dailymotion
+- Fixed gorillavid
+
+[B]Version 1.0.0[/B]
+- Initial Release.
