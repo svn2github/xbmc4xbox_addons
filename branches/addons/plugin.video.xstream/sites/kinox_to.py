@@ -13,7 +13,7 @@ from resources.lib.config import cConfig
 from xbmc import log
 from xbmc import LOGDEBUG
 from xbmc import LOGERROR
-from json import loads
+from simplejson import loads
 import re
 
 
