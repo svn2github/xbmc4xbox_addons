@@ -41,7 +41,7 @@ STRINGS = {
     "show_similar_songs": 30015,
 }
 
-plugin = Plugin()
+plugin = Plugin(addon_id=plugin.audio.songs_to)
 plugin.register_module(playlists.playlists, '/playlists')
 api = SongsApi()
 
@@ -270,7 +270,6 @@ def __add_songs(songs):
             'path': path,
         })
     temp_items = plugin.get_storage('temp_items')
-    temp_items.clear()
     temp_items.update((item['path'], item) for item in items)
     finish_kwargs = {
         'sort_methods': ('PLAYLIST_ORDER', ('LABEL', '%X'), 'DATE')

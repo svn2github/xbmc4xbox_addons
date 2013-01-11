@@ -33,7 +33,7 @@ class NetworkError(Exception):
     pass
 
 
-class SongsApi():
+class SongsApi:
 
     USER_AGENT = 'XBMC SongsApi v0.1'
 
