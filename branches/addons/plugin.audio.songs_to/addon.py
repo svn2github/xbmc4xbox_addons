@@ -41,7 +41,7 @@ STRINGS = {
     "show_similar_songs": 30015,
 }
 
-plugin = Plugin(addon_id=plugin.audio.songs_to)
+plugin = Plugin(addon_id='plugin.audio.songs_to')
 plugin.register_module(playlists.playlists, '/playlists')
 api = SongsApi()
 
