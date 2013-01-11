@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Addon Name -->
+    <string id="30000">Songs.to</string>
+    <!-- Default strings -->
+    <string id="30001">Top 500 songs</string>
+    <string id="30002">Charts</string>
+    <string id="30003">Song search</string>
+    <string id="30004">Song search by title</string>
+    <string id="30005">Song search by artist</string>
+    <string id="30006">Song search by album</string>
+    <string id="30007">Bitrate</string>
+    <string id="30008">Date</string>
+    <string id="30009">All songs from [B]%s[/B]</string>
+    <string id="30010">All songs in [B]%s[/B]</string>
+    <string id="30011">Show song infos</string>
+    <string id="30012">Add to [B]%s[/B]</string>
+    <string id="30013">My Playlists</string>
+    <string id="30014">New Songs</string>
+    <string id="30015">Show similar songs</string>
+    <!-- Playlist strings -->
+    <string id="30100">New Playlist...</string>
+    <string id="30101">Delete Playlist</string>
+    <string id="30102">Delete from Playlist</string>
+    <string id="30103">Enter Playlist Name</string>
+    <string id="30104">Sure to delete?</string>
+</strings>

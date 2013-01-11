@@ -1,0 +1,7 @@
+1.0.0
+ - initial release
+ - Features:
+ 	- Search by artist, album, title or in all fields
+ 	- Show all songs from a selected album or artist
+ 	- create and manage as much playlists as you want and add songs to them
+ 	- Find similar songs
