@@ -695,7 +695,7 @@
 
 <addon id="plugin.video.icefilms"
        name="Icefilms"
-       version="1.1.22"
+       version="1.1.24"
        provider-name="Eldorado (originator: anarchintosh)">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
