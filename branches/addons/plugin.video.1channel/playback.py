@@ -142,8 +142,7 @@ class Player(xbmc.Player):
 				self._lastPos = self.getTime()
 			except:
 				addon.log_debug('Error while trying to set playback time')
-				self.onPlayBackStopped()
-				addon.log('STOP PLAY BACK HACK')
+				
 			addon.log_debug('Inside Player. Tracker time = %s' % self._lastPos)
 			xbmc.sleep(SLEEP_MILLIS)
 		addon.log('Position tracker ending with lastPos = %s' % self._lastPos)
