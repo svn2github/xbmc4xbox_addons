@@ -80,7 +80,7 @@ class Player(xbmc.Player):
 			sql = sql.replace('?','%s')
 			db = database.connect(DB_NAME, DB_USER, DB_PASS, DB_ADDRESS, buffered=True)
 		else:
-			db = database.connect(db_dir)
+			db = database.connect(DB)
 		cur = db.cursor()
 		cur.execute(sql, (self.video_type, self.title, self.season, self.episode, self.year))
 		bookmark = cur.fetchone()
@@ -135,7 +135,8 @@ class Player(xbmc.Player):
 	def onPlayBackEnded(self):
 		self.onPlayBackStopped()
 		addon.log('onPlayBackEnded')
-
+		
+		
 	def _trackPosition(self):
 		while self._playbackLock.isSet():
 			try:
@@ -144,6 +145,7 @@ class Player(xbmc.Player):
 				addon.log_debug('Error while trying to set playback time')
 				self.onPlayBackStopped()
 				addon.log('STOP PLAY BACK HACK')
+				
 			addon.log_debug('Inside Player. Tracker time = %s' % self._lastPos)
 			xbmc.sleep(SLEEP_MILLIS)
 		addon.log('Position tracker ending with lastPos = %s' % self._lastPos)
