@@ -6,6 +6,7 @@
     <import addon="script.module.elementtree"/>
     <import addon="script.common.plugin.cache" version="0.9.1"/>
     <import addon="plugin.video.vimeo"/>
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
