@@ -27,6 +27,7 @@
        provider-name="qualisoft.dk - Tim C. Steinmetz">
 	<requires>
 		<import addon="xbmc.python" version="2.0"/>
+		<import addon="script.module.simplejson" version="2.0.10"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>audio</provides>
@@ -93,6 +94,7 @@
        provider-name="qualisoft.dk - Tim C. Steinmetz">
 	<requires>
 		<import addon="xbmc.python" version="2.0"/>
+		<import addon="script.module.simplejson"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>audio</provides>
@@ -113,6 +115,8 @@
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="script.module.xbmcswift2" version="1.3.0"/>
+	<import addon="script.module.simplejson"/>
+
   </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
     <provides>audio</provides>
@@ -176,6 +180,7 @@
     <import addon="script.module.simplejson" version="2.0.10"/>
     <import addon="script.module.xbmcswift" version="0.2.0"/>
     <import addon="plugin.video.youtube" version="3.3.0"/>
+	<import addon="script.module.mechanize" version="0.0.1"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
     <provides>video</provides>
@@ -216,6 +221,7 @@
     <import addon='xbmc.python' version='2.0'/>
     <import addon='script.module.parsedom' version='1.3.0'/>
 	<import addon='script.module.xbmcvfs' version='1.0.1'/>
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension point='xbmc.python.pluginsource'
             library='default.py'>
@@ -258,6 +264,8 @@
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="script.module.urlresolver"/>
+	<import addon="script.module.t0mm0.common" version="0.0.1"/>
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
 			 library="default.py">
@@ -293,6 +301,7 @@
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.beautifulsoup"	version="3.0.8"/>
     <import addon="script.module.simplejson" version="2.0.10"/>
+	<import addon="script.module.pysqlite2"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -354,6 +363,7 @@
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
     <import addon="script.module.xbmcswift" version="0.2.0"/>
     <import addon="plugin.video.youtube" version="3.3.0" />
+	<import addon="script.module.mechanize"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
     <provides>video</provides>
@@ -453,6 +463,8 @@
     <import addon="plugin.video.youtube" version="3.3.0" />
     <import addon="plugin.video.vimeo" version="2.4.0" />
     <import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon="script.module.simplejson"/>
+	<import addon="script.module.xbmcvfs"/>
   </requires>
   <extension library="addon.py" point="xbmc.python.pluginsource">
     <provides>video</provides>
@@ -492,6 +504,8 @@
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.simplejson" version="2.0.10"/>
         <import addon="script.module.buggalo" version="1.1.2"/>
+		<import addon="script.module.mechanize"/>
+
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
@@ -514,6 +528,8 @@
 	<requires>
 		<import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.buggalo" version="1.0.1"/>
+		<import addon="script.module.simplejson"/>
+		<import addon="script.module.mechanize"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="addon.py">
 		<provides>video</provides>
@@ -558,6 +574,7 @@
     <import addon="xbmc.python" version="2.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
     <import addon="script.module.xbmcswift" version="0.2.0"/>
+	<import addon="script.module.mechanize"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
@@ -597,6 +614,7 @@
   <requires>
     <import addon="xbmc.python" version="2.0"/>
     <import addon="script.module.t0mm0.common" version="1.1.0"/>
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -729,6 +747,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <import addon="script.module.elementtree"/>
     <import addon="script.common.plugin.cache" version="0.9.1"/>
     <import addon="plugin.video.vimeo"/>
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
@@ -995,6 +1014,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
   <requires>
     <import addon="xbmc.python" version="2.0" />
     <import addon="script.module.xbmcswift2" version="1.1.1" />
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension library="addon.py" point="xbmc.python.pluginsource">
     <provides>video</provides>
@@ -1012,6 +1032,8 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <import addon='xbmc.python' version='2.0'/>
     <import addon='script.common.plugin.cache' version='1.3.0'/>
     <import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon="script.module.simplejson"/>
+	<import addon="script.module.xbmcvfs"/>
   </requires>
   <extension point='xbmc.python.pluginsource' library='default.py'>
         <provides>video</provides>
@@ -1030,6 +1052,7 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
         <import addon="xbmc.python" version="1.0"/>
         <import addon="script.module.urlresolver" version="0.0.1"/>
         <import addon="script.module.t0mm0.common" version="0.0.1"/>
+		<import addon="script.module.simplejson"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
