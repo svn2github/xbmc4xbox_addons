@@ -20,7 +20,7 @@ import sys
 import  urllib
 
 
-class YouTubeFeeds():
+class YouTubeFeeds:
     # YouTube General Feeds
     urls = {}
     urls['playlist'] = "http://gdata.youtube.com/feeds/api/playlists/%s"
@@ -48,6 +48,8 @@ class YouTubeFeeds():
     urls['feed_discussed'] = "http://gdata.youtube.com/feeds/api/standardfeeds/most_discussed?time=%s"
     urls['feed_responded'] = "http://gdata.youtube.com/feeds/api/standardfeeds/most_responded?time=%s"
     urls['feed_live'] = "http://gdata.youtube.com/feeds/api/charts/live/events/live_now"
+    urls['feed_UKF'] = "http://gdata.youtube.com/feeds/api/users/UKFDubstep/uploads?&max-results=50&orderby-published"
+	
 
     # Wont work with time parameter
     urls['feed_recent'] = "http://gdata.youtube.com/feeds/api/standardfeeds/most_recent"
@@ -202,7 +204,7 @@ class YouTubeFeeds():
             if (thumbnail):
                 self.storage.store(params, thumbnail, "thumbnail")
 
-            if (len(result) > 0 and get("fetch_all") != "true"):
+            if (len(result) > 0):
                 if (per_page * (page + 1) < len(result)):
                     next = 'true'
 
@@ -296,9 +298,7 @@ class YouTubeFeeds():
         get = params.get
         result = {"content": "", "status": 303}
 
-        auth = "false"
         if get("login") == "true":
-            auth = "true"
             if (not self.core._getAuth()):
                 self.common.log("login required but auth wasn't set!")
                 return (self.language(30609), 303)
@@ -310,7 +310,7 @@ class YouTubeFeeds():
 
         ytobjects = []
 
-        result = self.core._fetchPage({"link": url, "auth": auth})
+        result = self.core._fetchPage({"link": url, "auth": "true"})
 
         if result["status"] == 200:
             if get("folder") == "true":

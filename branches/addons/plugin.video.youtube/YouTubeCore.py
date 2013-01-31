@@ -48,7 +48,7 @@ class url2request(urllib2.Request):
             return urllib2.Request.get_method(self)
 
 
-class YouTubeCore():
+class YouTubeCore:
     APIKEY = "AI39si6hWF7uOkKh4B9OEAX-gK337xbwR9Vax-cdeF9CF9iNAcQftT8NVhEXaORRLHAmHxj6GjM-Prw04odK4FxACFfKkiH9lg"
 
     #===============================================================================
@@ -232,12 +232,12 @@ class YouTubeCore():
             thumb = ""
             if get("user_feed") == "contacts":
                 folder["thumbnail"] = "user"
-                folder["contact"] = self.common.parseDOM(node, 'yt:username')[0]
+                folder["contact"] = folder["Title"]
                 folder["store"] = "contact_options"
                 folder["folder"] = "true"
 
             if get("user_feed") == "subscriptions":
-                folder["channel"] = self.common.parseDOM(node, 'yt:username')[0]
+                folder["channel"] = folder["Title"]
 
             if get("user_feed") == "playlists":
                 folder['playlist'] = self.common.parseDOM(node, 'yt:playlistId')[0]
@@ -442,16 +442,15 @@ class YouTubeCore():
                 return ret_obj
 
             # This should be a call to self.login._httpLogin()
-            if self.settings.getSetting("login_cookies") == "":
+            if self.settings.getSetting("login_info") == "":
                 if isinstance(self.login, str):
                     self.login = sys.modules["__main__"].login
                 self.login._httpLogin()
 
-            if self.settings.getSetting("login_cookies") != "":
-                tcookies = eval(self.settings.getSetting("login_cookies"))
-                self.common.log("Adding login cookies: " + repr(tcookies.keys()))
-                for key in tcookies.keys():
-                    cookie += "%s=%s;" % ( key, tcookies[key])
+            if self.settings.getSetting("login_info") != "":
+                info = self.settings.getSetting("login_info")
+                SID = self.settings.getSetting("SID")
+                cookie += 'LOGIN_INFO=' + info + ';SID=' + SID + ';'
 
         if get("referer", "false") != "false":
             self.common.log("Added referer: %s" % get("referer"))
@@ -588,17 +587,10 @@ class YouTubeCore():
                 if error[0].find("<") > -1:
                     error[0] = error[0][0:error[0].find("<")]
 
-        if len(error) == 0:
-            self.common.log("4")
-            error = self.common.parseDOM(ret['content'], "div", attrs={"id": "watch7-player-age-gate-content"})
-
         if len(error) > 0:
-            self.common.log("Found error: " + repr(error))
-            error = self.common.stripTags(error[0])
-            self.common.log("Found error: " + repr(error))
-            if error.find("[") > -1:
-                error = error[0:error.find("[")]
-            error = urllib.unquote(error.replace("\n", " ").replace("  ", " ")).replace("&#39;", "'")
+            self.common.log("4")
+            error = error[0]
+            error = urllib.unquote(error[0:error.find("[")]).replace("&#39;", "'")
             self.common.log("returning error : " + error.strip())
             return error.strip()
 
@@ -805,12 +797,11 @@ class YouTubeCore():
         return result
 
     def getVideoDuration(self, node):
-        result = 1
+        result = ""
 
         for tmp in self.common.parseDOM(node, "yt:duration", ret="seconds"):
-            tmp = int(tmp) / 60
-            if tmp:
-                result = tmp
+            tmp = int(tmp)
+            result = "%02d:%02d" % (int(tmp / 60), int(tmp % 60))
 
         return result
 
