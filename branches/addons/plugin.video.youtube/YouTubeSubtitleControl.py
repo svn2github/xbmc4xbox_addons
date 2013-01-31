@@ -25,7 +25,7 @@ try: import simplejson as json
 except ImportError: import json
 
 
-class YouTubeSubtitleControl:
+class YouTubeSubtitleControl():
 
     urls = {}
     urls['timed_text_index'] = "http://www.youtube.com/api/timedtext?type=list&v=%s"

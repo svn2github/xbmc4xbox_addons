@@ -17,7 +17,7 @@
 '''
 import sys
 
-class YouTubePluginSettings:
+class YouTubePluginSettings():
 
     def __init__(self):
         self.settings = sys.modules["__main__"].settings

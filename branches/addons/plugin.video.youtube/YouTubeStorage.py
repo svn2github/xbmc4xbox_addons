@@ -18,9 +18,10 @@
 
 import sys
 import urllib
+import io
 
 
-class YouTubeStorage:
+class YouTubeStorage():
     def __init__(self):
         self.xbmc = sys.modules["__main__"].xbmc
         self.settings = sys.modules["__main__"].settings
@@ -60,9 +61,9 @@ class YouTubeStorage:
             alternate = options.replace("b", "")
 
         try:
-            return open(filepath, options)
+            return io.open(filepath, options)
         except:
-            return open(filepath, alternate)
+            return io.open(filepath, alternate)
 
     def getStoredArtists(self, params={}):
         self.common.log(repr(params), 5)
@@ -295,7 +296,7 @@ class YouTubeStorage:
         if key:
             key += "_thumb"
 
-        return key
+        return key.encode("utf-8","ignore")
 
     def _getValueStorageKey(self, params={}, item={}):
         self.common.log(repr(params), 5)
