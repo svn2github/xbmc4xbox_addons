@@ -19,4 +19,9 @@
     <description lang="en">Plugin to watch streams from various film an series sites.</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

@@ -20,4 +20,14 @@
 		</description>
 		<language/>
 	</extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

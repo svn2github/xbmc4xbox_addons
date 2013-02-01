@@ -18,4 +18,9 @@
     <description lang="de">Dieses plugin bietet Zugriff auf alle Videos des deutschen Video-Portals MyVideo.de</description>
     <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

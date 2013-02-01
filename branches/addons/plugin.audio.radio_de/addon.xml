@@ -20,4 +20,9 @@
     <description lang="fr">Plugin musical pour écouter plus de 4000 stations de radio internationales de rad.io, radio.de et radio.fr[CR]Fonctionnalités[CR]- Traduit en Anglais, Allemand et Français[CR]- Parcourir les stations par genre, thème, pays, ville et langue[CR]- Recherche de stations[CR]- 115 genres, 59 thèmes, 94 pays, 1010 villes, 63 langues</description>
     <description lang="es">Plugin de música para escuchar más de 4.000 emisoras de radio internacionales desde rad.io, radio.de y radio.fr.[CR]Características:[CR]- Traducciones al inglés, alemán, francés y español.[CR]- Buscador de emisoras por ubicación, género, tema, país, ciudad o idioma.[CR]- Buscador de emisoras.[CR]- 115 géneros, 59 temas, 94 países, 1.010 ciudades, 63 idiomas.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

@@ -19,4 +19,9 @@
     <description>"Free Cable is the ultimate aphrodisiac" - The Cable Guy</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

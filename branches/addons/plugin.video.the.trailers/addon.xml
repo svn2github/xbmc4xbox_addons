@@ -18,4 +18,9 @@
         <description lang="en">Watch current movie trailers from[CR]- http://trailers.apple.com[CR]</description>
         <disclaimer lang="en">Only the most recent 100 or so trailers are listed.</disclaimer>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

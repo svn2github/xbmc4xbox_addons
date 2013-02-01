@@ -18,4 +18,9 @@
     <description>series, a lot, generally in german</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

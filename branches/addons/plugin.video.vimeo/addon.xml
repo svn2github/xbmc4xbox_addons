@@ -17,4 +17,9 @@
     <summary lang='bg'>Видео добавка за Vimeo</summary>
     <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на всички алтернативен видео сайт!</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

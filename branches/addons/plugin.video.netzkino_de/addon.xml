@@ -33,4 +33,9 @@
         <description lang="pt_BR">Netzkino.de é o primeiro portal legal e gratuíto de filmes na Alemanha.</description>
         <description lang="sv">Netzkino.de är den första gratis lagliga filmportalen i Tyskland</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

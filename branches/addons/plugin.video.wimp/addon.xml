@@ -14,4 +14,9 @@
         <summary lang="en">Wimp.com - Family Friendly Videos</summary>
         <description lang="en">A collection of the best online videos. Our editors make sure clips added are family friendly.</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

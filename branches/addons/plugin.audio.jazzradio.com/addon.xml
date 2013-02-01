@@ -19,4 +19,10 @@
 			Presenting jazz radio channels for your enjoyment. Listen for free and enjoy countless hours of the best jazz music around
 		</description>
 	</extension>
+    <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
+	
 </addon>

@@ -20,4 +20,9 @@
     <description>Music Videos from VEVO</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

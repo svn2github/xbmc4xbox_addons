@@ -15,4 +15,9 @@
     <summary lang="en">Free Music Portal</summary>
     <description lang="en">With the songs.to XBMC Add-on you can listen to your favourite music. Current Features:[CR]- Search by artist, album, title or in all fields[CR]- Show all songs from a selected album or artist[CR]- create and manage as much playlists as you want and add songs to them[CR]- Find similar songs</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

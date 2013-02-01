@@ -19,4 +19,9 @@
         <platform>all</platform>
         <language>da</language>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

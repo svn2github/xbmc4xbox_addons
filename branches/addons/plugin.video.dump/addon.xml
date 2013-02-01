@@ -15,4 +15,9 @@
     <description lang="de">Videos von Dump.com</description>
     <description lang="en">The Content of Dump.com on your Media Center</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

@@ -19,4 +19,9 @@
         <description lang="de">Dein Online Doku Stream Archiv. Die besten deutschen Dokumentationen einfach online anschauen. Tägliche Updates!</description>
         <description lang="en">German online documentary stream archive. The best german documentaries online. Daily updates!</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

@@ -19,4 +19,9 @@
     <summary lang="en">Search for an artist and it will play up to 150 music videos of that artist.</summary>
     <description lang="en">This plugin uses Google Suggest API, Last.fm and YouTube to search for music videos of an artist, and plays up to 150 music videos of that artist.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

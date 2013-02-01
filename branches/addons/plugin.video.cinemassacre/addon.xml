@@ -17,4 +17,9 @@
     	<description>Home of the Angry Video Game Nerd, Monster Madness, movie reviews, top 10's, and commentary, retro and classic video gaming and more.</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

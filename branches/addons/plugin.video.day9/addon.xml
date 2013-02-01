@@ -22,4 +22,9 @@
     <summary>Day[9].tv Archive</summary>
     <description>Casts from the awesome guy Sean "Day[9]" Plott teaching "How to be a better gamer" in Starcraft.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

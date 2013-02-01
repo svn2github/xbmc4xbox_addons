@@ -20,4 +20,9 @@
         <summary>Stream links listed on Icefilms.info</summary>
         <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

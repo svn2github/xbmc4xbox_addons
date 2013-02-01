@@ -15,5 +15,10 @@
     <summary lang="en">The C64 Gamevideoarchive</summary>
     <description lang="en">... presents a cross section of the most popular and obscure games for the C64 sorted by year of release all of which superseed the videos of THE ORIGINAL SERIES. Any questions concerning the archive are most likey answered in the FAQ. If you want more info on a game before downloading the video just click on the lemon to go the the game's detail page over at Lemon 64. If you want to contribute please check out which game videos are still wanted or have been submitted already.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 

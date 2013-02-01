@@ -16,4 +16,9 @@
     <summary lang="en">Watch videos from www.collegehumor.com</summary>
     <description lang="en">CollegeHumor finds funny videos from all over the internet plus some original videos that they made themself.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

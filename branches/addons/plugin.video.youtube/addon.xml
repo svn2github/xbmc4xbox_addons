@@ -19,4 +19,9 @@
     <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на на всички видео сайт!</description>
     <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

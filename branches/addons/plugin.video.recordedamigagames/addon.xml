@@ -15,5 +15,10 @@
     <summary lang="en">Recorded Amiga Games</summary>
     <description lang="en">Recorded Amiga Games</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 

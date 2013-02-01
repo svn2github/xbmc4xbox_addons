@@ -16,4 +16,9 @@
     <summary>Browse and stream videos from The Joe Rogan Experience Podcast</summary>
     <description>Browse and stream videos from The Joe Rogan Experience Podcast</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>

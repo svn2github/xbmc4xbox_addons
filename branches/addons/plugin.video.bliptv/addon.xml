@@ -17,4 +17,9 @@
     <summary lang='bg'>Видео добавка за Bliptv</summary>
     <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от BlipTV!</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
