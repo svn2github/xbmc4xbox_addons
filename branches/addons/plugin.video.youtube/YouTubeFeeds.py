@@ -18,7 +18,14 @@
 
 import sys
 import  urllib
-
+import YouTubePluginSettings
+import sys
+import xbmc
+import xbmcplugin
+import xbmcaddon
+import xbmcgui
+import urllib2
+settings = xbmcaddon.Addon(id='plugin.video.youtube')
 
 class YouTubeFeeds:
     # YouTube General Feeds
@@ -60,11 +67,17 @@ class YouTubeFeeds:
     urls['feed_MyList9'] = "http://gdata.youtube.com/feeds/api/users/NCIXcom/uploads?"
     urls['feed_MyList10'] = "http://gdata.youtube.com/feeds/api/users/nixiedoeslinux/uploads?"
     urls['feed_MyList11'] = "http://gdata.youtube.com/feeds/api/users/JerryLaVigneJr/uploads?"
-    urls['feed_MyList12'] = "http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzommRhc0-LsG1euXgU_QK-qu"
-    urls['feed_MyList13'] = "http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzommRhc0-LsG1euXgU_QK-qu"
-    urls['feed_MyList14'] = "http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzommRhc0-LsG1euXgU_QK-qu"
-    urls['feed_MyList15'] = "http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzommRhc0-LsG1euXgU_QK-qu"
-    urls['feed_MyList16'] = "http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzommRhc0-LsG1euXgU_QK-qu"
+    urls['feed_MyList12'] = settings.getSetting("userList1")
+    urls['feed_MyList13'] = settings.getSetting("userList2")
+    urls['feed_MyList14'] = settings.getSetting("userList3")
+    urls['feed_MyList15'] = settings.getSetting("userList4")
+    urls['feed_MyList16'] = settings.getSetting("userList5")
+    urls['feed_MyList17'] = settings.getSetting("userList6")
+    urls['feed_MyList18'] = settings.getSetting("userList7")
+    urls['feed_MyList19'] = settings.getSetting("userList8")
+    urls['feed_MyList20'] = settings.getSetting("userList9")
+    urls['feed_MyList21'] = settings.getSetting("userList10")
+    
 
     # Wont work with time parameter
     urls['feed_recent'] = "http://gdata.youtube.com/feeds/api/standardfeeds/most_recent"
@@ -83,6 +96,7 @@ class YouTubeFeeds:
         self.pluginsettings = sys.modules["__main__"].pluginsettings
         self.common = sys.modules["__main__"].common
 
+		
     def createUrl(self, params={}):
         self.common.log("", 4)
         get = params.get

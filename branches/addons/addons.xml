@@ -1105,7 +1105,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
   </extension>
 </addon>
 
-<addon id='plugin.video.youtube' version='3.3.0' name='YouTube' provider-name='TheCollective'>
+<addon id='plugin.video.youtube' version='3.3.0' name='YouTube(XboxEnhanced)' provider-name='TheCollective'>
   <requires>
     <import addon='xbmc.python' version='2.0'/>
     <import addon='script.module.simplejson' version='2.0.10'/>

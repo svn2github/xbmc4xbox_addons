@@ -77,6 +77,11 @@
     <string id="30074">User List 3</string>
     <string id="30075">User List 4</string>
     <string id="30076">User List 5</string>
+    <string id="30077">User List 6</string>
+    <string id="30078">User List 7</string>
+    <string id="30079">User List 8</string>
+    <string id="30080">User List 9</string>
+    <string id="30081">User List 10</string>
 	
     
 	
@@ -169,6 +174,17 @@
     <string id="30286">Show YouTube Music</string>
     <string id="30287">Show YouTube Live</string>
     <string id="30288">Show YouTube History</string>
+    <string id="30289">User Feed URLs</string>
+    <string id="30290">User List Address 1</string>
+    <string id="30291">User List Address 2</string>
+    <string id="30292">User List Address 3</string>
+    <string id="30293">User List Address 4</string>
+    <string id="30294">User List Address 5</string>
+    <string id="30295">User List Address 6</string>
+    <string id="30296">User List Address 7</string>
+    <string id="30297">User List Address 8</string>
+    <string id="30298">User List Address 9</string>
+    <string id="30299">User List Address 10</string>
 
     <!-- Menu strings -->
     <string id="30500">Clear refinements</string>

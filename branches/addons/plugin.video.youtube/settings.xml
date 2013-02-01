@@ -62,16 +62,16 @@
   
 <!-- User Feeds URL's -->
   <category label="30289">
-    <setting id="userlist1" type="text" label="30290" default="http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzommRhc0-LsG1euXgU_QK-qu" />
-    <setting id="userlist2" type="text" label="30291" default="http://gdata.youtube.com/feeds/api/playlists/" />
-    <setting id="userlist3" type="text" label="30292" default="http://gdata.youtube.com/feeds/api/playlists/" />
-    <setting id="userlist4" type="text" label="30293" default="http://gdata.youtube.com/feeds/api/playlists/" /> 
-    <setting id="userlist5" type="text" label="30294" default="http://gdata.youtube.com/feeds/api/playlists/" />
-    <setting id="userlist6" type="text" label="30295" default="http://gdata.youtube.com/feeds/api/playlists/" />
-    <setting id="userlist7" type="text" label="30296" default="http://gdata.youtube.com/feeds/api/playlists/" />
-    <setting id="userlist8" type="text" label="30297" default="http://gdata.youtube.com/feeds/api/playlists/" />
-	<setting id="userlist9" type="text" label="30298" default="http://gdata.youtube.com/feeds/api/playlists/" />
-	<setting id="userlist10" type="text" label="30299" default="http://gdata.youtube.com/feeds/api/playlists/PL12C0C916CECEA3BC" />
+    <setting id="feed_MyList12" type="text" label="30290" default="http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzommRhc0-LsG1euXgU_QK-qu" />
+    <setting id="userlist2" type="text" label="30291" default="true" />
+    <setting id="userlist3" type="text" label="30292" default="true" />
+    <setting id="userlist4" type="text" label="30293" default="true" /> 
+    <setting id="userlist5" type="text" label="30294" default="true" />
+    <setting id="userlist6" type="text" label="30295" default="true" />
+    <setting id="userlist7" type="text" label="30296" default="true" />
+    <setting id="userlist8" type="text" label="30297" default="true" />
+	<setting id="userlist8" type="text" label="30298" default="true" />
+	<setting id="userlist8" type="text" label="30299" default="true" />
     
   </category>
   

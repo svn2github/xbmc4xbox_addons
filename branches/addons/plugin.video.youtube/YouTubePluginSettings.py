@@ -49,3 +49,9 @@ class YouTubePluginSettings:
 
     def authenticationRefreshRoken(self):
         return self.settings.getSetting("oauth2_refresh_token")
+		
+    def userList1(self):
+	    return self.settings.getSetting("userlist1")
+		
+    def userList10(self):
+	    return self.settings.getSetting("userlist10")
