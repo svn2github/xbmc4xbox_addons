@@ -60,6 +60,26 @@
     <string id="30057">YouTube Education</string>
     <string id="30058">Season %s</string>
     <string id="30059">My History</string>
+    <string id="30060">UKF Dubstep</string>
+    <string id="30061">Example Playlist</string>
+    <string id="30062">Hak5</string>
+    <string id="30063">Whufclee Uploads</string>
+    <string id="30064">Element 14</string>
+    <string id="30065">Twit TV</string>
+    <string id="30066">The Ben Heck Show</string>
+    <string id="30067">Electronics Engineering Video Blog</string>
+    <string id="30068">SassiBoB</string>
+    <string id="30069">NCIX</string>
+    <string id="30070">Nixie Does Linux</string>
+    <string id="30071">JerryLaVigneJr</string>
+    <string id="30072">User List 1</string>
+    <string id="30073">User List 2</string>
+    <string id="30074">User List 3</string>
+    <string id="30075">User List 4</string>
+    <string id="30076">User List 5</string>
+	
+    
+	
 
     
     <!-- Plugin settings strings -->

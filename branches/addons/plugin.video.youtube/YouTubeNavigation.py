@@ -49,6 +49,23 @@ class YouTubeNavigation:
         # This list contains the main menu structure the user first encounters when running the plugin
         #     label                        , path                                          , thumbnail                    ,  login                  ,  feed / action
         self.categories = (
+            {'Title':self.language(30060)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_UKF" },
+            {'Title':self.language(30061)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList1" },
+            {'Title':self.language(30062)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList2" },
+            {'Title':self.language(30063)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList3" },
+            {'Title':self.language(30064)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList4" },
+            {'Title':self.language(30065)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList5" },
+            {'Title':self.language(30066)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList6" },
+            {'Title':self.language(30067)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList7" },
+            {'Title':self.language(30068)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList8" },
+            {'Title':self.language(30069)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList9" },
+            {'Title':self.language(30070)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList10" },
+            {'Title':self.language(30071)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList11" },
+            {'Title':self.language(30072)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList12" },
+            {'Title':self.language(30073)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList13" },
+            {'Title':self.language(30074)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList14" },
+            {'Title':self.language(30075)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList15" },
+            {'Title':self.language(30076)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList16" },
             {'Title':self.language(30044)  ,'path':"/root/explore"                         , 'thumbnail':"explore"           , 'login':"false" },
             {'Title':self.language(30041)  ,'path':"/root/explore/categories"              , 'thumbnail':"explore"           , 'login':"false" , 'feed':'feed_categories', 'folder':'true'},
             {'Title':self.language(30001)  ,'path':"/root/explore/feeds"                   , 'thumbnail':"feeds"             , 'login':"false" },
@@ -62,6 +79,7 @@ class YouTubeNavigation:
             {'Title':self.language(30049)  ,'path':"/root/explore/feeds/trending"          , 'thumbnail':"featured"          , 'login':"false" , 'feed':"feed_trending" },
             {'Title':self.language(30015)  ,'path':"/root/explore/feeds/favorites"         , 'thumbnail':"top"               , 'login':"false" , 'feed':"feed_favorites" },
             {'Title':self.language(30016)  ,'path':"/root/explore/feeds/rated"             , 'thumbnail':"top"               , 'login':"false" , 'feed':"feed_rated" },
+            
             #{'Title':self.language(30043)  ,'path':"/root/explore/movies"                  , 'thumbnail':"movies"            , 'login':"false" , 'scraper':'movies', 'folder':'true'},
             {'Title':self.language(30052)  ,'path':"/root/explore/music"                   , 'thumbnail':"music"             , 'login':"false" , 'store':"disco_searches", "folder":"true" },
             {'Title':self.language(30040)  ,'path':"/root/explore/music/new"               , 'thumbnail':"search"            , 'login':"false" , 'scraper':"search_disco"},
