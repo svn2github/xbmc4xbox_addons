@@ -50,7 +50,7 @@
 		</description>
 	</extension>
     <statfeed>
-    <working>yes</working>
+    <working>no</working>
 	<notes>none</notes>
     <thumbnailurl>http://</thumbnailurl>
     </statfeed>
