@@ -20,7 +20,7 @@
     <platform>all</platform>
   </extension>
   <statfeed>
-    <working>yes</working>
+    <working>half</working>
 	<notes>none</notes>
     <thumbnailurl>http://</thumbnailurl>
    </statfeed>
