@@ -1386,8 +1386,9 @@ Play a wide selection of TV shows from watchseries.eu</description>
     <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>half</working>
+	<notes>The user login is broken, Search and feeds work well</notes>
+	<maintainer>Jan editable feeds by Kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.youtube/icon.png</thumbnailurl>
     </statfeed>
 </addon>
