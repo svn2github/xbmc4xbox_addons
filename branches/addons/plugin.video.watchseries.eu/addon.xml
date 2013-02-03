@@ -19,6 +19,6 @@ Play a wide selection of TV shows from watchseries.eu</description>
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
-    <thumbnailurl>http://</thumbnailurl>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.watchseries.eu/icon.png</thumbnailurl>
     </statfeed>
 </addon>

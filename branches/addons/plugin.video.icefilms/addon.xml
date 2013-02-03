@@ -28,6 +28,6 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
-    <thumbnailurl>http://</thumbnailurl>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icefilms/icon.png</thumbnailurl>
     </statfeed>
 </addon>
