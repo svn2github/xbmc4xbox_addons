@@ -23,7 +23,8 @@
     <statfeed>
     <working>yes</working>
 	<notes>none</notes>
-    <thumbnailurl>http://</thumbnailurl>
+    <maintainer>Jan</maintainer>
+	<thumbnailurl>http://</thumbnailurl>
     </statfeed>
 	
 </addon>
