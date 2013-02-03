@@ -23,11 +23,6 @@
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
-    <thumbnailurl>http://</thumbnailurl>
-    </statfeed>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.sky.fm/icon.png</thumbnailurl>
     </statfeed>
 </addon>
