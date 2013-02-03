@@ -19,6 +19,15 @@
 			Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
 		</description>
 	</extension>
+## Specify the working status of the addon below to be scraped by the status web page
+## working field can be "yes" "no" or "half"
+    <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <maintainer>Jan</maintainer>
+	<thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.di.fm/icon.png</thumbnailurl>
+    </statfeed>
+
 </addon>
 
 <addon id="plugin.audio.jazzradio.com"
@@ -41,6 +50,12 @@
 			Presenting jazz radio channels for your enjoyment. Listen for free and enjoy countless hours of the best jazz music around
 		</description>
 	</extension>
+    <statfeed>
+    <working>no</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.jazzradio.com/icon.png</thumbnailurl>
+    </statfeed>
+
 </addon>
 
 <addon id="plugin.audio.mp3search"
@@ -63,6 +78,11 @@
     <disclaimer></disclaimer>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>half</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.mp3search/icon.png</thumbnailurl>
+   </statfeed>
 </addon>
 
 <addon id="plugin.audio.radio_de" name="Radio" version="2.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -86,6 +106,11 @@
     <description lang="fr">Plugin musical pour écouter plus de 4000 stations de radio internationales de rad.io, radio.de et radio.fr[CR]Fonctionnalités[CR]- Traduit en Anglais, Allemand et Français[CR]- Parcourir les stations par genre, thème, pays, ville et langue[CR]- Recherche de stations[CR]- 115 genres, 59 thèmes, 94 pays, 1010 villes, 63 langues</description>
     <description lang="es">Plugin de música para escuchar más de 4.000 emisoras de radio internacionales desde rad.io, radio.de y radio.fr.[CR]Características:[CR]- Traducciones al inglés, alemán, francés y español.[CR]- Buscador de emisoras por ubicación, género, tema, país, ciudad o idioma.[CR]- Buscador de emisoras.[CR]- 115 géneros, 59 temas, 94 países, 1.010 ciudades, 63 idiomas.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.radio_de/icon.png</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.audio.sky.fm"
@@ -109,6 +134,11 @@
 		</description>
 		<language/>
 	</extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.sky.fm/icon.png</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.audio.songs_to" name="songs.to" version="1.0.0" provider-name="sphere">
@@ -127,6 +157,11 @@
     <summary lang="en">Free Music Portal</summary>
     <description lang="en">With the songs.to XBMC Add-on you can listen to your favourite music. Current Features:[CR]- Search by artist, album, title or in all fields[CR]- Show all songs from a selected album or artist[CR]- create and manage as much playlists as you want and add songs to them[CR]- Find similar songs</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.songs_to/icon.png</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.1channel" version="1.0.0" name="1Channel" provider-name="Bstrdsmkr">
@@ -151,6 +186,11 @@
         <description>Play a wide selection of movies and TV shows from 1channel.ch</description>
         <platform>all</platform>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.1channel/icon.png</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.academicearth" name="Academic Earth" provider-name="Jonathan Beluch (jbel)" version="1.3.1">
@@ -171,6 +211,11 @@
     <summary>Watch lectures from Academic Earth (http://academicearth.org)</summary>
     <description>Browse online courses and lectures from the world's top scholars.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.academicearth/icon.png</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.aljazeera" name="Al Jazeera" version="0.9.2" provider-name="Jonathan Beluch (jbel)">
@@ -192,6 +237,11 @@
     <description lang="en">"Drawing on the legacy of the groundbreaking Al Jazeera Arabic channel, Al Jazeera English was launched on November 15, 2006 to more than 80 million households worldwide.[CR][CR] The 24-hour news and current affairs channel is the first international English-language news channel to broadcast across the globe from the Middle East.[CR][CR] Al Jazeera's global footprint continues to grow and now broadcasts to more than 220 million households on six continents in more than 100 countries.[CR][CR] Our channel is broadcast from four strategic broadcast centres: Doha, Kuala Lumpur, London, and Washington DC. Unlike other international channels, we broadcast from our different centres, as the world turns, providing the most comprehensive and contextual news coverage.[CR][CR] Our mission is to provide independent, impartial news for an international audience and to offer a voice to a diversity of perspectives from under-reported regions.[CR][CR] In addition, the channel aims to balance the information flow between the South and the North.[CR][CR] The channel of reference for the Middle East and Africa, Al Jazeera has unique access to some of the world’s most troubled and controversial locations. Our determination and ability to accurately reflect the truth on the ground in regions torn by conflict and poverty has set our content apart."[CR][CR] Source: Al Jazeera
     </description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.aljazeera/icon.png</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.bestofyoutube_com" name="BestOfYoutube.com" version="1.0.6" provider-name="AddonScriptorDE">
@@ -214,6 +264,11 @@
         <description lang="de">Nur die besten Youtube Videos</description>
     <platform>all</platform>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.bestofyoutube_com/default.tbn</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id='plugin.video.bliptv' version='0.7.0' name='BlipTV' provider-name='TheCollective'>
@@ -234,9 +289,14 @@
     <summary lang='bg'>Видео добавка за Bliptv</summary>
     <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от BlipTV!</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
-<addon id="plugin.video.borsentv.dk" version="1.0.4" name="Børsen TV" provider-name="twinther [tommy@winther.nu]">
+<addon id="plugin.video.borsentv.dk" version="1.0.4" name="Borsen TV" provider-name="twinther [tommy@winther.nu]">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.buggalo" version="1.0.1"/>
@@ -255,6 +315,11 @@
         <platform>all</platform>
         <language>da</language>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.burningseries"
@@ -276,6 +341,11 @@
     <description>series, a lot, generally in german</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.c64-longplays"
@@ -294,6 +364,11 @@
     <summary lang="en">The C64 Gamevideoarchive</summary>
     <description lang="en">... presents a cross section of the most popular and obscure games for the C64 sorted by year of release all of which superseed the videos of THE ORIGINAL SERIES. Any questions concerning the archive are most likey answered in the FAQ. If you want more info on a game before downloading the video just click on the lemon to go the the game's detail page over at Lemon 64. If you want to contribute please check out which game videos are still wanted or have been submitted already.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.canada.on.demand" name="Canada On Demand" version="0.7.4" provider-name="andre">
@@ -312,6 +387,11 @@
     <platform>all</platform>
     <disclaimer></disclaimer>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.cinemassacre" name="cinemassacre" version="0.0.5" provider-name="dethfeet">
@@ -332,6 +412,11 @@
     	<description>Home of the Angry Video Game Nerd, Monster Madness, movie reviews, top 10's, and commentary, retro and classic video gaming and more.</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.circuitboard" name="Circuit Board TV" version="0.0.2" provider-name="dethfeet">
@@ -355,6 +440,11 @@
     	</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.collegehumor" name="CollegeHumor" version="2.0.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -374,6 +464,11 @@
     <summary lang="en">Watch videos from www.collegehumor.com</summary>
     <description lang="en">CollegeHumor finds funny videos from all over the internet plus some original videos that they made themself.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.Crackle2"
@@ -394,6 +489,11 @@
     <description lang="en">Shows and Movies from Crackle.</description>
      <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.day9"
@@ -419,6 +519,11 @@
     <summary>Day[9].tv Archive</summary>
     <description>Casts from the awesome guy Sean "Day[9]" Plott teaching "How to be a better gamer" in Starcraft.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.disclose_tv" name="Disclose.tv" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -437,6 +542,11 @@
     <summary lang="en">TRUTH REVEALED</summary>
     <description lang="en">Largest multimedia hub and alternative news website about UFO Videos, Ancient Mysteries, Conspiracy Theories, Top Secrets, N.W.O. + more!</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.dmax" name="DMAX Videotheke" version="0.0.3" provider-name="dethfeet">
@@ -453,6 +563,11 @@
 	<description lang="de">DMAX Videotheke</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.documentary.net" name="Documentary.net" provider-name="Jonathan Beluch (jbel)" version="1.1.1">
@@ -475,6 +590,11 @@
     <summary>Documentary Network - Watch free documentaries online</summary>
     <description>Documentary.net offers free and legal streaming of documentary films from all around the world. We crawl the web and curate the best documentaries from various sources like YouTube, Vimeo etc. Most films are available worldwide.[CR][CR]The content on Documentary.net is generated by thousands of professional content producers and TV-stations who provide their films on the internet for free. You can browse the films by category, topic or film length.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.dokumonster" name="dokumonster.de" version="0.1.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -497,6 +617,11 @@
         <description lang="de">Dein Online Doku Stream Archiv. Die besten deutschen Dokumentationen einfach online anschauen. Tägliche Updates!</description>
         <description lang="en">German online documentary stream archive. The best german documentaries online. Daily updates!</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.dr.dk.bonanza" version="2.1.4" name="DR.dk Bonanza" provider-name="twinther [tommy@winther.nu]">
@@ -521,6 +646,11 @@
         <platform>all</platform>
         <language>da</language>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon
@@ -545,6 +675,11 @@
 		<platform>all</platform>
 		<language>da</language>
 	</extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.drnu" version="2.1.7" name="DR NU Player" provider-name="twinther [tommy@winther.nu]">
@@ -567,6 +702,11 @@
         <platform>all</platform>
         <language>da</language>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.dump" name="Dump.com" version="1.0.0" provider-name="sphere, Insayne">
@@ -585,6 +725,11 @@
     <description lang="de">Videos von Dump.com</description>
     <description lang="en">The Content of Dump.com on your Media Center</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.earth.touch"
@@ -608,6 +753,11 @@
     <platform>all</platform>
     <language>en</language>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.filmon" name="FilmOn" version="3.2.3" provider-name="FilmOn.TV Networks Inc">
@@ -625,6 +775,11 @@
     <description lang="en">FilmOn.com is an internet based television provider owned by FilmOn.TV Networks Inc. FilmOn.TV Networks was founded by Alki David in 2006.FilmOn.com subscription packages include access to over 120 streaming TV channels (mostly in English language) in addition to premium FilmOn.com Movie channels and pay-per-view channels</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.freecable"
@@ -647,6 +802,11 @@
     <description>"Free Cable is the ultimate aphrodisiac" - The Cable Guy</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.hdtrailers_net" name="HD-Trailers.net" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -667,6 +827,11 @@
     <description lang="de">Dieses Plugin bietet Zugriff auf verschiedene Film Trailer und Clips der folgenden Quellen:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Die meisten sind verfügbar in 480p, 720p und 1080p</description>
     <description lang="en">This Plugin provides access to Movie Trailers and Clips from the following sources:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Most of them are available in 480p, 720p and 1080p</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.hdtrailers_net" name="HD-Trailers.net" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -687,6 +852,11 @@
     <description lang="de">Dieses Plugin bietet Zugriff auf verschiedene Film Trailer und Clips der folgenden Quellen:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Die meisten sind verfügbar in 480p, 720p und 1080p</description>
     <description lang="en">This Plugin provides access to Movie Trailers and Clips from the following sources:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Most of them are available in 480p, 720p and 1080p</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.icefilms"
@@ -715,6 +885,11 @@
 
 Turns your XBMC into an instant free on-demand media-center. Stream and download to your library pure AVI scene releases, in DVD and HD720p quality. Browse and search the library of over 77,000 videos with metadata and posters. Never experience the frustration of dead video links!</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.11" provider-name="DudeHere">
@@ -738,6 +913,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
         <summary>Stream links listed on Icefilms.info</summary>
         <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.joeroganexperience" name="The Joe Rogan Experience" version="1.0.0" provider-name="Lex Toumbourou (lexandstuff), paddycarey">
@@ -757,6 +937,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary>Browse and stream videos from The Joe Rogan Experience Podcast</summary>
     <description>Browse and stream videos from The Joe Rogan Experience Podcast</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.jtv.archives"
@@ -778,6 +963,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <description>Watch live and archived videos from justin.tv</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.musicvideojukebox"
@@ -800,6 +990,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary lang="en">Search for an artist and it will play up to 150 music videos of that artist.</summary>
     <description lang="en">This plugin uses Google Suggest API, Last.fm and YouTube to search for music videos of an artist, and plays up to 150 music videos of that artist.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.myvideo_de" name="MyVideo.de" version="0.1.10" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -821,6 +1016,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <description lang="de">Dieses plugin bietet Zugriff auf alle Videos des deutschen Video-Portals MyVideo.de</description>
     <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.nasa" name="Nasa Videos, TV and Vodcasts" version="1.0.3" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -871,6 +1071,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <description lang="sv">Detta tillägg ger access till mer än 1800 videor, 8 vodcasts och 4 direktsända nasa-tv-kanaler[CR]Allt innehåll är dynamiskt och borde alltid vara uppdaterat.</description>
     <description lang="zh">此视频插件提供访问1800多个视频, 8个播客以及4个美国国家航空和航天管理局电视直播流[CR]全部内容都动态的并保持最新。</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.navi-x" name="Navi-X"
@@ -888,6 +1093,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
 			Media browser
 		</description>
 	</extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.netzkino_de" name="Netzkino.de" version="0.0.3" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -924,6 +1134,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
         <description lang="pt_BR">Netzkino.de é o primeiro portal legal e gratuíto de filmes na Alemanha.</description>
         <description lang="sv">Netzkino.de är den första gratis lagliga filmportalen i Tyskland</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.recordedamigagames"
@@ -942,6 +1157,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary lang="en">Recorded Amiga Games</summary>
     <description lang="en">Recorded Amiga Games</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon
@@ -963,6 +1183,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
         <description lang="en">Watch current movie trailers from[CR]- http://trailers.apple.com[CR]</description>
         <disclaimer lang="en">Only the most recent 100 or so trailers are listed.</disclaimer>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.twit"
@@ -985,6 +1210,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <platform>all</platform>
     <language>en</language>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.vevo"
@@ -1008,6 +1238,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <description>Music Videos from VEVO</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.vimcasts" name="VimCasts" provider-name="Jonathan Beluch (jbel)" version="1.1">
@@ -1025,6 +1260,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary>Watch screencasts about Vim, the text editor, from http://vimcasts.org</summary>
     <description>Vimcasts publishes free screencasts about Vim, the text editor. Vim has been around in one form or another for over 20 years. The learning curve is famously difficult, but those who manage to climb it insist that nothing can match Vim's modal editing model for speed and efficiency.[CR][CR]The patterns of use that make a Vim master productive are not easily discovered. Trial and error will get you so far, but the best way to learn is to watch an experienced Vim user at work. By providing short videos with digestible advice, Vimcasts gives you something you can take away and use immediately to improve your productivity. Vimcasts aims to be the expert Vim colleague you never had.[CR][CR]Vimcasts is produced by Drew Neil (aka nelstrom), who came to Vim from TextMate. He made the switch when starting work at a company that uses Linux workstations. His choice of text editor was influenced by colleagues.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id='plugin.video.vimeo' version='2.4.0' name='Vimeo' provider-name='TheCollective'>
@@ -1045,6 +1285,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
     <summary lang='bg'>Видео добавка за Vimeo</summary>
     <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на всички алтернативен видео сайт!</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.watchseries.eu" version="2.0.1" name="watchseries.eu" provider-name="mscreations (originator: rogerThis)">
@@ -1064,6 +1309,11 @@ Turns your XBMC into an instant free on-demand media-center. Stream and download
 Play a wide selection of TV shows from watchseries.eu</description>
         <platform>all</platform>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.wimp" name="Wimp.com" version="2.0.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
@@ -1081,6 +1331,11 @@ Play a wide selection of TV shows from watchseries.eu</description>
         <summary lang="en">Wimp.com - Family Friendly Videos</summary>
         <description lang="en">A collection of the best online videos. Our editors make sure clips added are family friendly.</description>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.xstream"
@@ -1103,6 +1358,11 @@ Play a wide selection of TV shows from watchseries.eu</description>
     <description lang="en">Plugin to watch streams from various film an series sites.</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id='plugin.video.youtube' version='3.3.0' name='YouTube(XboxEnhanced)' provider-name='TheCollective'>
@@ -1125,6 +1385,11 @@ Play a wide selection of TV shows from watchseries.eu</description>
     <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на на всички видео сайт!</description>
     <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="script.module.buggalo" name="Buggalo Exception Collector" version="1.0.1" provider-name="twinther [tommy@winther.nu]">
@@ -1140,6 +1405,11 @@ Play a wide selection of TV shows from watchseries.eu</description>
         <license>GPLv2</license>
         <platform>all</platform>
     </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="script.module.coveapi"

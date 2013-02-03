@@ -296,7 +296,7 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.borsentv.dk" version="1.0.4" name="Børsen TV" provider-name="twinther [tommy@winther.nu]">
+<addon id="plugin.video.borsentv.dk" version="1.0.4" name="Borsen TV" provider-name="twinther [tommy@winther.nu]">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.buggalo" version="1.0.1"/>
