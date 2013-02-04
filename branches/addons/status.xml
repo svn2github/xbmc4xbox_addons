@@ -1389,7 +1389,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
   <statfeed>
     <working>half</working>
 	<notes>The user login is broken, Search and feeds work well</notes>
-	<maintainer>skatulskijean & editable feeds by Kozz</maintainer>
+	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.youtube/icon.png</thumbnailurl>
     </statfeed>
 </addon>
