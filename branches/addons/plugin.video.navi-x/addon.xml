@@ -10,8 +10,7 @@
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">Media browser</summary>
-		<description lang="en">
-			Media browser
+		<description lang="en">Media browser
 		</description>
 	</extension>
 	<statfeed>

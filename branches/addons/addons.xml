@@ -15,8 +15,7 @@
 		<language>en</language>
 		<license>GPL 2.0</license>
    		<summary lang="en">Digitally Imported</summary>
-		<description lang="en">
-			Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
+		<description lang="en">Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
 		</description>
 	</extension>
 ## Specify the working status of the addon below to be scraped by the status web page
@@ -48,8 +47,7 @@
 		<platform>all</platform>
 		<license>GPL 2.0</license>
    		<summary lang="en">JazzRadio.com</summary>
-		<description lang="en">
-			Presenting jazz radio channels for your enjoyment. Listen for free and enjoy countless hours of the best jazz music around
+		<description lang="en">Presenting jazz radio channels for your enjoyment. Listen for free and enjoy countless hours of the best jazz music around
 		</description>
 	</extension>
     <statfeed>
@@ -132,8 +130,7 @@
 		<language>en</language>
 		<license>GPL 2.0</license>
    		<summary lang="en">Sky.fm</summary>
-		<description lang="en">
-			SKY.FM Radio features a wide variety of free streaming radio channels. Find your favorites among the best of each class - be it New Age, 80s, Smooth Jazz, New Age, Top40, Hip Hop, Oldies, 70s, Reggae, Lounge or many others inside.
+		<description lang="en">SKY.FM Radio features a wide variety of free streaming radio channels. Find your favorites among the best of each class - be it New Age, 80s, Smooth Jazz, New Age, Top40, Hip Hop, Oldies, 70s, Reggae, Lounge or many others inside.
 		</description>
 		<language/>
 	</extension>
@@ -882,17 +879,12 @@ provider-name="Eldorado (originator: anarchintosh)">
     <platform>all</platform>
     <summary>Stream and download scene releases from the links
     listed on Icefilms.info</summary>
-    <description>Visit www.xbmchub.com for support. Turns your XBMC
-    into an instant free on-demand media-center. Stream and
-    download to your library pure AVI scene releases, in DVD and
-    HD720p quality. Browse and search the library of over 77,000
-    videos with metadata and posters. Never experience the
-    frustration of dead video links!</description>
+    <description>Turns your XBMC into an instant free on-demand media-center. Stream and download to your library pure AVI scene releases, in DVD and HD720p quality. Browse and search the library of over 77,000 videos with metadata and posters. Never experience thefrustration of dead video links! Visit www.xbmchub.com for support.</description>
   </extension>
   <statfeed>
     <working>yes</working>
     <notes>Metadata must remain disabled in plugin-settings</notes>
-    <maintainer>Kozz</maintainer>
+    <maintainer>kozz</maintainer>
     <thumbnailurl>
     http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icefilms/icon.png</thumbnailurl>
   </statfeed>
@@ -1095,8 +1087,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">Media browser</summary>
-		<description lang="en">
-			Media browser
+		<description lang="en">Media browser
 		</description>
 	</extension>
 	<statfeed>
