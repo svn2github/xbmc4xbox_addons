@@ -19,8 +19,9 @@
     </description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>mostly</working>
+	<notes>Watch Live works some archived clips fail to play</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.aljazeera/icon.png</thumbnailurl>
     </statfeed>
 </addon>

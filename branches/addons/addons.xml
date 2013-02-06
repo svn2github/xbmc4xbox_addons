@@ -80,8 +80,9 @@
     <platform>all</platform>
   </extension>
   <statfeed>
-    <working>half</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Does not return search results yet</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.mp3search/icon.png</thumbnailurl>
    </statfeed>
 </addon>
@@ -110,6 +111,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.radio_de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -137,6 +139,7 @@
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.sky.fm/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -160,6 +163,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.songs_to/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -212,8 +216,9 @@
     <description>Browse online courses and lectures from the world's top scholars.</description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Links not playing logs show youtube problems</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.academicearth/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -238,8 +243,9 @@
     </description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>mostly</working>
+	<notes>Watch Live works some archived clips fail to play</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.aljazeera/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1362,7 +1368,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
     </statfeed>
 </addon>
 
-<addon id='plugin.video.youtube' version='3.3.0' name='YouTube(XboxEnhanced)' provider-name='TheCollective'>
+<addon id='plugin.video.youtube' version='3.3.0' name='YouTube' provider-name='TheCollective'>
   <requires>
     <import addon='xbmc.python' version='2.0'/>
     <import addon='script.module.simplejson' version='2.0.10'/>
@@ -1383,7 +1389,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
     <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
   </extension>
   <statfeed>
-    <working>half</working>
+    <working>mostly</working>
 	<notes>The user login is broken, Search and feeds work well</notes>
 	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.youtube/icon.png</thumbnailurl>

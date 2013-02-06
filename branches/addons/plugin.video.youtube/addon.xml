@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
-<addon id='plugin.video.youtube' version='3.3.0' name='YouTube(XboxEnhanced)' provider-name='TheCollective'>
+<addon id='plugin.video.youtube' version='3.3.0' name='YouTube' provider-name='TheCollective'>
   <requires>
     <import addon='xbmc.python' version='2.0'/>
     <import addon='script.module.simplejson' version='2.0.10'/>
@@ -20,7 +20,7 @@
     <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
   </extension>
   <statfeed>
-    <working>half</working>
+    <working>mostly</working>
 	<notes>The user login is broken, Search and feeds work well</notes>
 	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.youtube/icon.png</thumbnailurl>

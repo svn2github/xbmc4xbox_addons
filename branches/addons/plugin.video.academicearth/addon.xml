@@ -17,8 +17,9 @@
     <description>Browse online courses and lectures from the world's top scholars.</description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Links not playing logs show youtube problems</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.academicearth/icon.png</thumbnailurl>
     </statfeed>
 </addon>
