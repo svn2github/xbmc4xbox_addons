@@ -82,6 +82,7 @@
   <statfeed>
     <working>no</working>
 	<notes>Does not return search results yet</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.mp3search/icon.png</thumbnailurl>
    </statfeed>
 </addon>
