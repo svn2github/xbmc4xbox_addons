@@ -16,7 +16,7 @@
   </extension>
   <statfeed>
     <working>no</working>
-	<notes>HTTP Error 404 Not Found</notes>
+	<notes>Script error url not found</notes>
 	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.filmon/icon.png</thumbnailurl>
     </statfeed>

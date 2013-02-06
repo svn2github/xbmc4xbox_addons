@@ -486,8 +486,8 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.crackle2"
-       name="crackle2"
+<addon id="plugin.video.Crackle2"
+       name="Crackle2"
        version="0.0.1"
        provider-name="newatv2user">
   <requires>
@@ -505,9 +505,9 @@
      <platform>all</platform>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
+    <working>no</working>
+	<notes>wont launch </notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.Crackle2/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -538,6 +538,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.day9/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -559,8 +560,9 @@
     <description lang="en">Largest multimedia hub and alternative news website about UFO Videos, Ancient Mysteries, Conspiracy Theories, Top Secrets, N.W.O. + more!</description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Script errors playing sources xbmcswift2 related</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.disclose_tv/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -582,6 +584,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dmax/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -609,6 +612,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.documentary.net/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -636,6 +640,7 @@
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dokumonster/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -665,6 +670,7 @@
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dr.dk.bonanza/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -693,7 +699,8 @@
 	</extension>
 	<statfeed>
     <working>yes</working>
-	<notes>none</notes>
+	<notes>Most links only work from Denmark Region</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dr.dk.live/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -721,6 +728,7 @@
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.drnu/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -744,6 +752,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dump/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -770,8 +779,9 @@
     <language>en</language>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Giving script error</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.earth.touch/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -792,8 +802,9 @@
     <platform>all</platform>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Script error url not found</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.filmon/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -821,6 +832,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.freecable/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -846,6 +858,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.hdtrailers_net/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -871,6 +884,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.hdtrailers_net-master/icon.png</thumbnailurl>
     </statfeed>
 </addon>

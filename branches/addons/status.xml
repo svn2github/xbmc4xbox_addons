@@ -506,7 +506,7 @@
   </extension>
   <statfeed>
     <working>no</working>
-	<notes>wont launch</notes>
+	<notes>wont launch </notes>
 	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.Crackle2/icon.png</thumbnailurl>
     </statfeed>
@@ -803,7 +803,7 @@
   </extension>
   <statfeed>
     <working>no</working>
-	<notes>HTTP Error 404 Not Found</notes>
+	<notes>Script error url not found</notes>
 	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.filmon/icon.png</thumbnailurl>
     </statfeed>
