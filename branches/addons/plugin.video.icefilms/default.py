@@ -988,12 +988,12 @@ def resolve_movreel(url):
         method_free = re.search('<input type="(submit|hidden)" name="method_free" (style=".*?" )*value="(.*?)">', html).group(3)
         method_premium = re.search('<input type="(hidden|submit)" name="method_premium" (style=".*?" )*value="(.*?)">', html).group(3)
         
-        if method_free:
+       if method_free:
             usr_login = ''
         fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
         
         data = {'op': op, 'usr_login': usr_login, 'id': postid, 'referer': url, 'fname': fname, 'method_free': method_free}
-        elif
+       else:
             rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
             data = {'op': op, 'id': postid, 'referer': url, 'rand': rand, 'method_premium': method_premium}
         
