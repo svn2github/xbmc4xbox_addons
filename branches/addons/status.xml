@@ -187,8 +187,8 @@
         <platform>all</platform>
     </extension>
 	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>mostly</working>
+	<notes>Images for hosts requiring captcha dont appear</notes>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.1channel/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1389,4 +1389,6 @@ Play a wide selection of TV shows from watchseries.eu</description>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.youtube/icon.png</thumbnailurl>
     </statfeed>
 </addon>
+
+
 </addons>
