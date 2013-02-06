@@ -17,7 +17,8 @@
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>none</notes>
+	<notes>Many links for short clips few full eppisodes</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.canada.on.demand/icon.png</thumbnailurl>
     </statfeed>
 </addon>

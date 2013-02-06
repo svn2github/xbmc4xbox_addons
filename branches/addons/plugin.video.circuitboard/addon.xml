@@ -22,7 +22,8 @@
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>none</notes>
+	<notes>Installer will prompt user about cannot install xbmc.gui choosing yes will complete install and work normally</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.circuitboard/icon.png</thumbnailurl>
     </statfeed>
 </addon>

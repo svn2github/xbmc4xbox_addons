@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.Crackle2"
-       name="Crackle2"
+<addon id="plugin.video.crackle2"
+       name="crackle2"
        version="0.0.1"
        provider-name="newatv2user">
   <requires>
@@ -20,6 +20,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.Crackle2/icon.png</thumbnailurl>
     </statfeed>
 </addon>
