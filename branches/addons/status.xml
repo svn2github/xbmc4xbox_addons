@@ -80,8 +80,8 @@
     <platform>all</platform>
   </extension>
   <statfeed>
-    <working>half</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Does not return search results yet</notes>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.mp3search/icon.png</thumbnailurl>
    </statfeed>
 </addon>
