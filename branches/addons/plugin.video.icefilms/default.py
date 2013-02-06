@@ -993,7 +993,7 @@ def resolve_movreel(url):
         fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
         
         data = {'op': op, 'usr_login': usr_login, 'id': postid, 'referer': url, 'fname': fname, 'method_free': method_free}
-        else:
+        elif
             rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
             data = {'op': op, 'id': postid, 'referer': url, 'rand': rand, 'method_premium': method_premium}
         

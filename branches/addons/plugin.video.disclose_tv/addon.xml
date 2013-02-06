@@ -16,8 +16,9 @@
     <description lang="en">Largest multimedia hub and alternative news website about UFO Videos, Ancient Mysteries, Conspiracy Theories, Top Secrets, N.W.O. + more!</description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Script errors playing sources xbmcswift2 related</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.disclose_tv/icon.png</thumbnailurl>
     </statfeed>
 </addon>

@@ -15,8 +15,9 @@
     <platform>all</platform>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>HTTP Error 404 Not Found</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.filmon/icon.png</thumbnailurl>
     </statfeed>
 </addon>

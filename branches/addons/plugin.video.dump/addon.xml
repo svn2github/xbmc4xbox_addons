@@ -18,6 +18,7 @@
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dump/icon.png</thumbnailurl>
     </statfeed>
 </addon>

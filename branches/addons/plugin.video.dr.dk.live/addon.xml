@@ -23,7 +23,8 @@
 	</extension>
 	<statfeed>
     <working>yes</working>
-	<notes>none</notes>
+	<notes>Most links only work from Denmark Region</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dr.dk.live/icon.png</thumbnailurl>
     </statfeed>
 </addon>
