@@ -51,7 +51,7 @@
 		</description>
 	</extension>
     <statfeed>
-    <working>no</working>
+    <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.jazzradio.com/icon.png</thumbnailurl>
@@ -1392,7 +1392,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
   <statfeed>
     <working>half</working>
 	<notes>The user login is broken, Search and feeds work well</notes>
-	<maintainer>Jan editable feeds by Kozz</maintainer>
+	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.youtube/icon.png</thumbnailurl>
     </statfeed>
 </addon>
