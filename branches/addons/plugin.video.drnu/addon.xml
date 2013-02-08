@@ -4,8 +4,8 @@
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.simplejson" version="2.0.10"/>
         <import addon="script.module.buggalo" version="1.0.1"/>
-		<import addon='script.module.xbmcvfs' version='1.0.1'/>
-		<import addon='script.module.mechanize/>
+		<import addon="script.module.xbmcvfs" version='1.0.1'/>
+		<import addon="script.module.mechanize"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
