@@ -17,8 +17,9 @@
     <description>Browse and stream videos from The Joe Rogan Experience Podcast</description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>mostly</working>
+	<notes>Vimeo Sources not playing but Ustream do</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.joeroganexperience/icon.png</thumbnailurl>
     </statfeed>
 </addon>

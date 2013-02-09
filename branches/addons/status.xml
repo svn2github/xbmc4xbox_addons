@@ -945,8 +945,9 @@ provider-name="Eldorado (originator: anarchintosh)">
         <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
     </extension>
 	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>mostly</working>
+	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icelibrary24xbox/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -969,8 +970,9 @@ provider-name="Eldorado (originator: anarchintosh)">
     <description>Browse and stream videos from The Joe Rogan Experience Podcast</description>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>mostly</working>
+	<notes>Vimeo Sources not playing but Ustream do</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.joeroganexperience/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -996,7 +998,8 @@ provider-name="Eldorado (originator: anarchintosh)">
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>none</notes>
+	<notes>Might show script error on first listing</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.jtv.archives/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1023,7 +1026,8 @@ provider-name="Eldorado (originator: anarchintosh)">
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>none</notes>
+	<notes>YouTube addon must have been run once</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.musicvideojukebox/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1050,6 +1054,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.myvideo_de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1105,6 +1110,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.nasa/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1125,7 +1131,8 @@ provider-name="Eldorado (originator: anarchintosh)">
 	</extension>
 	<statfeed>
     <working>yes</working>
-	<notes>Requires xbmc4xbox Build - 31660</notes>
+	<notes>This is the Plugin version - Requires xbmc4xbox Build - r31660</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.navi-x/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1167,6 +1174,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.netzkino_de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1190,6 +1198,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.recordedamigagames/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1216,6 +1225,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.the.trailers/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1243,6 +1253,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.twit/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1271,6 +1282,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.vevo/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1293,6 +1305,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.vimcasts/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1318,6 +1331,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.vimeo/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1340,8 +1354,9 @@ Play a wide selection of TV shows from watchseries.eu</description>
         <platform>all</platform>
     </extension>
 	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>site has changed this addon may get removed</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.watchseries.eu/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1364,6 +1379,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.wimp/icon.png</thumbnailurl>
     </statfeed>
 </addon>
@@ -1391,6 +1407,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.xstream/icon.png</thumbnailurl>
     </statfeed>
 </addon>

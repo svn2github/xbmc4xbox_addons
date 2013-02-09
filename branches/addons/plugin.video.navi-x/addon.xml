@@ -15,7 +15,8 @@
 	</extension>
 	<statfeed>
     <working>yes</working>
-	<notes>Requires xbmc4xbox Build - 31660</notes>
+	<notes>This is the Plugin version - Requires xbmc4xbox Build - r31660</notes>
+	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.navi-x/icon.png</thumbnailurl>
     </statfeed>
 </addon>

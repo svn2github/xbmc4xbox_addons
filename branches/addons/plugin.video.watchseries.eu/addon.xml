@@ -17,8 +17,9 @@ Play a wide selection of TV shows from watchseries.eu</description>
         <platform>all</platform>
     </extension>
 	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>site has changed this addon may get removed</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.watchseries.eu/icon.png</thumbnailurl>
     </statfeed>
 </addon>

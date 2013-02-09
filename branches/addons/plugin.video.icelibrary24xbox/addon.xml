@@ -21,8 +21,9 @@
         <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
     </extension>
 	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>mostly</working>
+	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icelibrary24xbox/icon.png</thumbnailurl>
     </statfeed>
 </addon>
