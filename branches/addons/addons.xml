@@ -194,6 +194,7 @@
 	<statfeed>
     <working>mostly</working>
 	<notes>Images for hosts requiring captcha dont appear</notes>
+	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.1channel/icon.png</thumbnailurl>
     </statfeed>
 </addon>
