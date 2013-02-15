@@ -1,11 +1,11 @@
 import urllib,urllib2,sys,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,os,time
-import json
+import simplejson as json
 import datetime
 import time
-icon = xbmc.translatePath(os.path.join('special://home/addons/plugin.audio.xbmchubmusic', 'icon.png'))
+icon = xbmc.translatePath(os.path.join('special://home/plugins/music/XBMCHUB Music', 'icon1.png'))
 icon2='http://xbmc-hub-repo.googlecode.com/svn/addons/plugin.audio.xbmchubmusic/icon.png'
 allmusic='http://www.allmusic.com'
-fanart = xbmc.translatePath(os.path.join('special://home/addons/plugin.audio.xbmchubmusic', 'fanart.jpg'))
+fanart = xbmc.translatePath(os.path.join('special://home/plugins/music/XBMCHUB Music', 'fanart.jpg'))
 ADDON = xbmcaddon.Addon(id='plugin.audio.xbmchubmusic')
 musicdownloads=ADDON.getSetting('download_path')
 datapath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
@@ -193,7 +193,7 @@ def which_year_download(name):
         mp3=os.path.join(path, str(name)+'.mp3')
         try:
             DownloaderClass(url,mp3,name, dp, start, range)
-        except Exception as e:
+        except Exception , e:
             if str(e) == "Canceled":
                 dp.close()
                 return
@@ -538,7 +538,7 @@ def download_single_song(name,url,iconimage,artist,album):
     mp3=os.path.join(path, str(name)+'.mp3')
     try:
         DownloaderClass(url,mp3,name, dp, start, range)            
-    except Exception as e:
+    except Exception , e:
         if str(e) == "Canceled":
             dp.close()
             return
@@ -591,7 +591,7 @@ def download_album(name,url,iconimage,artist,album):
         mp3=os.path.join(path, str(name)+'.mp3')
         try:
             DownloaderClass(url,mp3,name, dp, start, range)            
-        except Exception as e:
+        except Exception , e:
             if str(e) == "Canceled":
                 dp.close()
                 return
@@ -632,7 +632,7 @@ def download_uk_album(name,url,iconimage,artist,album):
         mp3=os.path.join(path, str(name)+'.mp3')
         try:
             DownloaderClass(url,mp3,name, dp, start, range)
-        except Exception as e:
+        except Exception , e:
             if str(e) == "Canceled":
                 dp.close()
                 return
@@ -752,8 +752,8 @@ def get_uk_playlist(name,url,iconimage,artist,album,clear):
                   
     
 def getFavorites():
-        with open(favorites) as f:
-            a = f.read()
+        f = open(favorites, 'r')
+        a = f.read()
         try:
             for i in json.loads(a):
                 name = i[0]
@@ -781,11 +781,12 @@ def addFavorite(name,url,iconimage,artist,album):
             a.close()
         else:
             print 'Appending Favorites'
-            with open(favorites) as f:
-                a = f.read()
+            f = open(favorites, 'r')
+            a = f.read()
             try:
                 data = json.loads(a)
                 data.append((name,url,iconimage,artist,album))
+                f.close()
                 b = open(favorites, "w")
                 b.write(json.dumps(data))
                 b.close()
@@ -797,13 +798,14 @@ def addFavorite(name,url,iconimage,artist,album):
 
 def rmFavorite(name):
         print 'Remove Favorite'
-        with open(favorites) as f:
-            a = f.read()
+        f = open(favorites, 'r')
+        a = f.read()
         data = json.loads(a)
         for index in range(len(data)):
             try:
                 if data[index][0]==name:
                     del data[index]
+                    f.close()
                     b = open(favorites, "w")
                     b.write(json.dumps(data))
                     b.close()
