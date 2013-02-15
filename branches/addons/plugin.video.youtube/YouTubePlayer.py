@@ -19,10 +19,8 @@
 import sys
 import urllib
 import cgi
-try: import simplejson as json
-except ImportError: import json
-import urllib
-
+import re
+import simplejson as json
 
 class YouTubePlayer:
     fmt_value = {
@@ -72,6 +70,7 @@ class YouTubePlayer:
         self.utils = sys.modules["__main__"].utils
         self.cache = sys.modules["__main__"].cache
         self.core = sys.modules["__main__"].core
+        self.login = sys.modules["__main__"].login
         self.subtitles = sys.modules["__main__"].subtitles
 
     def playVideo(self, params={}):
@@ -293,26 +292,14 @@ class YouTubePlayer:
 
     def extractFlashVars(self, data):
         flashvars = {}
-        found = False
+	
+	pattern = "yt.playerConfig\s*=\s*({.*});"
+	match = re.search(pattern, data)
+	if match is None:
+		return flashvars
 
-        for line in data.split("\n"):
-            if line.strip().startswith("var swf = \""):
-                found = True
-                p1 = line.find("=")
-                p2 = line.rfind(";")
-                if p1 <= 0 or p2 <= 0:
-                    continue
-                data = line[p1 + 1:p2]
-                break
-
-        if found:
-            data = json.loads(data)
-            data = data[data.find("flashvars"):]
-            data = data[data.find("\""):]
-            data = data[:1 + data[1:].find("\"")]
-
-            for k, v in cgi.parse_qs(data).items():
-                flashvars[k] = v[0]
+	playerconfig =  json.loads(match.group(1))
+	flashvars =  playerconfig['args']
         self.common.log(u"flashvars: " + repr(flashvars), 2)
         return flashvars
 
@@ -324,10 +311,11 @@ class YouTubePlayer:
         if not flashvars.has_key(u"url_encoded_fmt_stream_map"):
             return links
 
+	
         if flashvars.has_key(u"ttsurl"):
             video[u"ttsurl"] = flashvars[u"ttsurl"]
 
-        for url_desc in flashvars[u"url_encoded_fmt_stream_map"].split(u","):
+	for url_desc in flashvars[u"url_encoded_fmt_stream_map"].split(u","):
             url_desc_map = cgi.parse_qs(url_desc)
             self.common.log(u"url_map: " + repr(url_desc_map), 2)
             if not (url_desc_map.has_key(u"url") or url_desc_map.has_key(u"stream")):
@@ -365,11 +353,24 @@ class YouTubePlayer:
 
         return page
 
+    def isVideoAgeRestricted(self, result):
+        error = self.common.parseDOM(result['content'], "div", attrs={"id": "watch7-player-age-gate-content"})
+        self.common.log(repr(error))
+        return len(error) > 0
+
     def extractVideoLinksFromYoutube(self, video, params):
         self.common.log(u"trying website: " + repr(params))
         get = params.get
 
         result = self.getVideoPageFromYoutube(get)
+        if self.isVideoAgeRestricted(result) and self.pluginsettings.userName() != "":
+            self.login.login()
+            result = self.getVideoPageFromYoutube(get)
+
+        if self.isVideoAgeRestricted(result):
+            self.common.log(u"Age restricted video")
+            if not self.pluginsettings.userHasProvidedValidCredentials():
+                self.utils.showMessage(self.language(30600), self.language(30622))
 
         if result[u"status"] != 200:
             self.common.log(u"Couldn't get video page from YouTube")
