@@ -172,6 +172,7 @@
 <addon id="plugin.audio.xbmchubmusic" name="XBMCHUB Music" version="2.0" provider-name="Mikey1234">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>audio</provides>
