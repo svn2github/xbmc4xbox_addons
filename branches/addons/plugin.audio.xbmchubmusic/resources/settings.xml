@@ -1,0 +1,12 @@
+<settings>
+<category label="Settings">
+    <setting id="ga_time" type="text" label="GA Called" default="2000-01-01 00:00:00" visible="false"/>
+    <setting id="visitor_ga" type="text" label="GA visitor" default="" visible="false"/>
+    <setting id="download_path" type="folder" label="Set Download path" default="" />
+</category>
+<category label="Auto-View">
+	<setting id="auto-view" type="bool" label="Enable Automatic View" default="false"/>
+	<setting id="default" type="number" label="EVERYTHING" default="50" enable="!eq(-1,false)"/>
+	<setting id="album" type="number" label="Album Views" default="500" enable="!eq(-1,false)"/>
+</category>
+</settings>
