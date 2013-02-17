@@ -154,7 +154,7 @@ def which_year_playlist(name,clear):
             except:
                 pass
         if clear or (not xbmc.Player().isPlayingAudio()):
-            xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl)
+            xbmc.Player(xbmc.PLAYER_CORE_PAPLAYER).play(pl)
     except:
         raise
         dialog = xbmcgui.Dialog()
@@ -697,7 +697,7 @@ def get_playlist(name,url,iconimage,artist,album,clear):
 	        except:
 	            pass
             if clear or (not xbmc.Player().isPlayingAudio()):
-	        xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl)
+	        xbmc.Player(xbmc.PLAYER_CORE_PAPLAYER).play(pl)
     except:
         raise
         dialog = xbmcgui.Dialog()
@@ -743,7 +743,7 @@ def get_uk_playlist(name,url,iconimage,artist,album,clear):
 	        except:
 	            pass
             if clear or (not xbmc.Player().isPlayingAudio()):
-	        xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl)
+	        xbmc.Player(xbmc.PLAYER_CORE_PAPLAYER).play(pl)
     except:
         raise
         dialog = xbmcgui.Dialog()
