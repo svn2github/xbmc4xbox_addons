@@ -12,4 +12,10 @@
     <description lang="en">Stream All Of Your Favourite Music</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    <thumbnailurl></thumbnailurl>
+    </statfeed>
 </addon>

@@ -182,6 +182,12 @@
     <description lang="en">Stream All Of Your Favourite Music</description>
     <platform>all</platform>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    <thumbnailurl></thumbnailurl>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.1channel" version="1.0.0" name="1Channel" provider-name="Bstrdsmkr">
