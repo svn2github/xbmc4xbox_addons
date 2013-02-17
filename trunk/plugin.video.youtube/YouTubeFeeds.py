@@ -58,7 +58,7 @@ class YouTubeFeeds:
     urls['feed_UKF'] = "http://gdata.youtube.com/feeds/api/users/UKFDubstep/uploads?&orderby-published"
     urls['feed_MyList1'] = "http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzonv3NNc9xq1jWIAWbG-X-h8"
     urls['feed_MyList2'] = "http://gdata.youtube.com/feeds/api/users/Hak5Darren/uploads?"
-    urls['feed_MyList3'] = "http://gdata.youtube.com/feeds/api/users/whufclee/uploads?"
+    urls['feed_MyList3'] = "http://gdata.youtube.com/feeds/api/playlists/PLNk-UfmtfSu5YP8t3iM5ZaIfinlo3_9BX"
     urls['feed_MyList4'] = "http://gdata.youtube.com/feeds/api/users/element14/uploads?"
     urls['feed_MyList5'] = "http://gdata.youtube.com/feeds/api/users/twit/uploads?"
     urls['feed_MyList6'] = "http://gdata.youtube.com/feeds/api/users/thebenheckshow/uploads?"
