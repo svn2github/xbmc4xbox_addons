@@ -1128,8 +1128,8 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<statfeed>
     <working>yes</working>
 	<notes>This is the Plugin version - Requires xbmc4xbox Build - r31660</notes>
-	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.navi-x/icon.png</thumbnailurl>
+	<maintainer>whufclee</maintainer>
+    <thumbnailurl></thumbnailurl>
     </statfeed>
 </addon>
 
