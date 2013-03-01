@@ -1416,48 +1416,74 @@ def resolve_180upload(url):
     
 
 def resolve_billionuploads(url):
-	try:
+        try:
+                #Show dialog box so user knows something is happening
+                dialog = xbmcgui.DialogProgress()
+                dialog.create('Resolving', 'Resolving BillionUploads Link...')       
+                dialog.update(0)
+                
+                print 'BillionUploads - Requesting GET URL: %s' % url
+                html = net.http_GET(url).content
+                #Check page for any error msgs
+                if re.search('This server is in maintenance mode', html):
+                        print '***** BillionUploads - Site reported maintenance mode'
+                        raise Exception('File is currently unavailable on the host')
 
-		#Show dialog box so user knows something is happening
-		dialog = xbmcgui.DialogProgress()
-		dialog.create('Resolving', 'Resolving BillionUploads Link...')       
-		dialog.update(0)
-		
-		print 'BillionUploads - Requesting GET URL: %s' % url
-		html = net.http_GET(url).content
-		
-		#They need to wait for the link to activate in order to get the proper 2nd page
-		dialog.close()
-		do_wait('Waiting on link to activate', '', 3)
-		dialog.create('Resolving', 'Resolving BillionUploads Link...') 
-		dialog.update(50)
-        
-		#Check page for any error msgs
-		if re.search('This server is in maintenance mode', html):
-			    print '***** BillionUploads - Site reported maintenance mode'
-			    raise Exception('File is currently unavailable on the host')
+                #Set POST data values
+                op = 'download2'
+                rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+                postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+                method_free = re.search('<input type="hidden" name="method_free" value="(.*?)">', html).group(1)
+                down_direct = re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1)
 
-		#Set POST data values
-		op = 'download2'
-		rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-		postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-		method_free = re.search('<input type="hidden" name="method_free" value="(.*?)">', html).group(1)
-		down_direct = re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1)
-		        
-		data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct}
-        
-		print 'BillionUploads - Requesting POST URL: %s DATA: %s' % (url, data)
-		html = net.http_POST(url, data).content
-		dialog.update(100)
-		link = re.search('&product_download_url=(.+?)"', html).group(1)
-		link = link + "|referer=" + url
-		dialog.close()
-		
-		return link
+                #Captcha
+                captchaimg = re.search('<img src="(http://BillionUploads.com/captchas/.+?)"', html)
+                #dialog.close()
 
-    	except Exception, e:
-        	print '**** BillionUploads Error occured: %s' % e
-        	raise
+                if captchaimg:
+                        #Grab Image and display it
+                        img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
+                        wdlg = xbmcgui.WindowDialog()
+                        wdlg.addControl(img)
+                        wdlg.show()
+
+                        #Small wait to let user see image
+                        xbmc.sleep(2000)
+
+                        #Prompt keyboard for user input
+                        kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+                        kb.doModal()
+                        capcode = kb.getText()
+                        #Check input
+                        if (kb.isConfirmed()):
+                                userInput = kb.getText()
+                                if userInput != '':
+                                        capcode = kb.getText()
+                                elif userInput == '':
+                                        Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
+                                        return None
+                                else:
+                                        return None
+                                wdlg.close()
+                        data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct, 'code': capcode}
+
+                else:
+                        data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct}
+                                        
+                dialog.update(50)
+
+                print 'BillionUploads - Requesting POST URL: %s DATA: %s' % (url, data)
+                html = net.http_POST(url, data).content
+                dialog.update(100)
+                link = re.search('&product_download_url=(.+?)"', html).group(1)
+                link = link + "|referer=" + url
+                dialog.close()
+                return link
+
+
+        except Exception, e:
+                print '**** BillionUploads Error occured: %s' % e
+                raise
 
 def resolve_speedyshare(url):
 

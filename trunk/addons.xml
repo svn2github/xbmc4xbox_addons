@@ -919,7 +919,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   </statfeed>
 </addon>
 
-<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.11" provider-name="DudeHere">
+<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.12" provider-name="DudeHere">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.simplejson"/>
