@@ -942,7 +942,7 @@ provider-name="Eldorado (originator: anarchintosh)">
         <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
     </extension>
 	<statfeed>
-    <working>mostly</working>
+    <working>yes</working>
 	<notes>TV Shows scan into Library on most builds, requires build r31688 or newer for Movies to get scaned into Library</notes>
 	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icelibrary24xbox/icon.png</thumbnailurl>
