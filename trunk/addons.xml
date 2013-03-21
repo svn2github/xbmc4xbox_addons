@@ -811,6 +811,23 @@
     </statfeed>
 </addon>
 
+<addon id="plugin.video.earthcam"
+	name="EarthCam"
+	version="1.0.2"
+	provider-name="xbmchub.com">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">EarthCam</summary>
+    <description lang="en">EarthCam.com is the premiere network of scenic webcams and offers a complete database of interesting places and views from around the world. EarthCam.com is the worlds favorite webcam network and the EarthCam Network cameras have been seen on top news shows, including CNN Headline News.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.filmon" name="FilmOn" version="3.2.3" provider-name="FilmOn.TV Networks Inc">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
