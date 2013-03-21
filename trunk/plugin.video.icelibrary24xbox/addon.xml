@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.12" provider-name="DudeHere">
+<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.14" provider-name="DudeHere">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.simplejson"/>
@@ -7,7 +7,6 @@
         <import addon="script.module.beautifulsoup"/>
         <import addon="script.module.metahandler" version="1.0.0"/>
         <import addon="script.module.t0mm0.common" version="1.1.0"/>
-		<import addon="script.module.pysqlite2" version="1.0.0" />
 	<import addon="script.module.myconnpy"     version="0.3.2"/>
 	<import addon="script.module.urlresolver"  version="0.0.1"/>
         <import addon="script.common.plugin.cache" version="0.9.0"/> 
@@ -22,8 +21,8 @@
         <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
     </extension>
 	<statfeed>
-    <working>yes</working>
-	<notes>TV Shows scan into Library on most builds, requires build r31688 or newer for Movies to get scaned into Library</notes>
+    <working>mostly</working>
+	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
 	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icelibrary24xbox/icon.png</thumbnailurl>
     </statfeed>

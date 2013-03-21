@@ -1,3 +1,12 @@
+[B]Version 2.0.14[/B]
+Fixed MovReel
+
+[B]Version 2.0.13[/B]
+Fixed Autoexec.py 
+
+[B]Version 2.0.12[/B]
+Added Dudeheres Capch Code for BillionUploads
+
 [B]Version 2.0.11[/B]
 Added graceful failure to watched flag update under sqlite.
 Added Recently Aired smartlist

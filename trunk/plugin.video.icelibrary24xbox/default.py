@@ -486,18 +486,18 @@ def FileAlreadyExist(filename, files):
 	return False
 
 def SetupAutoUpdate():
-	source_path = os.path.join(xbmc.translatePath('special://profile/'), 'autoexec.py')
+	source_path = os.path.join(xbmc.translatePath('special://home/scripts/'), 'autoexec.py')
 	try:
 		file = open(source_path, 'r')
 		content=file.read()
 		file.close()
-		index = content.find("xbmc.executebuiltin('RunScript(" + ADDON_ID + ",\"?mode=100\")')")
+		index = content.find("xbmc.executebuiltin('RunScript(special://home/plugins/video/IceLibrary24Xbox/default.py,\"?mode=100\")')")
 		if index > 0:
 			Notification("Already set up", "Auto update is already set up in autoexec.py")
 			return
 	except:
 		content = "import xbmc\n"
-	content += "\nxbmc.executebuiltin('RunScript(" + ADDON_ID + ",\"?mode=100\")')"
+	content += "\nxbmc.executebuiltin('RunScript(special://home/plugins/video/IceLibrary24Xbox/default.py,\"?mode=100\")')"
 	
 	file = open(source_path, 'w')
 	file.write(content)
@@ -1816,10 +1816,11 @@ def resolve_jumbofiles(url):
 def resolve_movreel(url):
 
     try:
-	if str2bool(selfAddon.getSetting('movreel-account')):
-         	print 'Movreel - Setting Cookie file'
-         	cookiejar = os.path.join(cookie_path,'movreel.lwp')
-         	net.set_cookies(cookiejar)
+
+        if str2bool(selfAddon.getSetting('movreel-account')):
+            print 'ShareBees - Setting Cookie file'
+            cookiejar = os.path.join(cookie_path,'movreel.lwp')
+            net.set_cookies(cookiejar)
 
         #Show dialog box so user knows something is happening
         dialog = xbmcgui.DialogProgress()
@@ -1837,30 +1838,45 @@ def resolve_movreel(url):
             raise Exception('File is currently unavailable on the host')
 
         #Set POST data values
+        print html
         op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-        usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
         postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
-        method_free = re.search('<input type="submit" name="method_free" style=".+?" value="(.+?)">', html).group(1)
+        method_free = re.search('<input type="(submit|hidden)" name="method_free" (style=".*?" )*value="(.*?)">', html).group(3)
+        method_premium = re.search('<input type="(hidden|submit)" name="method_premium" (style=".*?" )*value="(.*?)">', html).group(3)
         
-        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'referer': url, 'fname': fname, 'method_free': method_free}
+        if method_free:
+            usr_login = ''
+            fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
+            data = {'op': op, 'usr_login': usr_login, 'id': postid, 'referer': url, 'fname': fname, 'method_free': method_free}
+        else:
+            rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+            data = {'op': op, 'id': postid, 'referer': url, 'rand': rand, 'method_premium': method_premium}
         
         print 'Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
         html = net.http_POST(url, data).content
 
-        dialog.update(66)
-        
-        #Set POST data values
-        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-        method_free = re.search('<input type="hidden" name="method_free" value="(.+?)">', html).group(1)
-        
-        data = {'op': op, 'id': postid, 'rand': rand, 'referer': url, 'method_free': method_free, 'down_direct': 1}
+        #Only do next post if Free account, skip to last page for download link if Premium
+        if method_free:
+            #Check for download limit error msg
+            if re.search('<p class="err">.+?</p>', html):
+                print '***** Download limit reached'
+                errortxt = re.search('<p class="err">(.+?)</p>', html).group(1)
+                raise Exception(errortxt)
+    
+            dialog.update(66)
+            
+            #Set POST data values
+            op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
+            postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+            rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+            method_free = re.search('<input type="hidden" name="method_free" value="(.+?)">', html).group(1)
+            
+            data = {'op': op, 'id': postid, 'rand': rand, 'referer': url, 'method_free': method_free, 'down_direct': 1}
+    
+            print 'Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
+            html = net.http_POST(url, data).content
 
-        print 'Movreel - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-        
+        #Get download link
         dialog.update(100)
         link = re.search('<a id="lnk_download" href="(.+?)">Download Original Video</a>', html, re.DOTALL).group(1)
         dialog.close()
@@ -1870,6 +1886,7 @@ def resolve_movreel(url):
     except Exception, e:
         print '**** Movreel Error occured: %s' % e
         raise
+
 
 
 def WaitIf():
