@@ -169,6 +169,21 @@
     </statfeed>
 </addon>
 
+<addon id="plugin.audio.xbmchubmusic" name="XBMCHUB Music" version="2.0" provider-name="Mikey1234">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+	<import addon="script.module.simplejson"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">en</summary>
+    <description lang="en">Stream All Of Your Favourite Music</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.1channel" version="1.0.0" name="1Channel" provider-name="Bstrdsmkr">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
@@ -898,7 +913,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   </statfeed>
 </addon>
 
-<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.11" provider-name="DudeHere">
+<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.14" provider-name="DudeHere">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.simplejson"/>
@@ -1534,7 +1549,7 @@ Play a wide selection of TV shows from watchseries.eu</description>
 
 <addon id="script.module.urlresolver"
 	     name="urlresolver"
-	     version="1.0.5"
+	     version="1.0.7"
 	     provider-name="XBMCHub.com">
   <requires>
     <import addon="xbmc.python" version="2.0" />
