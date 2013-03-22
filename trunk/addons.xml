@@ -201,13 +201,13 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <summary>Stream Radio stations to your xbmc enabled devics</summary>
-    <description>Visit xbmc4xbox.org.uk/forum/ for support. </description>
+    <description>Listen to xmans favourite local Aussie stations</description>
     <nofanart>true</nofanart>
     <nochangelog>true</nochangelog>
 	</extension>
     <statfeed>
     <working>yes</working>
-	<notes>Listen to xmans favourite local Aussie stations</notes>
+	<notes>none</notes>
 	<maintainer>kozz</maintainer>
     <thumbnailurl></thumbnailurl>
     </statfeed>
