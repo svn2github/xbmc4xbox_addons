@@ -19,10 +19,10 @@
 import sys
 import urllib
 import cgi
-import re
-import simplejson as json
+try: import simplejson as json
+except ImportError: import json
 
-class YouTubePlayer:
+class YouTubePlayer():
     fmt_value = {
         5: "240p h263 flv container",
         18: "360p h264 mp4 container | 270 for rtmpe?",
@@ -292,14 +292,23 @@ class YouTubePlayer:
 
     def extractFlashVars(self, data):
         flashvars = {}
-	
-	pattern = "yt.playerConfig\s*=\s*({.*});"
-	match = re.search(pattern, data)
-	if match is None:
-		return flashvars
+        found = False
 
-	playerconfig =  json.loads(match.group(1))
-	flashvars =  playerconfig['args']
+        for line in data.split("\n"):
+            index = line.find("ytplayer.config =")
+            if index != -1:
+                found = True
+                p1 = line.find("=", (index-3))
+                p2 = line.rfind(";")
+                if p1 <= 0 or p2 <= 0:
+                    continue
+                data = line[p1 + 1:p2]
+                break
+
+        if found:
+            data = json.loads(data)
+            flashvars = data["args"]
+
         self.common.log(u"flashvars: " + repr(flashvars), 2)
         return flashvars
 
@@ -311,11 +320,10 @@ class YouTubePlayer:
         if not flashvars.has_key(u"url_encoded_fmt_stream_map"):
             return links
 
-	
         if flashvars.has_key(u"ttsurl"):
             video[u"ttsurl"] = flashvars[u"ttsurl"]
 
-	for url_desc in flashvars[u"url_encoded_fmt_stream_map"].split(u","):
+        for url_desc in flashvars[u"url_encoded_fmt_stream_map"].split(u","):
             url_desc_map = cgi.parse_qs(url_desc)
             self.common.log(u"url_map: " + repr(url_desc_map), 2)
             if not (url_desc_map.has_key(u"url") or url_desc_map.has_key(u"stream")):
