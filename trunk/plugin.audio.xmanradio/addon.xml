@@ -14,4 +14,10 @@
     <nofanart>true</nofanart>
     <nochangelog>true</nochangelog>
 	</extension>
+    <statfeed>
+    <working>yes</working>
+	<notes>Listen to xmans favourite local Aussie stations</notes>
+	<maintainer>kozz</maintainer>
+    <thumbnailurl></thumbnailurl>
+    </statfeed>
 </addon>
