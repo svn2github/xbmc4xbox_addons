@@ -11,13 +11,12 @@
     <platform>all</platform>
     <summary>Stream Radio stations to your xbmc enabled devics</summary>
     <description>Listen to xmans favourite local Aussie stations</description>
-    <nofanart>true</nofanart>
-    <nochangelog>true</nochangelog>
-	</extension>
-    <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>kozz</maintainer>
-    <thumbnailurl></thumbnailurl>
-    </statfeed>
+
+  </extension>
+  <statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
+      <thumbnailurl></thumbnailurl>
+  </statfeed>
 </addon>
