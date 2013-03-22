@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="plugin.video.xmanradio" name="XmanRadio" provider-name="Kozz" version="0.0.1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.simplejson" version="2.0.10" />
+  </requires>
+  <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Stream Radio stations to your xbmc enabled devics</summary>
+    <description>Visit xbmc4xbox.org.uk/forum/ for support. </description>
+    <nofanart>true</nofanart>
+    <nochangelog>true</nochangelog>
+	</extension>
+</addon>

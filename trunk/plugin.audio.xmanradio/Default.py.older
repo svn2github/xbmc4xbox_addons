@@ -1,0 +1,212 @@
+import urllib,urllib2,re
+import sys,os
+import time
+import cookielib,base64
+import unicodedata
+import random
+import copy
+import threading
+import string
+import datetime
+import xbmcplugin
+import xbmcgui
+import xbmcaddon
+
+#get path to me
+addon_id = 'plugin.video.kozz'
+selfAddon = xbmcaddon.Addon(id=addon_id)
+kozzpath = selfAddon.getAddonInfo('path')
+''' Use t0mm0's common library for http calls '''
+from t0mm0.common.net import Net
+from t0mm0.common.addon import Addon
+net = Net()
+addon = Addon(addon_id)
+datapath = addon.get_profile()
+
+#append lib directory
+sys.path.append( os.path.join( kozzpath, 'resources', 'lib' ) )
+
+#imports of things bundled in the addon
+import container_urls,clean_dirs,htmlcleaner
+import megaroutines, rapidroutines, debridroutines
+from metahandler import metahandlers
+from cleaners import *
+from BeautifulSoup import BeautifulSoup
+from xgoogle.search import GoogleSearch
+import jsunpack
+
+#Common Cache
+import xbmcvfs
+# plugin constants
+dbg = False # Set to false if you don't want debugging
+
+#Common Cache
+try:
+  import StorageServer
+except:
+  import storageserverdummy as StorageServer
+cache = StorageServer.StorageServer(addon_id)
+   
+
+#get path to me
+addon_id = 'plugin.video.kozz'
+selfAddon = xbmcaddon.Addon(id=addon_id)
+kozzpath = selfAddon.getAddonInfo('path')
+#TV DASH - by You 2008.
+#base_url = urllib2.quote_plus("http://videobull.com",safe="%/:=&?~#+!$,;'@()*[]")
+#http://videobull.com/tv-shows/
+#
+#GLOBAL CONSTANTS
+USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
+BULL_REFERRER = 'http://videobull.com'
+
+# global constants
+BULL_URL = selfAddon.getSetting('bull-url')
+BULL_AJAX = BULL_URL+'membersonly/components/com_iceplayer/video.phpAjaxResp.php'
+BULL_REFERRER = 'http://videobull.com'
+USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
+
+#useful global strings:
+bullurl = BULL_URL
+#meta_setting = selfAddon.getSetting('use-meta')
+#downloadPath = selfAddon.getSetting('download-folder')
+
+#Auto-watch
+currentTime = 1
+totalTime = 0
+
+callEndOfDirectory = True
+def get_video_name(name):
+    video = {}
+    if check_episode(name):
+        r = re.search('[0-9]+x[0-9]+ (.+?) [(]([0-9]{4})[)]', name)        
+    else:
+        r = re.search('(.+?) [(]([0-9]{4})[)]',name)
+    if r:
+        video['name'] = r.group(1)
+        video['year'] = r.group(2)
+    else:
+        video['name'] = name
+        video['year'] = ''
+    return video
+
+def xbmcpath(path,filename):
+     translatedpath = os.path.join(xbmc.translatePath( path ), ''+filename+'')
+     return translatedpath
+def handle_file(filename,getmode=''):
+    if filename == 'tv-shows':
+          return_file = xbmcpath(art,'')
+def CATEGORIES():
+        addDir('tv-shows','http://videobull.com/',1,'tv')
+        addDir( 'atoz','base_url',1,'')
+                       
+def INDEX(url):
+        link=GetURL(url)
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        match=re.compile('<a href="(.+?)" title=".+?">(.+?)</a>,?.src="(.+?)"', re.DOTALL).findall(link)
+        for url,name,thumbnail in match:
+                url='<a href="(.+?)" title=".+?">'+url+'</a>,?.src="(.+?)"'
+                latrel=re.compile('<li><a title=".+?" href=".+?">(.+?)</a> <span class="mctagmap_count">(42)</span></li>', re.DOTALL).findall(url)
+                for url in latrel:
+                    text = re.compile('<li><a title=".+?" href=".+?">(.+?)</a> <span class=".+?">(42)</span></li>').findall(url)
+                    VaddDir('[COLOR blue]' + text[0] + '[/COLOR]', '', 0, '', False)
+                    mirlinks=re.compile('<a href=/(.+?)>(.+?)</a>[ ]*<(.+?)>').findall(url)
+                    for url,name,thumbnail in mirlinks:
+                            url='http://videobull.com' +url
+                            name=CLEANUP(name)
+                            new_name = name
+                            addDir(new_name,url,100,'')
+    
+                
+
+def VIDEOLINKS(url,name):
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        match=re.compile('<a href="(.+?)",title=".+?">(.+?)/a>,?.src="(.+?)"').findall(link)
+        for url in match:
+                addLink(name,url,'')
+        
+
+                
+def get_params():
+        param=[]
+        paramstring=sys.argv[2]
+        if len(paramstring)>=2:
+                params=sys.argv[2]
+                cleanedparams=params.replace('?','')
+                if (params[len(params)-1]=='/'):
+                        params=params[0:len(params)-2]
+                pairsofparams=cleanedparams.split('&')
+                param={}
+                for i in range(len(pairsofparams)):
+                        splitparams={}
+                        splitparams=pairsofparams[i].split('=')
+                        if (len(splitparams))==2:
+                                param[splitparams[0]]=splitparams[1]
+                                
+        return param
+
+
+
+
+def addLink(name,url,iconimage):
+        ok=True
+        liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+        liz.setInfo( type="Video", infoLabels={ "Title": name } )
+        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
+        return ok
+
+
+def addDir(name,url,mode,iconimage):
+        u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+        ok=True
+        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+        liz.setInfo( type="Video", infoLabels={ "Title": name } )
+        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
+        return ok
+        
+              
+params=get_params()
+url=None
+name=None
+mode=None
+
+try:
+        url=urllib.unquote_plus(params["url"])
+except:
+        pass
+try:
+        name=urllib.unquote_plus(params["name"])
+except:
+        pass
+try:
+        mode=int(params["mode"])
+except:
+        pass
+
+print "Mode: "+str(mode)
+print "URL: "+str(url)
+print "Name: "+str(name)
+
+if mode==None or url==None or len(url)<1:
+        print ""
+        CATEGORIES()
+       
+elif mode==1:
+        print ""+url
+        INDEX(url)
+        
+elif mode==2:
+        print ""+url
+        VIDEOLINKS(url,name)
+
+
+
+xbmcplugin.endOfDirectory(int(sys.argv[1]))
