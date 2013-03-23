@@ -2,14 +2,11 @@ import urllib,urllib2,re
 import xbmcplugin,xbmcgui
 
 def CATEGORIES():
-        addLink('2GB Sydney Talk Radio','http://shoutcast.2gb.com:80/2ch','http://www.2gb.com/sites/all/themes/two_gb/logo.png')
-
-                       
-
-        
-          
-          
-        
+    addLink('2GB Sydney Talk Radio','http://shoutcast.2gb.com:80/2ch','http://www.2gb.com/sites/all/themes/two_gb/logo.png')
+    addLink('ABC Radio Australia','http://shoutmedia.abc.net.au:10442/','http://d1i6vahw24eb07.cloudfront.net/s25557q.png')
+    addLink('702 ABC Sydney','http://shoutmedia.abc.net.au:10436/','http://d1i6vahw24eb07.cloudfront.net/s9118q.png')
+    addLink('Aussie: All australian all the time','mms://winstream.sportalhosting.com/Aussie','http://d1i6vahw24eb07.cloudfront.net/s148654q.png')
+  
 def get_params():
         param=[]
         paramstring=sys.argv[2]
@@ -34,7 +31,6 @@ def addLink(name,url,iconimage):
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
         return ok
-
 
 def addDir(name,url,mode,iconimage):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
@@ -70,9 +66,4 @@ if mode==None or url==None or len(url)<1:
         print ""
         CATEGORIES()
        
-
-
-
-
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
