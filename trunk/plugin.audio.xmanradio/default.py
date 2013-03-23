@@ -2,7 +2,7 @@ import urllib,urllib2,re
 import xbmcplugin,xbmcgui
 
 def CATEGORIES():
-    addLink('2GB Sydney Talk Radio','http://shoutcast.2gb.com:80/2ch','http://www.2gb.com/sites/all/themes/two_gb/logo.png')
+    addLink('2GB Sydney Talk Radio','http://shoutcast.2gb.com/listen.pls?sid=1','http://www.2gb.com/sites/all/themes/two_gb/logo.png')
     addLink('ABC Radio Australia','http://shoutmedia.abc.net.au:10442/','http://d1i6vahw24eb07.cloudfront.net/s25557q.png')
     addLink('702 ABC Sydney','http://shoutmedia.abc.net.au:10436/','http://d1i6vahw24eb07.cloudfront.net/s9118q.png')
     addLink('Aussie: All australian all the time','mms://winstream.sportalhosting.com/Aussie','http://d1i6vahw24eb07.cloudfront.net/s148654q.png')
