@@ -12,8 +12,8 @@
 #
 #############################################################################
 
-import xbmc, xbmcgui, xbmcplugin, urllib2, urllib, re, string, sys, os, traceback, xbmcaddon
-
+import xbmc, xbmcgui, xbmcplugin, urllib2, urllib, re, string, sys, os, traceback, xbmcaddon, socket
+socket.setdefaulttimeout(300)
 sys.path.append(os.path.join(xbmcaddon.Addon(id='plugin.video.navi-x').getAddonInfo('path').replace(";",""),'src'))
 from libs2 import *
 from navix import *
@@ -45,7 +45,7 @@ def get_params():
 
 params=get_params()
 
-mediaitem=CMediaItem(name="Navi-X home", type="playlist", URL="http://navi-x.googlecode.com/svn/trunk/Playlists/home.plx")
+mediaitem=CMediaItem(name="Navi-X home", type="playlist", URL="http://whufclee.googlecode.com/svn/Navi-X/pluginhomepage.plx")
 
 try:
         mediaitem.URL = urllib.unquote_plus(params["url"])

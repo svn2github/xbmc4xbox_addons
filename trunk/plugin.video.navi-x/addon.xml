@@ -10,14 +10,15 @@
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<summary lang="en">Media browser</summary>
-		<description lang="en">Media browser
+		<description lang="en">
+			Media browser
 		</description>
 	</extension>
-	<statfeed>
+  <statfeed>
     <working>yes</working>
-	<notes>This is the Plugin version - Requires xbmc4xbox Build - r31660</notes>
+	<notes>This is the plugin version with whufclee's Playlist as Home - Requires xbmc4xbox Build - r31660 or newer (B4K3D PI Latest Stable)</notes>
 	<maintainer>whufclee</maintainer>
     <thumbnailurl></thumbnailurl>
-    </statfeed>
+  </statfeed>
 </addon>
 

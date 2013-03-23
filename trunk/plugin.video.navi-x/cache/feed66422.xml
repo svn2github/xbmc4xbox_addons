@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"> 
+
+<channels>
+<channel>
+<name>Sky Sports & Football Streams</name>
+<thumbnail></thumbnail>
+<items>
+
+
+</items>
+</channel>
+
+<channel>
+<name>Sky Sports & Football Streams</name>
+<thumbnail></thumbnail>
+<items>
+<!-- CHANNELS LIST GOES HERE -->
+ 
+<item>
+      <title>Tom & Jerry</title>
+      <media:thumbnail url='http://upload.wikimedia.org/wikipedia/en/thumb/5/5f/TomandJerryTitleCardc.jpg/250px-TomandJerryTitleCardc.jpg'/>
+      <link>rtmp://204.45.66.186/ctv playpath=tom swfUrl=http://www.canaistv.net/swf/player.swf pageUrl=http://www.canaistv.net/tvamigos/tom&jerry.html live=1
+</link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title>The Simpsons</title>
+      <media:thumbnail url='http://www.twilightfansitalia.com/wordpress/wp-content/uploads/2010/10/simpsons-logo2.jpg'/>
+      <link>rtmp://142.4.219.190/app playpath=simpsons swfUrl=http://www.owncast.me/player/player.swf pageUrl=http://www.owncast.me/embed.php?channel=1807&vw=600&vh=530&domain=tgun.tv live=1
+</link>
+      <description>
+</description>
+   </item>
+<item>
+      <title>Friends</title>
+      <media:thumbnail url='http://blogs.independent.co.uk/wp-content/uploads/2012/04/friends-tv-show.jpg'/>
+      <link>rtmp://5.39.65.109/edge playpath=wg2fmaake2sfjbr swfUrl=http://static.ilive.to/jwplayer/player.swf pageUrl=http://www.ilive.to/view/36673/Friends_show live=1
+</link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title>Cartoon Network</title>
+      <media:thumbnail url='http://www.graphics99.com/wp-content/uploads/2012/06/cartoon.png'/>
+      <link>rtmp://178.33.229.39/edge playpath=lf4cc63667vxzlx swfUrl=http://static.ilive.to/jwplayer/player.swf pageUrl=http://www.ilive.to/view/41423/Cartoon_Network live=1
+</link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title>Jackie Chan Movies</title>
+      <media:thumbnail url='http://www.chinesenewyear.me/wordpress/wp-content/uploads/2011/03/Jackie-Chan-playing-kung-fu.jpg'/>
+      <link>rtmp://176.31.233.147/edge playpath=gby01m6h4xd3lag swfUrl=http://static.ilive.to/jwplayer/player.swf pageUrl=http://www.ilive.to/view/36983/Jackie_Chan_movies live=1
+</link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title>UFC</title>
+      <media:thumbnail url='http://cdn.bleacherreport.net/images_root/slides/photos/002/090/934/UFC-Logo-mma_original_display_image.jpg?1333408655'/>
+      <link>rtmp://178.33.229.39/edge playpath=0kt3dud16tp6w6m swfUrl=http://static.ilive.to/jwplayer/player.swf pageUrl=http://www.ilive.to/view/44849/UFC_24/7 live=1
+</link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title>King of Queens</title>
+      <media:thumbnail url='http://cbscw44.files.wordpress.com/2012/01/the_king_of_queens.jpg'/>
+      <link>rtmp://178.33.224.194/edge playpath=yytqkp7711cd1ze swfUrl=http://static.ilive.to/jwplayer/player.swf pageUrl=http://www.ilive.to/view/38213/King_of_Queens live=1
+</link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title></title>
+      <media:thumbnail url=''/>
+      <link></link>
+      <description>
+</description>
+   </item>
+<item>
+      <title></title>
+      <media:thumbnail url=''/>
+      <link></link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title></title>
+      <media:thumbnail url=''/>
+      <link></link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title></title>
+      <media:thumbnail url=''/>
+      <link></link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title></title>
+      <media:thumbnail url=''/>
+      <link></link>
+      <description>
+</description>
+   </item>
+
+<item>
+      <title></title>
+      <media:thumbnail url=''/>
+      <link></link>
+      <description>
+</description>
+   </item>
+
+
+
+
+
+
+
+
+
+<!-- END OF CHANNELS LIST -->
+
+
+</items>
+</channel>
+
+
+
+</channels>
+
+</rss>
