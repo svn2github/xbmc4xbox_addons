@@ -17,4 +17,10 @@
     <description lang="pt">A rádio SHOUTcast oferece milhares de rádios livres existentes na Internet, mantidas por DJs de todo o mundo.</description>
 	<description lang="nl">SHOUTcast Radio biedt duizenden gratis Internet radiostatinos aan van DJs en zenders overal ter wereld</description>
   </extension>
+  <statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
+      <thumbnailurl>http://</thumbnailurl>
+  </statfeed>
 </addon>
