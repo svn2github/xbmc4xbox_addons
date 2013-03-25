@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.ustvnow" version="0.3.0" name="ustvnow" provider-name="t0mm0">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Plays live streams and recordings from ustvnow.com</summary>
+        <description>Live streaming US TV. You MUST log in to view streams (see addon settings). You can also play any recordings you have made on ustvnow.com</description>
+        <platform>all</platform>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>kozz</maintainer>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.twit/icon.png</thumbnailurl>
+    </statfeed>
+</addon>
+

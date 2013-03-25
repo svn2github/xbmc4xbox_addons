@@ -1332,6 +1332,26 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
+<addon id="plugin.video.ustvnow" version="0.3.0" name="ustvnow" provider-name="t0mm0">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Plays live streams and recordings from ustvnow.com</summary>
+        <description>Live streaming US TV. You MUST log in to view streams (see addon settings). You can also play any recordings you have made on ustvnow.com</description>
+        <platform>all</platform>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>kozz</maintainer>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.twit/icon.png</thumbnailurl>
+    </statfeed>
+</addon>
+
 <addon id="plugin.video.vevo"
        name="VEVO"
        version="0.7.3"
@@ -1407,31 +1427,6 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.vimeo/icon.png</thumbnailurl>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.watchseries.eu" version="2.0.1" name="watchseries.eu" provider-name="mscreations (originator: rogerThis)">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-        <import addon="script.module.urlresolver" version="0.0.1"/>
-        <import addon="script.module.t0mm0.common" version="0.0.1"/>
-		<import addon="script.module.simplejson"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>Browse watchseries.eu</summary>
-        <description>Visit www.xbmchub.com for support.
-
-Play a wide selection of TV shows from watchseries.eu</description>
-        <platform>all</platform>
-    </extension>
-	<statfeed>
-    <working>no</working>
-	<notes>site has changed this addon may get removed</notes>
-	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.watchseries.eu/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
