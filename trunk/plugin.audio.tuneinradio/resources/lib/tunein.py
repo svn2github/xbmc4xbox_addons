@@ -21,7 +21,7 @@
 
 import sys
 import os
-
+import xbmc
 import simplejson
 import urllib
 import urllib2
@@ -64,22 +64,7 @@ class TuneIn:
 		self.__debug = debug
 
 	def __get_mac_address(self):
-		mac = '00:00:00:00:00:00'
- 
-#		if sys.platform == 'win32': 
-#			command = "ipconfig /all"
-#			proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE,)
-#			for line in proc.stdout:
-#				if line.lstrip().startswith('Physical Address'): 
-#					mac = line.split(':')[1].strip().replace('-',':') 
-#					break 
-#		else: 
-#			command = "/sbin/ifconfig"
-#			proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,)
-#			for line in proc.stdout:
-#				if line.find('Ether') > -1: 
-#					mac = line.split()[4] 
-#					break 
+		mac = xbmc.getInfoLabel("network.macaddress")
 		return mac
 
 	def __add_params_to_url(self, method, fnparams=None, addrender=True, addserial=True):

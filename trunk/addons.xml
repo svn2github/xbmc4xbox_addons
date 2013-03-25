@@ -136,10 +136,10 @@
 	<description lang="nl">SHOUTcast Radio biedt duizenden gratis Internet radiostatinos aan van DJs en zenders overal ter wereld</description>
   </extension>
   <statfeed>
-      <working>yes</working>
-	  <notes>none</notes>
-      <maintainer>kozz</maintainer>
-      <thumbnailurl>http://</thumbnailurl>
+   <working>yes</working>
+	<notes>none</notes>
+    <maintainer>kozz</maintainer>
+    <thumbnailurl>http://</thumbnailurl>
   </statfeed>
 </addon>
 

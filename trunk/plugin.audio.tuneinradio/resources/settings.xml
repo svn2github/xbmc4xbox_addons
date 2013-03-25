@@ -19,18 +19,18 @@
 		<setting id="downloadbackground" type="bool" label="2018" default="false"/>
 	</category>
 	<category label="Formats">
-		<setting id="format-aac" type="bool" label="2019" default="true"/>
-		<setting id="format-am" type="bool" label="2024" default="true"/>
-		<setting id="format-dab" type="bool" label="2025" default="true"/>
-		<setting id="format-fm" type="bool" label="2026" default="true"/>
-		<setting id="format-hd" type="bool" label="2027" default="true"/>
-		<setting id="format-html" type="bool" label="2028" default="true"/>
+		<setting id="format-aac" type="bool" label="2019" default="false"/>
+		<setting id="format-am" type="bool" label="2024" default="false"/>
+		<setting id="format-dab" type="bool" label="2025" default="false"/>
+		<setting id="format-fm" type="bool" label="2026" default="false"/>
+		<setting id="format-hd" type="bool" label="2027" default="false"/>
+		<setting id="format-html" type="bool" label="2028" default="false"/>
 		<setting id="format-mp3" type="bool" label="2020" default="true"/>
-		<setting id="format-ogg" type="bool" label="2021" default="true"/>
-		<setting id="format-qt" type="bool" label="2029" default="true"/>
-		<setting id="format-real" type="bool" label="2022" default="true"/>
-		<setting id="format-flash" type="bool" label="2030" default="true"/>
-		<setting id="format-sat" type="bool" label="2031" default="true"/>
+		<setting id="format-ogg" type="bool" label="2021" default="false"/>
+		<setting id="format-qt" type="bool" label="2029" default="false"/>
+		<setting id="format-real" type="bool" label="2022" default="false"/>
+		<setting id="format-flash" type="bool" label="2030" default="false"/>
+		<setting id="format-sat" type="bool" label="2031" default="false"/>
 		<setting id="format-wma" type="bool" label="2023" default="true"/>
 		<setting id="format-wmpro" type="bool" label="2032" default="true"/>
 		<setting id="format-wmvideo" type="bool" label="2033" default="true"/>
