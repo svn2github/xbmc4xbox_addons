@@ -15,4 +15,10 @@
     <nofanart>true</nofanart>
     <nochangelog>true</nochangelog>
 	</extension>
+	<statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
+      <thumbnailurl>http://</thumbnailurl>
+    </statfeed>
 </addon>
