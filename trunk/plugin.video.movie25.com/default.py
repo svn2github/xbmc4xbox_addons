@@ -124,11 +124,10 @@ def VIDEOLINKS(url,name):
 
 def playVid(url):
         content = getUrl(url)
-        match1=re.compile('"Javascript.*\http\://www.(.*).\"').findall(content)
-        for url in match1:
-          url = 'http://www.' + url
-          url = url[:-5]
-          url = url
+        match=re.compile('"Javascript:location.href=.(.*?)."').findall(content)
+        for url in match:
+          url=str(url).replace("'", "")
+          print url
           hostUrl = url
           videoLink = urlresolver.resolve(hostUrl)
           addLink(name,url,'')
