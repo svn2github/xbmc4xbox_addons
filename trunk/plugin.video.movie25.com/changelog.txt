@@ -1,0 +1,12 @@
+1.0.0
+ - initial release
+ - Features:
+ 	- Search for Movies
+ 	- access all the categories rom movie.25.com
+ 	- full working addon
+	
+1.0.1
+ -Changes
+    - change to better regex to access the Hoster 
+    - the old was not working with all 
+ 
