@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+  id="plugin.video.movie25.com"
+  version="1.0"
+  name="Movie25.com"
+  provider-name="skatulskijean">
+  <requires>
+   <import addon="xbmc.python" version="2.0"/>
+   <import addon="script.module.urlresolver" version="1.0.0" />
+  </requires>
+  <extension 
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>access the resources from Movies25.com on your xbmc4xbox</summary>
+    <description>Play Movies from Movies25.com</description>
+    <platform>all</platform>
+  </extension>
+</addon>
