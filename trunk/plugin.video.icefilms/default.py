@@ -667,58 +667,34 @@ def resolve_vidhog(url):
         print 'VidHog - Requesting GET URL: %s' % url
         html = net.http_GET(url).content
 
-        dialog.update(33)
+        dialog.update(50)
         
         #Check page for any error msgs
         if re.search('This server is in maintenance mode', html):
             print '***** VidHog - Site reported maintenance mode'
             raise Exception('File is currently unavailable on the host')
-        
-        #Set POST data values
-        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-        usr_login = re.search('<input type="hidden" name="usr_login" value="(.*?)">', html).group(1)
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        fname = re.search('<input type="hidden" name="fname" value="(.+?)">', html).group(1)
-        method_free = re.search('<input type="submit" name="method_free" value="(.+?)" class="freebtn right">', html).group(1)
-        
-        data = {'op': op, 'usr_login': usr_login, 'id': postid, 'fname': fname, 'referer': url, 'method_free': method_free}
-        
-        print 'VidHog - Requesting POST URL: %s DATA: %s' % (url, data)
-        html = net.http_POST(url, data).content
-        
-        dialog.update(66)
-                
-        #Set POST data values
-        op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-        method_free = re.search('<input type="hidden" name="method_free" value="(.+?)">', html).group(1)
-        down_direct = int(re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1))
-        wait = int(re.search('<span id="countdown_str">Wait <span id=".+?">([0-9]*)</span>', html).group(1))
-        
-        data = {'op': op, 'id': postid, 'rand': rand, 'referer': url, 'method_free': method_free, 'down_direct': down_direct}
-        
-        dialog.close()
-        
-        #Do wait time for free accounts    
-        finished = do_wait('VidHog', '', wait)
+        if re.search('<b>File Not Found</b>', html):
+            print '***** VidHog - File not found'
+            raise Exception('File has been deleted')
 
-        if finished:
-            print 'VidHog - Requesting POST URL: %s DATA: %s' % (url, data)
-            
-            dialog.create('Resolving', 'Resolving VidHog Link...')
-            dialog.update(66)
-            
-            html = net.http_POST(url, data).content
-            
-            dialog.update(100)
-            
-            dialog.close()
+        filename = re.search('<strong>\(<font color="red">(.+?)</font>\)</strong><br><br>', html).group(1)
+        extension = re.search('(\.[^\.]*$)', filename).group(1)
+        guid = re.search('http://vidhog.com/(.+)$', url).group(1)
         
-            link = re.search('<strong><a href="(.+?)">Click Here to download this file</a></strong>', html).group(1)
-            return link
-        else:
-            return None
+        vid_embed_url = 'http://vidhog.com/vidembed-%s%s' % (guid, extension)
+        
+        request = urllib2.Request(vid_embed_url)
+        request.add_header('User-Agent', USER_AGENT)
+        request.add_header('Referer', url)
+        response = urllib2.urlopen(request)
+        redirect_url = re.search('(http://.+?)video', response.geturl()).group(1)
+        download_link = redirect_url + filename
+        
+        dialog.update(100)
+
+        dialog.close()
+
+        return download_link
         
     except Exception, e:
         print '**** VidHog Error occured: %s' % e
@@ -982,7 +958,6 @@ def resolve_movreel(url):
             raise Exception('File is currently unavailable on the host')
 
         #Set POST data values
-        print html
         op = re.search('<input type="hidden" name="op" value="(.+?)">', html).group(1)
         postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
         method_free = re.search('<input type="(submit|hidden)" name="method_free" (style=".*?" )*value="(.*?)">', html).group(3)
@@ -1049,36 +1024,50 @@ def resolve_billionuploads(url):
             print '***** BillionUploads - Site reported maintenance mode'
             raise Exception('File is currently unavailable on the host')
 
+        #Set POST data values
+        op = 'download2'
+        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
+        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
+        method_free = re.search('<input type="hidden" name="method_free" value="(.*?)">', html).group(1)
+        down_direct = re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1)
+        
         #Captcha
-        captchaimg = re.search('<img src="(http://BillionUploads.com/captchas/.+?)"', html).group(1)
+        captchaimg = re.search('<img src="(http://BillionUploads.com/captchas/.+?)"', html)
         
         dialog.close()
         
-        #Grab Image and display it
-        img = xbmcgui.ControlImage(550,15,240,100,captchaimg)
-        wdlg = xbmcgui.WindowDialog()
-        wdlg.addControl(img)
-        wdlg.show()
-        
-        #Small wait to let user see image
-        time.sleep(3)
-        
-        #Prompt keyboard for user input
-        kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-        kb.doModal()
-        capcode = kb.getText()
-        
-        #Check input
-        if (kb.isConfirmed()):
-          userInput = kb.getText()
-          if userInput != '':
-              capcode = kb.getText()
-          elif userInput == '':
-               Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
-               return None
+        #If Captcha image exists
+        if captchaimg:
+            #Grab Image and display it
+            img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
+            wdlg = xbmcgui.WindowDialog()
+            wdlg.addControl(img)
+            wdlg.show()
+            
+            #Small wait to let user see image
+            time.sleep(3)
+            
+            #Prompt keyboard for user input
+            kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+            kb.doModal()
+            capcode = kb.getText()
+            
+            #Check input
+            if (kb.isConfirmed()):
+              userInput = kb.getText()
+              if userInput != '':
+                  capcode = kb.getText()
+              elif userInput == '':
+                   Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
+                   return None
+            else:
+                return None
+            wdlg.close()
+            
+            data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct, 'code': capcode}
+
         else:
-            return None
-        wdlg.close()
+            data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct}
 
         #They need to wait for the link to activate in order to get the proper 2nd page
         dialog.close()
@@ -1086,15 +1075,6 @@ def resolve_billionuploads(url):
                
         dialog.create('Resolving', 'Resolving BillionUploads Link...') 
         dialog.update(50)
-        
-        #Set POST data values
-        op = 'download2'
-        rand = re.search('<input type="hidden" name="rand" value="(.+?)">', html).group(1)
-        postid = re.search('<input type="hidden" name="id" value="(.+?)">', html).group(1)
-        method_free = re.search('<input type="hidden" name="method_free" value="(.*?)">', html).group(1)
-        down_direct = re.search('<input type="hidden" name="down_direct" value="(.+?)">', html).group(1)
-                
-        data = {'op': op, 'rand': rand, 'id': postid, 'referer': url, 'method_free': method_free, 'down_direct': down_direct, 'code': capcode}
         
         print 'BillionUploads - Requesting POST URL: %s DATA: %s' % (url, data)
         html = net.http_POST(url, data).content
@@ -1107,6 +1087,52 @@ def resolve_billionuploads(url):
 
     except Exception, e:
         print '**** BillionUploads Error occured: %s' % e
+        raise
+
+
+def resolve_epicshare(url):
+
+    try:
+        
+        #Show dialog box so user knows something is happening
+        dialog = xbmcgui.DialogProgress()
+        dialog.create('Resolving', 'Resolving EpicShare Link...')
+        dialog.update(0)
+        
+        print 'EpicShare - Requesting GET URL: %s' % url
+        html = net.http_GET(url).content
+
+        dialog.update(50)
+        
+        #Check page for any error msgs
+        if re.search('This server is in maintenance mode', html):
+            print '***** EpicShare - Site reported maintenance mode'
+            raise Exception('File is currently unavailable on the host')
+        if re.search('<b>File Not Found</b>', html):
+            print '***** EpicShare - File not found'
+            raise Exception('File has been deleted')
+
+        filename = re.search('<h2>(.+)</h2>', html).group(1)
+        extension = re.search('(\.[^\.]*$)', filename).group(1)
+        guid = re.search('http://epicshare.net/(.+)$', url).group(1)
+        
+        vid_embed_url = 'http://epicshare.net/vidembed-%s%s' % (guid, extension)
+        
+        request = urllib2.Request(vid_embed_url)
+        request.add_header('User-Agent', USER_AGENT)
+        request.add_header('Referer', url)
+        response = urllib2.urlopen(request)
+        redirect_url = re.search('(http://.+?)video', response.geturl()).group(1)
+        download_link = redirect_url + filename
+        
+        dialog.update(100)
+
+        dialog.close()
+
+        return download_link
+        
+    except Exception, e:
+        print '**** EpicShare Error occured: %s' % e
         raise
 
 
@@ -1131,7 +1157,9 @@ def Startup_Routines():
      if meta_setting=='true': ContainerStartup()
      
      #Rescan Next Aired on startup - actually only rescans every 24hrs
-     xbmc.executebuiltin("RunScript(%s, silent=true)" % os.path.join(icepath, 'resources/script.tv.show.next.aired/default.py'))
+     next_aired = str2bool(selfAddon.getSetting('next-aired'))
+     if next_aired:
+         xbmc.executebuiltin("RunScript(%s, silent=true)" % os.path.join(icepath, 'resources/script.tv.show.next.aired/default.py'))
 
 def create_meta_pack():
        
@@ -1390,8 +1418,10 @@ def ADD_TO_FAVOURITES(name,url,imdbnum):
                
                Notify('small',name + ' added to favourites','','6000')
 
-               #Rescan Next Aired on startup - actually only rescans every 24hrs
-               xbmc.executebuiltin("RunScript(%s, silent=true)" % os.path.join(icepath, 'resources/script.tv.show.next.aired/default.py'))
+               #Rescan Next Aired
+               next_aired = str2bool(selfAddon.getSetting('next-aired'))
+               if next_aired:
+                   xbmc.executebuiltin("RunScript(%s, silent=true)" % os.path.join(icepath, 'resources/script.tv.show.next.aired/default.py'))
           else:
                print 'Warning - favourite already exists'
                Notify('small',name + ' favourite already exists','','6000')
@@ -2323,6 +2353,7 @@ def PART(scrap,sourcenumber,args,cookie):
                         isjumbo = re.search('jumbofiles\.com/', url)
                         ismovreel = re.search('movreel\.com/', url)
                         isbillion = re.search('billionuploads\.com/', url)
+                        isepicshare = re.search('epicshare\.net/', url)
 
                         partname='Part '+partnum
                         if ismega:
@@ -2361,7 +2392,9 @@ def PART(scrap,sourcenumber,args,cookie):
                         elif isbillion:
                               fullname=sourcestring+' | BU | '+partname
                               logo = billionpic
-
+                        elif isepicshare:
+                              fullname=sourcestring+' | ES | '+partname
+                              logo = ''
 
                         try:
                             sources = eval(cache.get("source"+str(sourcenumber)+"parts"))
@@ -2401,6 +2434,7 @@ def PART(scrap,sourcenumber,args,cookie):
                     isjumbo = re.search('jumbofiles\.com/', url)
                     ismovreel = re.search('movreel\.com/', url)
                     isbillion = re.search('billionuploads\.com/', url)
+                    isepicshare = re.search('epicshare\.net/', url)
                     
                     if ismega is not None:
                          fullname=sourcestring+' | MU | Full'
@@ -2449,6 +2483,10 @@ def PART(scrap,sourcenumber,args,cookie):
                     elif isbillion:
                          fullname=sourcestring+' | BU  | Full'
                          addExecute(fullname,url,get_default_action(),billionpic)
+
+                    elif isepicshare:
+                         fullname=sourcestring+' | ES  | Full'
+                         addExecute(fullname,url,get_default_action(),'')
 
 
 def GetSource(id, args, cookie):
@@ -2679,7 +2717,7 @@ def WaitIf():
 
 #Quick helper function used to strip characters that are invalid for Windows filenames/folders
 def Clean_Windows_String(string):
-     return re.sub('[^-a-zA-Z0-9_.()\\\/ ]+', '',  string)
+     return re.sub('[^\w\-_\. ]', '',  string)
 
 
 #Helper function to convert strings to boolean values
@@ -2844,6 +2882,7 @@ def Handle_Vidlink(url):
      isjumbo = re.search('jumbofiles\.com/', url)
      ismovreel = re.search('movreel\.com/', url)
      isbillion = re.search('billionuploads\.com/', url)
+     isepicshare = re.search('epicshare\.net/', url)
      
      host = re.search('//[w\.]*(.+?)/', url).group(1)
          
@@ -2909,6 +2948,9 @@ def Handle_Vidlink(url):
 
      elif isbillion:
           return resolve_billionuploads(url)
+
+     elif isepicshare:
+          return resolve_epicshare(url)
 
      elif israpid:
           
@@ -3731,7 +3773,9 @@ def addDir(name, url, mode, iconimage, meta=False, imdb=False, delfromfav=False,
                  liz.setProperty('fanart_image', meta['backdrop_url'])
              contextMenuItems.append(('Show Information', 'XBMC.Action(Info)'))
              if favourite:
-                 contextMenuItems.append(('Show Next Aired', 'RunScript(%s)' % os.path.join(icepath, 'resources/script.tv.show.next.aired/default.py')))
+                 next_aired = str2bool(selfAddon.getSetting('next-aired'))
+                 if next_aired:
+                     contextMenuItems.append(('Show Next Aired', 'RunScript(%s)' % os.path.join(icepath, 'resources/script.tv.show.next.aired/default.py')))
          elif mode == 13: # TV Season
              addWatched = True
              if tv_fanart == 'true' and tv_fanart_installed == 'true':
