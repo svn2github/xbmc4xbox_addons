@@ -12,7 +12,7 @@ addon = xbmcaddon.Addon(id='plugin.video.kinotrailer.de')
 
 def CATEGORIES():
         addDir('Kinocharts','http://www.kinotrailer.de/',"listVideos",'')
-        addDir( 'Votschau','http://www.kinotrailer.de/vorschau.html',"listVideos1",'')
+        addDir( 'Vorschau','http://www.kinotrailer.de/vorschau.html',"listVideos1",'')
         addDir( 'Blockbuster','http://www.kinotrailer.de/blockbuster.html',"listVideos1",'')
         xbmcplugin.endOfDirectory(pluginhandle)
 

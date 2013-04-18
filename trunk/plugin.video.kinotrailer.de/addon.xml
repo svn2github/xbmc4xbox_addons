@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.kinotrailer.de"
-       name="kinotrailer"
+       name="kinostarts.de"
        version="1.0"
        provider-name="Skatulskijean">
     <requires>
@@ -16,7 +16,7 @@
     </extension>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary>watch trailer from kinotrailer.de</summary>
+        <summary>watch trailer from kinostarts.de</summary>
     </extension>
 	<statfeed>
     <working>yes</working>
