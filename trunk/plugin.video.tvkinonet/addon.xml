@@ -13,7 +13,7 @@
    <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>TV-Streams</summary>
+    <summary>TV-Streams from the tv-kino-net site german and france language streams</summary>
     <description></description>
     <platform>all</platform>
   </extension>
