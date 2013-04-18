@@ -964,7 +964,7 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.icefilms" name="Icefilms" version="1.1.26"
+<addon id="plugin.video.icefilms" name="Icefilms" version="1.1.28"
 provider-name="Eldorado (originator: anarchintosh)">
   <requires>
     <import addon="xbmc.python" version="2.0" />
@@ -1074,6 +1074,30 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<notes>Might show script error on first listing</notes>
 	<maintainer>skatulskijean</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.jtv.archives/icon.png</thumbnailurl>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.kinotrailer.de"
+       name="kinotrailer"
+       version="1.0"
+       provider-name="Skatulskijean">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="plugin.video.youtube"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>watch trailer from kinotrailer.de</summary>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.kinotrailer.de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
