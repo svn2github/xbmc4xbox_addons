@@ -1083,7 +1083,10 @@ provider-name="Eldorado (originator: anarchintosh)">
        provider-name="Skatulskijean">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
-        <import addon="plugin.video.youtube"/>
+		<import addon='script.module.simplejson' version='2.0.10'/>
+		<import addon='script.module.parsedom' version='1.4.0'/>
+		<import addon='script.module.xbmcvfs' version='1.0.1'/>
+        <import addon="plugin.video.youtube" version="3.3.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource"
                library="default.py">
@@ -1109,6 +1112,8 @@ provider-name="Eldorado (originator: anarchintosh)">
   <requires>
    <import addon="xbmc.python" version="2.0"/>
    <import addon="script.module.urlresolver" version="1.0.0" />
+   <import addon="script.module.simplejson"   version="2.0.0"/>
+   <import addon="script.module.t0mm0.common" version="1.1.0"/>
   </requires>
   <extension
     point="xbmc.python.pluginsource"
