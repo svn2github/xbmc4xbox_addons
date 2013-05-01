@@ -1078,7 +1078,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 </addon>
 
 <addon id="plugin.video.kinotrailer.de"
-       name="kinotrailer"
+       name="kinostarts.de"
        version="1.0"
        provider-name="Skatulskijean">
     <requires>
@@ -1094,7 +1094,7 @@ provider-name="Eldorado (originator: anarchintosh)">
     </extension>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary>watch trailer from kinotrailer.de</summary>
+        <summary>watch trailer from kinostarts.de</summary>
     </extension>
 	<statfeed>
     <working>yes</working>
@@ -1330,6 +1330,36 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
     <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.recordedamigagames/icon.png</thumbnailurl>
+    </statfeed>
+</addon>
+
+<addon
+  id="plugin.video.streamallthis"
+  version="1.0.2"
+  name="StreamAllThis"
+  provider-name="skatulskijean">
+  <requires>
+   <import addon="xbmc.python" version="2.0"/>
+   <import addon="script.module.urlresolver" version="1.0.0" />
+   <import addon="script.module.simplejson"   version="2.0.10"/>
+   <import addon="script.module.t0mm0.common" version="1.1.0"/>
+   <import addon='script.module.mechanize' version='0.2.5'/>
+  </requires>
+  <extension
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>access series from streamallthis on your xbmc4xbox</summary>
+    <description>Watch Series from StreamAllThis</description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.streamallthis/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
