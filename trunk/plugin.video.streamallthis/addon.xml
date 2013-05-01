@@ -22,9 +22,9 @@
     <platform>all</platform>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.streamallthis/icon.png</thumbnailurl>
-    </statfeed>
+  <working>yes</working>
+  <notes>none</notes>
+  <maintainer>skatulskijean</maintainer>
+  <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.streamallthis/icon.png</thumbnailurl>
+  </statfeed>
 </addon>
