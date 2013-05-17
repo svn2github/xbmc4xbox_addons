@@ -1,0 +1,72 @@
+diff --git a/lib/urlresolver/plugins/bayfiles.py b/lib/urlresolver/plugins/bayfiles.py
+index 2fa7ebd..d415f03 100644
+--- a/lib/urlresolver/plugins/bayfiles.py
++++ b/lib/urlresolver/plugins/bayfiles.py
+@@ -20,7 +20,7 @@ from t0mm0.common.net import Net
+ from urlresolver.plugnplay.interfaces import UrlResolver
+ from urlresolver.plugnplay.interfaces import PluginSettings
+ from urlresolver.plugnplay import Plugin
+-import re,urllib2,os,json,time,sys
++import re,urllib2,os,simplejson as json,time,sys
+ from urlresolver import common
+ from time import time as wait
+ 
+diff --git a/lib/urlresolver/plugins/purevid.py b/lib/urlresolver/plugins/purevid.py
+index f56acfa..d4173a5 100644
+--- a/lib/urlresolver/plugins/purevid.py
++++ b/lib/urlresolver/plugins/purevid.py
+@@ -21,7 +21,6 @@ import os
+ import random
+ import re
+ import urllib, urllib2
+-import ast
+ import xbmc
+ import time
+ from urlresolver.plugnplay.interfaces import UrlResolver
+@@ -32,7 +31,7 @@ from urlresolver import common
+ import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
+ import cookielib
+ from t0mm0.common.net import Net
+-import json
++import simplejson as json
+ 
+ 
+ class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
+diff --git a/lib/urlresolver/plugins/sharerepo.py b/lib/urlresolver/plugins/sharerepo.py
+index 3e6b957..4b284c0 100644
+--- a/lib/urlresolver/plugins/sharerepo.py
++++ b/lib/urlresolver/plugins/sharerepo.py
+@@ -23,6 +23,7 @@ from urlresolver.plugnplay import Plugin
+ import re, xbmcgui, os
+ from urlresolver import common
+ from lib import jsunpack
++import urllib2
+ 
+ #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+diff --git a/lib/urlresolver/plugins/vimeo.py b/lib/urlresolver/plugins/vimeo.py
+index bc80f1b..ddcc5cf 100644
+--- a/lib/urlresolver/plugins/vimeo.py
++++ b/lib/urlresolver/plugins/vimeo.py
+@@ -34,7 +34,7 @@ class VimeoResolver(Plugin, UrlResolver, PluginSettings):
+ 
+     def get_media_url(self, host, media_id):
+         #just call vimeo addon
+-        plugin = 'plugin://plugin.video.vimeo/?action=play_video&videoid=' +\
++        plugin = 'plugin://video/Vimeo/?action=play_video&videoid=' +\
+                  media_id
+         return plugin
+ 
+diff --git a/lib/urlresolver/plugins/youtube.py b/lib/urlresolver/plugins/youtube.py
+index 5a70c63..e95db23 100644
+--- a/lib/urlresolver/plugins/youtube.py
++++ b/lib/urlresolver/plugins/youtube.py
+@@ -34,7 +34,7 @@ class YoutubeResolver(Plugin, UrlResolver, PluginSettings):
+ 
+     def get_media_url(self, host, media_id):
+         #just call youtube addon
+-        plugin = 'plugin://plugin.video.youtube/?action=play_video&videoid=' +\
++        plugin = 'plugin://video/YouTube/?action=play_video&videoid=' +\
+                  media_id
+         return plugin
+ 
