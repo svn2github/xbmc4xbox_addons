@@ -18,7 +18,6 @@
     <working>yes</working>
 	<notes>This is the plugin version with whufclee's Playlist as Home - Requires xbmc4xbox Build - r31660 or newer (B4K3D PI Latest Stable)</notes>
 	<maintainer>whufclee</maintainer>
-    <thumbnailurl></thumbnailurl>
   </statfeed>
 </addon>
 

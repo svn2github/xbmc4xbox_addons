@@ -25,6 +25,5 @@
     <working>mostly</working>
 	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icelibrary24xbox/icon.png</thumbnailurl>
     </statfeed>
 </addon>

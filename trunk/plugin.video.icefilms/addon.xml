@@ -25,7 +25,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
     <notes>Metadata must remain disabled in plugin-settings</notes>
     <maintainer>kozz</maintainer>
-    <thumbnailurl>
     http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icefilms/icon.png</thumbnailurl>
   </statfeed>
 </addon>
