@@ -196,8 +196,6 @@
         <notes>Images for hosts requiring captcha dont appear</notes>
         <maintainer>kozz</maintainer>
     </statfeed>
--</addon>
-
 </addon>
 
 <addon id="script.module.pysqlite2" name="Python SQLite2 library for XBOX" version="1.0.0" provider-name="Gerhard Haring">
