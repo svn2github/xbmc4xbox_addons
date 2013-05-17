@@ -802,9 +802,9 @@
 </addon>
 
 <addon id="script.module.urlresolver"
-	     name="urlresolver"
-	     version="1.0.7"
-	     provider-name="XBMCHub.com">
+     name="urlresolver"
+     version="1.0.9"
+     provider-name="XBMCHub.com">
   <requires>
     <import addon="xbmc.python" version="2.0" />
     <import addon="script.module.t0mm0.common" version="1.0.0"/>
