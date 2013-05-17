@@ -42,7 +42,8 @@
 	<setting id="auto-update-subscriptions" type="bool" label="30805" default="false"/>
 	<setting id="subscription-interval" type="enum" values="2h|5h|10h|15h|24h" label="30806" default="3" enable="!eq(-1,false)" />
 	<setting id="library-update" type="bool" label="30807" default="true" enable="eq(-2,true)"/>
-   </category>
+	<setting id="cleanup-subscriptions" type="bool" label="30808" default="true" enable="eq(-3,true)"/>
+    </category>
 
    <category label="Sources">
 	<setting id="auto-play" type="bool" label="30905" default="false"/>
@@ -79,6 +80,7 @@
 	</category>
 
    <category label="Miscellaneous">
+    <setting id="domain" type="labelenum" label="Domain" values="http://www.1channel.ch|http://www.letmewatchthis.ch" default="http://www.letmewatchthis.ch"/>
     <setting id="theme" type="enum" label="30800" values="mikey1234|Glossy_Black" default="1"/>
     <setting id="auto-watch" type="bool" label="30801" default="true"/>
     <setting id="watched-percent" type="enum" values="70[B] %[/B]|80[B] %[/B]|90[B] %[/B]" label="30802" default="2" enable="!eq(-1,false)"/>
@@ -89,5 +91,12 @@
 		<setting id="db_pass"	 type="text" 	label="    Password" 	enable="eq(-4,true)" default="" option="hidden"/>
 		<setting id="db_name"	 type="text" 	label="    Database" 	enable="eq(-5,true)" default="1channel" />
 		<setting id="migrateDB"  type="action"  label="    Migrate local DB..." enable="eq(-6,true)" action="RunPlugin(plugin://plugin.video.1channel/default.py?mode=migrateDB)" />
-	</category>
+    </category>
+
+	<category label="Website Integration">
+		<setting id="site_enabled"	type="bool" 	label="Enabled" default="False"/>
+		<setting id="username"		type="text" 	label="    Username"	enable="eq(-1,true)" default="" />
+		<setting id="passwd"		type="text" 	label="    Password"	enable="eq(-2,true)" default="" option="hidden"/>
+        <setting id="old_version" type="text" visible="False" default="0.0.0.0"/>
+    </category>
 </settings>
