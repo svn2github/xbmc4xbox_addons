@@ -20,7 +20,6 @@
       <working>yes</working>
 	  <notes>none</notes>
       <maintainer>kozz</maintainer>
-      <thumbnailurl>http://</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -50,7 +49,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.drnu/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -73,7 +71,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.vimcasts/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -93,7 +90,6 @@
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
-    <thumbnailurl>http://</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -120,7 +116,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.burningseries/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -149,7 +144,6 @@
     <working>yes</working>
 	<notes>Installer will prompt user about cannot install xbmc.gui choosing yes will complete install and work normally</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.circuitboard/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -234,7 +228,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dokumonster/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -258,7 +251,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.songs_to/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -280,7 +272,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dmax/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -319,7 +310,6 @@
     <working>no</working>
 	<notes>Does not return search results yet</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.mp3search/icon.png</thumbnailurl>
    </statfeed>
 </addon>
 
@@ -374,7 +364,6 @@
     <working>no</working>
 	<notes>Giving script error</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.earth.touch/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -416,7 +405,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.netzkino_de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -442,7 +430,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.hdtrailers_net/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -466,7 +453,6 @@
     <working>no</working>
 	<notes>Script errors playing sources xbmcswift2 related</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.disclose_tv/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -508,7 +494,6 @@
     <working>no</working>
 	<notes>Script error url not found</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.filmon/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -537,7 +522,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.movie25.com/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -564,7 +548,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.the.trailers/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -595,7 +578,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.day9/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -624,7 +606,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.vevo/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -651,7 +632,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.kinotrailer.de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -677,7 +657,6 @@
     <working>no</working>
 	<notes>Links not playing logs show youtube problems</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.academicearth/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -715,7 +694,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.documentary.net/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -741,7 +719,6 @@
     <working>no</working>
 	<notes>wont launch </notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.Crackle2/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -769,7 +746,6 @@
     <working>yes</working>
 	<notes>YouTube addon must have been run once</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.musicvideojukebox/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -797,7 +773,6 @@
   <working>yes</working>
   <notes>none</notes>
   <maintainer>skatulskijean</maintainer>
-  <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.streamallthis/icon.png</thumbnailurl>
   </statfeed>
 </addon>
 
@@ -823,7 +798,6 @@
     <working>no</working>
 	<notes>Not launching</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.cinemassacre/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -869,7 +843,6 @@
     <working>yes</working>
 	<notes>none</notes>
     <maintainer>skatulskijean</maintainer>
-	<thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.di.fm/icon.png</thumbnailurl>
 	<description>Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
 	</description>
     </statfeed>
@@ -896,7 +869,6 @@
     <working>yes</working>
 	<notes>Many links for short clips few full eppisodes</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.canada.on.demand/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -923,7 +895,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.aljazeera/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -960,7 +931,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.bliptv/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -990,7 +960,6 @@
     <working>yes</working>
 	<notes>Most links only work from Denmark Region</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dr.dk.live/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1017,7 +986,6 @@
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.jazzradio.com/icon.png</thumbnailurl>
     </statfeed>
 
 </addon>
@@ -1046,7 +1014,6 @@
     <working>mostly</working>
 	<notes>The user login is broken, Search and feeds work well</notes>
 	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.youtube/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1068,7 +1035,6 @@
       <working>yes</working>
 	  <notes>none</notes>
       <maintainer>kozz</maintainer>
-      <thumbnailurl>http://</thumbnailurl>
   </statfeed>
 </addon>
 
@@ -1098,7 +1064,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
     <notes>Metadata must remain disabled in plugin-settings</notes>
     <maintainer>kozz</maintainer>
-    <thumbnailurl>
     http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icefilms/icon.png</thumbnailurl>
   </statfeed>
 </addon>
@@ -1124,7 +1089,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.collegehumor/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1150,7 +1114,6 @@ provider-name="Eldorado (originator: anarchintosh)">
    <working>yes</working>
 	<notes>none</notes>
     <maintainer>kozz</maintainer>
-    <thumbnailurl>http://</thumbnailurl>
   </statfeed>
 </addon>
 
@@ -1176,7 +1139,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.tvkinonet/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1200,7 +1162,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dump/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1228,7 +1189,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.sky.fm/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1253,7 +1213,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>mostly</working>
 	<notes>Vimeo Sources not playing but Ustream do</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.joeroganexperience/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1309,7 +1268,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.nasa/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1332,7 +1290,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>This is the Script version with whufclee's Playlist as Home - Requires xbmc4xbox Build - r31660</notes>
 	<maintainer>whufclee</maintainer>
-    <thumbnailurl></thumbnailurl>
   </statfeed>
 </addon>
 
@@ -1359,7 +1316,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>Might show script error on first listing</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.jtv.archives/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1387,7 +1343,6 @@ provider-name="Eldorado (originator: anarchintosh)">
       <working>yes</working>
 	  <notes>none</notes>
       <maintainer>kozz</maintainer>
-      <thumbnailurl>http://</thumbnailurl>
   </statfeed>
 </addon>
 
@@ -1408,7 +1363,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl></thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1438,7 +1392,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>mostly</working>
 	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.icelibrary24xbox/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1461,7 +1414,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.wimp/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1503,7 +1455,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.bestofyoutube_com/default.tbn</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1531,7 +1482,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.freecable/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1572,7 +1522,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>This is the plugin version with whufclee's Playlist as Home - Requires xbmc4xbox Build - r31660 or newer (B4K3D PI Latest Stable)</notes>
 	<maintainer>whufclee</maintainer>
-    <thumbnailurl></thumbnailurl>
   </statfeed>
 </addon>
 
@@ -1599,7 +1548,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.borsentv.dk/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1623,7 +1571,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.recordedamigagames/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1653,7 +1600,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.dr.dk.bonanza/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1691,7 +1637,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.c64-longplays/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1720,7 +1665,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.audio.radio_de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1762,7 +1706,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.xstream/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1789,7 +1732,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.myvideo_de/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1809,7 +1751,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.twit/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1837,7 +1778,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.twit/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 
@@ -1863,7 +1803,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    <thumbnailurl>http://addons4xbox.googlecode.com/svn/branches/addons/plugin.video.vimeo/icon.png</thumbnailurl>
     </statfeed>
 </addon>
 </addons>
