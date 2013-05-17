@@ -1,5 +1,5 @@
 diff --git a/addon.xml b/addon.xml
-index 943e68b..5f789dc 100644
+index 943e68b..ec36521 100644
 --- a/addon.xml
 +++ b/addon.xml
 @@ -2,8 +2,14 @@
@@ -17,7 +17,7 @@ index 943e68b..5f789dc 100644
  		<import addon="script.module.metahandler"  version="1.0.0"/>
  		<import addon="script.module.myconnpy"     version="0.3.2"/>
      </requires>
-@@ -17,4 +23,11 @@
+@@ -17,4 +23,9 @@
          <description>This addon is supported at [COLOR blue]www.XBMCHub.com[/COLOR],  [COLOR white][B]NOT[/B][/COLOR] [COLOR red]xbmc.org[/COLOR].  Play a wide selection of movies and TV shows from 1channel.ch</description>
          <platform>all</platform>
      </extension>
@@ -26,8 +26,6 @@ index 943e68b..5f789dc 100644
 +        <notes>Images for hosts requiring captcha dont appear</notes>
 +        <maintainer>kozz</maintainer>
 +    </statfeed>
-+-</addon>
-+
  </addon>
 \ No newline at end of file
 diff --git a/default.py b/default.py
