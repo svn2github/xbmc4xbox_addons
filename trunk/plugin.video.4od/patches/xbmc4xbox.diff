@@ -1,0 +1,714 @@
+diff -ru ../t/plugin.video.4od/addon.xml ./addon.xml
+--- ../t/plugin.video.4od/addon.xml	2013-05-12 13:18:02.000000000 +0100
++++ ./addon.xml	2013-05-23 16:55:10.405176528 +0100
+@@ -5,7 +5,8 @@
+        provider-name="mossy">
+     <requires>
+         <import addon="script.module.socksipy" version="2.0.0"/>
+-    	<import addon="script.module.beautifulsoup" version="3.2.0"/>
++        <import addon="script.module.beautifulsoup" version="3.2.0"/>
++        <import addon="script.module.simplejson"/>
+         <import addon="xbmc.python" version="2.1.0"/>
+     </requires>
+     <extension point="xbmc.python.pluginsource"
+@@ -23,4 +24,9 @@
+         <website>http://code.google.com/p/mossy-xbmc-repo/</website>
+         <source>http://code.google.com/p/plugin-video-4od/source/browse/</source>
+     </extension>
++  <statfeed>
++    <working>yes</working>
++        <notes></notes>
++        <maintainer>BuZz</maintainer>
++    </statfeed>
+ </addon>
+diff -ru ../t/plugin.video.4od/default.py ./default.py
+--- ../t/plugin.video.4od/default.py	2013-03-27 22:28:40.000000000 +0000
++++ ./default.py	2013-05-23 16:30:09.096335728 +0100
+@@ -44,7 +44,7 @@
+ 
+ pluginHandle = int(sys.argv[1])
+ 
+-addon = Addon()
++addon = Addon(id='plugin.video.4od')
+ version = addon.getAddonInfo('version')
+ pluginName = addon.getAddonInfo('id')
+ name = addon.getAddonInfo('name')
+diff -ru ../t/plugin.video.4od/episodelist.py ./episodelist.py
+--- ../t/plugin.video.4od/episodelist.py	2013-03-27 22:22:06.000000000 +0000
++++ ./episodelist.py	2013-05-23 16:23:59.110079681 +0100
+@@ -92,7 +92,7 @@
+ 			self.showTitle = showTitle
+ 
+ 			return True
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			if not isinstance(exception, LoggingException):
+ 				exception = LoggingException.fromException(exception)
+ 			
+@@ -264,44 +264,44 @@
+ 
+ 		try:
+ 			self.epNum = int(entry[u'dc:relation.EpisodeNumber'])
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			self.logException(exception, u'dc:relation.EpisodeNumber')
+ 			self.epNum = ""
+ 
+ 		try:
+ 			self.hasSubtitles = bool(entry['dc:relation.Subtitles'])
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			self.logException(exception, u'dc:relation.Subtitles')
+ 			self.hasSubtitles = False
+ 
+ 		try:
+ 			self.thumbnail = entry[u'group'][u'thumbnail'][u'@url']
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			self.logException(exception, u'thumbnail')
+ 			self.thumbnail = ""
+ 
+ 		try:
+ 			lastDate = date.fromtimestamp(mktime(strptime(entry[u'dc:date.TXDate'], u"%Y-%m-%dT%H:%M:%S.%fZ")))
+ 			self.premieredDate = lastDate.strftime(u"%d.%m.%Y")
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			self.logException(exception, u'dc:date.Last')
+ 			self.premieredDate = ""
+ 
+ 		try:
+ 			self.epTitle = unicode(entry[u'title'])
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			self.logException(exception, u'title')
+ 			self.epTitle = ""
+ 
+ 		try:
+ 			self.description = entry[u'summary'][u'$']
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			self.logException(exception, u'summary')
+ 			self.description = ""
+ 			
+ 		try:
+ 			self.seriesNum = int(entry[u'dc:relation.SeriesNumber'])
+-		except (Exception) as exception:
++		except (Exception),exception:
+ 			self.logException(exception, u'dc:relation.SeriesNumber')
+ 			self.seriesNum = ""
+ 
+diff -ru ../t/plugin.video.4od/fourOD.py ./fourOD.py
+--- ../t/plugin.video.4od/fourOD.py	2013-05-12 13:13:14.000000000 +0100
++++ ./fourOD.py	2013-05-23 16:21:38.326757656 +0100
+@@ -4,8 +4,6 @@
+ import re
+ import time
+ 
+-from subprocess import Popen, PIPE, STDOUT
+-
+ import simplejson
+ import codecs
+ 
+@@ -141,7 +139,7 @@
+             xbmcplugin.endOfDirectory( handle=self.pluginhandle, succeeded=True )
+             
+             return True
+-        except (Exception) as exception:
++        except (Exception),exception:
+             exception = LoggingException.fromException(exception)
+ 
+             if jsonText is not None:
+@@ -340,7 +338,7 @@
+ 
+             return nextUrl
+         
+-        except (Exception) as exception:
++        except (Exception),exception:
+             exception = LoggingException.fromException(exception)
+         
+             if jsonText is not None:
+@@ -373,7 +371,7 @@
+         if pageInt == 1 and count is None or count > 10:
+             try:
+                 self.AddExtraLinks(category, label, order, listItems)
+-            except (Exception) as exception:
++            except (Exception),exception:
+                 exception = LoggingException.fromException(exception)
+             
+                 # 'Error processing web page', 'Cannot show Category'
+@@ -391,7 +389,7 @@
+     
+             try:
+                 nextUrl = self.AddPageToListItems( category, label, order, page, listItems )
+-            except (Exception) as exception:
++            except (Exception),exception:
+                 if not isinstance(exception, LoggingException):
+                     exception = LoggingException.fromException(exception)
+             
+@@ -413,7 +411,7 @@
+                     pageInt = pageInt + 1
+                     page = unicode(pageInt)
+                 
+-                except (Exception) as exception:
++                except (Exception),exception:
+                     if not isinstance(exception, LoggingException):
+                         exception = LoggingException.fromException(exception)
+             
+@@ -444,7 +442,7 @@
+             
+         try:
+            episodeList.initialise(showId, showTitle)
+-        except (Exception) as exception:
++        except (Exception),exception:
+             if not isinstance(exception, LoggingException):
+                 exception = LoggingException.fromException(exception)
+         
+@@ -507,7 +505,7 @@
+             auth =  self.GetAuthentication(uriData)
+         
+             return (streamURI, auth)
+-        except (Exception) as exception:
++        except (Exception),exception:
+             if not isinstance(exception, LoggingException):
+                 exception = LoggingException.fromException(exception)
+         
+@@ -540,7 +538,7 @@
+             
+             swfPlayer = ps3Root + '/' + match.group(1)
+             
+-        except (Exception) as exception:
++        except (Exception),exception:
+             if not isinstance(exception, LoggingException):
+                 exception = LoggingException.fromException(exception)
+         
+@@ -647,7 +645,7 @@
+                 
+                 if entrySeriesNum == seriesNumber and entryEpNum == episodeNumber:
+                     return entry[u'group'][u'player'][u'@url']
+-        except (Exception) as exception:
++        except (Exception),exception:
+             if not isinstance(exception, LoggingException):
+                 exception = LoggingException.fromException(exception)
+         
+@@ -673,7 +671,7 @@
+ 
+             return (playUrl, rtmpvar)
+     
+-        except (Exception) as exception:
++        except (Exception),exception:
+             if not isinstance(exception, LoggingException):
+                 exception = LoggingException.fromException(exception)
+         
+@@ -694,7 +692,7 @@
+             # "Getting video stream url"
+             self.dialog.update(10, self.language(32700))
+             (playUrl, rtmpVar) = self.getRTMPUrl(showId.lower(), seriesNumber, episodeNumber, episodeId)
+-        except (LoggingException) as exception:
++        except (LoggingException),exception:
+             # Error getting RTMP url
+             exception.addLogMessage(self.language(30965))
+             exception.process(u"", u"", severity = self.logLevel(xbmc.LOGERROR))
+diff -ru ../t/plugin.video.4od/httpmanager.py ./httpmanager.py
+--- ../t/plugin.video.4od/httpmanager.py	2013-03-27 22:22:52.000000000 +0000
++++ ./httpmanager.py	2013-05-23 16:48:10.259189444 +0100
+@@ -102,47 +102,48 @@
+         self.log(u"(%s)" % (site + path), xbmc.LOGDEBUG)
+         
+         try:
+-            if self.proxyConfig is not None: 
+-                self.proxyConfig.Enable()
+-                
+-            repeat = True
+-            firstTime = True
+-            addon = sys.modules["__main__"].addon
+-    
+-            while repeat:
+-                repeat = False
+-                try:
+-                    if site.startswith("http://"):
+-                        site = site[7:]
+-                    
+-                    headers = self.PrepareHeaders(addon, headers)
+-    
+-                    self.log("headers: " + repr(headers))
++            try:
++                if self.proxyConfig is not None: 
++                    self.proxyConfig.Enable()
+                     
+-                    conn = httplib.HTTPConnection(site)
+-                    conn.request("POST", path, data, headers)
+-                    response = conn.getresponse()
+-                except ( httplib.HTTPException ) as exception:
+-                    self.log ( u'HTTPError: ' + unicode(exception), xbmc.LOGERROR)
+-                    raise exception
+-                except ( socket.timeout ) as exception:
+-                    self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
+-                    if firstTime:
+-                        self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
+-                        xbmc.executebuiltin(u'XBMC.Notification(%s, %s)' % (u'Socket timed out', 'Trying again'))
+-                        repeat = True
+-                    else:
+-                        """
+-                        The while loop is normally only processed once.
+-                        When a socket timeout happens it executes twice.
+-                        The following code executes after the second timeout.
+-                        """
+-                        self.log ( u'Timeout exception: ' + unicode(exception) + ", if you see this msg often consider changing your Socket Timeout settings", xbmc.LOGERROR )
+-                        raise exception
++                repeat = True
++                firstTime = True
++                addon = sys.modules["__main__"].addon
++        
++                while repeat:
++                    repeat = False
++                    try:
++                        if site.startswith("http://"):
++                            site = site[7:]
++                        
++                        headers = self.PrepareHeaders(addon, headers)
+         
+-                    firstTime = False
+-        except ( Exception ) as exception:
+-            raise exception
++                        self.log("headers: " + repr(headers))
++                        
++                        conn = httplib.HTTPConnection(site)
++                        conn.request("POST", path, data, headers)
++                        response = conn.getresponse()
++                    except ( httplib.HTTPException ),exception:
++                        self.log ( u'HTTPError: ' + unicode(exception), xbmc.LOGERROR)
++                        raise exception
++                    except ( socket.timeout ),exception:
++                        self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
++                        if firstTime:
++                            self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
++                            xbmc.executebuiltin(u'XBMC.Notification(%s, %s)' % (u'Socket timed out', 'Trying again'))
++                            repeat = True
++                        else:
++                            """
++                            The while loop is normally only processed once.
++                            When a socket timeout happens it executes twice.
++                            The following code executes after the second timeout.
++                            """
++                            self.log ( u'Timeout exception: ' + unicode(exception) + ", if you see this msg often consider changing your Socket Timeout settings", xbmc.LOGERROR )
++                            raise exception
++            
++                        firstTime = False
++            except ( Exception ),exception:
++                raise exception
+         finally:
+             if self.proxyConfig is not None: 
+                 self.proxyConfig.Disable()
+@@ -160,47 +161,48 @@
+         self.log(u"(%s)" % (site + path), xbmc.LOGDEBUG)
+ 
+         try:
+-            if self.proxyConfig is not None: 
+-                self.proxyConfig.Enable()
+-            repeat = True
+-            firstTime = True
+-            addon = sys.modules["__main__"].addon
+-    
+-            while repeat:
+-                repeat = False
+-                try:
+-                    if site.startswith("http://"):
+-                        site = site[7:]
+-                    
+-                    headers = self.PrepareHeaders(addon, headers)
+-    
+-                    self.log("headers: " + repr(headers))
+-                    
+-                    conn = httplib.HTTPConnection(site)
+-                    conn.request("GET", path, headers = headers)
+-                    #conn.putheader('Connection','Keep-Alive')
+-                    response = conn.getresponse()
+-                except ( httplib.HTTPException ) as exception:
+-                    self.log ( u'HTTPError: ' + unicode(exception), xbmc.LOGERROR)
+-                    raise exception
+-                except ( socket.timeout ) as exception:
+-                    self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
+-                    if firstTime:
+-                        self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
+-                        xbmc.executebuiltin(u'XBMC.Notification(%s, %s)' % (u'Socket timed out', 'Trying again'))
+-                        repeat = True
+-                    else:
+-                        """
+-                        The while loop is normally only processed once.
+-                        When a socket timeout happens it executes twice.
+-                        The following code executes after the second timeout.
+-                        """
+-                        self.log ( u'Timeout exception: ' + unicode(exception) + ", if you see this msg often consider changing your Socket Timeout settings", xbmc.LOGERROR )
+-                        raise exception
++            try:
++                if self.proxyConfig is not None: 
++                    self.proxyConfig.Enable()
++                repeat = True
++                firstTime = True
++                addon = sys.modules["__main__"].addon
++        
++                while repeat:
++                    repeat = False
++                    try:
++                        if site.startswith("http://"):
++                            site = site[7:]
++                        
++                        headers = self.PrepareHeaders(addon, headers)
+         
+-                    firstTime = False
+-        except ( Exception ) as exception:
+-            raise exception
++                        self.log("headers: " + repr(headers))
++                        
++                        conn = httplib.HTTPConnection(site)
++                        conn.request("GET", path, headers = headers)
++                        #conn.putheader('Connection','Keep-Alive')
++                        response = conn.getresponse()
++                    except ( httplib.HTTPException ),exception:
++                        self.log ( u'HTTPError: ' + unicode(exception), xbmc.LOGERROR)
++                        raise exception
++                    except ( socket.timeout ),exception:
++                        self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
++                        if firstTime:
++                            self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
++                            xbmc.executebuiltin(u'XBMC.Notification(%s, %s)' % (u'Socket timed out', 'Trying again'))
++                            repeat = True
++                        else:
++                            """
++                            The while loop is normally only processed once.
++                            When a socket timeout happens it executes twice.
++                            The following code executes after the second timeout.
++                            """
++                            self.log ( u'Timeout exception: ' + unicode(exception) + ", if you see this msg often consider changing your Socket Timeout settings", xbmc.LOGERROR )
++                            raise exception
++            
++                        firstTime = False
++            except ( Exception ),exception:
++                raise exception
+         finally:
+             if self.proxyConfig is not None: 
+                 self.proxyConfig.Disable()
+@@ -328,63 +330,64 @@
+     
+         self.log (u"url: " + url, xbmc.LOGDEBUG)    
+ 
+-        try:    
+-            if self.proxyConfig is not None: 
+-                self.proxyConfig.Enable()
+-
+-            repeat = True
+-            firstTime = True
+-            addon = sys.modules["__main__"].addon
+-    
+-            while repeat:
+-                repeat = False
+-                try:
+-                    # Test socket.timeout
+-                    #raise socket.timeout
+-                    postData = None
+-                    if values is not None:
+-                        postData = urllib.urlencode(values)
+-                        self.log("postData: " + repr(postData))
+-                    
+-                    headers = self.PrepareHeaders(addon, headers)
+-                    
+-                    self.log("headers: " + repr(headers), xbmc.LOGDEBUG)
+-                    
+-                    request = urllib2.Request(url, postData, headers)
+-                    response = urllib2.urlopen(request)
+-    
+-                except ( urllib2.HTTPError ) as err:
+-                    self.log ( u'HTTPError: ' + unicode(err), xbmc.LOGERROR)
+-                    lastCode = err.code
+-                    self.log (u"lastCode: " + unicode(lastCode), xbmc.LOGDEBUG)
+-                    raise err
+-                except ( urllib2.URLError ) as err:
+-                    self.log ( u'URLError: ' + unicode(err), xbmc.LOGERROR )
+-                    lastCode = -1
+-                    raise err
+-                except ( socket.timeout ) as exception:
+-                    self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
+-                    if firstTime:
+-                        self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
+-                        xbmc.executebuiltin(u'XBMC.Notification(%s, %s)' % (u'Socket timed out', 'Trying again'))
+-                        repeat = True
+-                    else:
+-                        """
+-                        The while loop is normally only processed once.
+-                        When a socket timeout happens it executes twice.
+-                        The following code executes after the second timeout.
+-                        """
+-                        self.log ( u'Timeout exception: ' + unicode(exception) + ", if you see this msg often consider changing your Socket Timeout settings", xbmc.LOGERROR )
+-                        raise exception
++        try:
++            try:    
++                if self.proxyConfig is not None: 
++                    self.proxyConfig.Enable()
++
++                repeat = True
++                firstTime = True
++                addon = sys.modules["__main__"].addon
++        
++                while repeat:
++                    repeat = False
++                    try:
++                        # Test socket.timeout
++                        #raise socket.timeout
++                        postData = None
++                        if values is not None:
++                            postData = urllib.urlencode(values)
++                            self.log("postData: " + repr(postData))
++                        
++                        headers = self.PrepareHeaders(addon, headers)
++                        
++                        self.log("headers: " + repr(headers), xbmc.LOGDEBUG)
++                        
++                        request = urllib2.Request(url, postData, headers)
++                        response = urllib2.urlopen(request)
+         
+-                    firstTime = False
+-        except ( Exception ) as exception:
+-            raise exception
++                    except ( urllib2.HTTPError ),err:
++                        self.log ( u'HTTPError: ' + unicode(err), xbmc.LOGERROR)
++                        lastCode = err.code
++                        self.log (u"lastCode: " + unicode(lastCode), xbmc.LOGDEBUG)
++                        raise err
++                    except ( urllib2.URLError ),err:
++                        self.log ( u'URLError: ' + unicode(err), xbmc.LOGERROR )
++                        lastCode = -1
++                        raise err
++                    except ( socket.timeout ),exception:
++                        self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
++                        if firstTime:
++                            self.log ( u'Timeout exception: ' + unicode(exception), xbmc.LOGERROR )
++                            xbmc.executebuiltin(u'XBMC.Notification(%s, %s)' % (u'Socket timed out', 'Trying again'))
++                            repeat = True
++                        else:
++                            """
++                            The while loop is normally only processed once.
++                            When a socket timeout happens it executes twice.
++                            The following code executes after the second timeout.
++                            """
++                            self.log ( u'Timeout exception: ' + unicode(exception) + ", if you see this msg often consider changing your Socket Timeout settings", xbmc.LOGERROR )
++                            raise exception
++            
++                        firstTime = False
++            except ( Exception ),exception:
++                raise exception
+         finally:
+             if self.proxyConfig is not None: 
+                 self.proxyConfig.Disable()
+     
+-        lastCode = response.getcode()
++        lastCode = 200
+         self.log (u"lastCode: " + unicode(lastCode), xbmc.LOGDEBUG)
+ 
+         return response
+@@ -484,7 +487,7 @@
+             
+     #==============================================================================
+     def GetExpiryTimeStr(self, cacheKey):
+-        files = glob.iglob( self.cacheDir + "/*" )
++        files = glob.glob( self.cacheDir + "/*" )
+         for file in files:
+             match=re.search( u"%s_(\d{10})" % cacheKey, file)
+     
+@@ -531,11 +534,11 @@
+ 
+             self.log("url: " + url)
+             from hashlib import md5
+-            return md5(url).hexdigest()
++            return md5(url).hexdigest()[:16]
+         except:
+             import md5
+             self.log("url to be hashed: " + url)
+-            return  md5.new(url).hexdigest()
++            return  md5.new(url).hexdigest()[:16]
+     
+     #==============================================================================
+     
+@@ -560,7 +563,7 @@
+     #==============================================================================
+         
+     def ClearCache(self):
+-        files = glob.iglob( self.cacheDir + "/*" )
++        files = glob.glob( self.cacheDir + "/*" )
+         for fileFullPath in files:
+             self.log("Deleting cache fileFullPath: " + fileFullPath, xbmc.LOGDEBUG)
+             if os.path.exists(fileFullPath):
+@@ -573,7 +576,7 @@
+         filenameLen = cacheKeyLen + epochLen + 1
+         
+         pathOffset = len(self.cacheDir) + 1
+-        files = glob.iglob( self.cacheDir + "/*" )
++        files = glob.glob( self.cacheDir + "/*" )
+         for fileFullPath in files:
+             filename = os.path.basename(fileFullPath)
+             if self.IsDeleteFile(filename, filenameLen, currentTime):
+Only in .: patches
+diff -ru ../t/plugin.video.4od/provider.py ./provider.py
+--- ../t/plugin.video.4od/provider.py	2013-03-27 22:22:06.000000000 +0000
++++ ./provider.py	2013-05-23 16:28:58.680668411 +0100
+@@ -23,7 +23,6 @@
+ else:
+     import xbmcgui
+ 
+-from subprocess import Popen, PIPE, STDOUT
+ import mycgi
+ import utils
+ 
+@@ -88,7 +87,7 @@
+             html = self.httpManager.GetWebPageDirect(countryInfoUrl)
+     
+             self.log(u"Country code: " + html)
+-        except (Exception) as exception:
++        except (Exception),exception:
+             self.log(u"Exception getting country code: " + repr(exception))
+             
+             
+@@ -118,7 +117,7 @@
+             proxy_port = int(self.addon.getSetting(u'proxy_port'))
+             proxy_user = self.addon.getSetting(u'proxy_user')
+             proxy_pass = self.addon.getSetting(u'proxy_pass')
+-        except ( Exception ) as exception:
++        except ( Exception ),exception:
+             raise exception
+     
+         if   proxy_type_id == u'0': proxy_type = socks.PROXY_TYPE_HTTP_NO_TUNNEL
+@@ -248,7 +247,7 @@
+                 self.Download(rtmpVar, defaultFilename, subtitles)
+     
+             return True
+-        except (Exception) as exception:
++        except (Exception),exception:
+             if not isinstance(exception, LoggingException):
+                 exception = LoggingException.fromException(exception)
+     
+@@ -291,7 +290,7 @@
+             try:
+                 subtitleFile = subtitles.GetSubtitleFile()
+                 self.player().setSubtitles(subtitleFile)
+-            except (Exception) as exception:
++            except (Exception),exception:
+                 if not isinstance(exception, LoggingException):
+                     exception = LoggingException.fromException(exception)
+             
+@@ -317,7 +316,7 @@
+             try:
+                 # Replace '.flv' or other 3 character extension with '.smi'
+                 subtitleFile = subtitles.GetSubtitleFile(savePath[0:-4] + u'.smi')
+-            except (Exception) as exception:
++            except (Exception),exception:
+                 if not isinstance(exception, LoggingException):
+                     exception = LoggingException.fromException(exception)
+             
+@@ -486,7 +485,7 @@
+     
+             return re.search(pattern, data).groups()
+         
+-        except (Exception) as exception:
++        except (Exception),exception:
+             if not isinstance(exception, LoggingException):
+                 exception = LoggingException.fromException(exception)
+     
+diff -ru ../t/plugin.video.4od/proxyconfig.py ./proxyconfig.py
+--- ../t/plugin.video.4od/proxyconfig.py	2013-03-27 22:23:26.000000000 +0000
++++ ./proxyconfig.py	2013-05-23 16:28:22.440839491 +0100
+@@ -32,7 +32,7 @@
+             socks.setdefaultproxy(self.type, self.server, self.port, self.dns, self.user, self.password)
+             socks.wrapmodule(urllib2)
+             socks.wrapmodule(httplib)
+-        except ( Exception ) as exception:
++        except ( Exception ),exception:
+             log(u"Error processing proxy settings", xbmc.LOGERROR)
+             log(u"Exception: " + exception.me, xbmc.LOGERROR)
+             
+diff -ru ../t/plugin.video.4od/rtmp.py ./rtmp.py
+--- ../t/plugin.video.4od/rtmp.py	2013-03-27 22:28:40.000000000 +0000
++++ ./rtmp.py	2013-05-23 16:23:14.598292213 +0100
+@@ -177,7 +177,7 @@
+                     match=re.search("(.+//[^/]+)(/.*)", self.rtmp,  re.DOTALL | re.IGNORECASE )
+                     
+                 args = [u"%s:%d%s" % (match.group(1), self.port, match.group(2))]
+-            except (Exception) as exception:
++            except (Exception),exception:
+                 self.log("Exception changing default port: " + repr(exception))
+                 args = [u"%s" % self.rtmp]
+ 
+diff -ru ../t/plugin.video.4od/utils.py ./utils.py
+--- ../t/plugin.video.4od/utils.py	2013-03-27 22:22:06.000000000 +0000
++++ ./utils.py	2013-05-23 16:16:39.772198298 +0100
+@@ -20,7 +20,7 @@
+ 		if dateCompare > __Aug12__:
+ 			return True
+ 
+-	except ( Exception ) as e:
++	except ( Exception ),e:
+ 		if dateString is None:
+ 			dateString = 'None'
+ 
+@@ -37,7 +37,7 @@
+             xbmc.log((u"%s : '%s'" % (method, msg)).encode('utf8'), level)
+         else:
+             xbmc.log(to_unicode((u"%s : '%s'" % (method, msg))).encode('utf8'), level)
+-    except ( Exception ) as e:
++    except ( Exception ),e:
+         xbmc.log(u"FALLBACK %s : '%s'" % (method, repr(msg)), level)
+ 
+ 
+@@ -71,7 +71,7 @@
+ 		req = urllib2.Request(swfPlayer)
+ 		res = urllib2.urlopen(req)
+ 		swfPlayer = res.geturl()
+-	except (Exception) as e:
++	except (Exception),e:
+ 		log (u"Exception resolving swfPlayer URL: " + str(e), xbmc.LOGWARNING)
+ 		log (u"Unable to determine swfPlayer URL. Using default: " + __SwfPlayerDefault__, xbmc.LOGWARNING)  
+ 
+@@ -133,14 +133,22 @@
+ def drepr(x, sort = True, indent = 0):
+     if isinstance(x, dict):
+         r = '{\n'
+-        for (key, value) in (sorted(x.items()) if sort else x.iteritems()):
++        if sort:
++            items = sorted(x.items())
++        else:
++            items = x.iteritems()
++        for (key, value) in (items):
+             r += (' ' * (indent + 4)) + repr(key) + ': '
+             r += drepr(value, sort, indent + 4) + ',\n'
+         r = r.rstrip(',\n') + '\n'
+         r += (' ' * indent) + '}'
+     elif hasattr(x, '__iter__'):
+         r = '[\n'
+-        for value in (sorted(x) if sort else x):
++        if sort:
++            items = sorted(x)
++        else:
++            items = x
++        for value in (items):
+             r += (' ' * (indent + 4)) + drepr(value, sort, indent + 4) + ',\n'
+         r = r.rstrip(',\n') + '\n'
+         r += (' ' * indent) + ']'
+diff -ru ../t/plugin.video.4od/watched.py ./watched.py
+--- ../t/plugin.video.4od/watched.py	2013-03-27 22:22:06.000000000 +0000
++++ ./watched.py	2013-05-23 16:25:29.049656686 +0100
+@@ -4,7 +4,7 @@
+ 
+ import xbmc
+ 
+-class Watched():
++class Watched:
+     
+     def __init__(self):
+         self.folder = sys.modules["__main__"].WATCHED_FOLDER
+@@ -67,7 +67,7 @@
+             while self.isPlaying():
+                 self.currentTime = self.getTime()
+                 xbmc.sleep(SLEEP_MILLIS)
+-        except (Exception) as exception:
++        except (Exception),exception:
+             self.log("Exception: " + repr(exception))
+             
+     def checkWatched(self):
