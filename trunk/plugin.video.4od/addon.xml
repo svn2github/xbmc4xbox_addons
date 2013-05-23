@@ -26,7 +26,7 @@
     </extension>
   <statfeed>
     <working>yes</working>
-        <notes></notes>
+        <notes>none</notes>
         <maintainer>BuZz</maintainer>
     </statfeed>
 </addon>
