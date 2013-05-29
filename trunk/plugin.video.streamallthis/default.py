@@ -29,7 +29,7 @@ def CATEGORIES():
 
 def Bestof(url):
         content = getUrl(url)
-        match=re.compile('<img src="(.*?)" />\n     </td> \n     <td>\n      <a href="(.*?)" class="lc"> (.*?)</a>').findall(content)
+        match=re.compile('<img src="(.*?)".*?<a href="(.*?)" class="lc"> (.*?)</a>', re.DOTALL).findall(content)
         for thumb,url, title in match:
           url=mainurl+url
           thumb=mainurl+thumb
@@ -39,10 +39,13 @@ def Bestof(url):
 		  
 def alphabetic(url):
         content = getUrl(url)
-        match=re.compile('<tr class="fc">\n     <td>\n      <a href="(.*?)" class="lc"> (.*?)</a>\n     </td>\n    </tr>').findall(content)
-        for url,title in match:
-          url=mainurl+url
-          addDir(title,url,"assessSeasons",imageDir+"Tvshows.jpg")	  
+        match=re.compile('ALPHABETIC(.*?)</table>', re.DOTALL).findall(content)
+        for find in match:
+          find=str(find)
+          gg=re.findall('<a href="(.*)" class="lc"> (.*)</a>', find)
+          for url,title in gg:
+            url=mainurl+url
+            addDir(title,url,"assessSeasons",imageDir+"Tvshows.jpg")	  
         xbmcplugin.endOfDirectory(pluginhandle)
 
 def LastEpisodes(url):
