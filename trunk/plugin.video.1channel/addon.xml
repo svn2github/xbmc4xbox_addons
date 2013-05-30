@@ -5,7 +5,7 @@
         <import addon="script.module.xbmcaddon"    version="1.1.0"/>
         <import addon="script.module.urlresolver"  version="0.0.1"/>
         <import addon="script.module.simplejson"   version="2.0.0"/>
-        <import addon="script.module.urlresolver"  version="1.0.0"/>
+        <import addon="script.module.urlresolver"  version="1.0.10"/>
         <import addon="script.module.t0mm0.common" version="1.1.0"/>
         <import addon="script.module.pysqlite2"    version="1.0.0"/>
         <import addon="script.module.elementtree"  version="1.2.0"/>
