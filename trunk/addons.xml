@@ -961,7 +961,7 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.icefilms" name="Icefilms" version="1.1.28"
+<addon id="plugin.video.icefilms" name="Icefilms" version="1.1.31"
 provider-name="Eldorado (originator: anarchintosh)">
   <requires>
     <import addon="xbmc.python" version="2.0" />
