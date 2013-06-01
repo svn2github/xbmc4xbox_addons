@@ -3,7 +3,6 @@
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.xbmcaddon"    version="1.1.0"/>
-        <import addon="script.module.urlresolver"  version="0.0.1"/>
         <import addon="script.module.simplejson"   version="2.0.0"/>
         <import addon="script.module.urlresolver"  version="1.0.10"/>
         <import addon="script.module.t0mm0.common" version="1.1.0"/>
@@ -24,8 +23,8 @@
         <platform>all</platform>
     </extension>
     <statfeed>
-        <working>mostly</working>
-        <notes>Images for hosts requiring captcha dont appear</notes>
+        <working>no</working>
+        <notes>the 1Channel sites are eqperiencing difficulties at the moment, please be patient there is nothing we can do on our end :-)</notes>
         <maintainer>kozz</maintainer>
     </statfeed>
 </addon>
