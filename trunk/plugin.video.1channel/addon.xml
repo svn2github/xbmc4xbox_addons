@@ -19,12 +19,12 @@
 	</extension>
     <extension point="xbmc.addon.metadata">
         <summary>Browse 1channel.ch</summary>
-        <description>This addon is supported at [COLOR blue]www.XBMCHub.com[/COLOR],  [COLOR white][B]NOT[/B][/COLOR] [COLOR red]xbmc.org[/COLOR].  Play a wide selection of movies and TV shows from 1channel.ch</description>
+        <description>This addon is supported at www.XBMCHub.com, NOT xbmc.org.  Play a wide selection of movies and TV shows from 1channel.ch</description>
         <platform>all</platform>
     </extension>
     <statfeed>
         <working>no</working>
-        <notes>the 1Channel sites are eqperiencing difficulties at the moment, please be patient there is nothing we can do on our end :-)</notes>
+        <notes>The 1Channel sites are experiencing difficulties on both domains at the moment, please be patient there is nothing we can do on our end :-)</notes>
         <maintainer>kozz</maintainer>
     </statfeed>
 </addon>
