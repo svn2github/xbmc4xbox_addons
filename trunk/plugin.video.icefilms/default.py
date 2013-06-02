@@ -662,8 +662,8 @@ def resolve_180upload(url):
     except Exception, e:
         print '**** 180Upload Error occured: %s' % e
         raise
-    finally:
-        dialog.close()
+#    finally:
+    dialog.close()
 
 
 def resolve_vidhog(url):
@@ -708,7 +708,7 @@ def resolve_vidhog(url):
     except Exception, e:
         print '**** VidHog Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -772,7 +772,7 @@ def resolve_sharebees(url):
     except Exception, e:
         print '**** ShareBees Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -847,7 +847,7 @@ def resolve_movreel(url):
     except Exception, e:
         print '**** Movreel Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -932,7 +932,7 @@ def resolve_billionuploads(url):
     except Exception, e:
         print '**** BillionUploads Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -1022,7 +1022,7 @@ def resolve_epicshare(url):
         print '**** EpicShare Error occured: %s' % e
         raise
 
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -1074,7 +1074,7 @@ def resolve_megarelease(url):
     except Exception, e:
         print '**** MegaRelease Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -1127,7 +1127,7 @@ def resolve_lemupload(url):
     except Exception, e:
         print '**** LemUpload Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -1192,7 +1192,7 @@ def resolve_hugefiles(url):
     except Exception, e:
         print '**** HugeFiles Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
@@ -1257,7 +1257,7 @@ def resolve_entroupload(url):
     except Exception, e:
         print '**** EntroUpload Error occured: %s' % e
         raise
-    finally:
+#    finally:
         dialog.close()
 
 
