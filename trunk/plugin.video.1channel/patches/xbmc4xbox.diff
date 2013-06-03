@@ -1,15 +1,15 @@
 diff --git a/addon.xml b/addon.xml
-index 943e68b..ec36521 100644
+index 943e68b..e0bb56f 100644
 --- a/addon.xml
 +++ b/addon.xml
-@@ -2,8 +2,14 @@
+@@ -2,8 +2,13 @@
  <addon id="plugin.video.1channel" version="2.0.1" name="1Channel" provider-name="Bstrdsmkr">
      <requires>
          <import addon="xbmc.python" version="2.0"/>
+-        <import addon="script.module.urlresolver"  version="1.0.0"/>
 +        <import addon="script.module.xbmcaddon"    version="1.1.0"/>
-+        <import addon="script.module.urlresolver"  version="0.0.1"/>
 +        <import addon="script.module.simplejson"   version="2.0.0"/>
-         <import addon="script.module.urlresolver"  version="1.0.0"/>
++        <import addon="script.module.urlresolver"  version="1.0.10"/>
          <import addon="script.module.t0mm0.common" version="1.1.0"/>
 +        <import addon="script.module.pysqlite2"    version="1.0.0"/>
 +        <import addon="script.module.elementtree"  version="1.2.0"/>
@@ -17,17 +17,18 @@ index 943e68b..ec36521 100644
  		<import addon="script.module.metahandler"  version="1.0.0"/>
  		<import addon="script.module.myconnpy"     version="0.3.2"/>
      </requires>
-@@ -17,4 +23,9 @@
+@@ -17,4 +22,9 @@
          <description>This addon is supported at [COLOR blue]www.XBMCHub.com[/COLOR],  [COLOR white][B]NOT[/B][/COLOR] [COLOR red]xbmc.org[/COLOR].  Play a wide selection of movies and TV shows from 1channel.ch</description>
          <platform>all</platform>
      </extension>
+-</addon>
+\ No newline at end of file
 +    <statfeed>
 +        <working>mostly</working>
 +        <notes>Images for hosts requiring captcha dont appear</notes>
 +        <maintainer>kozz</maintainer>
 +    </statfeed>
- </addon>
-\ No newline at end of file
++</addon>
 diff --git a/default.py b/default.py
 index 9953366..3555ab4 100644
 --- a/default.py

@@ -23,8 +23,8 @@
         <platform>all</platform>
     </extension>
     <statfeed>
-        <working>no</working>
-        <notes>the 1Channel sites are eqperiencing difficulties at the moment, please be patient there is nothing we can do on our end :-)</notes>
+        <working>mostly</working>
+        <notes>Images for hosts requiring captcha dont appear</notes>
         <maintainer>kozz</maintainer>
     </statfeed>
 </addon>
