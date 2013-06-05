@@ -1,24 +1,23 @@
 diff --git a/addon.xml b/addon.xml
-index 943e68b..e0bb56f 100644
+index 1e43186..3c67ba6 100644
 --- a/addon.xml
 +++ b/addon.xml
-@@ -2,8 +2,13 @@
+@@ -3,7 +3,12 @@
  <addon id="plugin.video.1channel" version="2.0.1" name="1Channel" provider-name="Bstrdsmkr">
      <requires>
          <import addon="xbmc.python" version="2.0"/>
--        <import addon="script.module.urlresolver"  version="1.0.0"/>
+-        <import addon="script.module.urlresolver" version="1.0.0"/>
 +        <import addon="script.module.xbmcaddon"    version="1.1.0"/>
 +        <import addon="script.module.simplejson"   version="2.0.0"/>
-+        <import addon="script.module.urlresolver"  version="1.0.10"/>
-         <import addon="script.module.t0mm0.common" version="1.1.0"/>
 +        <import addon="script.module.pysqlite2"    version="1.0.0"/>
 +        <import addon="script.module.elementtree"  version="1.2.0"/>
 +        <import addon="script.module.xbmcvfs"      version="1.0.1"/>
- 		<import addon="script.module.metahandler"  version="1.0.0"/>
- 		<import addon="script.module.myconnpy"     version="0.3.2"/>
-     </requires>
-@@ -17,4 +22,9 @@
-         <description>This addon is supported at [COLOR blue]www.XBMCHub.com[/COLOR],  [COLOR white][B]NOT[/B][/COLOR] [COLOR red]xbmc.org[/COLOR].  Play a wide selection of movies and TV shows from 1channel.ch</description>
++        <import addon="script.module.urlresolver" version="1.0.10"/>
+         <import addon="script.module.t0mm0.common" version="1.1.0"/>
+         <import addon="script.module.metahandler" version="1.0.0"/>
+         <import addon="script.module.myconnpy" version="0.3.2"/>
+@@ -20,4 +25,9 @@
+         </description>
          <platform>all</platform>
      </extension>
 -</addon>
@@ -30,56 +29,47 @@ index 943e68b..e0bb56f 100644
 +    </statfeed>
 +</addon>
 diff --git a/default.py b/default.py
-index 9953366..3555ab4 100644
+index 60079c1..128dc95 100644
 --- a/default.py
 +++ b/default.py
-@@ -33,7 +33,7 @@ from t0mm0.common.addon import Addon
- from t0mm0.common.net import Net
- from metahandler import metahandlers
- from metahandler import metacontainers
--from operator import itemgetter, methodcaller
-+from operator import itemgetter
+@@ -98,7 +98,7 @@ PREPARE_ZIP = False
+ __metaget__ = metahandlers.MetaData(preparezip=PREPARE_ZIP)
  
- import metapacks
- from utils import *
-@@ -88,7 +88,7 @@ prepare_zip = False
- metaget=metahandlers.MetaData(preparezip=prepare_zip)
- 
- if not xbmcvfs.exists(addon.get_profile()):
--     xbmcvfs.mkdirs(addon.get_profile())
-+     xbmcvfs.mkdir(addon.get_profile())
+ if not xbmcvfs.exists(_1CH.get_profile()):
+-    xbmcvfs.mkdirs(_1CH.get_profile())
++    xbmcvfs.mkdir(_1CH.get_profile())
  
  
- def art(file):
-@@ -231,7 +231,7 @@ def GetURL(url, params=None, referrer=BASE_URL, silent=False, cache_limit=8):
-     if referrer: req.add_header('Referer', referrer)
-     
+ def art(name):
+@@ -255,7 +255,7 @@ def get_url(url, cache_limit=8):
+     req.add_header('Referer', BASE_URL)
+ 
      try:
 -        response = urllib2.urlopen(req, timeout=10)
 +        response = urllib2.urlopen(req)
          body = response.read()
-         body = unicode(body,'iso-8859-1')
-         h = HTMLParser.HTMLParser()
-@@ -989,7 +989,7 @@ def migrate_favs_to_web():
+         body = unicode(body, 'iso-8859-1')
+         parser = HTMLParser.HTMLParser()
+@@ -1087,7 +1087,7 @@ def migrate_favs_to_web():
      # failures = [('title1','url1'), ('title2','url2'), ('title3','url3'), ('title4','url4'), ('title5','url5'), ('title6','url6'), ('title7','url7')]
      if ret:
          if failures:
--            params = ', '.join('%s' if DB=='mysql' else '?' for item in failures)
+-            params = ', '.join('%s' if DB == 'mysql' else '?' for item in failures)
 +            params = ', '.join('?' for item in failures)
              sql_delete = 'DELETE FROM favorites WHERE url NOT IN (SELECT url FROM favorites WHERE url IN (%s))'
-             sql_delete = sql_delete % params
-             addon.log(sql_delete)
-@@ -1103,13 +1103,14 @@ def zipdir(basedir, archivename):
-     from contextlib import closing
+             sql_delete %= params
+             _1CH.log(sql_delete)
+@@ -1210,13 +1210,14 @@ def zipdir(basedir, archivename):
      from zipfile import ZipFile, ZIP_DEFLATED
+ 
      assert os.path.isdir(basedir)
--    with closing(ZipFile(archivename, "w", ZIP_DEFLATED)) as z:
+-    with closing(ZipFile(archivename, "w", ZIP_DEFLATED)) as zfile:
 -        for root, dirs, files in os.walk(basedir):
 -            #NOTE: ignore empty directories
--            for fn in files:
--                absfn = os.path.join(root, fn)
--                zfn = absfn[len(basedir)+len(os.sep):] #XXX: relative path
--                z.write(absfn, zfn)
+-            for fname in files:
+-                absfn = os.path.join(root, fname)
+-                zfn = absfn[len(basedir) + len(os.sep):] #XXX: relative path
+-                zfile.write(absfn, zfn)
 +    z = ZipFile(archivename, "w", ZIP_DEFLATED)
 +    for root, dirs, files in os.walk(basedir):
 +        #NOTE: ignore empty directories
@@ -89,10 +79,10 @@ index 9953366..3555ab4 100644
 +            z.write(absfn, zfn)
 +    z.close
  
+ 
  def extract_zip(src, dest):
-         try:
-@@ -1632,10 +1633,17 @@ def multikeysort(items, columns, functions={}, getter=itemgetter):
-     """
+@@ -1758,10 +1759,17 @@ def multikeysort(items, columns, functions=None, getter=itemgetter):
+     if not functions: functions = {}
      comparers = []
      for col in columns:
 -        column = col[1:] if col.startswith('-') else col
@@ -111,26 +101,26 @@ index 9953366..3555ab4 100644
  
      def comparer(left, right):
          for func, polarity in comparers:
-@@ -1879,6 +1887,7 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
+@@ -2040,6 +2048,7 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
  
  
  def upgrade_db():
 +    return
-     addon.log('Upgrading db...')
+     _1CH.log('Upgrading db...')
      for table in ('subscriptions', 'favorites'):
-         sql = "UPDATE %s SET url = replace(url, 'http://www.1channel.ch', '')" %table
-@@ -1889,7 +1898,6 @@ def upgrade_db():
+         sql = "UPDATE %s SET url = replace(url, 'http://www.1channel.ch', '')" % table
+@@ -2052,7 +2061,6 @@ def upgrade_db():
          db.commit()
          db.close()
  
 -
  def fix_existing_strms():
      for folder in ('tvshow-folder', 'movie-folder'):
-         save_path = addon.get_setting(folder)
-@@ -1899,17 +1907,19 @@ def fix_existing_strms():
-                 if currentFile.endswith('.strm'):
-                     addon.log( "processing file: %s" %currentFile)
-                     full_path = os.path.join(root, currentFile)
+         save_path = _1CH.get_setting(folder)
+@@ -2062,17 +2070,18 @@ def fix_existing_strms():
+                 if current_file.endswith('.strm'):
+                     _1CH.log("processing file: %s" % current_file)
+                     full_path = os.path.join(root, current_file)
 -                    with open(full_path, 'r+') as target:
 -                        content = target.read()
 -                        target.seek(0)
@@ -140,7 +130,7 @@ index 9953366..3555ab4 100644
 -                                new_content += '&video_type=episode'
 -                            elif folder == 'movie-folder':
 -                                new_content += '&video_type=movie'
--                        addon.log('Writing new content: %s' %new_content)
+-                        _1CH.log('Writing new content: %s' % new_content)
 -                        target.write(new_content)
 +                    target = open(full_path, 'r+')
 +                    content = target.read()
@@ -154,26 +144,24 @@ index 9953366..3555ab4 100644
 +                    addon.log('Writing new content: %s' %new_content)
 +                    target.write(new_content)
 +                    target.close
-+
-                     
  
- mode        = addon.queries.get('mode',       None)
-@@ -2024,4 +2034,4 @@ elif mode=='migrateFavs':
+ 
+ mode = _1CH.queries.get('mode', None)
+@@ -2195,4 +2204,4 @@ elif mode == 'migrateFavs':
      migrate_favs_to_web()
- elif mode=='Help':
-     addon.log('Showing help popup')
--    popup = TextBox()
-\ No newline at end of file
-+    popup = TextBox()
+ elif mode == 'Help':
+     _1CH.log('Showing help popup')
+-    TextBox()
++    #TextBox()
 diff --git a/resources/settings.xml b/resources/settings.xml
-index 2952e06..b17f9b6 100644
+index 1b5ccfe..1514913 100644
 --- a/resources/settings.xml
 +++ b/resources/settings.xml
 @@ -1,6 +1,6 @@
  <settings>
-    <category label="Meta Data">
--  	<setting id="use-meta" type="bool" label="30600" default="true"/>
-+  	<setting id="use-meta" type="bool" label="30600" default="false"/>
- 	<setting id="meta-path" type="action" label="30601" enable="!eq(-1,false)" action="RunPlugin(plugin://plugin.video.1channel/default.py?mode=9988)" option="close"/>
- 	<setting id="enable-fanart" type="bool" label="30602" enable="!eq(-2,false)" default="true"/>
- 	<setting id="use-posters" type="bool" label="30603" enable="!eq(-3,false)" default="false"/>
+     <category label="Meta Data">
+-        <setting id="use-meta" type="bool" label="30600" default="true"/>
++        <setting id="use-meta" type="bool" label="30600" default="false"/>
+         <setting id="meta-path" type="action" label="30601" enable="!eq(-1,false)"
+                  action="RunPlugin(plugin://plugin.video.1channel/default.py?mode=9988)" option="close"/>
+         <setting id="enable-fanart" type="bool" label="30602" enable="!eq(-2,false)" default="true"/>
