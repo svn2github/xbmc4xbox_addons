@@ -70,6 +70,9 @@ def mkdir( path ):
     xbmc.log( "[xbmcvfs] %s, mkdir(%s)" % ( msg, path ), xbmc.LOGDEBUG )
     return os.path.exists( path )
 
+def mkdirs( path ):
+    return mkdir( path )
+    
 
 def rename( oldName, newName ):
     """ rename(file, newFileName)
