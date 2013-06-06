@@ -15,4 +15,9 @@
         <summary>Watch TV and listen to radio from the BBC's iPlayer website</summary>
         <description>This XBMC plugin enables (UK only) the playing of TV and Radio catchup content from the BBC IPlayer website. Live radio and TV feeds are also supported.</description>
     </extension>
+    <statfeed>
+        <working>yes</working>
+        <notes>none</notes>
+        <maintainer>BuZz</maintainer>
+    </statfeed>
 </addon>
