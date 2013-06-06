@@ -620,7 +620,7 @@ def AddonMenu():  # homescreen
     init_database()
     if has_upgraded():
         _1CH.log('Showing update popup')
-        TextBox()
+        #TextBox()
         adn = xbmcaddon.Addon('plugin.video.1channel')
         upgrade_db()
         fix_existing_strms()
