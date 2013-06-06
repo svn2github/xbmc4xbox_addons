@@ -1,5 +1,5 @@
 diff --git a/addon.xml b/addon.xml
-index 1e43186..3c67ba6 100644
+index 1e43186..33ca30c 100644
 --- a/addon.xml
 +++ b/addon.xml
 @@ -3,7 +3,12 @@
@@ -11,7 +11,7 @@ index 1e43186..3c67ba6 100644
 +        <import addon="script.module.simplejson"   version="2.0.0"/>
 +        <import addon="script.module.pysqlite2"    version="1.0.0"/>
 +        <import addon="script.module.elementtree"  version="1.2.0"/>
-+        <import addon="script.module.xbmcvfs"      version="1.0.1"/>
++        <import addon="script.module.xbmcvfs"      version="1.0.2"/>
 +        <import addon="script.module.urlresolver" version="1.0.10"/>
          <import addon="script.module.t0mm0.common" version="1.1.0"/>
          <import addon="script.module.metahandler" version="1.0.0"/>
@@ -29,7 +29,7 @@ index 1e43186..3c67ba6 100644
 +    </statfeed>
 +</addon>
 diff --git a/default.py b/default.py
-index 60079c1..128dc95 100644
+index 60079c1..89b3445 100644
 --- a/default.py
 +++ b/default.py
 @@ -98,7 +98,7 @@ PREPARE_ZIP = False
@@ -50,6 +50,15 @@ index 60079c1..128dc95 100644
          body = response.read()
          body = unicode(body, 'iso-8859-1')
          parser = HTMLParser.HTMLParser()
+@@ -620,7 +620,7 @@ def AddonMenu():  # homescreen
+     init_database()
+     if has_upgraded():
+         _1CH.log('Showing update popup')
+-        TextBox()
++        #TextBox()
+         adn = xbmcaddon.Addon('plugin.video.1channel')
+         upgrade_db()
+         fix_existing_strms()
 @@ -1087,7 +1087,7 @@ def migrate_favs_to_web():
      # failures = [('title1','url1'), ('title2','url2'), ('title3','url3'), ('title4','url4'), ('title5','url5'), ('title6','url6'), ('title7','url7')]
      if ret:
