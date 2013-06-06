@@ -169,7 +169,7 @@
         <import addon="script.module.simplejson"   version="2.0.0"/>
         <import addon="script.module.pysqlite2"    version="1.0.0"/>
         <import addon="script.module.elementtree"  version="1.2.0"/>
-        <import addon="script.module.xbmcvfs"      version="1.0.1"/>
+        <import addon="script.module.xbmcvfs"      version="1.0.2"/>
         <import addon="script.module.urlresolver" version="1.0.10"/>
         <import addon="script.module.t0mm0.common" version="1.1.0"/>
         <import addon="script.module.metahandler" version="1.0.0"/>
@@ -1451,7 +1451,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 </addon>
 
 <addon id="script.module.xbmcvfs" name="xbmcvfs emulator"
-       version="1.0.1" provider-name="Frost (passion-xbmc.org)">
+       version="1.0.2" provider-name="Frost (passion-xbmc.org)">
     <requires>
         <import addon="xbmc.python" version="1.0"/>
     </requires>
