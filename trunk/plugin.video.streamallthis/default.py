@@ -21,6 +21,7 @@ def CATEGORIES():
         addDir('Most Popular Show','http://streamallthis.ch/tv-shows-list.html',"Bestof",imageDir+"streamallthisMost.jpg")
         addDir('Alphabetic Shows','http://streamallthis.ch/tv-shows-list.html',"alphabetic",imageDir+"streamallthisAlphabetic.jpg")
         addDir('Last Episodes','http://streamallthis.ch/',"LastEpisodes",imageDir+"streamthisallLast.jpg")
+        addDir('[COLOR yellow]Resolver Settings[/COLOR]','',"Resolver",'')
         xbmcplugin.endOfDirectory(pluginhandle)
 		
 
@@ -85,9 +86,18 @@ def VIDEOLINKS(url):
         match=re.compile('<iframe src="(.*?)" width="600" height="360" frameborder="0" scrolling="no"></iframe>').findall(content)
         for url in match:
           print url
-          url= urlresolver.resolve(url)
-          listitem = xbmcgui.ListItem(path=url)
-          return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+          if 'watch' in url:
+            url=mainurl+url
+            content = getUrl(url)
+            match=re.compile('<iframe src="(.*?)" width="600" height="360" frameborder="0" scrolling="no"></iframe>').findall(content)
+            for url in match:
+              print url
+              url= urlresolver.resolve(url)
+          else:
+            url=str(url)
+            url= urlresolver.resolve(url)
+        listitem = xbmcgui.ListItem(path=url)
+        return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
           		  
 def GETCOVER(url):
         print "test :"+str(url)
@@ -127,7 +137,6 @@ def addDir(name,url,mode,iconimage):
         liz.setProperty('fanart_image', fanart)
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok
-	
 		
 		
 def getUrl(url):
@@ -157,7 +166,10 @@ if type(url)==type(str()):
   url=urllib.unquote_plus(url)
 
 if  mode == "Bestof":
-    Bestof(url)  
+    Bestof(url)
+  
+elif mode == "Resolver":
+    urlresolver.display_settings()
   
 elif mode == "alphabetic":
     alphabetic(url)

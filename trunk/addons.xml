@@ -1344,7 +1344,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 </addon>
 
 <addon id="plugin.video.streamallthis"
-       version="1.0.3"
+       version="1.0.4"
        name="StreamAllThis"
        provider-name="skatulskijean">
   <requires>
