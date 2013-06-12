@@ -29,12 +29,14 @@ def CATEGORIES():
 
 def Bestof(url):
         content = getUrl(url)
-        match=re.compile('<img src="(.*?)".*?<a href="(.*?)" class="lc"> (.*?)</a>', re.DOTALL).findall(content)
-        for thumb,url, title in match:
-          url=mainurl+url
-          thumb=mainurl+thumb
-          addDir(title,url,"assessSeasons",thumb)	  
-        xbmcplugin.endOfDirectory(pluginhandle)
+        #match=re.compile('<img src="(.*?)".*?<a href="(.*?)" class="lc"> (.*?)</a>', re.DOTALL).findall(content)
+        match=re.compile('MOST POPULAR(.*?)ALPHABETIC',re.DOTALL).findall(content)
+        for find in match:
+          gg=re.findall('<img src="(.*?)"/>.*?<a href="(.*?)" class="lc"> (.*?)</a>',find , re.DOTALL)
+          for thumb,url, title in gg:
+            url=mainurl+url
+            addDir(title,url,"assessSeasons",thumb)	  
+          xbmcplugin.endOfDirectory(pluginhandle)
 		  
 		  
 def alphabetic(url):
@@ -50,22 +52,26 @@ def alphabetic(url):
 
 def LastEpisodes(url):
         content = getUrl(url)
-        match=re.compile('<td>\n      <img src="(.*?)" />\n     </td>\n     <td>\n      <a href="(.*?)" class="lc"> (.*?)</a>\n     </td>\n     <td>\n      &nbsp;(.*?)\n     </td>\n     <td>\n      &nbsp;(.*?)\n     </td>').findall(content)
-        for thumb,url,title,season,episode in match:
-          url=mainurl+url
-          title=title+'SEASON'+' ' +season+' '+'EPISODE'+' '+episode
-          print title
-          print url
-          print thumb
-          addDir(title,url,"assessSeasons",thumb)	  
-        xbmcplugin.endOfDirectory(pluginhandle)
+        match=re.compile('LAST EPISODES(.*?)</table>',re.DOTALL).findall(content)
+        for find in match:
+          gg=re.findall('<img src="(.*?)"/>.*?<a href="(.*?)" class="lc"> (.*?)</a>.*?&nbsp;(.*?)\n.*?&nbsp;(.*?)\n.*?</td>',find, re.DOTALL)
+          for thumb,url,title,season,episode in gg:
+            url=mainurl+url
+            title=title+'SEASON'+' ' +season+' '+'EPISODE'+' '+episode
+            thumb=str(thumb).replace('" width="110" height="160', '')
+            print title
+            print url
+            print thumb
+            addDir(title,url,"assessSeasons",thumb)	  
+          xbmcplugin.endOfDirectory(pluginhandle)
 
+          
 def assessSeasons(url):
         coverLINK = GETCOVER(url)
         if coverLINK == None:
         		 coverLINK = "http://www.apps4linux.de/images/not_available.png"
         content = getUrl(url)
-        match=re.compile('<td>\n      &nbsp;(.*?)\n     </td>\n     <td>\n      &nbsp;(.*?)\n     </td>\n     <td>\n      <a href="(.*?)" class="la">WATCH</a>\n     </td>').findall(content)
+        match=re.compile('&nbsp;(.*?)\n.*?</td>.*?&nbsp;(.*?)\n.*?</td>.*?<a href="(.*?)" class="la">WATCH</a>', re.DOTALL).findall(content)
         for name1,name2,url in match:
           name1='SEASON'+' '+name1
           name2='Episode'+' ' +name2
@@ -97,9 +103,9 @@ def GETCOVER(url):
         else:          
         		link=response.read()
         		response.close()
-        match=re.compile('<img src="(.*?)" alt=".*?" />').findall(link)
+        match=re.compile('<img src="(.*?)" alt=".*?"/>',re.DOTALL).findall(link)
         for m in match:
-        		cover = mainurl+str(m)
+        		cover = str(m)
         		return cover        
 
 		  
