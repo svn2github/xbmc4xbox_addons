@@ -1,17 +1,28 @@
-import xbmc, xbmcgui, xbmcplugin, xbmcaddon
-import urllib,urllib2
-import re, string
+import urllib,urllib2,re,cookielib,xbmcplugin,xbmcgui,xbmcaddon,socket,os,shutil,string,xbmc,stat,xbmcvfs
 import base64
+from t0mm0.common.net import Net as net
 from t0mm0.common.addon import Addon
-from t0mm0.common.net import Net
+from metahandler import metahandlers
+from zipfile import ZipFile as zip
+from BeautifulSoup import BeautifulSoup as soup
 
-
-
+#SET DIRECTORIES
+local = xbmcaddon.Addon(id='plugin.video.videobull')
 addon = Addon('plugin.video.videobull', sys.argv)
-net = Net()
+grab = metahandlers.MetaData(None,preparezip = False)
+fanart = "%s/skins/%s/fanart.jpg"%(local.getAddonInfo("path"),local.getSetting("Current Skin"))
+xbmc_skin = xbmc.getSkinDir()
+print "CURRENT XBMC SKIN: %s"%xbmc_skin
+print "VERSION: %s"%local.getAddonInfo('version')
 
-#Common Cache
-import xbmcvfs
+
+
+
+
+
+
+
+
 dbg = False # Set to false if you don't want debugging
 
 #Common Cache
@@ -21,6 +32,35 @@ except:
   import storageserverdummy as StorageServer
 cache = StorageServer.StorageServer('plugin.video.videobull')
 
+##### Queries ##########
+total = addon.queries.get('total','')
+play = addon.queries.get('play', '')
+mode = addon.queries['mode']
+level = addon.queries.get('level', '')
+levels = addon.queries.get('levels', '')
+video_type = addon.queries.get('video_type', '')
+section = addon.queries.get('section', '')
+url = addon.queries.get('url', '')
+title = addon.queries.get('title', '')
+name = addon.queries.get('name', '')
+imdb_id = addon.queries.get('imdb_id', '')
+season = addon.queries.get('season', '')
+episode = addon.queries.get('episode', '')
+year = addon.queries.get('year', '')
+thumb = addon.queries.get('thumb', '')
+print '---------------------------------------------------------------'
+print '--- Mode: ' + str(mode)
+print '--- Play: ' + str(play)
+print '--- URL: ' + str(url)
+print '--- Video Type: ' + str(video_type)
+print '--- Section: ' + str(section)
+print '--- Title: ' + str(title)
+print '--- Name: ' + str(name)
+print '--- IMDB: ' + str(imdb_id)
+print '--- Season: ' + str(season)
+print '--- Episode: ' + str(episode)
+print '--- Cover URL: ' + str(thumb)
+print '---------------------------------------------------------------'
 
 ################### Global Constants #################################
 
@@ -44,11 +84,70 @@ VideoType_TV = 'tvshow'
 VideoType_Season = 'season'
 VideoType_Episode = 'episode'
 
+
+# def get_metadata(video_type, vidtitle, vidname='', year='', imdb='', season_list=None, season_num=0, episode_num=0):
+    
+    # if meta_setting:
+        # # Get Meta settings
+        # movie_covers = addon.get_setting('movie-covers')
+        # tv_banners = addon.get_setting('tv-banners')
+        # tv_posters = addon.get_setting('tv-posters')
+        
+        # movie_fanart = addon.get_setting('movie-fanart')
+        # tv_fanart = addon.get_setting('tv-fanart')
+            
+        # metaget=metahandlers.MetaData()
+    
+        # if video_type in (VideoType_Movies, VideoType_TV):
+            # meta = metaget.get_meta(video_type, vidtitle, year=year)
+    
+        # if video_type == VideoType_Season:
+            # returnlist = True
+            # if not season_list:
+                # season_list = []
+                # season_list.append(season_num)
+                # returnlist = False
+            # meta = metaget.get_seasons(vidtitle, imdb, season_list)
+            # if not returnlist:
+                # meta = meta[0]
+    
+        # if video_type == VideoType_Episode:
+            # meta=metaget.get_episode_meta(vidname, imdb, season_num, episode_num)
+        
+        # # Check for and blank out covers if option disabled
+        # if video_type==VideoType_Movies and movie_covers == 'false':
+            # meta['cover_url'] = ''
+        # elif video_type==VideoType_TV and tv_banners == 'false':
+            # meta['cover_url'] = ''
+    
+        # # Check for banners vs posters setting    
+        # if video_type == VideoType_TV and tv_banners == 'true' and tv_posters == 'false':
+            # meta['cover_url'] = meta['banner_url']
+        
+        # # Check for and blank out fanart if option disabled
+        # if video_type==VideoType_Movies and movie_fanart == 'false':
+            # meta['backdrop_url'] = ''
+        # elif video_type in (VideoType_TV, VideoType_Episode) and tv_fanart == 'false':
+            # meta['backdrop_url'] = ''
+
+    # else:
+        # meta = {}
+        # meta['title'] = vidname
+        # meta['cover_url'] = ''
+        # meta['imdb_id'] = imdb
+        # meta['backdrop_url'] = ''
+        # meta['year'] = year
+        # meta['overlay'] = 0
+        # if video_type in (VideoType_TV, VideoType_Episode):
+            # meta['TVShowTitle'] = vidtitle
+
+    # return meta
+
 def CATEGORIES():
         addDir('Latest TV Show Feed',MainUrl,7,IconPath +'icons/icon.png')
         addDir('Search for Shows',MainUrl,8,IconPath +'icons/search.png')
         addDir('A-Z TV Shows',MainUrl +'tv-shows/',9,IconPath +'letters/AZ.png')
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
 		
 def INDEX(url):
         req = urllib2.Request(url)
@@ -83,7 +182,7 @@ def pages(url):
 	addDir('Page 9',MainUrl +'page/9/',2,'')
 	addDir('Page 10',MainUrl +'page/10/',2,'')
 
-def showEpp(url):
+def showEpp(url,name):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     response = urllib2.urlopen(req)
@@ -91,8 +190,13 @@ def showEpp(url):
     response.close()
     match=re.compile('<div id="contentarchive">.*?<a href="(.+?)" title="(.+?)">.+?</a>', re.DOTALL).findall(link)
     for url,name in match:
-        name=name.replace('&#8211','')	
-        addDir(name,url,4,'')	
+        name=name.replace('&#8211','').replace(';','-').replace('&#8217',"'").replace('&#038','&').replace('&#8230','ss')
+        # artname=name.replace('Season','').replace('Episode','').replace('0','').replace('1','').replace('2','').replace('3','').replace('4','').replace('5','').replace('6','').replace('7','').replace('8','').replace('9','').replace('-\s.*?','')
+        # cover = grab.get_meta('tvshow', artname, overlay=6)
+        # covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        # for thumb in covers:
+            # thumb = str(thumb)
+        addDir(name,url,4,thumb)
 def AtoZ(url):
    addDir('A',MainUrl +'tv-shows/',10,IconPath +'letters/A.png')
    addDir('B',MainUrl +'tv-shows/',11,IconPath +'letters/B.png')
@@ -120,7 +224,7 @@ def AtoZ(url):
    addDir('X',MainUrl +'tv-shows/',33,IconPath +'letters/X.png')
    addDir('Y',MainUrl +'tv-shows/',34,IconPath +'letters/Y.png')
    addDir('Z',MainUrl +'tv-shows/',35,IconPath +'letters/Z.png')
-def A(url):
+def A(url,name):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     response = urllib2.urlopen(req)
@@ -129,7 +233,12 @@ def A(url):
     match=re.compile('title="[A](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='A'+name
-        addDir(name,url,40,'')
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)
+
 def B(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -139,7 +248,11 @@ def B(url):
     match=re.compile('title="[B](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='B'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def C(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -149,7 +262,12 @@ def C(url):
     match=re.compile('title="[C](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='C'+name
-        addDir(name,url,40,'')   
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)   
+
 def D(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -159,7 +277,11 @@ def D(url):
     match=re.compile('title="[D](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='D'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def E(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -169,7 +291,11 @@ def E(url):
     match=re.compile('title="[E](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='E'+name
-        addDir(name,url,40,'')
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)
 def F(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -179,7 +305,11 @@ def F(url):
     match=re.compile('title="[F](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='F'+name
-        addDir(name,url,40,'')
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)
 def G(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -189,7 +319,11 @@ def G(url):
     match=re.compile('title="[G](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='G'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def H(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -199,7 +333,11 @@ def H(url):
     match=re.compile('title="[H](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='H'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)
 def I(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -209,7 +347,11 @@ def I(url):
     match=re.compile('title="[I](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='I'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)	
 def J(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -219,7 +361,11 @@ def J(url):
     match=re.compile('title="[J](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='J'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def K(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -229,7 +375,11 @@ def K(url):
     match=re.compile('title="[K](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='K'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def L(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -239,7 +389,11 @@ def L(url):
     match=re.compile('title="[L](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='L'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def M(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -249,7 +403,11 @@ def M(url):
     match=re.compile('title="[M](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='M'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)	
 def N(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -259,7 +417,11 @@ def N(url):
     match=re.compile('title="[N](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='N'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def O(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -269,7 +431,11 @@ def O(url):
     match=re.compile('title="[O](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='O'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)	
 def P(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -279,7 +445,11 @@ def P(url):
     match=re.compile('title="[P](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='P'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def Q(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -289,7 +459,11 @@ def Q(url):
     match=re.compile('title="[Q](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='Q'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def R(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -299,7 +473,11 @@ def R(url):
     match=re.compile('title="[R](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='R'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def S(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -309,7 +487,11 @@ def S(url):
     match=re.compile('title="[S](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='S'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def T(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -319,7 +501,11 @@ def T(url):
     match=re.compile('title="[T](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='T'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def U(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -329,7 +515,11 @@ def U(url):
     match=re.compile('title="[U](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='U'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def V(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -339,7 +529,11 @@ def V(url):
     match=re.compile('title="[V](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='V'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def W(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -349,7 +543,11 @@ def W(url):
     match=re.compile('title="[W](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='W'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def X(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -359,7 +557,11 @@ def X(url):
     match=re.compile('title="[X](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='X'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def Y(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -369,7 +571,11 @@ def Y(url):
     match=re.compile('title="[Y](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='Y'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def Z(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -379,7 +585,11 @@ def Z(url):
     match=re.compile('title="[Z](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='Z'+name
-        addDir(name,url,40,'')		
+        cover = grab.get_meta('tvshow', name, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)		
 def TvSearch(url):
     search_entered =search()
     name=str(search_entered).replace('+','')
@@ -387,7 +597,13 @@ def TvSearch(url):
     link = getUrl(url)
     match=re.compile('<div id="contentarchivetitle">\n.*?<a href="(.+?)" title="(.+?)">.+?</a>', re.DOTALL).findall(link)
     for url,name in match:
-        addDir(name,url,4,'')
+        name=name.replace('&#8211','').replace(';','-').replace('&#8217',"'").replace('&#038','&').replace('&#8230','ss')
+        artname=name.replace('Season','').replace('Episode','').replace('0','').replace('1','').replace('2','').replace('3','').replace('4','').replace('5','').replace('6','').replace('7','').replace('8','').replace('9','')
+        cover = grab.get_meta('tvshow', artname, overlay=6)
+        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+        for thumb in covers:
+            thumb = str(thumb)
+            addDir(name,url,40,thumb)
 		
 def search():
         search_entered = ''
@@ -436,14 +652,13 @@ def VIDEOLINKS(url,name):
         response.close()
         match=re.compile('''<a id='.+?' href='.*?title=(.+?)' target='_blank' rel='nofollow'>(.+?)</a>''', re.DOTALL).findall(link)
         print match
-        for url,name in match:
-        
-         addDir(name,url,5,'')
+        for url,name in match:     
+         addDir(name,url,5,thumb)
          
             
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
                       
-def PLAYLINKS(url):
+def PLAYLINKS(url,name):
         import urlresolver
         regexlink = url
         url = base64.b64decode(regexlink)
@@ -538,7 +753,7 @@ elif mode==4:
 
 elif mode==5:
     print ""+url
-    PLAYLINKS(url)
+    PLAYLINKS(url,name)
 elif mode==7:
         print ""+url
         pages(url)
@@ -550,7 +765,7 @@ elif mode==9:
         AtoZ(url)
 elif mode==10:
         print ""+url
-        A(url)
+        A(url,name)
 elif mode==11:
         print ""+url
         B(url)		
@@ -629,7 +844,7 @@ elif mode==35:
 
 elif mode==40:
         print ""+url
-        showEpp(url)			
+        showEpp(url,name)			
 		
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
