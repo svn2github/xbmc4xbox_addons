@@ -2,14 +2,14 @@ import urllib,urllib2,re,cookielib,xbmcplugin,xbmcgui,xbmcaddon,socket,os,shutil
 import base64
 from t0mm0.common.net import Net as net
 from t0mm0.common.addon import Addon
-from metahandler import metahandlers
+#XBOX-COMPAT-EXCLUSION from metahandler import metahandlers
 from zipfile import ZipFile as zip
 from BeautifulSoup import BeautifulSoup as soup
 
 #SET DIRECTORIES
 local = xbmcaddon.Addon(id='plugin.video.videobull')
 addon = Addon('plugin.video.videobull', sys.argv)
-grab = metahandlers.MetaData(None,preparezip = False)
+#XBOX-COMPAT-EXCLUSION grab = metahandlers.MetaData(None,preparezip = False)
 fanart = "%s/skins/%s/fanart.jpg"%(local.getAddonInfo("path"),local.getSetting("Current Skin"))
 xbmc_skin = xbmc.getSkinDir()
 print "CURRENT XBMC SKIN: %s"%xbmc_skin
