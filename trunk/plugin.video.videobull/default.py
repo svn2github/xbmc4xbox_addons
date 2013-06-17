@@ -5,7 +5,7 @@ from t0mm0.common.addon import Addon
 #XBOX-COMPAT-EXCLUSION from metahandler import metahandlers
 from zipfile import ZipFile as zip
 from BeautifulSoup import BeautifulSoup as soup
-import urlresolver
+
 #SET DIRECTORIES
 local = xbmcaddon.Addon(id='plugin.video.videobull')
 addon = Addon('plugin.video.videobull', sys.argv)
@@ -87,63 +87,7 @@ VideoType_Season = 'season'
 VideoType_Episode = 'episode'
 
 
-# def get_metadata(video_type, vidtitle, vidname='', year='', imdb='', season_list=None, season_num=0, episode_num=0):
-    
-    # if meta_setting:
-        # # Get Meta settings
-        # movie_covers = addon.get_setting('movie-covers')
-        # tv_banners = addon.get_setting('tv-banners')
-        # tv_posters = addon.get_setting('tv-posters')
-        
-        # movie_fanart = addon.get_setting('movie-fanart')
-        # tv_fanart = addon.get_setting('tv-fanart')
-            
-        # metaget=metahandlers.MetaData()
-    
-        # if video_type in (VideoType_Movies, VideoType_TV):
-            # meta = metaget.get_meta(video_type, vidtitle, year=year)
-    
-        # if video_type == VideoType_Season:
-            # returnlist = True
-            # if not season_list:
-                # season_list = []
-                # season_list.append(season_num)
-                # returnlist = False
-            # meta = metaget.get_seasons(vidtitle, imdb, season_list)
-            # if not returnlist:
-                # meta = meta[0]
-    
-        # if video_type == VideoType_Episode:
-            # meta=metaget.get_episode_meta(vidname, imdb, season_num, episode_num)
-        
-        # # Check for and blank out covers if option disabled
-        # if video_type==VideoType_Movies and movie_covers == 'false':
-            # meta['cover_url'] = ''
-        # elif video_type==VideoType_TV and tv_banners == 'false':
-            # meta['cover_url'] = ''
-    
-        # # Check for banners vs posters setting    
-        # if video_type == VideoType_TV and tv_banners == 'true' and tv_posters == 'false':
-            # meta['cover_url'] = meta['banner_url']
-        
-        # # Check for and blank out fanart if option disabled
-        # if video_type==VideoType_Movies and movie_fanart == 'false':
-            # meta['backdrop_url'] = ''
-        # elif video_type in (VideoType_TV, VideoType_Episode) and tv_fanart == 'false':
-            # meta['backdrop_url'] = ''
 
-    # else:
-        # meta = {}
-        # meta['title'] = vidname
-        # meta['cover_url'] = ''
-        # meta['imdb_id'] = imdb
-        # meta['backdrop_url'] = ''
-        # meta['year'] = year
-        # meta['overlay'] = 0
-        # if video_type in (VideoType_TV, VideoType_Episode):
-            # meta['TVShowTitle'] = vidtitle
-
-    # return meta
 
 def CATEGORIES():
         addDir('Latest TV Show Feed',MainUrl,7,IconPath +'icons/icon.png')
@@ -654,6 +598,7 @@ elif mode==4:
         VIDEOLINKS(url)
 
 elif mode==5:
+    import urlresolver
     print ""+url
     PLAYLINKS(url)
 elif mode==7:
@@ -749,6 +694,7 @@ elif mode==40:
         showEpp(url,name)			
 
 elif mode==45 or url==RES:
+        import urlresolver
         print ""
         urlresolver.display_settings()		
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
