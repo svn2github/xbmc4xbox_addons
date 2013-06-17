@@ -29,7 +29,7 @@ index 1e43186..33ca30c 100644
 +    </statfeed>
 +</addon>
 diff --git a/default.py b/default.py
-index 60079c1..89b3445 100644
+index d6a6057..3f12b38 100644
 --- a/default.py
 +++ b/default.py
 @@ -98,7 +98,7 @@ PREPARE_ZIP = False
@@ -50,7 +50,7 @@ index 60079c1..89b3445 100644
          body = response.read()
          body = unicode(body, 'iso-8859-1')
          parser = HTMLParser.HTMLParser()
-@@ -620,7 +620,7 @@ def AddonMenu():  # homescreen
+@@ -619,7 +619,7 @@ def AddonMenu():  # homescreen
      init_database()
      if has_upgraded():
          _1CH.log('Showing update popup')
@@ -59,7 +59,7 @@ index 60079c1..89b3445 100644
          adn = xbmcaddon.Addon('plugin.video.1channel')
          upgrade_db()
          fix_existing_strms()
-@@ -1087,7 +1087,7 @@ def migrate_favs_to_web():
+@@ -1090,7 +1090,7 @@ def migrate_favs_to_web():
      # failures = [('title1','url1'), ('title2','url2'), ('title3','url3'), ('title4','url4'), ('title5','url5'), ('title6','url6'), ('title7','url7')]
      if ret:
          if failures:
@@ -68,7 +68,7 @@ index 60079c1..89b3445 100644
              sql_delete = 'DELETE FROM favorites WHERE url NOT IN (SELECT url FROM favorites WHERE url IN (%s))'
              sql_delete %= params
              _1CH.log(sql_delete)
-@@ -1210,13 +1210,14 @@ def zipdir(basedir, archivename):
+@@ -1213,13 +1213,14 @@ def zipdir(basedir, archivename):
      from zipfile import ZipFile, ZIP_DEFLATED
  
      assert os.path.isdir(basedir)
@@ -90,7 +90,7 @@ index 60079c1..89b3445 100644
  
  
  def extract_zip(src, dest):
-@@ -1758,10 +1759,17 @@ def multikeysort(items, columns, functions=None, getter=itemgetter):
+@@ -1761,10 +1762,17 @@ def multikeysort(items, columns, functions=None, getter=itemgetter):
      if not functions: functions = {}
      comparers = []
      for col in columns:
@@ -110,7 +110,7 @@ index 60079c1..89b3445 100644
  
      def comparer(left, right):
          for func, polarity in comparers:
-@@ -2040,6 +2048,7 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
+@@ -2048,6 +2056,7 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
  
  
  def upgrade_db():
@@ -118,7 +118,7 @@ index 60079c1..89b3445 100644
      _1CH.log('Upgrading db...')
      for table in ('subscriptions', 'favorites'):
          sql = "UPDATE %s SET url = replace(url, 'http://www.1channel.ch', '')" % table
-@@ -2052,7 +2061,6 @@ def upgrade_db():
+@@ -2060,7 +2069,6 @@ def upgrade_db():
          db.commit()
          db.close()
  
@@ -126,7 +126,7 @@ index 60079c1..89b3445 100644
  def fix_existing_strms():
      for folder in ('tvshow-folder', 'movie-folder'):
          save_path = _1CH.get_setting(folder)
-@@ -2062,17 +2070,18 @@ def fix_existing_strms():
+@@ -2070,17 +2078,18 @@ def fix_existing_strms():
                  if current_file.endswith('.strm'):
                      _1CH.log("processing file: %s" % current_file)
                      full_path = os.path.join(root, current_file)
@@ -156,7 +156,7 @@ index 60079c1..89b3445 100644
  
  
  mode = _1CH.queries.get('mode', None)
-@@ -2195,4 +2204,4 @@ elif mode == 'migrateFavs':
+@@ -2203,4 +2212,4 @@ elif mode == 'migrateFavs':
      migrate_favs_to_web()
  elif mode == 'Help':
      _1CH.log('Showing help popup')

@@ -1,5 +1,11 @@
 import os
+
+# workaround for bug in Python imports
 import datetime
+# noinspection PyUnresolvedReferences
+import _strptime
+# noinspection PyUnresolvedReferences
+import time
 
 import xbmc
 import xbmcgui
@@ -190,7 +196,7 @@ while not xbmc.abortRequested:
                 xbmc.log('1Channel: Service: Updating subscriptions')
                 builtin = 'RunPlugin(plugin://plugin.video.1channel/?mode=UpdateSubscriptions)'
                 xbmc.executebuiltin(builtin)
-                ADDON.setSetting(last_run, now.strftime("%Y-%m-%d %H:%M:%S.%f"))
+                ADDON.setSetting('last_run', now.strftime("%Y-%m-%d %H:%M:%S.%f"))
             else:
                 xbmc.log('1Channel: Service: Busy... Postponing subscription update')
     while monitor.tracking and monitor.isPlayingVideo():

@@ -497,7 +497,6 @@ def TrackProgress(player):
 
 
 def ChangeWatched(imdb_id, video_type, name, season, episode, year='', watched='', refresh=False):
-    __metaget__ = metahandlers.MetaData(preparezip=prepare_zip)
     __metaget__.change_watched(video_type, name, imdb_id, season=season, episode=episode, year=year, watched=watched)
     if refresh:
         xbmc.executebuiltin("XBMC.Container.Refresh")
@@ -624,6 +623,7 @@ def AddonMenu():  # homescreen
         adn = xbmcaddon.Addon('plugin.video.1channel')
         upgrade_db()
         fix_existing_strms()
+        adn.setSetting('domain', 'http://www.primewire.ag')
         adn.setSetting('old_version', _1CH.get_version())
     _1CH.add_directory({'mode': 'BrowseListMenu', 'section': ''}, {'title': 'Movies'}, img=art('movies.png'),
                        fanart=art('fanart.png'))
@@ -1021,10 +1021,12 @@ def browse_favorites_website(section):
         folder = _1CH.get_setting('auto-play') == 'false'
         subs = []
 
-    pattern = '''<div class="index_item"> <a href="(.+?)"><img src="(.+?(\d{4})\.jpg)" width="150" border="0">.+?<td align="center"><a href=".+?">(.+?)</a></td>.+?class="favs_deleted"><a href=["'](.+?)["'] ref=["']delete_fav["']'''
+    pattern = '''<div class="index_item"> <a href="(.+?)"><img src="(.+?(\d{1,4})\.jpg)" width="150" border="0">.+?<td align="center"><a href=".+?">(.+?)</a></td>.+?class="favs_deleted"><a href=\'(.+?)\' ref=\'delete_fav\''''
     regex = re.compile(pattern, re.IGNORECASE | re.DOTALL)
     for item in regex.finditer(html):
         link, img, year, title, delete = item.groups()
+        if len(year) != 4:
+            year = ''
 
         runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(
             {'mode': 'DeleteFav', 'section': section, 'title': title, 'url': link, 'year': year})
@@ -1041,6 +1043,7 @@ def browse_favorites_website(section):
 
 
 def migrate_favs_to_web():
+    init_database()
     sql = 'SELECT type, name, url, year FROM favorites ORDER BY name'
     if DB == 'mysql':
         db = orm.connect(DB_NAME, DB_USER, DB_PASS, DB_ADDR, buffered=True)
@@ -1967,7 +1970,6 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='', 
                    'img': img, 'year': year}
         runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(queries)
         menu_items.append(('Subscribe', runstring), )
-        print menu_items
     else:
         plugin_str = 'plugin://plugin.video.couchpotato_manager'
         plugin_str += '/movies/add?title=%s' % title
@@ -2000,11 +2002,17 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='', 
 
         if meta['overlay'] == 6:
             label = 'Mark as watched'
+            new_status = 7
         else:
             label = 'Mark as unwatched'
-        runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(
-            {'mode': 'ChangeWatched', 'title': title, 'imdbnum': meta['imdb_id'], 'video_type': video_type,
-             'year': year})
+            new_status = 6
+
+        queries = {'mode': 'ChangeWatched', 'title': title, 'imdbnum': meta['imdb_id'], 'video_type': video_type,
+                   'year': year, 'watched': new_status}
+        if video_type in ('tv', 'tvshow', 'episode'):
+            queries['season'] = season
+            queries['episode'] = episode
+        runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(queries)
         menu_items.append((label, runstring,))
 
         fanart = ''
