@@ -1,28 +1,17 @@
-import urllib,urllib2,re,cookielib,xbmcplugin,xbmcgui,xbmcaddon,socket,os,shutil,string,xbmc,stat,xbmcvfs
+import xbmc, xbmcgui, xbmcplugin, xbmcaddon
+import urllib,urllib2
+import re, string
 import base64
-from t0mm0.common.net import Net as net
 from t0mm0.common.addon import Addon
-#XBOX-COMPAT-EXCLUSION from metahandler import metahandlers
-from zipfile import ZipFile as zip
-from BeautifulSoup import BeautifulSoup as soup
-
-#SET DIRECTORIES
-local = xbmcaddon.Addon(id='plugin.video.videobull')
-addon = Addon('plugin.video.videobull', sys.argv)
-#XBOX-COMPAT-EXCLUSION grab = metahandlers.MetaData(None,preparezip = False)
-fanart = "%s/skins/%s/fanart.jpg"%(local.getAddonInfo("path"),local.getSetting("Current Skin"))
-xbmc_skin = xbmc.getSkinDir()
-print "CURRENT XBMC SKIN: %s"%xbmc_skin
-print "VERSION: %s"%local.getAddonInfo('version')
+from t0mm0.common.net import Net
 pluginhandle = int(sys.argv[1])
 
 
+addon = Addon('plugin.video.videobull', sys.argv)
+net = Net()
 
-
-
-
-
-
+#Common Cache
+import xbmcvfs
 dbg = False # Set to false if you don't want debugging
 
 #Common Cache
@@ -32,37 +21,6 @@ except:
   import storageserverdummy as StorageServer
 cache = StorageServer.StorageServer('plugin.video.videobull')
 
-##### Queries ##########
-total = addon.queries.get('total','')
-play = addon.queries.get('play', '')
-mode = addon.queries['mode']
-level = addon.queries.get('level', '')
-levels = addon.queries.get('levels', '')
-video_type = addon.queries.get('video_type', '')
-section = addon.queries.get('section', '')
-url = addon.queries.get('url', '')
-Title = addon.queries.get('Title', '')
-ptitle = addon.queries.get('name','')
-name = addon.queries.get('name', '')
-imdb_id = addon.queries.get('imdb_id', '')
-season = addon.queries.get('season', '')
-episode = addon.queries.get('episode', '')
-year = addon.queries.get('year', '')
-thumb = addon.queries.get('thumb', '')
-playingtitle = addon.queries.get('playingtitle', '')
-print '---------------------------------------------------------------'
-print '--- Mode: ' + str(mode)
-print '--- Play: ' + str(play)
-print '--- URL: ' + str(url)
-print '--- Video Type: ' + str(video_type)
-print '--- Section: ' + str(section)
-print '--- Title: ' + str(Title)
-print '--- Name: ' + str(name)
-print '--- IMDB: ' + str(imdb_id)
-print '--- Season: ' + str(season)
-print '--- Episode: ' + str(episode)
-print '--- Cover URL: ' + str(thumb)
-print '---------------------------------------------------------------'
 
 ################### Global Constants #################################
 
@@ -86,15 +44,13 @@ VideoType_TV = 'tvshow'
 VideoType_Season = 'season'
 VideoType_Episode = 'episode'
 
-
-
-
 def CATEGORIES():
         addDir('Latest TV Show Feed',MainUrl,7,IconPath +'icons/icon.png')
         addDir('Search for Shows',MainUrl,8,IconPath +'icons/search.png')
         addDir('A-Z TV Shows',MainUrl +'tv-shows/',9,IconPath +'letters/AZ.png')
         addDir('[COLOR blue]Resolver Settings[/COLOR]','RES',45,IconPath +'icons/icon.png')
         xbmcplugin.endOfDirectory(pluginhandle)
+		
 def INDEX(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -128,7 +84,7 @@ def pages(url):
 	addDir('Page 9',MainUrl +'page/9/',2,'')
 	addDir('Page 10',MainUrl +'page/10/',2,'')
 
-def showEpp(url,name):
+def showEpp(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     response = urllib2.urlopen(req)
@@ -136,19 +92,8 @@ def showEpp(url,name):
     response.close()
     match=re.compile('<div id="contentarchive">.*?<a href="(.+?)" title="(.+?)">.+?</a>', re.DOTALL).findall(link)
     for url,name in match:
-        name=name.replace('&#8211','').replace(';','-').replace('&#8217',"'").replace('&#038','&').replace('&#8230','ss')
-        # artname=name.replace('Season','').replace('Episode','').replace('0','').replace('1','').replace('2','').replace('3','').replace('4','').replace('5','').replace('6','').replace('7','').replace('8','').replace('9','').replace('-\s.*?','')
-        # cover = grab.get_meta('tvshow', artname, overlay=6)
-        # covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
-        # for thumb in covers:
-            # thumb = str(thumb)
-        
-        print 'ShowEpp Name---: '+name
-        print 'ShowEpp (name)addonQueries.get---:'+addon.queries.get('Title', '')
-        ptitle=name
-        print 'PLAYING TITLE---: '+ptitle
-        addDir(name,url,4,thumb)
-        	
+        name=name.replace('&#8211','')	
+        addDir(name,url,4,'')	
 def AtoZ(url):
    addDir('A',MainUrl +'tv-shows/',10,IconPath +'letters/A.png')
    addDir('B',MainUrl +'tv-shows/',11,IconPath +'letters/B.png')
@@ -206,6 +151,7 @@ def C(url):
     for name,url in match:
         name='C'+name
         addDir(name,url,40,'')   
+
 def D(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -443,13 +389,7 @@ def TvSearch(url):
     link = getUrl(url)
     match=re.compile('<div id="contentarchivetitle">\n.*?<a href="(.+?)" title="(.+?)">.+?</a>', re.DOTALL).findall(link)
     for url,name in match:
-        name=name.replace('&#8211','').replace(';','-').replace('&#8217',"'").replace('&#038','&').replace('&#8230','ss')
-        artname=name.replace('Season','').replace('Episode','').replace('0','').replace('1','').replace('2','').replace('3','').replace('4','').replace('5','').replace('6','').replace('7','').replace('8','').replace('9','')
-#        cover = grab.get_meta('tvshow', artname, overlay=6)
-        covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
-        for thumb in covers:
-            thumb = str(thumb)
-            addDir(name,url,40,thumb)
+        addDir(name,url,4,'')
 		
 def search():
         search_entered = ''
@@ -490,7 +430,7 @@ def EPISODES(url):
                         thumb='http://www.tvdash.com/'+thumb
                         addDir(name,'http://www.videobull.com/'+url,4,thumb)
 
-def VIDEOLINKS(url):
+def VIDEOLINKS(url,name):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -498,19 +438,19 @@ def VIDEOLINKS(url):
         response.close()
         match=re.compile('''<a id='.+?' href='.*?title=(.+?)' target='_blank' rel='nofollow'>(.+?)</a>''', re.DOTALL).findall(link)
         print match
-        for url,name in match:     
-         addDir(name,url,5,thumb)
-         print 'PLAYING TITLE---: '+ptitle
+        for url,name in match:
+        
+         addDir(name,url,5,'')
+         pluginhandle = int(sys.argv[1])
             
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
                       
 def PLAYLINKS(url):
-        
         regexlink = url
         url = base64.b64decode(regexlink)
         hostUrl = url
         videoLink = urlresolver.resolve(hostUrl)      
-        addLink(ptitle,'videoLink','')
+        addLink(name,'videoLink','')
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
         playlist.add(videoLink)
@@ -536,7 +476,7 @@ def get_params():
 
 def addLink(name,url,iconimage):
         ok=True
-        liz=xbmcgui.ListItem(label=ptitle, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+        liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
         return ok
@@ -595,12 +535,12 @@ elif mode==3:
 
 elif mode==4:
         print ""+url
-        VIDEOLINKS(url)
+        VIDEOLINKS(url,name)
 
 elif mode==5:
-    import urlresolver
-    print ""+url
-    PLAYLINKS(url)
+        import urlresolver
+        print ""+url
+        PLAYLINKS(url)
 elif mode==7:
         print ""+url
         pages(url)
@@ -691,13 +631,13 @@ elif mode==35:
 
 elif mode==40:
         print ""+url
-        showEpp(url,name)			
-
+        showEpp(url)			
 elif mode==45 or url==RES:
         import urlresolver
-        print ""
+        print ""+url
         urlresolver.display_settings()		
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+xbmcplugin.endOfDirectory(int(sys.argv[1]))		
+
 
 
 
