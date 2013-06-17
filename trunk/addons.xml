@@ -1495,13 +1495,13 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
-<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="0.2.7">
+<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="0.2.8">
   <requires>
-    <import addon="xbmc.python" version="2.0" />
+    <import addon="xbmc.python" version="2.1.0" />
     <import addon="script.module.urlresolver" version="1.0.10"/>
 	<import addon="script.module.t0mm0.common" version="1.1.0"/>
-    <import addon="script.module.metahandler"  version="1.0.0"/>
-
+	<import addon="script.module.simplejson"   version="2.0.0"/>
+	<import addon="script.module.xbmcvfs"/>
   </requires>
   <extension library="default.py" point="xbmc.python.pluginsource">
         <provides>video</provides>
@@ -1513,6 +1513,11 @@ provider-name="Eldorado (originator: anarchintosh)">
     <nofanart>true</nofanart>
     <nochangelog>true</nochangelog>
 	</extension>
+	<statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
+    </statfeed>
 </addon>
 
 <addon id="plugin.video.vimcasts" name="VimCasts" provider-name="Jonathan Beluch (jbel)" version="1.1">
