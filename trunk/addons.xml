@@ -1,110 +1,118 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.audio.di.fm"
-       name="Digitally Imported"
-       version="2.1.0"
-       provider-name="qualisoft.dk - Tim C. Steinmetz">
-	<requires>
-		<import addon="xbmc.python" version="2.0"/>
-		<import addon="script.module.simplejson"   version="2.0.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>audio</provides>
+<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="0.2.9">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.urlresolver" version="1.0.10"/>
+	<import addon="script.module.t0mm0.common" version="1.1.0"/>
+	<import addon="script.module.simplejson"   version="2.0.0"/>
+	<import addon="script.module.xbmcvfs"/>
+  </requires>
+  <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Stream TV Shows from Videobull.com Directly to your xbmc device</summary>
+    <description>Visit xbmc4xbox.org.uk/forum/ for support. Stream TV Shows from Videobull.com Directly to your xbmc device</description>
+    <nofanart>true</nofanart>
+    <nochangelog>true</nochangelog>
 	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language>en</language>
-		<license>GPL 2.0</license>
-   		<summary lang="en">Digitally Imported</summary>
-		<description lang="en">Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
-		</description>
-	</extension>
-## Specify the working status of the addon below to be scraped by the status web page
-## working field can be "yes" "no" or "half"
-    <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-    <maintainer>skatulskijean</maintainer>
-	<description>Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
-	</description>
+	<statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
     </statfeed>
-
 </addon>
 
-<addon id="plugin.audio.jazzradio.com"
-       name="JazzRadio.com"
-       version="1.1.0"
-       provider-name="qualisoft.dk - Tim C. Steinmetz">
-	<requires>
-		<import addon="xbmc.python" version="2.0"/>
-		<import addon="script.module.simplejson" version="2.0.10"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>audio</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<language>en</language>
-		<platform>all</platform>
-		<license>GPL 2.0</license>
-   		<summary lang="en">JazzRadio.com</summary>
-		<description lang="en">Presenting jazz radio channels for your enjoyment. Listen for free and enjoy countless hours of the best jazz music around
-		</description>
-	</extension>
-    <statfeed>
+<addon id="plugin.video.drnu" version="2.1.7" name="DR NU Player" provider-name="twinther [tommy@winther.nu]">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.module.buggalo" version="1.0.1"/>
+		<import addon="script.module.xbmcvfs" version='1.0.1'/>
+		<import addon="script.module.mechanize"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Watch the latest shows from DR.dk/nu</summary>
+        <summary lang="da">Se de seneste udsendelser fra DR.dk/nu</summary>
+        <description lang="en">All programs that DR has the rights to show on the internet is available in DR NU. The typically means DR's own programs, news, sports and magazine - but usually not movies and some international tv-shows.[CR][CR]If you have comments or suggestions for this addon, please feel free to participate in the debate on my blog at http://tommy.winther.nu</description>
+        <description lang="da">Alle de programmer, DR har rettigheder til at vise på nettet, vil være at finde i DR NU. Dette gælder typisk DR's egne programmer, nyheder, sport og magasiner - men typisk ikke film og visse udenlandske tv-serier.[CR][CR]Har du kommentarer, ris eller ros til denne addon er du velkommen til at deltage i debatten på min blog på http://tommy.winther.nu</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
+        <disclaimer lang="da">Nogle dele af denne addon er muligvis ikke lovlig i dit land - kontroller venligst dine lokale love.</disclaimer>
+        <license>GPL 2.0</license>
+        <platform>all</platform>
+        <language>da</language>
+    </extension>
+	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
     </statfeed>
-
 </addon>
 
-<addon id="plugin.audio.mp3search"
-       name="MP3 Search"
-       version="0.2.3"
-       provider-name="ghua@seznam.cz">
+<addon id="plugin.video.vimcasts" name="VimCasts" provider-name="Jonathan Beluch (jbel)" version="1.1">
+  <requires>
+    <import addon="xbmc.python" version="2.0" />
+    <import addon="script.module.xbmcswift2" version="1.1.1" />
+	<import addon="script.module.simplejson"/>
+  </requires>
+  <extension library="addon.py" point="xbmc.python.pluginsource">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language />
+    <summary>Watch screencasts about Vim, the text editor, from http://vimcasts.org</summary>
+    <description>Vimcasts publishes free screencasts about Vim, the text editor. Vim has been around in one form or another for over 20 years. The learning curve is famously difficult, but those who manage to climb it insist that nothing can match Vim's modal editing model for speed and efficiency.[CR][CR]The patterns of use that make a Vim master productive are not easily discovered. Trial and error will get you so far, but the best way to learn is to watch an experienced Vim user at work. By providing short videos with digestible advice, Vimcasts gives you something you can take away and use immediately to improve your productivity. Vimcasts aims to be the expert Vim colleague you never had.[CR][CR]Vimcasts is produced by Drew Neil (aka nelstrom), who came to Vim from TextMate. He made the switch when starting work at a company that uses Linux workstations. His choice of text editor was influenced by colleagues.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="script.module.buggalo" name="Buggalo Exception Collector" version="1.0.1" provider-name="twinther [tommy@winther.nu]">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+		<import addon="script.module.mechanize" version="0.2.5"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <summary>Automatic exception collector</summary>
+        <description>This module can collect various information about an exception and the users system such as XBMC and Python versions, etc. and submit it to a url.</description>
+        <license>GPLv2</license>
+        <platform>all</platform>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.burningseries"
+	   name="Burning Series"
+	   version="0.98"
+	   provider-name="chmee phreekz">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.simple.downloader" version="0.9.2"/>
+    <import addon="script.module.urlresolver"/>
+	<import addon="script.module.t0mm0.common" version="0.0.1"/>
+	<import addon="script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
-             provides="audio"
-             library="default.py">
-    <provides>audio</provides>
+			 library="default.py">
+    	<provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <language></language>
-    <summary lang="en">Search,play and download mp3's </summary>
-    <description lang="en">With this addon you can search for mp3's, listen and download them.</description>
-    <disclaimer></disclaimer>
+    <summary>burning-series.to player</summary>
+    <description>series, a lot, generally in german</description>
     <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>no</working>
-	<notes>Does not return search results yet</notes>
-	<maintainer>skatulskijean</maintainer>
-   </statfeed>
-</addon>
-
-<addon id="plugin.audio.radio_de" name="Radio" version="2.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.xbmcswift2" version="1.2.0" />
-    <import addon="script.module.simplejson" version="2.0.10"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>audio</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <language></language>
-    <platform>all</platform>
-    <summary lang="en">Access &gt;4000 radio broadcasts</summary>
-    <summary lang="de">Zugriff auf &gt;4000 Radiosender</summary>
-    <summary lang="fr">Ecoutez plus de 4000 stations de radio</summary>
-    <summary lang="es">Escuche más de 4.000 emisoras de radio</summary>
-    <description lang="en">Music plugin to access over 4000 international radio broadcasts from rad.io, radio.de and radio.fr[CR]Currently features[CR]- English, german and french translated[CR]- Browse stations by location, genre, topic, country, city and language[CR]- Search for stations[CR]- 115 genres, 59 topics, 94 countrys, 1010 citys, 63 languages</description>
-    <description lang="de">Das Radio im Internet mit über 4000 Radiosendern, Internetradio Stationen, gratis Streams und Podcasts live von rad.io, radio.de und radio.fr.[CR]Features[CR]- Auf deutsch, englisch und französisch übersetzt[CR]- Sortiert nach: in der nähe, Genre, Thema, Land und Sprache[CR]- nach Sendern suchen[CR]- 115 Genre, 59 Themen, 94 Länder, 1010 Städte, 63 Sprachen</description>
-    <description lang="fr">Plugin musical pour écouter plus de 4000 stations de radio internationales de rad.io, radio.de et radio.fr[CR]Fonctionnalités[CR]- Traduit en Anglais, Allemand et Français[CR]- Parcourir les stations par genre, thème, pays, ville et langue[CR]- Recherche de stations[CR]- 115 genres, 59 thèmes, 94 pays, 1010 villes, 63 langues</description>
-    <description lang="es">Plugin de música para escuchar más de 4.000 emisoras de radio internacionales desde rad.io, radio.de y radio.fr.[CR]Características:[CR]- Traducciones al inglés, alemán, francés y español.[CR]- Buscador de emisoras por ubicación, género, tema, país, ciudad o idioma.[CR]- Buscador de emisoras.[CR]- 115 géneros, 59 temas, 94 países, 1.010 ciudades, 63 idiomas.</description>
   </extension>
   <statfeed>
     <working>yes</working>
@@ -113,51 +121,113 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.audio.shoutcast" name="Shoutcast" version="1.3.0" provider-name="Team XBMC">
+<addon id="plugin.video.circuitboard" name="Circuit Board TV" version="0.0.2" provider-name="dethfeet">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="xbmc.gui" version="2.11"/>
+    <import addon="plugin.video.youtube" version="3.3.0"/>
+    <import addon="plugin.video.bliptv" version="0.7.0"/>
+    <import addon="script.module.urlresolver" version="1.0.3"/>
+	<import addon='script.module.simplejson' version='2.0.10'/>
+	<import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon='script.module.xbmcvfs' version='1.0.1'/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>audio</provides>
+    <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
+  		<language>de</language>
+    	<summary>circuit-board.de</summary>
+    	<description>Circuit Board TV: 15 Minutes of Game, Der Retro Brettspiel-Check, Floppy Fans, Kraut &amp; Rüben, Longplays, PIXELKITSCH, PixelSpieler, Retro Snippets, Sprites, Shapes &amp; Co
+    	</description>
     <platform>all</platform>
-    <summary lang="en">Shoutcast</summary>
-    <summary lang="hu">Shoutcast rádiók</summary>
-    <summary lang="pt">Rádio Shoutcast</summary>
-    <summary lang="nl">Shoutcast Radio</summary>
-    <description lang="en">SHOUTcast Radio offers thousands of free Internet radio stations from DJs and broadcasters around the world</description>
-    <description lang="hu">A SHOUTcast több ezer ingyenes internetes rádiót kínál DJ-k és rádióállomások jóvoltából.</description>
-    <description lang="pt">A rádio SHOUTcast oferece milhares de rádios livres existentes na Internet, mantidas por DJs de todo o mundo.</description>
-	<description lang="nl">SHOUTcast Radio biedt duizenden gratis Internet radiostatinos aan van DJs en zenders overal ter wereld</description>
   </extension>
   <statfeed>
-   <working>yes</working>
-	<notes>none</notes>
-    <maintainer>kozz</maintainer>
-  </statfeed>
+    <working>yes</working>
+	<notes>Installer will prompt user about cannot install xbmc.gui choosing yes will complete install and work normally</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
 </addon>
 
-<addon id="plugin.audio.sky.fm"
-       name="Sky.fm"
-       version="2.1.0"
-       provider-name="qualisoft.dk - Tim C. Steinmetz">
-	<requires>
-		<import addon="xbmc.python" version="2.0"/>
-		<import addon="script.module.simplejson"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>audio</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language>en</language>
-		<license>GPL 2.0</license>
-   		<summary lang="en">Sky.fm</summary>
-		<description lang="en">SKY.FM Radio features a wide variety of free streaming radio channels. Find your favorites among the best of each class - be it New Age, 80s, Smooth Jazz, New Age, Top40, Hip Hop, Oldies, 70s, Reggae, Lounge or many others inside.
-		</description>
-		<language/>
-	</extension>
+<addon id="script.module.simple.downloader" name="Simple Downloader for xbmc plugins" provider-name="TheCollective" version="1.9.4">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.common.plugin.cache" version="2.5.0" />
+    <import addon="script.module.parsedom" version="2.5.1" />
+  </requires>
+  <extension library="default.py" point="xbmc.service" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Simple downloader for xbmc plugins.</summary>
+  </extension>
+  <extension library="lib" point="xbmc.python.module" />
+</addon>
+
+<!--suppress ALL -->
+<addon id="plugin.video.1channel" version="2.0.2" name="1Channel" provider-name="Bstrdsmkr">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.xbmcaddon"    version="1.1.0"/>
+        <import addon="script.module.simplejson"   version="2.0.0"/>
+        <import addon="script.module.pysqlite2"    version="1.0.0"/>
+        <import addon="script.module.elementtree"  version="1.2.0"/>
+        <import addon="script.module.xbmcvfs"      version="1.0.2"/>
+        <import addon="script.module.urlresolver" version="1.0.10"/>
+        <import addon="script.module.t0mm0.common" version="1.1.0"/>
+        <import addon="script.module.metahandler" version="1.0.0"/>
+        <import addon="script.module.myconnpy" version="0.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py" start="startup">
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Browse 1channel.ch</summary>
+        <description>This addon is supported at [COLOR blue]www.XBMCHub.com[/COLOR], [COLOR white][B]NOT[/B][/COLOR]
+            [COLOR red]xbmc.org[/COLOR]. Play a wide selection of movies and TV shows from 1channel.ch
+        </description>
+        <platform>all</platform>
+    </extension>
+    <statfeed>
+        <working>mostly</working>
+        <notes>Images for hosts requiring captcha dont appear</notes>
+        <maintainer>kozz</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="script.module.pysqlite2" name="Python SQLite2 library for XBOX" version="1.0.0" provider-name="Gerhard Haring">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>xbox</platform>
+        <summary lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</summary>
+        <description lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</description>
+    </extension>
+</addon>
+
+<addon id="plugin.video.dokumonster" name="dokumonster.de" version="0.1.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+		<import addon='script.module.parsedom' version='1.4.0'/>
+		<import addon='script.module.xbmcvfs' version='1.0.1'/>
+        <import addon="script.module.xbmcswift2" version="1.2.0"/>
+        <import addon="plugin.video.youtube" version="3.2.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <language>en de</language>
+        <platform>all</platform>
+        <summary lang="de">Deutsche Dokus</summary>
+        <summary lang="en">German documentaries</summary>
+        <description lang="de">Dein Online Doku Stream Archiv. Die besten deutschen Dokumentationen einfach online anschauen. Tägliche Updates!</description>
+        <description lang="en">German online documentary stream archive. The best german documentaries online. Daily updates!</description>
+    </extension>
 	<statfeed>
     <working>yes</working>
 	<notes>none</notes>
@@ -188,44 +258,18 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.audio.tuneinradio"
-       name="TuneIn Radio"
-       version="1.0.7"
-       provider-name="Brian Hornsby">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.simplejson" version="2.0.10"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>audio</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="bg">Радио TuneIn</summary>
-    <summary lang="en">TuneIn Radio</summary>
-    <description lang="bg">Радио TuneIn е безплатна услуга, която ви позволява да слушате всичко, независимо къде се намирате. Каквото желаете - музика, спорт или новини. Радио TuneIn предлага над 50 000 станции от които да избирате. Можете да намерите местните станции или да откриете нови станции от целия свят. Радио TuneIn ви отвежда точно където желаете да сте.</description>
-    <description lang="en">TuneIn Radio is a free service that lets you listen to anything in the world from wherever you are. Whether you want to hear music, sports, news or current events. TuneIn Radio offers over 50,000 stations for you to choose from. From finding local stations to discovering new stations from around the world, TuneIn Radio brings you to where you want to be.</description>
-    <description lang="es">TuneIn Radio es un servicio gratuito que te permite escuchar cualquier cosa del mundo desde donde te encuentres. Si deseas escuchar música, deportes, noticias o eventos actuales. TuneIn Radio ofrece más de 50,000 estaciones radiales para escoger, desde estaciones locales hasta descubrir nuevas estaciones alrededor del mundo, TuneIn Radio te lleva a donde tu quieras estar.</description>
-  </extension>
-  <statfeed>
-      <working>yes</working>
-	  <notes>none</notes>
-      <maintainer>kozz</maintainer>
-  </statfeed>
-</addon>
-
-<addon id="plugin.audio.xbmchubmusic" name="XBMCHUB Music" version="2.0" provider-name="Mikey1234">
+<addon id="plugin.video.dmax" name="DMAX Videotheke" version="0.0.3" provider-name="dethfeet">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
-	<import addon="script.module.simplejson"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>audio</provides>
+    <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">en</summary>
-    <description lang="en">Stream All Of Your Favourite Music</description>
+    <summary lang="en">DMAX (german television)</summary>
+	<summary lang="de">DMAX Videotheke</summary>
+    <description lang="en">DMAX (german television)</description>
+	<description lang="de">DMAX Videotheke</description>
     <platform>all</platform>
   </extension>
   <statfeed>
@@ -235,57 +279,363 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.audio.xmanradio" name="xmanRadio" provider-name="Kozz" version="0.0.5">
+<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel)" version="1.3">
   <requires>
-    <import addon="xbmc.python" version="2.1.0" />
-    <import addon="script.module.simplejson" version="2.0.10" />
+    <import addon='script.module.simplejson' version='2.0.10'/>
+    <import addon="xbmc.python" version="2.0" />
   </requires>
-  <extension library="default.py" point="xbmc.python.pluginsource">
-        <provides>audio</provides>
-  </extension>
+  <extension library="lib" point="xbmc.python.module" />
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary>Stream Radio stations to your xbmc enabled devics</summary>
-    <description>Listen to xmans favourite local Aussie stations</description>
-
   </extension>
-  <statfeed>
-      <working>yes</working>
-	  <notes>none</notes>
-      <maintainer>kozz</maintainer>
-  </statfeed>
 </addon>
 
-<!--suppress ALL -->
-<addon id="plugin.video.1channel" version="2.0.1" name="1Channel" provider-name="Bstrdsmkr">
+<addon id="plugin.audio.mp3search"
+       name="MP3 Search"
+       version="0.2.3"
+       provider-name="ghua@seznam.cz">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.simple.downloader" version="0.9.2"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+             provides="audio"
+             library="default.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary lang="en">Search,play and download mp3's </summary>
+    <description lang="en">With this addon you can search for mp3's, listen and download them.</description>
+    <disclaimer></disclaimer>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>no</working>
+	<notes>Does not return search results yet</notes>
+	<maintainer>skatulskijean</maintainer>
+   </statfeed>
+</addon>
+
+<addon id="script.module.demjson"
+       name="demjson"
+       version="1.4"
+       provider-name="deron.meranda.us">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="script.module.xbmcaddon" name="xbmcaddon emulator" version="1.2.0" provider-name="Team XBMC4XBOX">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>xbox</platform>
+        <summary lang="en">Module emulates XBMC xbmcaddon module.</summary>
+        <description lang="en">Module emulates XBMC xbmcaddon module.</description>
+    </extension>
+</addon>
+
+<addon id="plugin.video.earth.touch"
+       name="Earth Touch"
+       version="1.0.2"
+       provider-name="divingmule">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.common.plugin.cache" version="1.3.0"/>
+    <import addon="plugin.video.vimeo" version="2.4.0"/>
+    <import addon="plugin.video.youtube" version="3.3.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Videos from earth-touch.com</summary>
+    <description>Earth-Touch aspires to be the pre-eminent multimedia company that brings matters of the Earth (including wildlife and the environment) into the offices, homes and daily lives of people around the world by using cutting-edge technology. </description>
+    <platform>all</platform>
+    <language>en</language>
+  </extension>
+  <statfeed>
+    <working>no</working>
+	<notes>Giving script error</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.netzkino_de" name="Netzkino.de" version="0.0.3" provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.xbmcaddon"    version="1.1.0"/>
-        <import addon="script.module.simplejson"   version="2.0.0"/>
-        <import addon="script.module.pysqlite2"    version="1.0.0"/>
-        <import addon="script.module.elementtree"  version="1.2.0"/>
-        <import addon="script.module.xbmcvfs"      version="1.0.2"/>
-        <import addon="script.module.urlresolver" version="1.0.10"/>
-        <import addon="script.module.t0mm0.common" version="1.1.0"/>
-        <import addon="script.module.metahandler" version="1.0.0"/>
-        <import addon="script.module.myconnpy" version="0.3.2"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.module.xbmcswift2" version="1.2.0"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
+    <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
-    <extension point="xbmc.service" library="service.py" start="startup">
+    <extension point="xbmc.addon.metadata">
+        <language>de</language>
+        <platform>all</platform>
+        <!-- translation commit: 84113ddafdde2c18eac5fd9b9b8144abff06ccf9 -->
+        <summary lang="be">Free german movies</summary>
+        <summary lang="de">Konstenlose Spielfilme</summary>
+        <summary lang="el">Δωρεάν γερμανικές ταινίες</summary>
+        <summary lang="en">Free german movies</summary>
+        <summary lang="es">Películas alemanas gratis</summary>
+        <summary lang="ko">무료 독일 영화</summary>
+        <summary lang="lt">NVokiečių filmai dykai/nemokamai</summary>
+        <summary lang="pl">Darmowe filmy niemieckie</summary>
+        <summary lang="pt_BR">Filmes alemães gratuítos</summary>
+        <summary lang="sv">Gratis tyska filmer</summary>
+        <description lang="be">Netzkino.de is the first legal and free movie portal in germany</description>
+        <description lang="de">Netzkino.de ist das erste und einzige legale + kostenlose Spielfilmportal im deutschsprachigen Raum</description>
+        <description lang="el">Το Netzkino.de είναι το πρώτο νόμιμο portal δωρεάν ταινιών στη Γερμανία</description>
+        <description lang="en">Netzkino.de is the first legal and free movie portal in germany</description>
+        <description lang="es">Netzkino.de es el primer portal legal y gratuito de películas en Alemania</description>
+        <description lang="ko">Netzkino.de는 독일의 합법적이 무료 영화 포털입니다.</description>
+        <description lang="lt">Netzkino.de yra pirmasis juridiškai įteisintas nemokamų filmų portalas Vokietijoje</description>
+        <description lang="pl">Netzkino.de to pierwszy legalny i darmowy portal w niemczech</description>
+        <description lang="pt_BR">Netzkino.de é o primeiro portal legal e gratuíto de filmes na Alemanha.</description>
+        <description lang="sv">Netzkino.de är den första gratis lagliga filmportalen i Tyskland</description>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.hdtrailers_net" name="HD-Trailers.net" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.xbmcswift2" version="1.3.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+	<import addon='script.module.simplejson' version='2.0.10'/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <platform>all</platform>
+    <summary lang="de">Trailer und Clips aus verschiedenen Quellen in HD</summary>
+    <summary lang="en">Trailer and Clips from several sources in HD</summary>
+    <description lang="de">Dieses Plugin bietet Zugriff auf verschiedene Film Trailer und Clips der folgenden Quellen:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Die meisten sind verfügbar in 480p, 720p und 1080p</description>
+    <description lang="en">This Plugin provides access to Movie Trailers and Clips from the following sources:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Most of them are available in 480p, 720p and 1080p</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.disclose_tv" name="Disclose.tv" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.xbmcswift2" version="1.3.0"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <platform>all</platform>
+    <summary lang="en">TRUTH REVEALED</summary>
+    <description lang="en">Largest multimedia hub and alternative news website about UFO Videos, Ancient Mysteries, Conspiracy Theories, Top Secrets, N.W.O. + more!</description>
+  </extension>
+  <statfeed>
+    <working>no</working>
+	<notes>Script errors playing sources xbmcswift2 related</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="script.module.xmltodict"
+       name="xmltodict"
+       version="0.2.0"
+       provider-name="Tristan Fischer (sphere@dersphere.de)">
+  <requires>
+    <import addon="xbmc.python"
+            version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary lang="en">Python helper module</summary>
+    <description lang="en">xmltodict is a Python module that makes working with XML feel like you are working with JSON, as in this "spec".[CR]Original: https://github.com/martinblech/xmltodict[CR]Author: martinblech@gmail.com</description>
+    <license>MIT</license>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.filmon" name="FilmOn" version="3.2.3" provider-name="FilmOn.TV Networks Inc">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.t0mm0.common" version="1.1.0"/>
+	<import addon="script.module.simplejson"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">FilmOn</summary>
+    <language>en de fr es it ru</language>
+    <description lang="en">FilmOn.com is an internet based television provider owned by FilmOn.TV Networks Inc. FilmOn.TV Networks was founded by Alki David in 2006.FilmOn.com subscription packages include access to over 120 streaming TV channels (mostly in English language) in addition to premium FilmOn.com Movie channels and pay-per-view channels</description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>no</working>
+	<notes>Script error url not found</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon
+  id="plugin.video.movie25.com"
+  version="1.0.1"
+  name="Movie25.com"
+  provider-name="skatulskijean">
+  <requires>
+   <import addon="xbmc.python" version="2.0"/>
+   <import addon="script.module.urlresolver" version="1.0.0" />
+   <import addon="script.module.simplejson"   version="2.0.0"/>
+   <import addon="script.module.t0mm0.common" version="1.1.0"/>
+  </requires>
+  <extension
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>access the resources from Movies25.com on your xbmc4xbox</summary>
+    <description>Play Movies from Movies25.com</description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon
+    id="plugin.video.the.trailers"
+    name="The Trailers"
+    version="0.1.1"
+    provider-name="Martijn (orginal: nuka1195) Xbox Version Skatulskijean">
+    <!-- Code taken from AMT-L and original creator ="nuka1195" -->
+    <requires>
+        <import addon="xbmc.python"                 version="2.0"/>
+        <import addon="script.module.elementtree"   version="1.2.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"     library="addon.py">
+        <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary>Browse 1channel.ch</summary>
-        <description>This addon is supported at [COLOR blue]www.XBMCHub.com[/COLOR], [COLOR white][B]NOT[/B][/COLOR]
-            [COLOR red]xbmc.org[/COLOR]. Play a wide selection of movies and TV shows from 1channel.ch
-        </description>
         <platform>all</platform>
+        <summary lang="en">Watch movie trailers</summary>
+        <description lang="en">Watch current movie trailers from[CR]- http://trailers.apple.com[CR]</description>
+        <disclaimer lang="en">Only the most recent 100 or so trailers are listed.</disclaimer>
     </extension>
-    <statfeed>
-        <working>mostly</working>
-        <notes>Images for hosts requiring captcha dont appear</notes>
-        <maintainer>kozz</maintainer>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.day9"
+       name="Day[9].tv archive"
+       version="2.0.1"
+       provider-name="Robert">
+  <requires>
+    <import addon="xbmc.python" version='2.0'/>
+    <import addon="script.module.beautifulsoup" version='3.0.8'/>
+    <import addon="plugin.video.youtube" version='3.2.0'/>
+    <import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon='script.module.simplejson' version='2.0.10'/>
+	<import addon='script.module.xbmcvfs' version='1.0.1'/>
+	<import addon='script.module.mechanize' version='0.2.5'/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language>en</language>
+    <platform>all</platform>
+    <summary>Day[9].tv Archive</summary>
+    <description>Casts from the awesome guy Sean "Day[9]" Plott teaching "How to be a better gamer" in Starcraft.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.vevo"
+       name="VEVO"
+       version="0.7.3"
+       provider-name="BlueCop">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+	<import addon="script.module.simplejson"/>
+    <import addon="script.module.demjson" version="1.4"/>
+    <import addon="script.module.mechanize" version="0.2.5"/>
+	<import addon="script.module.pysqlite2"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+  <provides>video audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Music Videos from VEVO</summary>
+    <description>Music Videos from VEVO</description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>kozz</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.kinotrailer.de"
+       name="kinostarts.de"
+       version="1.0"
+       provider-name="Skatulskijean">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+		<import addon='script.module.simplejson' version='2.0.10'/>
+		<import addon='script.module.parsedom' version='1.4.0'/>
+		<import addon='script.module.xbmcvfs' version='1.0.1'/>
+        <import addon="plugin.video.youtube" version="3.3.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>watch trailer from kinostarts.de</summary>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     </statfeed>
 </addon>
 
@@ -346,251 +696,35 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.aljazeera" name="Al Jazeera" version="0.9.2" provider-name="Jonathan Beluch (jbel)">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-    <import addon="script.module.simplejson" version="2.0.10"/>
-    <import addon="script.module.xbmcswift" version="0.2.0"/>
-    <import addon="plugin.video.youtube" version="3.3.0"/>
-	<import addon="script.module.mechanize" version="0.0.1"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <language>en</language>
-    <platform>all</platform>
-    <summary lang="en">Watch videos and the live stream from Al Jazeera English.</summary>
-    <description lang="en">Drawing on the legacy of the groundbreaking Al Jazeera Arabic channel, Al Jazeera English was launched on November 15, 2006 to more than 80 million households worldwide.[CR][CR] The 24-hour news and current affairs channel is the first international English-language news channel to broadcast across the globe from the Middle East.[CR][CR] Al Jazeera's global footprint continues to grow and now broadcasts to more than 220 million households on six continents in more than 100 countries.[CR][CR] Our channel is broadcast from four strategic broadcast centres: Doha, Kuala Lumpur, London, and Washington DC. Unlike other international channels, we broadcast from our different centres, as the world turns, providing the most comprehensive and contextual news coverage.[CR][CR] Our mission is to provide independent, impartial news for an international audience and to offer a voice to a diversity of perspectives from under-reported regions.[CR][CR] In addition, the channel aims to balance the information flow between the South and the North.[CR][CR] The channel of reference for the Middle East and Africa, Al Jazeera has unique access to some of the world’s most troubled and controversial locations. Our determination and ability to accurately reflect the truth on the ground in regions torn by conflict and poverty has set our content apart.[CR][CR] Source: Al Jazeera
-    </description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.bestofyoutube_com" name="BestOfYoutube.com" version="1.0.6" provider-name="AddonScriptorDE">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-		<import addon='script.module.simplejson' version='2.0.10'/>
-		<import addon='script.module.parsedom' version='1.4.0'/>
-		<import addon='script.module.xbmcvfs' version='1.0.1'/>
-        <import addon="plugin.video.youtube" version="3.3.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Only the best Youtube clips</summary>
-        <summary lang="de">Nur die besten Youtube Videos</summary>
-        <language>en</language>
-        <description lang="en">Only the best Youtube clips</description>
-        <description lang="de">Nur die besten Youtube Videos</description>
-    <platform>all</platform>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id='plugin.video.bliptv' version='0.7.0' name='BlipTV' provider-name='TheCollective'>
-  <requires>
-    <import addon='xbmc.python' version='2.0'/>
-    <import addon='script.module.parsedom' version='1.3.0'/>
-	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-	<import addon="script.module.simplejson"/>
-  </requires>
-  <extension point='xbmc.python.pluginsource'
-            library='default.py'>
-        <provides>video</provides>
-  </extension>
-  <extension point='xbmc.addon.metadata'>
-    <platform>all</platform>
-    <summary lang='en'>Bliptv video plugin</summary>
-    <description lang='en'>Plugin that let's you browse and play videos from BlipTV!</description>
-    <summary lang='bg'>Видео добавка за Bliptv</summary>
-    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от BlipTV!</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.borsentv.dk" version="1.0.4" name="Borsen TV" provider-name="twinther [tommy@winther.nu]">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.buggalo" version="1.0.1"/>
-		<import addon="script.module.simplejson" version="2.0.10"/>
-		<import addon="script.module.mechanize" version="0.2.5"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en">Borsen TV</summary>
-        <description lang="en">Borsen TV is Dagbladet Borsens TV station on the internet that focuses on business and finance, but also covers politics and culture among other things.[CR][CR]If you have comments or suggestions for this addon, please feel free to participate in the debate on my blog at http://tommy.winther.nu</description>
-        <summary lang="da">Børsen TV</summary>
-        <description lang="da">Børsen TV er Dagbladet Børsens TV kanal på nettet som har fokus på erhvervs- og finansstof, men som også dækker politik, kultur og samfundsøkonomi.[CR][CR]Har du kommentarer, ris eller ros til denne addon er du velkommen til at deltage i debatten på min blog på http://tommy.winther.nu</description>
-        <license>GPL 2.0</license>
-        <platform>all</platform>
-        <language>da</language>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.burningseries"
-	   name="Burning Series"
-	   version="0.98"
-	   provider-name="chmee phreekz">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.urlresolver"/>
-	<import addon="script.module.t0mm0.common" version="0.0.1"/>
-	<import addon="script.module.simplejson"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-			 library="default.py">
-    	<provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>burning-series.to player</summary>
-    <description>series, a lot, generally in german</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.c64-longplays"
-       name="C64-Longplays"
-       version="0.2.0"
-       provider-name="Jools">
+<addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.0" provider-name="Jonathan Beluch (jbel)">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
   </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="addon.py">
-        <provides>video</provides>
-  </extension>
+  <extension point="xbmc.python.module" library="lib"/>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">The C64 Gamevideoarchive</summary>
-    <description lang="en">... presents a cross section of the most popular and obscure games for the C64 sorted by year of release all of which superseed the videos of THE ORIGINAL SERIES. Any questions concerning the archive are most likey answered in the FAQ. If you want more info on a game before downloading the video just click on the lemon to go the the game's detail page over at Lemon 64. If you want to contribute please check out which game videos are still wanted or have been submitted already.</description>
   </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
 </addon>
 
-<addon id="plugin.video.canada.on.demand" name="Canada On Demand" version="0.7.4" provider-name="andre">
+<addon id="plugin.video.documentary.net" name="Documentary.net" provider-name="Jonathan Beluch (jbel)" version="1.1.1">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.beautifulsoup"	version="3.0.8"/>
-    <import addon="script.module.simplejson" version="2.0.10"/>
-	<import addon="script.module.pysqlite2"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Video On Demand From Canada</summary>
-    <description>Stream content from tons of Canadian providers including CTV, CBC, TSN, Global and MANY More!</description>
-    <platform>all</platform>
-    <disclaimer></disclaimer>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>Many links for short clips few full eppisodes</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.cinemassacre" name="cinemassacre" version="0.0.5" provider-name="dethfeet">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon='script.module.simplejson' version='2.0.10'/>
-	<import addon='script.module.parsedom' version='1.3.0'/>
-	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-    <import addon="plugin.video.youtube" version="3.3.0"/>
-    <import addon="plugin.video.bliptv" version="0.7.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-  		<language>en</language>
-    	<summary>cinemassacre.com</summary>
-    	<description>Home of the Angry Video Game Nerd, Monster Madness, movie reviews, top 10's, and commentary, retro and classic video gaming and more.</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>no</working>
-	<notes>Not launching</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.circuitboard" name="Circuit Board TV" version="0.0.2" provider-name="dethfeet">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="xbmc.gui" version="2.11"/>
-    <import addon="plugin.video.youtube" version="3.3.0"/>
-    <import addon="plugin.video.bliptv" version="0.7.0"/>
-    <import addon="script.module.urlresolver" version="1.0.3"/>
-	<import addon='script.module.simplejson' version='2.0.10'/>
-	<import addon='script.module.parsedom' version='1.3.0'/>
-	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-  		<language>de</language>
-    	<summary>circuit-board.de</summary>
-    	<description>Circuit Board TV: 15 Minutes of Game, Der Retro Brettspiel-Check, Floppy Fans, Kraut &amp; Rüben, Longplays, PIXELKITSCH, PixelSpieler, Retro Snippets, Sprites, Shapes &amp; Co
-    	</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>Installer will prompt user about cannot install xbmc.gui choosing yes will complete install and work normally</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.collegehumor" name="CollegeHumor" version="2.0.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-    <import addon="script.module.xbmcswift" version="0.2.0"/>
+    <import addon="xbmc.python" version="2.0" />
+    <import addon="script.module.beautifulsoup" version="3.2.0" />
+    <import addon="script.module.xbmcswift2" version="1.2.0" />
     <import addon="plugin.video.youtube" version="3.3.0" />
-	<import addon="script.module.mechanize"/>
+    <import addon="plugin.video.vimeo" version="2.4.0" />
+    <import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon="script.module.simplejson"/>
+	<import addon="script.module.xbmcvfs"/>
   </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
+  <extension library="addon.py" point="xbmc.python.pluginsource">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <language>en</language>
     <platform>all</platform>
-    <summary lang="en">Watch videos from www.collegehumor.com</summary>
-    <description lang="en">CollegeHumor finds funny videos from all over the internet plus some original videos that they made themself.</description>
+    <language />
+    <summary>Documentary Network - Watch free documentaries online</summary>
+    <description>Documentary.net offers free and legal streaming of documentary films from all around the world. We crawl the web and curate the best documentaries from various sources like YouTube, Vimeo etc. Most films are available worldwide.[CR][CR]The content on Documentary.net is generated by thousands of professional content producers and TV-stations who provide their films on the internet for free. You can browse the films by category, topic or film length.</description>
   </extension>
   <statfeed>
     <working>yes</working>
@@ -624,99 +758,174 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.day9"
-       name="Day[9].tv archive"
+<addon id="plugin.video.musicvideojukebox"
+       name="Music Video Jukebox"
        version="2.0.1"
-       provider-name="Robert">
+       provider-name="iZE">
   <requires>
-    <import addon="xbmc.python" version='2.0'/>
-    <import addon="script.module.beautifulsoup" version='3.0.8'/>
-    <import addon="plugin.video.youtube" version='3.2.0'/>
-    <import addon='script.module.parsedom' version='1.3.0'/>
+    <import addon="xbmc.python" version="1.0"/>
 	<import addon='script.module.simplejson' version='2.0.10'/>
+	<import addon='script.module.parsedom' version='1.3.0'/>
 	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-	<import addon='script.module.mechanize' version='0.2.5'/>
+    <import addon="plugin.video.youtube" version="3.3.0" />
   </requires>
   <extension point="xbmc.python.pluginsource"
             library="default.py">
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <language>en</language>
     <platform>all</platform>
-    <summary>Day[9].tv Archive</summary>
-    <description>Casts from the awesome guy Sean "Day[9]" Plott teaching "How to be a better gamer" in Starcraft.</description>
+    <summary lang="en">Search for an artist and it will play up to 150 music videos of that artist.</summary>
+    <description lang="en">This plugin uses Google Suggest API, Last.fm and YouTube to search for music videos of an artist, and plays up to 150 music videos of that artist.</description>
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>none</notes>
+	<notes>YouTube addon must have been run once</notes>
 	<maintainer>skatulskijean</maintainer>
     </statfeed>
 </addon>
 
-<addon id="plugin.video.disclose_tv" name="Disclose.tv" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="plugin.video.streamallthis"
+       version="1.0.4"
+       name="StreamAllThis"
+       provider-name="skatulskijean">
   <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.xbmcswift2" version="1.3.0"/>
-    <import addon="script.module.simplejson" version="2.0.10"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+   <import addon="xbmc.python" version="2.0"/>
+   <import addon="script.module.urlresolver" version="1.0.0" />
+   <import addon="script.module.simplejson"   version="2.0.10"/>
+   <import addon="script.module.t0mm0.common" version="1.1.0"/>
+   <import addon='script.module.mechanize' version='0.2.5'/>
   </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
+  <extension point="xbmc.python.pluginsource"
+             library="default.py">
+   <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <language></language>
+    <summary>access series from streamallthis on your xbmc4xbox</summary>
+    <description>Watch Series from StreamAllThis</description>
     <platform>all</platform>
-    <summary lang="en">TRUTH REVEALED</summary>
-    <description lang="en">Largest multimedia hub and alternative news website about UFO Videos, Ancient Mysteries, Conspiracy Theories, Top Secrets, N.W.O. + more!</description>
   </extension>
   <statfeed>
-    <working>no</working>
-	<notes>Script errors playing sources xbmcswift2 related</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
+  <working>yes</working>
+  <notes>none</notes>
+  <maintainer>skatulskijean</maintainer>
+  </statfeed>
 </addon>
 
-<addon id="plugin.video.dmax" name="DMAX Videotheke" version="0.0.3" provider-name="dethfeet">
+<addon id="plugin.video.cinemassacre" name="cinemassacre" version="0.0.5" provider-name="dethfeet">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
+    <import addon='script.module.simplejson' version='2.0.10'/>
+	<import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon='script.module.xbmcvfs' version='1.0.1'/>
+    <import addon="plugin.video.youtube" version="3.3.0"/>
+    <import addon="plugin.video.bliptv" version="0.7.0"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">DMAX (german television)</summary>
-	<summary lang="de">DMAX Videotheke</summary>
-    <description lang="en">DMAX (german television)</description>
-	<description lang="de">DMAX Videotheke</description>
+  		<language>en</language>
+    	<summary>cinemassacre.com</summary>
+    	<description>Home of the Angry Video Game Nerd, Monster Madness, movie reviews, top 10's, and commentary, retro and classic video gaming and more.</description>
     <platform>all</platform>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
+    <working>no</working>
+	<notes>Not launching</notes>
 	<maintainer>skatulskijean</maintainer>
     </statfeed>
 </addon>
 
-<addon id="plugin.video.documentary.net" name="Documentary.net" provider-name="Jonathan Beluch (jbel)" version="1.1.1">
+<addon id="script.module.urlresolver"
+     name="urlresolver"
+     version="1.0.10"
+     provider-name="XBMCHub.com">
   <requires>
     <import addon="xbmc.python" version="2.0" />
-    <import addon="script.module.beautifulsoup" version="3.2.0" />
-    <import addon="script.module.xbmcswift2" version="1.2.0" />
-    <import addon="plugin.video.youtube" version="3.3.0" />
-    <import addon="plugin.video.vimeo" version="2.4.0" />
-    <import addon='script.module.parsedom' version='1.3.0'/>
-	<import addon="script.module.simplejson"/>
-	<import addon="script.module.xbmcvfs"/>
+    <import addon="script.module.t0mm0.common" version="1.0.0"/>
+    <import addon="plugin.video.youtube" version="3.3.0"/>
   </requires>
-  <extension library="addon.py" point="xbmc.python.pluginsource">
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Resolve common video host URL's to be playable in XBMC.</summary>
+    <description lang="en">Resolve common video host URL's to be playable in XBMC, simplify addon development of video plugins requiring multi video hosts.</description>
+  </extension>
+</addon>
+
+<addon id="plugin.audio.di.fm"
+       name="Digitally Imported"
+       version="2.1.0"
+       provider-name="qualisoft.dk - Tim C. Steinmetz">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+		<import addon="script.module.simplejson"   version="2.0.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language>en</language>
+		<license>GPL 2.0</license>
+   		<summary lang="en">Digitally Imported</summary>
+		<description lang="en">Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
+		</description>
+	</extension>
+## Specify the working status of the addon below to be scraped by the status web page
+## working field can be "yes" "no" or "half"
+    <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+    <maintainer>skatulskijean</maintainer>
+	<description>Digitally Imported streams the world's most addictive electronic music. Our radio channels feature world renowned artists, DJs, and the hottest exclusive shows. Discover the community and the wide variety of electronic music covering Trance, House, Dance, Techno, Chillout, Breaks, Downtempo and so much more.
+	</description>
+    </statfeed>
+
+</addon>
+
+<addon id="plugin.video.canada.on.demand" name="Canada On Demand" version="0.7.4" provider-name="andre">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup"	version="3.0.8"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+	<import addon="script.module.pysqlite2"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Video On Demand From Canada</summary>
+    <description>Stream content from tons of Canadian providers including CTV, CBC, TSN, Global and MANY More!</description>
+    <platform>all</platform>
+    <disclaimer></disclaimer>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>Many links for short clips few full eppisodes</notes>
+	<maintainer>kozz</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.aljazeera" name="Al Jazeera" version="0.9.2" provider-name="Jonathan Beluch (jbel)">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+    <import addon="script.module.xbmcswift" version="0.2.0"/>
+    <import addon="plugin.video.youtube" version="3.3.0"/>
+	<import addon="script.module.mechanize" version="0.0.1"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
+    <language>en</language>
     <platform>all</platform>
-    <language />
-    <summary>Documentary Network - Watch free documentaries online</summary>
-    <description>Documentary.net offers free and legal streaming of documentary films from all around the world. We crawl the web and curate the best documentaries from various sources like YouTube, Vimeo etc. Most films are available worldwide.[CR][CR]The content on Documentary.net is generated by thousands of professional content producers and TV-stations who provide their films on the internet for free. You can browse the films by category, topic or film length.</description>
+    <summary lang="en">Watch videos and the live stream from Al Jazeera English.</summary>
+    <description lang="en">Drawing on the legacy of the groundbreaking Al Jazeera Arabic channel, Al Jazeera English was launched on November 15, 2006 to more than 80 million households worldwide.[CR][CR] The 24-hour news and current affairs channel is the first international English-language news channel to broadcast across the globe from the Middle East.[CR][CR] Al Jazeera's global footprint continues to grow and now broadcasts to more than 220 million households on six continents in more than 100 countries.[CR][CR] Our channel is broadcast from four strategic broadcast centres: Doha, Kuala Lumpur, London, and Washington DC. Unlike other international channels, we broadcast from our different centres, as the world turns, providing the most comprehensive and contextual news coverage.[CR][CR] Our mission is to provide independent, impartial news for an international audience and to offer a voice to a diversity of perspectives from under-reported regions.[CR][CR] In addition, the channel aims to balance the information flow between the South and the North.[CR][CR] The channel of reference for the Middle East and Africa, Al Jazeera has unique access to some of the world’s most troubled and controversial locations. Our determination and ability to accurately reflect the truth on the ground in regions torn by conflict and poverty has set our content apart.[CR][CR] Source: Al Jazeera
+    </description>
   </extension>
   <statfeed>
     <working>yes</working>
@@ -725,56 +934,36 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.dokumonster" name="dokumonster.de" version="0.1.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
-		<import addon='script.module.parsedom' version='1.4.0'/>
-		<import addon='script.module.xbmcvfs' version='1.0.1'/>
-        <import addon="script.module.xbmcswift2" version="1.2.0"/>
-        <import addon="plugin.video.youtube" version="3.2.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <language>en de</language>
-        <platform>all</platform>
-        <summary lang="de">Deutsche Dokus</summary>
-        <summary lang="en">German documentaries</summary>
-        <description lang="de">Dein Online Doku Stream Archiv. Die besten deutschen Dokumentationen einfach online anschauen. Tägliche Updates!</description>
-        <description lang="en">German online documentary stream archive. The best german documentaries online. Daily updates!</description>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
+<addon id='script.module.parsedom' version='1.4.0' name='Parsedom for xbmc plugins' provider-name='TheCollective'>
+  <requires>
+    <import addon='xbmc.python' version='2.0'/>
+  </requires>
+  <extension point='xbmc.addon.metadata'>
+    <platform>all</platform>
+    <summary lang='en'>Parsedom for xbmc plugins.</summary>
+  </extension>
+  <extension point='xbmc.python.module' library='lib' />
 </addon>
 
-<addon id="plugin.video.dr.dk.bonanza" version="2.1.4" name="DR.dk Bonanza" provider-name="twinther [tommy@winther.nu]">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
-        <import addon="script.module.buggalo" version="1.1.2"/>
-		<import addon="script.module.mechanize"/>
-
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
+<addon id='plugin.video.bliptv' version='0.7.0' name='BlipTV' provider-name='TheCollective'>
+  <requires>
+    <import addon='xbmc.python' version='2.0'/>
+    <import addon='script.module.parsedom' version='1.3.0'/>
+	<import addon='script.module.xbmcvfs' version='1.0.1'/>
+	<import addon="script.module.simplejson"/>
+  </requires>
+  <extension point='xbmc.python.pluginsource'
+            library='default.py'>
         <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en">Best and worst from DR's archives</summary>
-        <summary lang="da">Det bedste og værste fra DR's arkiver</summary>
-        <description lang="en">On the 16th of January 2008 DR (Danish Broadcasting Corporation) opened up its great archive to what became Bonanza. Here you can see some of the best - and worst, of what has been produced during the years.</description>
-        <description lang="da">16. januar 2008 åbnede DR for sit store arkiv med Bonanza. Her kan du se lidt af det bedste - og værste af det, der er blevet produceret i årenes løb.</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
-        <disclaimer lang="da">Nogle dele af denne addon er muligvis ikke lovlig i dit land - kontroller venligst dine lokale love.</disclaimer>
-        <license>GPL 2.0</license>
-        <platform>all</platform>
-        <language>da</language>
-    </extension>
-	<statfeed>
+  </extension>
+  <extension point='xbmc.addon.metadata'>
+    <platform>all</platform>
+    <summary lang='en'>Bliptv video plugin</summary>
+    <description lang='en'>Plugin that let's you browse and play videos from BlipTV!</description>
+    <summary lang='bg'>Видео добавка за Bliptv</summary>
+    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от BlipTV!</description>
+  </extension>
+  <statfeed>
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
@@ -810,158 +999,79 @@
     </statfeed>
 </addon>
 
-<addon id="plugin.video.drnu" version="2.1.7" name="DR NU Player" provider-name="twinther [tommy@winther.nu]">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
-        <import addon="script.module.buggalo" version="1.0.1"/>
-		<import addon="script.module.xbmcvfs" version='1.0.1'/>
-		<import addon="script.module.mechanize"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en">Watch the latest shows from DR.dk/nu</summary>
-        <summary lang="da">Se de seneste udsendelser fra DR.dk/nu</summary>
-        <description lang="en">All programs that DR has the rights to show on the internet is available in DR NU. The typically means DR's own programs, news, sports and magazine - but usually not movies and some international tv-shows.[CR][CR]If you have comments or suggestions for this addon, please feel free to participate in the debate on my blog at http://tommy.winther.nu</description>
-        <description lang="da">Alle de programmer, DR har rettigheder til at vise på nettet, vil være at finde i DR NU. Dette gælder typisk DR's egne programmer, nyheder, sport og magasiner - men typisk ikke film og visse udenlandske tv-serier.[CR][CR]Har du kommentarer, ris eller ros til denne addon er du velkommen til at deltage i debatten på min blog på http://tommy.winther.nu</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
-        <disclaimer lang="da">Nogle dele af denne addon er muligvis ikke lovlig i dit land - kontroller venligst dine lokale love.</disclaimer>
-        <license>GPL 2.0</license>
-        <platform>all</platform>
-        <language>da</language>
-    </extension>
-	<statfeed>
+<addon id="plugin.audio.jazzradio.com"
+       name="JazzRadio.com"
+       version="1.1.0"
+       provider-name="qualisoft.dk - Tim C. Steinmetz">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+		<import addon="script.module.simplejson" version="2.0.10"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<language>en</language>
+		<platform>all</platform>
+		<license>GPL 2.0</license>
+   		<summary lang="en">JazzRadio.com</summary>
+		<description lang="en">Presenting jazz radio channels for your enjoyment. Listen for free and enjoy countless hours of the best jazz music around
+		</description>
+	</extension>
+    <statfeed>
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
     </statfeed>
+
 </addon>
 
-<addon id="plugin.video.dump" name="Dump.com" version="1.0.0" provider-name="sphere, Insayne">
+<addon id='plugin.video.youtube' version='3.3.1' name='YouTube' provider-name='TheCollective'>
   <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-    <import addon="script.module.xbmcswift" version="0.2.0"/>
-	<import addon="script.module.mechanize"/>
+    <import addon='xbmc.python' version='2.0'/>
+    <import addon='script.module.simplejson' version='2.0.10'/>
+    <import addon='script.common.plugin.cache' version='1.3.0'/>
+    <import addon='script.module.parsedom'/>
+    <import addon='script.module.xbmcvfs' version='1.0.1'/>
   </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
+  <extension point='xbmc.python.pluginsource' library='default.py'>
         <provides>video</provides>
   </extension>
-  <extension point="xbmc.addon.metadata">
+  <extension point='xbmc.addon.metadata'>
     <platform>all</platform>
-    <summary lang="en">Stream Dump.com</summary>
-    <description lang="de">Videos von Dump.com</description>
-    <description lang="en">The Content of Dump.com on your Media Center</description>
+    <summary lang='en'>YouTube video plugin</summary>
+    <description lang='en'>Plugin that lets you browse and play videos from everybody's favorite video site!</description>
+    <disclaimer lang='en'>Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+    <summary lang='bg'>Видео добавка за YouTube</summary>
+    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на на всички видео сайт!</description>
+    <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
   </extension>
   <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
+    <working>mostly</working>
+	<notes>The user login is broken, Search and feeds work well</notes>
+	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
     </statfeed>
 </addon>
 
-<addon id="plugin.video.earth.touch"
-       name="Earth Touch"
-       version="1.0.2"
-       provider-name="divingmule">
+<addon id="plugin.audio.xmanradio" name="xmanRadio" provider-name="Kozz" version="0.0.5">
   <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-    <import addon="script.common.plugin.cache" version="1.3.0"/>
-    <import addon="plugin.video.vimeo" version="2.4.0"/>
-    <import addon="plugin.video.youtube" version="3.3.0"/>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.simplejson" version="2.0.10" />
   </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
+  <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>audio</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Videos from earth-touch.com</summary>
-    <description>Earth-Touch aspires to be the pre-eminent multimedia company that brings matters of the Earth (including wildlife and the environment) into the offices, homes and daily lives of people around the world by using cutting-edge technology. </description>
     <platform>all</platform>
-    <language>en</language>
-  </extension>
-  <statfeed>
-    <working>no</working>
-	<notes>Giving script error</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
+    <summary>Stream Radio stations to your xbmc enabled devics</summary>
+    <description>Listen to xmans favourite local Aussie stations</description>
 
-<addon id="plugin.video.filmon" name="FilmOn" version="3.2.3" provider-name="FilmOn.TV Networks Inc">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.t0mm0.common" version="1.1.0"/>
-	<import addon="script.module.simplejson"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">FilmOn</summary>
-    <language>en de fr es it ru</language>
-    <description lang="en">FilmOn.com is an internet based television provider owned by FilmOn.TV Networks Inc. FilmOn.TV Networks was founded by Alki David in 2006.FilmOn.com subscription packages include access to over 120 streaming TV channels (mostly in English language) in addition to premium FilmOn.com Movie channels and pay-per-view channels</description>
-    <platform>all</platform>
   </extension>
   <statfeed>
-    <working>no</working>
-	<notes>Script error url not found</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.freecable"
-       name="Free Cable"
-       version="0.5.2"
-       provider-name="BlueCop">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-    <import addon="script.module.demjson" version="1.4"/>
-    <import addon="script.module.coveapi" version="0.2"/>
-	<import addon="script.module.pysqlite2" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>US station aggregator</summary>
-    <description>Free Cable is the ultimate aphrodisiac - The Cable Guy</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.hdtrailers_net" name="HD-Trailers.net" version="0.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.xbmcswift2" version="1.3.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-	<import addon='script.module.simplejson' version='2.0.10'/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <language></language>
-    <platform>all</platform>
-    <summary lang="de">Trailer und Clips aus verschiedenen Quellen in HD</summary>
-    <summary lang="en">Trailer and Clips from several sources in HD</summary>
-    <description lang="de">Dieses Plugin bietet Zugriff auf verschiedene Film Trailer und Clips der folgenden Quellen:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Die meisten sind verfügbar in 480p, 720p und 1080p</description>
-    <description lang="en">This Plugin provides access to Movie Trailers and Clips from the following sources:[CR]- apple.com[CR]- yahoo.com[CR]- youtube.com[CR]- moviefone.com[CR]- ign.com[CR]- hd-trailers.net[CR]- aol.com[CR]Most of them are available in 480p, 720p and 1080p</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
+  </statfeed>
 </addon>
 
 <addon id="plugin.video.icefilms" name="Icefilms" version="1.1.31"
@@ -993,33 +1103,53 @@ provider-name="Eldorado (originator: anarchintosh)">
   </statfeed>
 </addon>
 
-<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.14" provider-name="DudeHere">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson"/>
-        <import addon="script.module.elementtree"/>
-        <import addon="script.module.beautifulsoup"/>
-        <import addon="script.module.metahandler" version="1.0.0"/>
-        <import addon="script.module.t0mm0.common" version="1.1.0"/>
-	    <import addon="script.module.myconnpy"     version="0.3.2"/>
-	    <import addon="script.module.urlresolver"  version="0.0.1"/>
-        <import addon="script.common.plugin.cache" version="0.9.0"/>
-        <import addon="script.module.pysqlite2" version="1.0.0" />
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary>Stream links listed on Icefilms.info</summary>
-        <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
-    </extension>
-	<statfeed>
-    <working>mostly</working>
-	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
-	<maintainer>kozz</maintainer>
+<addon id="plugin.video.collegehumor" name="CollegeHumor" version="2.0.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.module.xbmcswift" version="0.2.0"/>
+    <import addon="plugin.video.youtube" version="3.3.0" />
+	<import addon="script.module.mechanize"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language>en</language>
+    <platform>all</platform>
+    <summary lang="en">Watch videos from www.collegehumor.com</summary>
+    <description lang="en">CollegeHumor finds funny videos from all over the internet plus some original videos that they made themself.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
     </statfeed>
+</addon>
+
+<addon id="plugin.audio.shoutcast" name="Shoutcast" version="1.3.0" provider-name="Team XBMC">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Shoutcast</summary>
+    <summary lang="hu">Shoutcast rádiók</summary>
+    <summary lang="pt">Rádio Shoutcast</summary>
+    <summary lang="nl">Shoutcast Radio</summary>
+    <description lang="en">SHOUTcast Radio offers thousands of free Internet radio stations from DJs and broadcasters around the world</description>
+    <description lang="hu">A SHOUTcast több ezer ingyenes internetes rádiót kínál DJ-k és rádióállomások jóvoltából.</description>
+    <description lang="pt">A rádio SHOUTcast oferece milhares de rádios livres existentes na Internet, mantidas por DJs de todo o mundo.</description>
+	<description lang="nl">SHOUTcast Radio biedt duizenden gratis Internet radiostatinos aan van DJs en zenders overal ter wereld</description>
+  </extension>
+  <statfeed>
+   <working>yes</working>
+	<notes>none</notes>
+    <maintainer>kozz</maintainer>
+  </statfeed>
 </addon>
 
 <addon id="plugin.video.iplayer"
@@ -1045,6 +1175,81 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
+<addon
+  id="plugin.video.tvkinonet"
+  version="1.0"
+  name="TV-KINO-NET"
+  provider-name="skatulskijean">
+  <requires>
+   <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>TV-Streams from the tv-kino-net site german and france language streams</summary>
+    <description></description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.dump" name="Dump.com" version="1.0.0" provider-name="sphere, Insayne">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.module.xbmcswift" version="0.2.0"/>
+	<import addon="script.module.mechanize"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Stream Dump.com</summary>
+    <description lang="de">Videos von Dump.com</description>
+    <description lang="en">The Content of Dump.com on your Media Center</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.audio.sky.fm"
+       name="Sky.fm"
+       version="2.1.0"
+       provider-name="qualisoft.dk - Tim C. Steinmetz">
+	<requires>
+		<import addon="xbmc.python" version="2.0"/>
+		<import addon="script.module.simplejson"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language>en</language>
+		<license>GPL 2.0</license>
+   		<summary lang="en">Sky.fm</summary>
+		<description lang="en">SKY.FM Radio features a wide variety of free streaming radio channels. Find your favorites among the best of each class - be it New Age, 80s, Smooth Jazz, New Age, Top40, Hip Hop, Oldies, 70s, Reggae, Lounge or many others inside.
+		</description>
+		<language/>
+	</extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
 <addon id="plugin.video.joeroganexperience" name="The Joe Rogan Experience" version="1.0.0" provider-name="Lex Toumbourou (lexandstuff), paddycarey">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -1066,139 +1271,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>mostly</working>
 	<notes>Vimeo Sources not playing but Ustream do</notes>
 	<maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.jtv.archives"
-       name="Jtv"
-       version="0.3.6"
-       provider-name="divingmule">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.common.plugin.cache" version="1.0.0"/>
-    <import addon="script.module.simplejson"/>
-	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Justin.tv</summary>
-    <description>Watch live and archived videos from justin.tv</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>Might show script error on first listing</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.kinotrailer.de"
-       name="kinostarts.de"
-       version="1.0"
-       provider-name="Skatulskijean">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-		<import addon='script.module.simplejson' version='2.0.10'/>
-		<import addon='script.module.parsedom' version='1.4.0'/>
-		<import addon='script.module.xbmcvfs' version='1.0.1'/>
-        <import addon="plugin.video.youtube" version="3.3.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary>watch trailer from kinostarts.de</summary>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon
-  id="plugin.video.movie25.com"
-  version="1.0.1"
-  name="Movie25.com"
-  provider-name="skatulskijean">
-  <requires>
-   <import addon="xbmc.python" version="2.0"/>
-   <import addon="script.module.urlresolver" version="1.0.0" />
-   <import addon="script.module.simplejson"   version="2.0.0"/>
-   <import addon="script.module.t0mm0.common" version="1.1.0"/>
-  </requires>
-  <extension
-    point="xbmc.python.pluginsource"
-    library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>access the resources from Movies25.com on your xbmc4xbox</summary>
-    <description>Play Movies from Movies25.com</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.musicvideojukebox"
-       name="Music Video Jukebox"
-       version="2.0.1"
-       provider-name="iZE">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-	<import addon='script.module.simplejson' version='2.0.10'/>
-	<import addon='script.module.parsedom' version='1.3.0'/>
-	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-    <import addon="plugin.video.youtube" version="3.3.0" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Search for an artist and it will play up to 150 music videos of that artist.</summary>
-    <description lang="en">This plugin uses Google Suggest API, Last.fm and YouTube to search for music videos of an artist, and plays up to 150 music videos of that artist.</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>YouTube addon must have been run once</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.myvideo_de" name="MyVideo.de" version="0.1.10" provider-name="Tristan Fischer (sphere@dersphere.de)">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.xbmcswift" version="0.2.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-	<import addon="script.module.mechanize" version="0.2.5"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <language>de</language>
-    <summary lang="en">video plugin for MyVideo.de</summary>
-    <summary lang="de">Video plugin für MyVideo.de</summary>
-    <description lang="en">This plugin provides access to all videos from the german video portal MyVideo.de</description>
-    <description lang="de">Dieses plugin bietet Zugriff auf alle Videos des deutschen Video-Portals MyVideo.de</description>
-    <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
     </statfeed>
 </addon>
 
@@ -1257,6 +1329,238 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
+<addon id="script.navi-x"
+       name="Navi-X"
+       version="3.7.6"
+       provider-name="Navi-X team">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <minversion>28764</minversion>
+    <summary lang="en">Media browser</summary>
+    <description lang="en">Media browser</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>This is the Script version with whufclee's Playlist as Home - Requires xbmc4xbox Build - r31660</notes>
+	<maintainer>whufclee</maintainer>
+  </statfeed>
+</addon>
+
+<addon id="plugin.video.jtv.archives"
+       name="Jtv"
+       version="0.3.6"
+       provider-name="divingmule">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.common.plugin.cache" version="1.0.0"/>
+    <import addon="script.module.simplejson"/>
+	<import addon='script.module.xbmcvfs' version='1.0.1'/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Justin.tv</summary>
+    <description>Watch live and archived videos from justin.tv</description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>Might show script error on first listing</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.audio.tuneinradio"
+       name="TuneIn Radio"
+       version="1.0.7"
+       provider-name="Brian Hornsby">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="bg">Радио TuneIn</summary>
+    <summary lang="en">TuneIn Radio</summary>
+    <description lang="bg">Радио TuneIn е безплатна услуга, която ви позволява да слушате всичко, независимо къде се намирате. Каквото желаете - музика, спорт или новини. Радио TuneIn предлага над 50 000 станции от които да избирате. Можете да намерите местните станции или да откриете нови станции от целия свят. Радио TuneIn ви отвежда точно където желаете да сте.</description>
+    <description lang="en">TuneIn Radio is a free service that lets you listen to anything in the world from wherever you are. Whether you want to hear music, sports, news or current events. TuneIn Radio offers over 50,000 stations for you to choose from. From finding local stations to discovering new stations from around the world, TuneIn Radio brings you to where you want to be.</description>
+    <description lang="es">TuneIn Radio es un servicio gratuito que te permite escuchar cualquier cosa del mundo desde donde te encuentres. Si deseas escuchar música, deportes, noticias o eventos actuales. TuneIn Radio ofrece más de 50,000 estaciones radiales para escoger, desde estaciones locales hasta descubrir nuevas estaciones alrededor del mundo, TuneIn Radio te lleva a donde tu quieras estar.</description>
+  </extension>
+  <statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
+  </statfeed>
+</addon>
+
+<addon id="plugin.audio.xbmchubmusic" name="XBMCHUB Music" version="2.0" provider-name="Mikey1234">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+	<import addon="script.module.simplejson"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">en</summary>
+    <description lang="en">Stream All Of Your Favourite Music</description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.14" provider-name="DudeHere">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson"/>
+        <import addon="script.module.elementtree"/>
+        <import addon="script.module.beautifulsoup"/>
+        <import addon="script.module.metahandler" version="1.0.0"/>
+        <import addon="script.module.t0mm0.common" version="1.1.0"/>
+	    <import addon="script.module.myconnpy"     version="0.3.2"/>
+	    <import addon="script.module.urlresolver"  version="0.0.1"/>
+        <import addon="script.common.plugin.cache" version="0.9.0"/>
+        <import addon="script.module.pysqlite2" version="1.0.0" />
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Stream links listed on Icefilms.info</summary>
+        <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
+    </extension>
+	<statfeed>
+    <working>mostly</working>
+	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
+	<maintainer>kozz</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.wimp" name="Wimp.com" version="2.0.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.module.xbmcswift2" version="1.2.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <language>en</language>
+        <platform>all</platform>
+        <summary lang="en">Wimp.com - Family Friendly Videos</summary>
+        <description lang="en">A collection of the best online videos. Our editors make sure clips added are family friendly.</description>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="script.module.xbmcvfs" name="xbmcvfs emulator"
+       version="1.0.2" provider-name="Frost (passion-xbmc.org)">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.module"
+               library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Module emulates XBMC xbmcvfs module.</summary>
+        <description lang="en">Module emulates XBMC xbmcvfs module.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.bestofyoutube_com" name="BestOfYoutube.com" version="1.0.6" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+		<import addon='script.module.simplejson' version='2.0.10'/>
+		<import addon='script.module.parsedom' version='1.4.0'/>
+		<import addon='script.module.xbmcvfs' version='1.0.1'/>
+        <import addon="plugin.video.youtube" version="3.3.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Only the best Youtube clips</summary>
+        <summary lang="de">Nur die besten Youtube Videos</summary>
+        <language>en</language>
+        <description lang="en">Only the best Youtube clips</description>
+        <description lang="de">Nur die besten Youtube Videos</description>
+    <platform>all</platform>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.freecable"
+       name="Free Cable"
+       version="0.5.2"
+       provider-name="BlueCop">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.module.demjson" version="1.4"/>
+    <import addon="script.module.coveapi" version="0.2"/>
+	<import addon="script.module.pysqlite2" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>US station aggregator</summary>
+    <description>Free Cable is the ultimate aphrodisiac - The Cable Guy</description>
+    <platform>all</platform>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>kozz</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="script.module.mechanize"
+       name="Mechanize"
+       version="0.2.5"
+       provider-name="Tristan Fischer (sphere)">
+  <requires>
+    <import addon="xbmc.python"
+            version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary>Stateful programmatic web browsing in Python, after Andy Lester’s Perl module WWW::Mechanize.</summary>
+    <description>packed for xbmc from https://github.com/jjlee/mechanize</description>
+    <license>BSD</license>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.navi-x" name="Navi-X"
 	version="0.3.6" provider-name="cbb">
 	<requires>
@@ -1279,39 +1583,24 @@ provider-name="Eldorado (originator: anarchintosh)">
   </statfeed>
 </addon>
 
-<addon id="plugin.video.netzkino_de" name="Netzkino.de" version="0.0.3" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="plugin.video.borsentv.dk" version="1.0.4" name="Borsen TV" provider-name="twinther [tommy@winther.nu]">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
-        <import addon="script.module.xbmcswift2" version="1.2.0"/>
+        <import addon="script.module.buggalo" version="1.0.1"/>
+		<import addon="script.module.simplejson" version="2.0.10"/>
+		<import addon="script.module.mechanize" version="0.2.5"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <language>de</language>
+        <summary lang="en">Borsen TV</summary>
+        <description lang="en">Borsen TV is Dagbladet Borsens TV station on the internet that focuses on business and finance, but also covers politics and culture among other things.[CR][CR]If you have comments or suggestions for this addon, please feel free to participate in the debate on my blog at http://tommy.winther.nu</description>
+        <summary lang="da">Børsen TV</summary>
+        <description lang="da">Børsen TV er Dagbladet Børsens TV kanal på nettet som har fokus på erhvervs- og finansstof, men som også dækker politik, kultur og samfundsøkonomi.[CR][CR]Har du kommentarer, ris eller ros til denne addon er du velkommen til at deltage i debatten på min blog på http://tommy.winther.nu</description>
+        <license>GPL 2.0</license>
         <platform>all</platform>
-        <!-- translation commit: 84113ddafdde2c18eac5fd9b9b8144abff06ccf9 -->
-        <summary lang="be">Free german movies</summary>
-        <summary lang="de">Konstenlose Spielfilme</summary>
-        <summary lang="el">Δωρεάν γερμανικές ταινίες</summary>
-        <summary lang="en">Free german movies</summary>
-        <summary lang="es">Películas alemanas gratis</summary>
-        <summary lang="ko">무료 독일 영화</summary>
-        <summary lang="lt">NVokiečių filmai dykai/nemokamai</summary>
-        <summary lang="pl">Darmowe filmy niemieckie</summary>
-        <summary lang="pt_BR">Filmes alemães gratuítos</summary>
-        <summary lang="sv">Gratis tyska filmer</summary>
-        <description lang="be">Netzkino.de is the first legal and free movie portal in germany</description>
-        <description lang="de">Netzkino.de ist das erste und einzige legale + kostenlose Spielfilmportal im deutschsprachigen Raum</description>
-        <description lang="el">Το Netzkino.de είναι το πρώτο νόμιμο portal δωρεάν ταινιών στη Γερμανία</description>
-        <description lang="en">Netzkino.de is the first legal and free movie portal in germany</description>
-        <description lang="es">Netzkino.de es el primer portal legal y gratuito de películas en Alemania</description>
-        <description lang="ko">Netzkino.de는 독일의 합법적이 무료 영화 포털입니다.</description>
-        <description lang="lt">Netzkino.de yra pirmasis juridiškai įteisintas nemokamų filmų portalas Vokietijoje</description>
-        <description lang="pl">Netzkino.de to pierwszy legalny i darmowy portal w niemczech</description>
-        <description lang="pt_BR">Netzkino.de é o primeiro portal legal e gratuíto de filmes na Alemanha.</description>
-        <description lang="sv">Netzkino.de är den första gratis lagliga filmportalen i Tyskland</description>
+        <language>da</language>
     </extension>
 	<statfeed>
     <working>yes</working>
@@ -1343,51 +1632,27 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
-<addon id="plugin.video.streamallthis"
-       version="1.0.4"
-       name="StreamAllThis"
-       provider-name="skatulskijean">
-  <requires>
-   <import addon="xbmc.python" version="2.0"/>
-   <import addon="script.module.urlresolver" version="1.0.0" />
-   <import addon="script.module.simplejson"   version="2.0.10"/>
-   <import addon="script.module.t0mm0.common" version="1.1.0"/>
-   <import addon='script.module.mechanize' version='0.2.5'/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-             library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>access series from streamallthis on your xbmc4xbox</summary>
-    <description>Watch Series from StreamAllThis</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-  <working>yes</working>
-  <notes>none</notes>
-  <maintainer>skatulskijean</maintainer>
-  </statfeed>
-</addon>
-
-<addon
-    id="plugin.video.the.trailers"
-    name="The Trailers"
-    version="0.1.1"
-    provider-name="Martijn (orginal: nuka1195) Xbox Version Skatulskijean">
-    <!-- Code taken from AMT-L and original creator ="nuka1195" -->
+<addon id="plugin.video.dr.dk.bonanza" version="2.1.4" name="DR.dk Bonanza" provider-name="twinther [tommy@winther.nu]">
     <requires>
-        <import addon="xbmc.python"                 version="2.0"/>
-        <import addon="script.module.elementtree"   version="1.2.7"/>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.module.buggalo" version="1.1.2"/>
+		<import addon="script.module.mechanize"/>
+
     </requires>
-    <extension point="xbmc.python.pluginsource"     library="addon.py">
+    <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
+        <summary lang="en">Best and worst from DR's archives</summary>
+        <summary lang="da">Det bedste og værste fra DR's arkiver</summary>
+        <description lang="en">On the 16th of January 2008 DR (Danish Broadcasting Corporation) opened up its great archive to what became Bonanza. Here you can see some of the best - and worst, of what has been produced during the years.</description>
+        <description lang="da">16. januar 2008 åbnede DR for sit store arkiv med Bonanza. Her kan du se lidt af det bedste - og værste af det, der er blevet produceret i årenes løb.</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
+        <disclaimer lang="da">Nogle dele af denne addon er muligvis ikke lovlig i dit land - kontroller venligst dine lokale love.</disclaimer>
+        <license>GPL 2.0</license>
         <platform>all</platform>
-        <summary lang="en">Watch movie trailers</summary>
-        <description lang="en">Watch current movie trailers from[CR]- http://trailers.apple.com[CR]</description>
-        <disclaimer lang="en">Only the most recent 100 or so trailers are listed.</disclaimer>
+        <language>da</language>
     </extension>
 	<statfeed>
     <working>yes</working>
@@ -1396,28 +1661,154 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
-<addon
-  id="plugin.video.tvkinonet"
-  version="1.0"
-  name="TV-KINO-NET"
-  provider-name="skatulskijean">
+<addon id="script.module.coveapi"
+       name="Cove API"
+       version="0.2"
+       provider-name="github.com/pbs/python-coveapi">
   <requires>
-   <import addon="xbmc.python" version="2.0"/>
+    <import addon="xbmc.python" version="1.0"/>
   </requires>
-  <extension
-    point="xbmc.python.pluginsource"
-    library="default.py">
-   <provides>video</provides>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.c64-longplays"
+       name="C64-Longplays"
+       version="0.2.0"
+       provider-name="Jools">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="addon.py">
+        <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>TV-Streams from the tv-kino-net site german and france language streams</summary>
-    <description></description>
+    <platform>all</platform>
+    <summary lang="en">The C64 Gamevideoarchive</summary>
+    <description lang="en">... presents a cross section of the most popular and obscure games for the C64 sorted by year of release all of which superseed the videos of THE ORIGINAL SERIES. Any questions concerning the archive are most likey answered in the FAQ. If you want more info on a game before downloading the video just click on the lemon to go the the game's detail page over at Lemon 64. If you want to contribute please check out which game videos are still wanted or have been submitted already.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>kozz</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.audio.radio_de" name="Radio" version="2.0.1" provider-name="Tristan Fischer (sphere@dersphere.de)">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.xbmcswift2" version="1.2.0" />
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <platform>all</platform>
+    <summary lang="en">Access &gt;4000 radio broadcasts</summary>
+    <summary lang="de">Zugriff auf &gt;4000 Radiosender</summary>
+    <summary lang="fr">Ecoutez plus de 4000 stations de radio</summary>
+    <summary lang="es">Escuche más de 4.000 emisoras de radio</summary>
+    <description lang="en">Music plugin to access over 4000 international radio broadcasts from rad.io, radio.de and radio.fr[CR]Currently features[CR]- English, german and french translated[CR]- Browse stations by location, genre, topic, country, city and language[CR]- Search for stations[CR]- 115 genres, 59 topics, 94 countrys, 1010 citys, 63 languages</description>
+    <description lang="de">Das Radio im Internet mit über 4000 Radiosendern, Internetradio Stationen, gratis Streams und Podcasts live von rad.io, radio.de und radio.fr.[CR]Features[CR]- Auf deutsch, englisch und französisch übersetzt[CR]- Sortiert nach: in der nähe, Genre, Thema, Land und Sprache[CR]- nach Sendern suchen[CR]- 115 Genre, 59 Themen, 94 Länder, 1010 Städte, 63 Sprachen</description>
+    <description lang="fr">Plugin musical pour écouter plus de 4000 stations de radio internationales de rad.io, radio.de et radio.fr[CR]Fonctionnalités[CR]- Traduit en Anglais, Allemand et Français[CR]- Parcourir les stations par genre, thème, pays, ville et langue[CR]- Recherche de stations[CR]- 115 genres, 59 thèmes, 94 pays, 1010 villes, 63 langues</description>
+    <description lang="es">Plugin de música para escuchar más de 4.000 emisoras de radio internacionales desde rad.io, radio.de y radio.fr.[CR]Características:[CR]- Traducciones al inglés, alemán, francés y español.[CR]- Buscador de emisoras por ubicación, género, tema, país, ciudad o idioma.[CR]- Buscador de emisoras.[CR]- 115 géneros, 59 temas, 94 países, 1.010 ciudades, 63 idiomas.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="script.module.simplejson"
+       name="simplejson"
+       version="2.0.10"
+       provider-name="code.google.com/simplejson">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.xstream"
+	name="xStream"
+	version="2.0.17"
+	provider-name="MaxMustermann">
+  <requires>
+    <import addon="script.module.urlresolver" version="1.0.0" />
+	<import addon="script.module.t0mm0.common" version="1.1.0" />
+	<import addon='script.module.simplejson' version='2.0.10'/>
+	<import addon='script.module.mechanize' version='0.2.5'/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">xStream</summary>
+    <description lang="de">xStream ist ein Plugin, welches mit eigenen Plugins erweitert werden kann. Hiermit kann man Filme, Serien, etc. per Stream anschauen</description>
+    <summary lang="en">xStream</summary>
+    <description lang="en">Plugin to watch streams from various film an series sites.</description>
     <platform>all</platform>
   </extension>
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.myvideo_de" name="MyVideo.de" version="0.1.10" provider-name="Tristan Fischer (sphere@dersphere.de)">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.xbmcswift" version="0.2.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+	<import addon="script.module.mechanize" version="0.2.5"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language>de</language>
+    <summary lang="en">video plugin for MyVideo.de</summary>
+    <summary lang="de">Video plugin für MyVideo.de</summary>
+    <description lang="en">This plugin provides access to all videos from the german video portal MyVideo.de</description>
+    <description lang="de">Dieses plugin bietet Zugriff auf alle Videos des deutschen Video-Portals MyVideo.de</description>
+    <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>skatulskijean</maintainer>
+    </statfeed>
+</addon>
+
+<addon id="plugin.video.ustvnow" version="0.3.0" name="ustvnow" provider-name="t0mm0">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Plays live streams and recordings from ustvnow.com</summary>
+        <description>Live streaming US TV. You MUST log in to view streams (see addon settings). You can also play any recordings you have made on ustvnow.com</description>
+        <platform>all</platform>
+    </extension>
+	<statfeed>
+    <working>yes</working>
+	<notes>none</notes>
+	<maintainer>kozz</maintainer>
     </statfeed>
 </addon>
 
@@ -1448,100 +1839,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
-<addon id="plugin.video.ustvnow" version="0.3.0" name="ustvnow" provider-name="t0mm0">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>Plays live streams and recordings from ustvnow.com</summary>
-        <description>Live streaming US TV. You MUST log in to view streams (see addon settings). You can also play any recordings you have made on ustvnow.com</description>
-        <platform>all</platform>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.vevo"
-       name="VEVO"
-       version="0.7.3"
-       provider-name="BlueCop">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-	<import addon="script.module.simplejson"/>
-    <import addon="script.module.demjson" version="1.4"/>
-    <import addon="script.module.mechanize" version="0.2.5"/>
-	<import addon="script.module.pysqlite2"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-  <provides>video audio</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Music Videos from VEVO</summary>
-    <description>Music Videos from VEVO</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="0.2.9">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0" />
-    <import addon="script.module.urlresolver" version="1.0.10"/>
-	<import addon="script.module.t0mm0.common" version="1.1.0"/>
-	<import addon="script.module.simplejson"   version="2.0.0"/>
-	<import addon="script.module.xbmcvfs"/>
-  </requires>
-  <extension library="default.py" point="xbmc.python.pluginsource">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary>Stream TV Shows from Videobull.com Directly to your xbmc device</summary>
-    <description>Visit xbmc4xbox.org.uk/forum/ for support. Stream TV Shows from Videobull.com Directly to your xbmc device</description>
-    <nofanart>true</nofanart>
-    <nochangelog>true</nochangelog>
-	</extension>
-	<statfeed>
-      <working>yes</working>
-	  <notes>none</notes>
-      <maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.vimcasts" name="VimCasts" provider-name="Jonathan Beluch (jbel)" version="1.1">
-  <requires>
-    <import addon="xbmc.python" version="2.0" />
-    <import addon="script.module.xbmcswift2" version="1.1.1" />
-	<import addon="script.module.simplejson"/>
-  </requires>
-  <extension library="addon.py" point="xbmc.python.pluginsource">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <language />
-    <summary>Watch screencasts about Vim, the text editor, from http://vimcasts.org</summary>
-    <description>Vimcasts publishes free screencasts about Vim, the text editor. Vim has been around in one form or another for over 20 years. The learning curve is famously difficult, but those who manage to climb it insist that nothing can match Vim's modal editing model for speed and efficiency.[CR][CR]The patterns of use that make a Vim master productive are not easily discovered. Trial and error will get you so far, but the best way to learn is to watch an experienced Vim user at work. By providing short videos with digestible advice, Vimcasts gives you something you can take away and use immediately to improve your productivity. Vimcasts aims to be the expert Vim colleague you never had.[CR][CR]Vimcasts is produced by Drew Neil (aka nelstrom), who came to Vim from TextMate. He made the switch when starting work at a company that uses Linux workstations. His choice of text editor was influenced by colleagues.</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
 <addon id='plugin.video.vimeo' version='2.4.0' name='Vimeo' provider-name='TheCollective'>
   <requires>
     <import addon='xbmc.python' version='2.0'/>
@@ -1565,302 +1862,5 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
     </statfeed>
-</addon>
-
-<addon id="plugin.video.wimp" name="Wimp.com" version="2.0.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
-        <import addon="script.module.xbmcswift2" version="1.2.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <language>en</language>
-        <platform>all</platform>
-        <summary lang="en">Wimp.com - Family Friendly Videos</summary>
-        <description lang="en">A collection of the best online videos. Our editors make sure clips added are family friendly.</description>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.xstream"
-	name="xStream"
-	version="2.0.17"
-	provider-name="MaxMustermann">
-  <requires>
-    <import addon="script.module.urlresolver" version="1.0.0" />
-	<import addon="script.module.t0mm0.common" version="1.1.0" />
-	<import addon='script.module.simplejson' version='2.0.10'/>
-	<import addon='script.module.mechanize' version='0.2.5'/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">xStream</summary>
-    <description lang="de">xStream ist ein Plugin, welches mit eigenen Plugins erweitert werden kann. Hiermit kann man Filme, Serien, etc. per Stream anschauen</description>
-    <summary lang="en">xStream</summary>
-    <description lang="en">Plugin to watch streams from various film an series sites.</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id='plugin.video.youtube' version='3.3.1' name='YouTube' provider-name='TheCollective'>
-  <requires>
-    <import addon='xbmc.python' version='2.0'/>
-    <import addon='script.module.simplejson' version='2.0.10'/>
-    <import addon='script.common.plugin.cache' version='1.3.0'/>
-    <import addon='script.module.parsedom'/>
-    <import addon='script.module.xbmcvfs' version='1.0.1'/>
-  </requires>
-  <extension point='xbmc.python.pluginsource' library='default.py'>
-        <provides>video</provides>
-  </extension>
-  <extension point='xbmc.addon.metadata'>
-    <platform>all</platform>
-    <summary lang='en'>YouTube video plugin</summary>
-    <description lang='en'>Plugin that lets you browse and play videos from everybody's favorite video site!</description>
-    <disclaimer lang='en'>Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-    <summary lang='bg'>Видео добавка за YouTube</summary>
-    <description lang='bg'>Добавката ви позволява да разглеждате и гледате видео клипове от любимия на на всички видео сайт!</description>
-    <disclaimer lang='bg'>Някои части от добавката може да са незаконни в държавата, в която се намирате - моля, проверете местните закони, преди да я инсталирате.</disclaimer>
-  </extension>
-  <statfeed>
-    <working>mostly</working>
-	<notes>The user login is broken, Search and feeds work well</notes>
-	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="script.module.buggalo" name="Buggalo Exception Collector" version="1.0.1" provider-name="twinther [tommy@winther.nu]">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
-		<import addon="script.module.mechanize" version="0.2.5"/>
-    </requires>
-    <extension point="xbmc.python.module" library="lib"/>
-    <extension point="xbmc.addon.metadata">
-        <summary>Automatic exception collector</summary>
-        <description>This module can collect various information about an exception and the users system such as XBMC and Python versions, etc. and submit it to a url.</description>
-        <license>GPLv2</license>
-        <platform>all</platform>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-    </statfeed>
-</addon>
-
-<addon id="script.module.coveapi"
-       name="Cove API"
-       version="0.2"
-       provider-name="github.com/pbs/python-coveapi">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.module.demjson"
-       name="demjson"
-       version="1.4"
-       provider-name="deron.meranda.us">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.module.mechanize"
-       name="Mechanize"
-       version="0.2.5"
-       provider-name="Tristan Fischer (sphere)">
-  <requires>
-    <import addon="xbmc.python"
-            version="2.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <summary>Stateful programmatic web browsing in Python, after Andy Lester’s Perl module WWW::Mechanize.</summary>
-    <description>packed for xbmc from https://github.com/jjlee/mechanize</description>
-    <license>BSD</license>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id='script.module.parsedom' version='1.4.0' name='Parsedom for xbmc plugins' provider-name='TheCollective'>
-  <requires>
-    <import addon='xbmc.python' version='2.0'/>
-  </requires>
-  <extension point='xbmc.addon.metadata'>
-    <platform>all</platform>
-    <summary lang='en'>Parsedom for xbmc plugins.</summary>
-  </extension>
-  <extension point='xbmc.python.module' library='lib' />
-</addon>
-
-<addon id="script.module.pysqlite2" name="Python SQLite2 library for XBOX" version="1.0.0" provider-name="Gerhard Haring">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-    </requires>
-    <extension point="xbmc.python.module" library="lib"/>
-    <extension point="xbmc.addon.metadata">
-        <platform>xbox</platform>
-        <summary lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</summary>
-        <description lang="en">pysqlite2/dbapi2.py: the DB-API 2.0 interface for XBOX</description>
-    </extension>
-</addon>
-
-<addon id="script.module.simple.downloader" name="Simple Downloader for xbmc plugins" provider-name="TheCollective" version="1.9.4">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0" />
-    <import addon="script.common.plugin.cache" version="2.5.0" />
-    <import addon="script.module.parsedom" version="2.5.1" />
-  </requires>
-  <extension library="default.py" point="xbmc.service" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Simple downloader for xbmc plugins.</summary>
-  </extension>
-  <extension library="lib" point="xbmc.python.module" />
-</addon>
-
-<addon id="script.module.simplejson"
-       name="simplejson"
-       version="2.0.10"
-       provider-name="code.google.com/simplejson">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.module.urlresolver"
-     name="urlresolver"
-     version="1.0.10"
-     provider-name="XBMCHub.com">
-  <requires>
-    <import addon="xbmc.python" version="2.0" />
-    <import addon="script.module.t0mm0.common" version="1.0.0"/>
-    <import addon="plugin.video.youtube" version="3.3.0"/>
-  </requires>
-  <extension point="xbmc.python.module" library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Resolve common video host URL's to be playable in XBMC.</summary>
-    <description lang="en">Resolve common video host URL's to be playable in XBMC, simplify addon development of video plugins requiring multi video hosts.</description>
-  </extension>
-</addon>
-
-<addon id="script.module.xbmcaddon" name="xbmcaddon emulator" version="1.2.0" provider-name="Team XBMC4XBOX">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-    </requires>
-    <extension point="xbmc.python.module" library="lib"/>
-    <extension point="xbmc.addon.metadata">
-        <platform>xbox</platform>
-        <summary lang="en">Module emulates XBMC xbmcaddon module.</summary>
-        <description lang="en">Module emulates XBMC xbmcaddon module.</description>
-    </extension>
-</addon>
-
-<addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.0" provider-name="Jonathan Beluch (jbel)">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-  </requires>
-  <extension point="xbmc.python.module" library="lib"/>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel)" version="1.3">
-  <requires>
-    <import addon='script.module.simplejson' version='2.0.10'/>
-    <import addon="xbmc.python" version="2.0" />
-  </requires>
-  <extension library="lib" point="xbmc.python.module" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.module.xbmcvfs" name="xbmcvfs emulator"
-       version="1.0.2" provider-name="Frost (passion-xbmc.org)">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-    </requires>
-    <extension point="xbmc.python.module"
-               library="lib"/>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en">Module emulates XBMC xbmcvfs module.</summary>
-        <description lang="en">Module emulates XBMC xbmcvfs module.</description>
-        <platform>all</platform>
-    </extension>
-</addon>
-
-<addon id="script.module.xmltodict"
-       name="xmltodict"
-       version="0.2.0"
-       provider-name="Tristan Fischer (sphere@dersphere.de)">
-  <requires>
-    <import addon="xbmc.python"
-            version="2.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <language></language>
-    <summary lang="en">Python helper module</summary>
-    <description lang="en">xmltodict is a Python module that makes working with XML feel like you are working with JSON, as in this "spec".[CR]Original: https://github.com/martinblech/xmltodict[CR]Author: martinblech@gmail.com</description>
-    <license>MIT</license>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.navi-x"
-       name="Navi-X"
-       version="3.7.6"
-       provider-name="Navi-X team">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.script"
-             library="default.py" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <minversion>28764</minversion>
-    <summary lang="en">Media browser</summary>
-    <description lang="en">Media browser</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>This is the Script version with whufclee's Playlist as Home - Requires xbmc4xbox Build - r31660</notes>
-	<maintainer>whufclee</maintainer>
-  </statfeed>
 </addon>
 </addons>
