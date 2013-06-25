@@ -1,9 +1,12 @@
 diff --git a/addon.xml b/addon.xml
-index 1e43186..33ca30c 100644
+index 1e43186..b6c497e 100644
 --- a/addon.xml
 +++ b/addon.xml
-@@ -3,7 +3,12 @@
- <addon id="plugin.video.1channel" version="2.0.1" name="1Channel" provider-name="Bstrdsmkr">
+@@ -1,9 +1,14 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!--suppress ALL -->
+-<addon id="plugin.video.1channel" version="2.0.1" name="1Channel" provider-name="Bstrdsmkr">
++<addon id="plugin.video.1channel" version="2.0.2" name="1Channel" provider-name="Bstrdsmkr">
      <requires>
          <import addon="xbmc.python" version="2.0"/>
 -        <import addon="script.module.urlresolver" version="1.0.0"/>
@@ -29,7 +32,7 @@ index 1e43186..33ca30c 100644
 +    </statfeed>
 +</addon>
 diff --git a/default.py b/default.py
-index d6a6057..3f12b38 100644
+index 60079c1..4b84f24 100644
 --- a/default.py
 +++ b/default.py
 @@ -98,7 +98,7 @@ PREPARE_ZIP = False
@@ -50,7 +53,15 @@ index d6a6057..3f12b38 100644
          body = response.read()
          body = unicode(body, 'iso-8859-1')
          parser = HTMLParser.HTMLParser()
-@@ -619,7 +619,7 @@ def AddonMenu():  # homescreen
+@@ -497,7 +497,6 @@ def TrackProgress(player):
+ 
+ 
+ def ChangeWatched(imdb_id, video_type, name, season, episode, year='', watched='', refresh=False):
+-    __metaget__ = metahandlers.MetaData(preparezip=prepare_zip)
+     __metaget__.change_watched(video_type, name, imdb_id, season=season, episode=episode, year=year, watched=watched)
+     if refresh:
+         xbmc.executebuiltin("XBMC.Container.Refresh")
+@@ -620,10 +619,11 @@ def AddonMenu():  # homescreen
      init_database()
      if has_upgraded():
          _1CH.log('Showing update popup')
@@ -59,7 +70,55 @@ index d6a6057..3f12b38 100644
          adn = xbmcaddon.Addon('plugin.video.1channel')
          upgrade_db()
          fix_existing_strms()
-@@ -1090,7 +1090,7 @@ def migrate_favs_to_web():
++        adn.setSetting('domain', 'http://www.primewire.ag')
+         adn.setSetting('old_version', _1CH.get_version())
+     _1CH.add_directory({'mode': 'BrowseListMenu', 'section': ''}, {'title': 'Movies'}, img=art('movies.png'),
+                        fanart=art('fanart.png'))
+@@ -842,14 +842,18 @@ def TVShowSeasonList(url, title, year, old_imdb, old_tvdb=''):
+         if META_ON:
+             if not old_imdb and new_imdb:
+                 _1CH.log('Imdb ID not recieved from title search, updating with new id of %s' % new_imdb)
++                # TODO: WTF is up with xbmc.log() and utf-8 all of a sudden?
++                # print 'title is unicode: %s' % isinstance(title, unicode)
++                # print _1CH.log(title)
+                 try:
+                     _1CH.log('Title: %s Old IMDB: %s Old TVDB: %s New IMDB %s Year: %s' % (
+                         title, old_imdb, old_tvdb, new_imdb, year))
+                     __metaget__.update_meta('tvshow', title, old_imdb, old_tvdb, new_imdb)
+-                except:
++                except Exception, e:
+                     _1CH.log('Error while trying to update metadata with:')
+-                    _1CH.log('Title: %s Old IMDB: %s Old TVDB: %s New IMDB %s Year: %s' % (
+-                        title, old_imdb, old_tvdb, new_imdb, year))
++                    # print 'Title: %s Old IMDB: %s Old TVDB: %s New IMDB %s Year: %s' % (
++                    #     title, old_imdb, old_tvdb, new_imdb, year)
++                    print str(e)
+                 imdbnum = new_imdb
+ 
+             season_meta = __metaget__.get_seasons(title, imdbnum, season_nums)
+@@ -1021,10 +1025,12 @@ def browse_favorites_website(section):
+         folder = _1CH.get_setting('auto-play') == 'false'
+         subs = []
+ 
+-    pattern = '''<div class="index_item"> <a href="(.+?)"><img src="(.+?(\d{4})\.jpg)" width="150" border="0">.+?<td align="center"><a href=".+?">(.+?)</a></td>.+?class="favs_deleted"><a href=["'](.+?)["'] ref=["']delete_fav["']'''
++    pattern = '''<div class="index_item"> <a href="(.+?)"><img src="(.+?(\d{1,4})\.jpg)" width="150" border="0">.+?<td align="center"><a href=".+?">(.+?)</a></td>.+?class="favs_deleted"><a href=\'(.+?)\' ref=\'delete_fav\''''
+     regex = re.compile(pattern, re.IGNORECASE | re.DOTALL)
+     for item in regex.finditer(html):
+         link, img, year, title, delete = item.groups()
++        if len(year) != 4:
++            year = ''
+ 
+         runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(
+             {'mode': 'DeleteFav', 'section': section, 'title': title, 'url': link, 'year': year})
+@@ -1041,6 +1047,7 @@ def browse_favorites_website(section):
+ 
+ 
+ def migrate_favs_to_web():
++    init_database()
+     sql = 'SELECT type, name, url, year FROM favorites ORDER BY name'
+     if DB == 'mysql':
+         db = orm.connect(DB_NAME, DB_USER, DB_PASS, DB_ADDR, buffered=True)
+@@ -1087,7 +1094,7 @@ def migrate_favs_to_web():
      # failures = [('title1','url1'), ('title2','url2'), ('title3','url3'), ('title4','url4'), ('title5','url5'), ('title6','url6'), ('title7','url7')]
      if ret:
          if failures:
@@ -68,7 +127,7 @@ index d6a6057..3f12b38 100644
              sql_delete = 'DELETE FROM favorites WHERE url NOT IN (SELECT url FROM favorites WHERE url IN (%s))'
              sql_delete %= params
              _1CH.log(sql_delete)
-@@ -1213,13 +1213,14 @@ def zipdir(basedir, archivename):
+@@ -1210,13 +1217,14 @@ def zipdir(basedir, archivename):
      from zipfile import ZipFile, ZIP_DEFLATED
  
      assert os.path.isdir(basedir)
@@ -90,7 +149,7 @@ index d6a6057..3f12b38 100644
  
  
  def extract_zip(src, dest):
-@@ -1761,10 +1762,17 @@ def multikeysort(items, columns, functions=None, getter=itemgetter):
+@@ -1758,10 +1766,17 @@ def multikeysort(items, columns, functions=None, getter=itemgetter):
      if not functions: functions = {}
      comparers = []
      for col in columns:
@@ -110,7 +169,36 @@ index d6a6057..3f12b38 100644
  
      def comparer(left, right):
          for func, polarity in comparers:
-@@ -2048,6 +2056,7 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
+@@ -1959,7 +1974,6 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
+                    'img': img, 'year': year}
+         runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(queries)
+         menu_items.append(('Subscribe', runstring), )
+-        print menu_items
+     else:
+         plugin_str = 'plugin://plugin.video.couchpotato_manager'
+         plugin_str += '/movies/add?title=%s' % title
+@@ -1992,11 +2006,17 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
+ 
+         if meta['overlay'] == 6:
+             label = 'Mark as watched'
++            new_status = 7
+         else:
+             label = 'Mark as unwatched'
+-        runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(
+-            {'mode': 'ChangeWatched', 'title': title, 'imdbnum': meta['imdb_id'], 'video_type': video_type,
+-             'year': year})
++            new_status = 6
++
++        queries = {'mode': 'ChangeWatched', 'title': title, 'imdbnum': meta['imdb_id'], 'video_type': video_type,
++                   'year': year, 'watched': new_status}
++        if video_type in ('tv', 'tvshow', 'episode'):
++            queries['season'] = season
++            queries['episode'] = episode
++        runstring = 'RunPlugin(%s)' % _1CH.build_plugin_url(queries)
+         menu_items.append((label, runstring,))
+ 
+         fanart = ''
+@@ -2040,6 +2060,7 @@ def build_listitem(video_type, title, year, img, resurl, imdbnum='', season='',
  
  
  def upgrade_db():
@@ -118,7 +206,7 @@ index d6a6057..3f12b38 100644
      _1CH.log('Upgrading db...')
      for table in ('subscriptions', 'favorites'):
          sql = "UPDATE %s SET url = replace(url, 'http://www.1channel.ch', '')" % table
-@@ -2060,7 +2069,6 @@ def upgrade_db():
+@@ -2052,7 +2073,6 @@ def upgrade_db():
          db.commit()
          db.close()
  
@@ -126,7 +214,7 @@ index d6a6057..3f12b38 100644
  def fix_existing_strms():
      for folder in ('tvshow-folder', 'movie-folder'):
          save_path = _1CH.get_setting(folder)
-@@ -2070,17 +2078,18 @@ def fix_existing_strms():
+@@ -2062,17 +2082,18 @@ def fix_existing_strms():
                  if current_file.endswith('.strm'):
                      _1CH.log("processing file: %s" % current_file)
                      full_path = os.path.join(root, current_file)
@@ -156,7 +244,7 @@ index d6a6057..3f12b38 100644
  
  
  mode = _1CH.queries.get('mode', None)
-@@ -2203,4 +2212,4 @@ elif mode == 'migrateFavs':
+@@ -2195,4 +2216,4 @@ elif mode == 'migrateFavs':
      migrate_favs_to_web()
  elif mode == 'Help':
      _1CH.log('Showing help popup')
@@ -174,3 +262,100 @@ index 1b5ccfe..1514913 100644
          <setting id="meta-path" type="action" label="30601" enable="!eq(-1,false)"
                   action="RunPlugin(plugin://plugin.video.1channel/default.py?mode=9988)" option="close"/>
          <setting id="enable-fanart" type="bool" label="30602" enable="!eq(-2,false)" default="true"/>
+diff --git a/service.py b/service.py
+index 24bf434..07cd3c6 100644
+--- a/service.py
++++ b/service.py
+@@ -1,5 +1,11 @@
+ import os
++
++# workaround for bug in Python imports
+ import datetime
++# noinspection PyUnresolvedReferences
++import _strptime
++# noinspection PyUnresolvedReferences
++import time
+ 
+ import xbmc
+ import xbmcgui
+@@ -117,7 +123,7 @@ class Service(xbmc.Player):
+             else:
+                 db = database.connect(db_dir)
+             cur = db.cursor()
+-            cur.execute(sql, (self.video_type, self.title, self.season, self.episode, self.year))
++            cur.execute(sql, (self.video_type, unicode(self.title, 'utf-8'), self.season, self.episode, self.year))
+             bookmark = cur.fetchone()
+             db.close()
+             if bookmark:
+@@ -144,7 +150,11 @@ class Service(xbmc.Player):
+             elif ((playedTime / self._totalTime) > min_watched_percent) and (
+                         self.video_type == 'movie' or (self.season and self.episode)):
+                 xbmc.log('1Channel: Service: Threshold met. Marking item as watched')
+-                ChangeWatched(self.imdb, self.video_type, self.title, self.season, self.episode, self.year, watched=7)
++                if self.video_type == 'movie':
++                    videotype = 'movie'
++                else:
++                    videotype = 'episode'
++                ChangeWatched(self.imdb, videotype, self.title, self.season, self.episode, self.year, watched=7)
+                 sql = 'DELETE FROM bookmarks WHERE video_type=? AND title=? AND season=? AND episode=? AND year=?'
+                 if DB == 'mysql':
+                     sql = sql.replace('?', '%s')
+@@ -152,7 +162,7 @@ class Service(xbmc.Player):
+                 else:
+                     db = database.connect(db_dir)
+                 cur = db.cursor()
+-                cur.execute(sql, (self.video_type, self.title, self.season, self.episode, self.year))
++                cur.execute(sql, (self.video_type, unicode(self.title, 'utf-8'), self.season, self.episode, self.year))
+                 db.commit()
+                 db.close()
+             else:
+@@ -165,7 +175,7 @@ class Service(xbmc.Player):
+                     sql = 'INSERT or ' + sql
+                     db = database.connect(db_dir)
+                 cur = db.cursor()
+-                cur.execute(sql, (self.video_type, self.title, self.season,
++                cur.execute(sql, (self.video_type, unicode(self.title, 'utf-8'), self.season,
+                                   self.episode, self.year, playedTime))
+                 db.commit()
+                 db.close()
+@@ -190,7 +200,7 @@ while not xbmc.abortRequested:
+                 xbmc.log('1Channel: Service: Updating subscriptions')
+                 builtin = 'RunPlugin(plugin://plugin.video.1channel/?mode=UpdateSubscriptions)'
+                 xbmc.executebuiltin(builtin)
+-                ADDON.setSetting(last_run, now.strftime("%Y-%m-%d %H:%M:%S.%f"))
++                ADDON.setSetting('last_run', now.strftime("%Y-%m-%d %H:%M:%S.%f"))
+             else:
+                 xbmc.log('1Channel: Service: Busy... Postponing subscription update')
+     while monitor.tracking and monitor.isPlayingVideo():
+diff --git a/utils.py b/utils.py
+index 8839172..8eb1fbb 100644
+--- a/utils.py
++++ b/utils.py
+@@ -18,10 +18,15 @@ def format_label_tvshow(info):
+         year = ''
+     title = info['title']
+     label = addon.get_setting('format-tvshow')
+-    label = label.replace('{t}', title)
+-    label = label.replace('{y}', year)
+-    label = label.replace('{ft}', format_tvshow_title(title))
+-    label = label.replace('{fy}', format_tvshow_year(year))
++    # label = label.replace('{t}', title)
++    # label = label.replace('{y}', year)
++    # label = label.replace('{ft}', format_tvshow_title(title))
++    # label = label.replace('{fy}', format_tvshow_year(year))
++
++    label = re.sub('\{t\}', title, label)
++    label = re.sub('\{y\}', year, label)
++    label = re.sub('\{ft\}', format_tvshow_title(title), label)
++    label = re.sub('\{fy\}', format_tvshow_year(year), label)
+     return label
+ 
+ 
+@@ -139,7 +144,6 @@ class TextBox:
+         xbmc.sleep(1000)
+         self.setControls()
+ 
+-
+     def setControls(self):
+         # set heading
+         heading = "1Channel v%s" % (addon.get_version())
