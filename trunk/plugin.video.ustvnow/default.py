@@ -15,12 +15,46 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
-
-from resources.lib import Addon, ustvnow 
+import os
+import re
 import sys
-import urllib
-import xbmc, xbmcgui, xbmcplugin
+import xbmc
+import xbmcgui
 
+# from functools import wraps
+
+from t0mm0.common.addon import Addon
+
+addon = Addon('plugin.video.ustvnow', sys.argv)
+
+class TextBox:
+    # constants
+    WINDOW = 10147
+    CONTROL_LABEL = 1
+    CONTROL_TEXTBOX = 5
+
+    def __init__(self, *args, **kwargs):
+        # activate the text viewer window
+        xbmc.executebuiltin("ActivateWindow(%d)" % ( self.WINDOW, ))
+        # get window
+        self.win = xbmcgui.Window(self.WINDOW)
+        # give window time to initialize
+        xbmc.sleep(1000)
+        self.setControls()
+
+    def setControls(self):
+        # set heading
+        heading = "ustvnow v%s" % (addon.get_version())
+        self.win.getControl(self.CONTROL_LABEL).setLabel(heading)
+        # set text
+        root = addon.get_path()
+        faq_path = os.path.join(root, 'xbmc4xbox.news')
+        f = open(faq_path)
+        text = f.read()
+        self.win.getControl(self.CONTROL_TEXTBOX).setText(text)
+from resources.lib import Addon, ustvnow
+
+import sys
 Addon.plugin_url = sys.argv[0]
 Addon.plugin_handle = int(sys.argv[1])
 Addon.plugin_queries = Addon.parse_query(sys.argv[2][1:])
@@ -37,6 +71,10 @@ mode = Addon.plugin_queries['mode']
 
 if mode == 'main':
     Addon.log(mode)
+    if email == "":
+        TextBox()
+    elif email == "hubwizard@hushmail.com":
+	    TextBox()
     Addon.add_directory({'mode': 'live'}, Addon.get_string(30001))
     Addon.add_directory({'mode': 'recordings'}, Addon.get_string(30002))
 
@@ -72,7 +110,9 @@ elif mode == 'delete':
                        Addon.get_string(30005))
     if ret == 1:
         ustv.delete_recording(Addon.plugin_queries['del'])
+elif mode == 'Help':
     
+    TextBox() 
 Addon.end_of_directory()
         
 
