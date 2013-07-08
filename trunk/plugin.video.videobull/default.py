@@ -1,26 +1,149 @@
-import xbmc, xbmcgui, xbmcplugin, xbmcaddon
-import urllib,urllib2
-import re, string
+import urllib,urllib2,re,cookielib,xbmcplugin,xbmcgui,xbmcaddon,socket,os,shutil,string,xbmc,stat,xbmcvfs
 import base64
+from operator import itemgetter
+from t0mm0.common.net import Net as net
 from t0mm0.common.addon import Addon
-from t0mm0.common.net import Net
+from metahandler import metahandlers
+from metahandler import metacontainers
+from zipfile import ZipFile as zip
+#from BeautifulSoup import BeautifulSoup as soup
+#import script.common.plugin.cache
 pluginhandle = int(sys.argv[1])
-
-
+#SET DIRECTORIES
+local = xbmcaddon.Addon(id='plugin.video.videobull')
 addon = Addon('plugin.video.videobull', sys.argv)
-net = Net()
 
-#Common Cache
-import xbmcvfs
+#grab = metahandlers.MetaData(None,preparezip = False)
+fanart = "resources/art/fanart.png"
+xbmc_skin = xbmc.getSkinDir()
+
+
+try:
+    import StorageServer
+except:
+    import storageserverdummy as StorageServer
+cache = StorageServer.StorageServer('plugin.video.videobull', 24)
+_VBL = Addon('plugin.video.videobull', sys.argv)
+META_ON = _VBL.get_setting('use-meta') == 'true'
+META_OFF = _VBL.get_setting('use-meta') == 'false'
+
+try:
+    DB_NAME = _VBL.get_setting('db_name')
+    DB_USER = _VBL.get_setting('db_user')
+    DB_PASS = _VBL.get_setting('db_pass')
+    DB_ADDR = _VBL.get_setting('db_address')
+
+    if _VBL.get_setting('use_remote_db') == 'true' and \
+                    DB_ADDR is not None and \
+                    DB_USER is not None and \
+                    DB_PASS is not None and \
+                    DB_NAME is not None:
+        import mysql.connector as orm
+
+        _VBL.log('Loading MySQL as DB engine')
+        DB = 'mysql'
+    else:
+        _VBL.log('MySQL not enabled or not setup correctly')
+        raise ValueError('MySQL not enabled or not setup correctly')
+except:
+    try:
+        from sqlite3 import dbapi2 as orm
+
+        _VBL.log('Loading sqlite3 as DB engine')
+    except:
+        from pysqlite2 import dbapi2 as orm
+
+        _VBL.log('pysqlite2 as DB engine')
+    DB = 'sqlite'
+    __translated__ = xbmc.translatePath("special://database")
+    DB_DIR = os.path.join(__translated__, 'videobullcache.db')
+
+PREPARE_ZIP = False
+__metaget__ = metahandlers.MetaData(preparezip=PREPARE_ZIP)
+	
+if not xbmcvfs.exists(_VBL.get_profile()):
+    xbmcvfs.mkdirs(_VBL.get_profile())
+
+def init_database():
+    _VBL.log('Building VideoBull Database')
+    if DB == 'mysql':
+        db = orm.connect(DB_NAME, DB_USER,
+                         DB_PASS, DB_ADDR, buffered=True)
+        cur = db.cursor()
+        cur.execute('CREATE TABLE IF NOT EXISTS tmp_tvshow_meta (season INTEGER UNIQUE, contents TEXT)')
+        cur.execute(
+            'CREATE TABLE IF NOT EXISTS favorites (type VARCHAR(10), name TEXT, url VARCHAR(255) UNIQUE, year VARCHAR(10))')
+        cur.execute(
+            'CREATE TABLE IF NOT EXISTS subscriptions (url VARCHAR(255) UNIQUE, title TEXT, img TEXT, year TEXT, imdbnum TEXT)')
+        cur.execute(
+            'CREATE TABLE IF NOT EXISTS bookmarks (video_type VARCHAR(10), title VARCHAR(255), season INTEGER, episode INTEGER, year VARCHAR(10), bookmark VARCHAR(10))')
+        cur.execute('CREATE TABLE IF NOT EXISTS url_cache (url VARCHAR(255), response TEXT, timestamp TEXT)')
+
+        try:
+            cur.execute('CREATE UNIQUE INDEX unique_bmk ON bookmarks (video_type, title, season, episode, year)')
+        except:
+            pass
+
+    else:
+        if not xbmcvfs.exists(os.path.dirname(DB_DIR)):
+            xbmcvfs.mkdirs(os.path.dirname(DB_DIR))
+        db = orm.connect(DB_DIR)
+        db.execute('CREATE TABLE IF NOT EXISTS seasons (season UNIQUE, contents)')
+        db.execute('CREATE TABLE IF NOT EXISTS favorites (type, name, url, year)')
+        db.execute('CREATE TABLE IF NOT EXISTS subscriptions (url, title, img, year, imdbnum)')
+        db.execute('CREATE TABLE IF NOT EXISTS bookmarks (video_type, title, season, episode, year, bookmark)')
+        db.execute('CREATE TABLE IF NOT EXISTS url_cache (url UNIQUE, response, timestamp)')
+        db.execute('CREATE UNIQUE INDEX IF NOT EXISTS unique_fav ON favorites (name, url)')
+        db.execute('CREATE UNIQUE INDEX IF NOT EXISTS unique_sub ON subscriptions (url, title, year)')
+        db.execute(
+            'CREATE UNIQUE INDEX IF NOT EXISTS unique_bmk ON bookmarks (video_type, title, season, episode, year)')
+        db.execute('CREATE UNIQUE INDEX IF NOT EXISTS unique_url ON url_cache (url)')
+    db.commit()
+    db.close()
+
+
 dbg = False # Set to false if you don't want debugging
 
 #Common Cache
-try:
-  import StorageServer
-except:
-  import storageserverdummy as StorageServer
-cache = StorageServer.StorageServer('plugin.video.videobull')
+#try:
+#  import StorageServer
+#except:
+#  import storageserverdummy as StorageServer
+#cache = StorageServer.StorageServer('plugin.video.videobull')
 
+##### Queries ##########
+total = addon.queries.get('total','')
+play = addon.queries.get('play', '')
+mode = addon.queries['mode']
+level = addon.queries.get('level', '')
+levels = addon.queries.get('levels', '')
+video_type = addon.queries.get('video_type', '')
+section = addon.queries.get('section', '')
+url = addon.queries.get('url', '')
+title = addon.queries.get('title', '')
+name = addon.queries.get('name', '')
+imdb_id = addon.queries.get('imdb_id', '')
+season = addon.queries.get('season', '')
+episode = addon.queries.get('episode', '')
+year = addon.queries.get('year', '')
+thumb = addon.queries.get('thumb', '')
+img = addon.queries.get('img', '')
+metatoggle= addon.queries.get('metatoggle', '')
+print '---------------------------------------------------------------'
+print '--- Mode: ' + str(mode)
+print '--- Play: ' + str(play)
+print '--- URL: ' + str(url)
+print '--- Video Type: ' + str(video_type)
+print '--- Section: ' + str(section)
+print '--- Title: ' + str(title)
+print '--- Name: ' + str(name)
+print '--- IMDB: ' + str(imdb_id)
+print '--- Season: ' + str(season)
+print '--- Episode: ' + str(episode)
+print '--- Cover URL-Thumb: ' + str(thumb)
+print '--- Cover URL-IMG: ' + str(img)
+print '--- Cover MetaOn_Off: ' + str(metatoggle)
+print '---------------------------------------------------------------'
 
 ################### Global Constants #################################
 
@@ -31,7 +154,7 @@ MovieUrl = MainUrl + "movies/"
 TVUrl = MainUrl + "tv-shows/"
 
 #PATHS
-AddonPath = addon.get_path()
+AddonPath = _VBL.get_path()
 IconPath = AddonPath + "/resources/art/"
 
 #VARIABLES
@@ -44,12 +167,17 @@ VideoType_TV = 'tvshow'
 VideoType_Season = 'season'
 VideoType_Episode = 'episode'
 
+
+
+
 def CATEGORIES():
         addDir('Latest TV Show Feed',MainUrl,7,IconPath +'icons/icon.png')
         addDir('Search for Shows',MainUrl,8,IconPath +'icons/search.png')
         addDir('A-Z TV Shows',MainUrl +'tv-shows/',9,IconPath +'letters/AZ.png')
         addDir('[COLOR blue]Resolver Settings[/COLOR]','RES',45,IconPath +'icons/icon.png')
-        xbmcplugin.endOfDirectory(pluginhandle)
+
+        xbmcplugin.endOfDirectory(pluginhandle)		
+
 		
 def INDEX(url):
         req = urllib2.Request(url)
@@ -70,7 +198,20 @@ def INDEX2(url):
         match=re.compile('/*/?<li>.+?a href="(.+?)" rel="bookmark" title="(.+?)">.+?img src="(.+?)".+?/>.?/a>.+?/li>', re.DOTALL).findall(link)
         for url,name,thumb in match:
 #		plugintools.add_item( action="play" , title=title , url=url )
-         addDir(name,url,4,thumb)
+            name=name.replace('&#8211','').replace(';','-').replace('&#8217',"'").replace('&#038','&').replace('&#8230','ss')
+            cname=re.sub("([^-]*-[^-]*)(-.*$)", r"\1", name)
+            aname=name.replace('Season','').replace('Episode','').replace('0','').replace('1','').replace('2','').replace('3','').replace('4','').replace('5','').replace('6','').replace('7','').replace('8','').replace('9','').replace('-\s.*?','')
+            artname= re.sub("([^-]*-[^-]*)(-.*$)", r"\1", aname) 
+            title = cname
+            if META_ON:
+                cover = __metaget__.get_meta('tvshow', artname, overlay=6)
+                covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+                img=cover['cover_url']
+                cache.set('Cover_url', img)
+            elif META_OFF:
+                img=thumb
+            cache.set('Vidname', title)
+            addDir(name,url,4,img)
            
 def pages(url):
 	addDir('Page 1',MainUrl +'page/1/',2,'')
@@ -92,8 +233,24 @@ def showEpp(url):
     response.close()
     match=re.compile('<div id="contentarchive">.*?<a href="(.+?)" title="(.+?)">.+?</a>', re.DOTALL).findall(link)
     for url,name in match:
-        name=name.replace('&#8211','')	
-        addDir(name,url,4,'')	
+        print "PlainURLMode40:"+url
+        print "showEppURL=====:"+url
+        name=name.replace('&#8211','').replace(';','-').replace('&#8217',"'").replace('&#038','&').replace('&#8230','ss')
+        cname=re.sub("([^-]*-[^-]*)(-.*$)", r"\1", name)
+        aname=name.replace('Season','').replace('Episode','').replace('0','').replace('1','').replace('2','').replace('3','').replace('4','').replace('5','').replace('6','').replace('7','').replace('8','').replace('9','').replace('-\s.*?','')
+        artname= re.sub("([^-]*-[^-]*)(-.*$)", r"\1", aname) 
+        title = cname
+        
+        print "THIS IS ARTNAME:"+artname
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', artname, overlay=6)
+            covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+            img=cover['cover_url']
+            cache.set('Cover_url', img)
+        elif META_OFF:
+            img=IconPath +'icons/icon.png'
+        cache.set('Vidname', title)
+        addDir(title,url,4,img)
 def AtoZ(url):
    addDir('A',MainUrl +'tv-shows/',10,IconPath +'letters/A.png')
    addDir('B',MainUrl +'tv-shows/',11,IconPath +'letters/B.png')
@@ -121,16 +278,25 @@ def AtoZ(url):
    addDir('X',MainUrl +'tv-shows/',33,IconPath +'letters/X.png')
    addDir('Y',MainUrl +'tv-shows/',34,IconPath +'letters/Y.png')
    addDir('Z',MainUrl +'tv-shows/',35,IconPath +'letters/Z.png')
-def A(url):
+def A(url,name):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     response = urllib2.urlopen(req)
     link=response.read()
     response.close()
     match=re.compile('title="[A](.*?)" href="(.*?)">.*?</a>').findall(link)
+    meta = {'title': name, 'year': year, 'imdb_id': '', 'overlay': ''}
     for name,url in match:
-        name='A'+name
-        addDir(name,url,40,'')
+        name='A'+name       
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
+
 def B(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -139,8 +305,16 @@ def B(url):
     response.close()
     match=re.compile('title="[B](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
-        name='B'+name
-        addDir(name,url,40,'')		
+        name='B'+name        
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
+
 def C(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -150,7 +324,14 @@ def C(url):
     match=re.compile('title="[C](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='C'+name
-        addDir(name,url,40,'')   
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 
 def D(url):
     req = urllib2.Request(url)
@@ -161,7 +342,14 @@ def D(url):
     match=re.compile('title="[D](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='D'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 def E(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -171,7 +359,14 @@ def E(url):
     match=re.compile('title="[E](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='E'+name
-        addDir(name,url,40,'')
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 def F(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -181,7 +376,14 @@ def F(url):
     match=re.compile('title="[F](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='F'+name
-        addDir(name,url,40,'')
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 def G(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -191,7 +393,14 @@ def G(url):
     match=re.compile('title="[G](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='G'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def H(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -201,7 +410,14 @@ def H(url):
     match=re.compile('title="[H](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='H'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 def I(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -211,7 +427,14 @@ def I(url):
     match=re.compile('title="[I](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='I'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)	
 def J(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -221,7 +444,14 @@ def J(url):
     match=re.compile('title="[J](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='J'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)	
 def K(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -231,7 +461,14 @@ def K(url):
     match=re.compile('title="[K](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='K'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def L(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -241,7 +478,14 @@ def L(url):
     match=re.compile('title="[L](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='L'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)	
 def M(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -251,7 +495,14 @@ def M(url):
     match=re.compile('title="[M](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='M'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 def N(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -261,7 +512,14 @@ def N(url):
     match=re.compile('title="[N](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='N'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def O(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -271,7 +529,14 @@ def O(url):
     match=re.compile('title="[O](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='O'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 def P(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -281,7 +546,14 @@ def P(url):
     match=re.compile('title="[P](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='P'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)
 def Q(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -291,7 +563,14 @@ def Q(url):
     match=re.compile('title="[Q](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='Q'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)	
 def R(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -301,7 +580,14 @@ def R(url):
     match=re.compile('title="[R](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='R'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def S(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -311,7 +597,14 @@ def S(url):
     match=re.compile('title="[S](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='S'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def T(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -321,7 +614,14 @@ def T(url):
     match=re.compile('title="[T](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='T'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)	
 def U(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -331,7 +631,14 @@ def U(url):
     match=re.compile('title="[U](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='U'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def V(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -341,7 +648,14 @@ def V(url):
     match=re.compile('title="[V](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='V'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def W(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -351,7 +665,14 @@ def W(url):
     match=re.compile('title="[W](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='W'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def X(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -361,7 +682,14 @@ def X(url):
     match=re.compile('title="[X](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='X'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)		
 def Y(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -371,7 +699,14 @@ def Y(url):
     match=re.compile('title="[Y](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='Y'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)	
 def Z(url):
     req = urllib2.Request(url)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -381,7 +716,14 @@ def Z(url):
     match=re.compile('title="[Z](.*?)" href="(.*?)">.*?</a>').findall(link)
     for name,url in match:
         name='Z'+name
-        addDir(name,url,40,'')		
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', name, year, overlay=6)      
+            title = cover['TVShowTitle']
+            img=cover['cover_url']
+        elif META_OFF:
+            title=name
+            img=IconPath +'icons/icon.png' 			
+        addDir(title,url,40,img)	
 def TvSearch(url):
     search_entered =search()
     name=str(search_entered).replace('+','')
@@ -389,7 +731,24 @@ def TvSearch(url):
     link = getUrl(url)
     match=re.compile('<div id="contentarchivetitle">\n.*?<a href="(.+?)" title="(.+?)">.+?</a>', re.DOTALL).findall(link)
     for url,name in match:
-        addDir(name,url,4,'')
+        print "PlainURLMode40:"+url
+        print "showEppURL=====:"+url
+        name=name.replace('&#8211','').replace(';','-').replace('&#8217',"'").replace('&#038','&').replace('&#8230','ss')
+        cname=re.sub("([^-]*-[^-]*)(-.*$)", r"\1", name)
+        aname=name.replace('Season','').replace('Episode','').replace('0','').replace('1','').replace('2','').replace('3','').replace('4','').replace('5','').replace('6','').replace('7','').replace('8','').replace('9','').replace('-\s.*?','')
+        artname= re.sub("([^-]*-[^-]*)(-.*$)", r"\1", aname) 
+        title = cname
+        
+        print "THIS IS ARTNAME:"+artname
+        if META_ON:
+            cover = __metaget__.get_meta('tvshow', artname, overlay=6)
+#            covers= re.compile("cover_url.+?'(.+?)'").findall(str(cover))
+            img=cover['cover_url']
+            cache.set('Cover_url', img)
+        elif META_OFF:
+            img=IconPath +'icons/icon.png'
+        cache.set('Vidname', title)
+        addDir(title,url,4,img)
 		
 def search():
         search_entered = ''
@@ -418,17 +777,7 @@ def read(url):
     
     return data
                 
-def EPISODES(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
-        match=re.compile('/*/?<li>.+?a href="(.+?)" rel="bookmark" title="(.+?)">.+?img src="(.+?)".+?/>.?/a>.+?/li>').findall(link)
-        for url,name,thumb in match:
-                if not thumb.find('http://')>0:
-                        thumb='http://www.tvdash.com/'+thumb
-                        addDir(name,'http://www.videobull.com/'+url,4,thumb)
+
 
 def VIDEOLINKS(url,name):
         req = urllib2.Request(url)
@@ -438,24 +787,33 @@ def VIDEOLINKS(url,name):
         response.close()
         match=re.compile('''<a id='.+?' href='.*?title=(.+?)' target='_blank' rel='nofollow'>(.+?)</a>''', re.DOTALL).findall(link)
         print match
-        for url,name in match:
-        
+        for url,name in match:     
          addDir(name,url,5,'')
-         pluginhandle = int(sys.argv[1])
+         
             
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
                       
-def PLAYLINKS(url):
+def PLAYLINKS(url,name):
         regexlink = url
         url = base64.b64decode(regexlink)
         hostUrl = url
         videoLink = urlresolver.resolve(hostUrl)      
-        addLink(name,'videoLink','')
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        playlist.clear()
-        playlist.add(videoLink)
-        xbmc.Player().play(playlist)
-    
+        vName=cache.get('Vidname')
+        print "VNAME:"+vName
+        if META_ON:
+            img=cache.get('Cover_url')
+            print "THUMBNAILCACHENAME"+img
+        elif META_OFF:
+            img=IconPath +'icons/icon.png'
+        name=vName
+        player = xbmc.Player(xbmc.PLAYER_CORE_AUTO)
+        listitem = xbmcgui.ListItem(name, img, img)
+        listitem.setInfo('video', {'Title': name})
+        listitem.setThumbnailImage(img)
+        player.play(videoLink,listitem)
+        addLink('Restart Stream',videoLink,img) 
+
+
 def get_params():
         param=[]
         paramstring=sys.argv[2]
@@ -540,7 +898,7 @@ elif mode==4:
 elif mode==5:
         import urlresolver
         print ""+url
-        PLAYLINKS(url)
+        PLAYLINKS(url,name)
 elif mode==7:
         print ""+url
         pages(url)
@@ -552,7 +910,7 @@ elif mode==9:
         AtoZ(url)
 elif mode==10:
         print ""+url
-        A(url)
+        A(url,name)
 elif mode==11:
         print ""+url
         B(url)		
@@ -635,9 +993,11 @@ elif mode==40:
 elif mode==45 or url==RES:
         import urlresolver
         print ""+url
-        urlresolver.display_settings()		
-xbmcplugin.endOfDirectory(int(sys.argv[1]))		
+        urlresolver.display_settings()			
 
+
+
+xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
 
