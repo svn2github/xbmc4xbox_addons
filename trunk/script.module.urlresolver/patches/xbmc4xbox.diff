@@ -1,3 +1,120 @@
+diff --git a/addon.xml b/addon.xml
+index eeab704..3cad9de 100644
+--- a/addon.xml
++++ b/addon.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+ <addon id="script.module.urlresolver" 
+      name="urlresolver" 
+-     version="1.0.9" 
++     version="1.0.10" 
+      provider-name="XBMCHub.com">
+   <requires>
+     <import addon="xbmc.python" version="2.0" />
+diff --git a/lib/urlresolver/plugins/alldebrid.py b/lib/urlresolver/plugins/alldebrid.py
+index bb864f8..edee347 100644
+--- a/lib/urlresolver/plugins/alldebrid.py
++++ b/lib/urlresolver/plugins/alldebrid.py
+@@ -1,6 +1,6 @@
+ """
+     urlresolver XBMC Addon
+-    Copyright (C) 2011 t0mm0
++    Copyright (C) 2011 t0mm0, JUL1EN094
+ 
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+@@ -26,12 +26,11 @@ from urlresolver.plugnplay.interfaces import SiteAuth
+ from urlresolver.plugnplay.interfaces import PluginSettings
+ from urlresolver.plugnplay import Plugin
+ from urlresolver import common
++import simplejson as json
+ import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
+ import cookielib
+ from t0mm0.common.net import Net
+ 
+-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+ 
+ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+     implements = [UrlResolver, SiteAuth, PluginSettings]
+@@ -55,33 +54,45 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+     def get_media_url(self, host, media_id):
+         print 'in get_media_url %s : %s' % (host, media_id)
+         dialog = xbmcgui.Dialog()
+-
+         try:
+             url = 'http://www.alldebrid.com/service.php?link=%s' % media_id
+-
+             source = self.net.http_GET(url).content
+-
+-            if re.search('login', source):
+-                raise Exception ('Your account may have Expired')
+-            if re.search('Hoster unsupported or under maintenance', source):
+-                raise Exception ('Sorry this hoster is not supported')
+-
+-            link =re.compile("href='(.+?)'").findall(source)
+-            if len(link) == 0:
+-                raise Exception ('File Not Found or removed')
+-            print 'link is %s' % link[0]
+-            self.media_url = link[0]
+-            return link[0]
+-        
+-        except urllib2.URLError, e:
+-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+-                                   (e.code, web_url))
+-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+-            return False
+-        
+         except Exception, e:
+-            common.addon.log('**** Alldebrid Error occured: %s' % e)
+-            common.addon.show_small_popup(title='[B][COLOR white]ALLDEBRID[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
++            exc_type, exc_obj, exc_tb = sys.exc_info()
++            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
++            print(exc_type, fname, exc_tb.tb_lineno)
++            dialog.ok(' all-Debrid ', ' all-Debrid server timed out ', '', '')
++            return False
++        print '************* %s' % str(source)
++        #if not debriding
++        if re.search('login', source):
++            dialog.ok(' All Debrid Message ', ' Your account may have Expired, please check by going to the website ', '', '')
++            return False
++        if re.search('Hoster unsupported or under maintenance', source):
++            dialog.ok(' All Debrid Message ', ' Sorry this hoster is not supported, change the priority level in resolver settings for this host ', '', '')
++            return False
++        if re.search('Invalid link', source):
++            dialog.ok(' All Debrid Message ', ' Sorry the link seems invalid', '', '')
++            return False            
++        #Go
++        finallink = ''
++        #try json return
++        try:
++            link      = json.loads(source)
++            streaming = link['streaming']
++            finallink = streaming['source file ']   
++        #classic method
++        except :
++            link =re.compile("href='(.+?)'").findall(source)
++            if len(link) != 0:
++                finallink = link[0]              
++        #end
++        if finallink != '' :
++            print 'link is %s' % str(finallink)
++            self.media_url = finallink
++            return finallink
++        #false
++        else :
+             return False
+ 
+     def get_url(self, host, media_id):
+@@ -110,6 +121,8 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+                 domain = 'megashares.com'
+             elif 'megashare' in domain:
+                 domain = 'megashare.com'
++            elif 'mixture' in domain :
++                domain = 'mixturevideo.com'
+             print 'domain is %s ' % domain
+         if (domain in self.get_all_hosters()) or (len(host) > 0 and host in self.get_all_hosters()):
+             return True
 diff --git a/lib/urlresolver/plugins/bayfiles.py b/lib/urlresolver/plugins/bayfiles.py
 index 2fa7ebd..d415f03 100644
 --- a/lib/urlresolver/plugins/bayfiles.py
@@ -11,6 +128,65 @@ index 2fa7ebd..d415f03 100644
  from urlresolver import common
  from time import time as wait
  
+diff --git a/lib/urlresolver/plugins/hugefiles.py b/lib/urlresolver/plugins/hugefiles.py
+index 6b81cef..cdba2c8 100644
+--- a/lib/urlresolver/plugins/hugefiles.py
++++ b/lib/urlresolver/plugins/hugefiles.py
+@@ -43,6 +43,7 @@ class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
+         try:
+             url = self.get_url(host, media_id)
+             html = self.net.http_GET(url).content
++            r = re.findall('File Not Found',html)
+             if r:
+                 raise Exception ('File Not Found or removed')
+             dialog = xbmcgui.DialogProgress()
+@@ -59,19 +60,18 @@ class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
+             dialog.update(50)
+     
+             sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
+-            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+-    
++            r = re.findall(sPattern, html, re.DOTALL|re.I)
+             if r:
+-                sJavascript = r.group(1)
+-                sUnpacked = jsunpack.unpack(sJavascript)
+-                sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)'
+-                sPattern += '"custommode='
+-                r = re.search(sPattern, sUnpacked)
+-                if r:
+-                    dialog.update(100)
+-                    dialog.close()
+-                    return r.group(1)
+-
++                sUnpacked = jsunpack.unpack(r[0])
++                sUnpacked = sUnpacked.replace("\\'","")
++                r = re.findall('file,(.+?)\)\;s1',sUnpacked)
++                if not r:
++                   r = re.findall('"src"value="(.+?)"/><embed',sUnpacked)
++                dialog.update(100)
++                dialog.close()
++                return r[0]
++            if not r:
++                return self.unresolvable()
+         except urllib2.URLError, e:
+             common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, web_url))
+diff --git a/lib/urlresolver/plugins/premiumize_me.py b/lib/urlresolver/plugins/premiumize_me.py
+index d6d2859..b6527a3 100644
+--- a/lib/urlresolver/plugins/premiumize_me.py
++++ b/lib/urlresolver/plugins/premiumize_me.py
+@@ -94,7 +94,10 @@ class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+ 
+     #PluginSettings methods
+     def get_settings_xml(self):
+-        xml = PluginSettings.get_settings_xml(self)
++        xml  = '<setting id="PremiumizeMeResolver_priority" '
++        xml += 'type="number" label="Priority" default="100"/>\n'
++        xml += '<setting id="PremiumizeMeResolver_enabled" '
++        xml += 'type="bool" label="Enabled" default="false"/>\n'
+         xml += '<setting id="PremiumizeMeResolver_username" enable="eq(-1,true)" '
+         xml += 'type="text" label="username" default=""/>\n'
+         xml += '<setting id="PremiumizeMeResolver_password" enable="eq(-2,true)" '
 diff --git a/lib/urlresolver/plugins/purevid.py b/lib/urlresolver/plugins/purevid.py
 index f56acfa..d4173a5 100644
 --- a/lib/urlresolver/plugins/purevid.py
@@ -32,6 +208,76 @@ index f56acfa..d4173a5 100644
  
  
  class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
+diff --git a/lib/urlresolver/plugins/realdebrid.py b/lib/urlresolver/plugins/realdebrid.py
+index d385b32..e0bea3e 100644
+--- a/lib/urlresolver/plugins/realdebrid.py
++++ b/lib/urlresolver/plugins/realdebrid.py
+@@ -27,6 +27,7 @@ from urlresolver.plugnplay import Plugin
+ from urlresolver import common
+ import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
+ from t0mm0.common.net import Net
++import simplejson as json
+ 
+ #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+@@ -52,9 +53,8 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+     def get_media_url(self, host, media_id):
+         dialog = xbmcgui.Dialog()
+         try:
+-            url = 'http://real-debrid.com/ajax/deb.php?lang=en&sl=1&link=%s' % media_id.replace('|User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0','')
++            url = 'https://real-debrid.com/ajax/unrestrict.php?link=%s' % media_id.replace('|User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0','')
+             source = self.net.http_GET(url).content
+-
+             if re.search('Upgrade your account now to generate a link', source):
+                 raise Exception ('Upgrade your account now to generate a link')
+             if source == '<span id="generation-error">Your file is unavailable on the hoster.</span>':
+@@ -63,14 +63,13 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+                 raise Exception ('This hoster is not included in our free offer')
+             if re.search('No server is available for this hoster.', source):
+                 raise Exception ('No server is available for this hoster')
+-            link =re.compile('ok"><a href="(.+?)"').findall(source)
+-            if len(link) == 0:
+-                raise Exception ('File Not Found or removed')
+-            self.media_url = link[0]
+-            return link[0]
++            jsonresult = json.loads(source)
++            if 'main_link' in jsonresult :
++                return jsonresult['main_link'].encode('utf-8')
++            else :
++                return False
+         except urllib2.URLError, e:
+-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+-                                   (e.code, web_url))
++            common.addon.log_error(self.name + ': got http error %d fetching %s' %  (e.code, web_url))
+             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+             return False
+         except Exception, e:
+@@ -141,7 +140,10 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+ 
+     #PluginSettings methods
+     def get_settings_xml(self):
+-        xml = PluginSettings.get_settings_xml(self)
++        xml  = '<setting id="RealDebridResolver_priority" '
++        xml += 'type="number" label="Priority" default="100"/>\n'
++        xml += '<setting id="RealDebridResolver_enabled" '
++        xml += 'type="bool" label="Enabled" default="false"/>\n'
+         xml += '<setting id="RealDebridResolver_login" '
+         xml += 'type="bool" label="login" default="false"/>\n'
+         xml += '<setting id="RealDebridResolver_username" enable="eq(-1,true)" '
+diff --git a/lib/urlresolver/plugins/rpnet.py b/lib/urlresolver/plugins/rpnet.py
+index 015bacf..0aa0f76 100644
+--- a/lib/urlresolver/plugins/rpnet.py
++++ b/lib/urlresolver/plugins/rpnet.py
+@@ -88,7 +88,8 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+ 
+     #PluginSettings methods
+     def get_settings_xml(self):
+-        xml = PluginSettings.get_settings_xml(self)
++        xml  = '<setting id="RPnetResolver_priority" '
++        xml += 'type="number" label="Priority" default="100"/>\n'
+         xml += '<setting id="RPnetResolver_enabled" '
+         xml += 'type="bool" label="Enabled" default="false"/>\n'
+         xml += '<setting id="RPnetResolver_username" enable="eq(-1,true)" '
 diff --git a/lib/urlresolver/plugins/sharerepo.py b/lib/urlresolver/plugins/sharerepo.py
 index 3e6b957..4b284c0 100644
 --- a/lib/urlresolver/plugins/sharerepo.py
@@ -44,6 +290,69 @@ index 3e6b957..4b284c0 100644
  
  #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
  error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+diff --git a/lib/urlresolver/plugins/streamcloud.py b/lib/urlresolver/plugins/streamcloud.py
+index b5d5d13..7a098c5 100644
+--- a/lib/urlresolver/plugins/streamcloud.py
++++ b/lib/urlresolver/plugins/streamcloud.py
+@@ -56,7 +56,7 @@ class StreamcloudResolver(Plugin, UrlResolver, PluginSettings):
+             for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
+                 form_values[i.group(1)] = i.group(2)
+             #wait required
+-            time.sleep(10)
++            common.addon.show_countdown(11)
+             html = self.net.http_POST(post_url, form_data=form_values).content
+ 
+             r = re.search('file: "(.+?)",', html)
+@@ -89,4 +89,3 @@ class StreamcloudResolver(Plugin, UrlResolver, PluginSettings):
+         if self.get_setting('enabled') == 'false': return False
+         return re.match('http://(www.)?streamcloud.eu/[0-9A-Za-z]+', url) or 'streamcloud' in host
+ 
+-
+diff --git a/lib/urlresolver/plugins/videoweed.py b/lib/urlresolver/plugins/videoweed.py
+index d49add6..93b5f08 100644
+--- a/lib/urlresolver/plugins/videoweed.py
++++ b/lib/urlresolver/plugins/videoweed.py
+@@ -40,7 +40,6 @@ class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
+     def get_media_url(self, host, media_id):
+         web_url = self.get_url(host, media_id)
+         dialog = xbmcgui.Dialog()
+-        
+         #grab stream details
+         try:
+             html = self.net.http_GET(web_url).content
+@@ -55,23 +54,23 @@ class VideoweedResolver(Plugin, UrlResolver, PluginSettings):
+             else:
+                 raise Exception ('File Not Found or removed')
+ 
+-                api_html = self.net.http_GET(api_call).content
+-                rapi = re.search('url=(.+?)&title=', api_html)
+-                if rapi:
+-                    stream_url = rapi.group(1)
+-                else:
+-                    raise Exception ('File Not Found or removed')
+-                return stream_url
++            api_html = self.net.http_GET(api_call).content
++            rapi = re.search('url=(.+?)&title=', api_html)
++            if rapi:
++                stream_url = rapi.group(1)
++            else:
++                raise Exception ('File Not Found or removed')
++            return stream_url
+ 
+         except urllib2.URLError, e:
+             common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                    (e.code, web_url))
+             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
+-            return False
++            return self.unresolvable() 
+         except Exception, e:
+             common.addon.log('**** Videoweed Error occured: %s' % e)
+             common.addon.show_small_popup(title='[B][COLOR white]VIDEOWEED[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+-            return False
++            return self.unresolvable() 
+ 
+ 
+     def get_url(self, host, media_id):
 diff --git a/lib/urlresolver/plugins/vimeo.py b/lib/urlresolver/plugins/vimeo.py
 index bc80f1b..ddcc5cf 100644
 --- a/lib/urlresolver/plugins/vimeo.py
@@ -70,3 +379,16 @@ index 5a70c63..e95db23 100644
                   media_id
          return plugin
  
+diff --git a/lib/urlresolver/plugnplay/interfaces.py b/lib/urlresolver/plugnplay/interfaces.py
+index 30b55e8..8607767 100644
+--- a/lib/urlresolver/plugnplay/interfaces.py
++++ b/lib/urlresolver/plugnplay/interfaces.py
+@@ -74,7 +74,7 @@ class UrlResolver(Interface):
+     first.
+     '''    
+ 
+-    class unresolvable():
++    class unresolvable:
+         '''
+         An object returned to indicate that the url could not be resolved
+         

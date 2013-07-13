@@ -31,11 +31,10 @@ try:
 except ImportError:
     import json
 
-class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "RPnet"
+    name = "Premiumize.me"
     media_url = None
-    allHosters = None
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -48,34 +47,41 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         try:
             username = self.get_setting('username')
             password = self.get_setting('password')
-            url   = 'https://premium.rpnet.biz/client_api.php?'
-            url += 'username=%s&password=%s&action=generate&links=%s'
-            url   = url %(username, password, media_id)
+            url   = 'https://api.premiumize.me/pm-api/v1.php?'
+            url += 'method=directdownloadlink&params%%5Blogin%%5D=%s'
+            url += '&params%%5Bpass%%5D=%s&params%%5Blink%%5D=%s'
+            url   = url % (username, password, media_id)
             response = self.net.http_GET(url).content
             response = json.loads(response)
-            link = response['links'][0]['generated']
+            link = response['result']['location']
         except Exception, e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
             return False
         
-        print 'RPnet: Resolved to %s' %link
+        common.addon.log('Premiumize.me: Resolved to %s' %link)
         return link
 
     def get_url(self, host, media_id):
         return media_id
 
     def get_host_and_id(self, url):
-        return 'RPnet.biz', url
+        return 'Premiumize.me', url
 
     def get_all_hosters(self):
         if self.patterns is None:
-            url = 'http://premium.rpnet.biz/hoster.json'
+            username = self.get_setting('username')
+            password = self.get_setting('password')
+            url = 'https://api.premiumize.me/pm-api/v1.php?method=hosterlist'
+            url += '&params%%5Blogin%%5D=%s&params%%5Bpass%%5D=%s'
+            url = url % (username, password)
             response = self.net.http_GET(url).content
-            hosters = json.loads(response)
-            print 'rpnet patterns: %s' %hosters
-            self.patterns = [re.compile(pattern) for pattern in hosters['supported']]
+            response = json.loads(response)
+            result = response['result']
+            log_msg = 'Premiumize.me patterns: %s' % result['regexlist']
+            common.addon.log_debug(log_msg)
+            self.patterns = [re.compile(regex) for regex in result['regexlist']]
         return self.patterns 
 
     def valid_url(self, url, host):
@@ -88,13 +94,13 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #PluginSettings methods
     def get_settings_xml(self):
-        xml  = '<setting id="RPnetResolver_priority" '
+        xml  = '<setting id="PremiumizeMeResolver_priority" '
         xml += 'type="number" label="Priority" default="100"/>\n'
-        xml += '<setting id="RPnetResolver_enabled" '
+        xml += '<setting id="PremiumizeMeResolver_enabled" '
         xml += 'type="bool" label="Enabled" default="false"/>\n'
-        xml += '<setting id="RPnetResolver_username" enable="eq(-1,true)" '
+        xml += '<setting id="PremiumizeMeResolver_username" enable="eq(-1,true)" '
         xml += 'type="text" label="username" default=""/>\n'
-        xml += '<setting id="RPnetResolver_password" enable="eq(-2,true)" '
+        xml += '<setting id="PremiumizeMeResolver_password" enable="eq(-2,true)" '
         xml += 'type="text" label="password" option="hidden" default=""/>\n'
         return xml
         
