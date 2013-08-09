@@ -59,10 +59,8 @@ import xbmcvfs
 dbg = False # Set to false if you don't want debugging
 
 #Common Cache
-try:
-  import StorageServer
-except:
-  import storageserverdummy as StorageServer
+
+import storageserverdummy as StorageServer
 cache = StorageServer.StorageServer(addon_id)
    
 ####################################################
