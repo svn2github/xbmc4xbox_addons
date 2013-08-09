@@ -1,7 +1,6 @@
 import xbmcaddon,xbmcplugin,xbmcgui,sys,urllib,urllib2,re,socket
 import os
 import urlresolver
-import mechanize
 import StringIO,gzip
 
 socket.setdefaulttimeout(30)
@@ -9,9 +8,8 @@ pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon(id='plugin.video.streamallthis')
 
 
-rootDir = os.getcwd()
-if rootDir[-1] == ';':rootDir = rootDir[0:-1]
-imageDir = os.path.join(rootDir, 'thumbnails') + '/'
+home = addon.getAddonInfo('path').decode('utf-8')
+imageDir = os.path.join(home, 'thumbnails') + '/'
 fanart=imageDir+"fanart.jpg"
 
 mainurl='http://streamallthis.ch'
@@ -36,6 +34,7 @@ def Bestof(url):
           gg=re.findall('<img src="(.*?)"/>.*?<a href="(.*?)" class="lc"> (.*?)</a>',find , re.DOTALL)
           for thumb,url, title in gg:
             url=mainurl+url
+            thumb=mainurl+thumb
             addDir(title,url,"assessSeasons",thumb)	  
           xbmcplugin.endOfDirectory(pluginhandle)
 		  
@@ -60,6 +59,7 @@ def LastEpisodes(url):
             url=mainurl+url
             title=title+'SEASON'+' ' +season+' '+'EPISODE'+' '+episode
             thumb=str(thumb).replace('" width="110" height="160', '')
+            thumb=mainurl+thumb
             print title
             print url
             print thumb
@@ -90,7 +90,15 @@ def VIDEOLINKS(url):
             url=mainurl+url
             content = getUrl(url)
             match=re.compile('<iframe src="(.*?)" width="600" height="360" frameborder="0" scrolling="no"></iframe>').findall(content)
-            for url in match:
+            if 'badsvideo' in content:
+              match=re.compile('onclick="window.location.href=\'(.*?)\'">').findall(content)
+              url=mainurl+match[0]
+              content = getUrl(url)
+              match=re.compile('<iframe src="(.*?)" width="600" height="360" frameborder="0" scrolling="no"></iframe>').findall(content)
+              url=match[0]
+              url= urlresolver.resolve(url)
+            else:
+              url=match[0]
               print url
               url= urlresolver.resolve(url)
           else:
@@ -140,9 +148,9 @@ def addDir(name,url,mode,iconimage):
 		
 		
 def getUrl(url):
-        req = mechanize.Request(url)
+        req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:16.0) Gecko/20100101 Firefox/16.0')
-        response = mechanize.urlopen(req)
+        response = urllib2.urlopen(req)
         link=response.read()
         response.close()
         return link		
