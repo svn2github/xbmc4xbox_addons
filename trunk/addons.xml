@@ -1169,7 +1169,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 </addon>
 
 <addon id="plugin.video.streamallthis"
-       version="1.0.5"
+       version="1.0.4"
        name="StreamAllThis"
        provider-name="skatulskijean">
   <requires>
@@ -1177,6 +1177,7 @@ provider-name="Eldorado (originator: anarchintosh)">
    <import addon="script.module.urlresolver" version="1.0.0" />
    <import addon="script.module.simplejson"   version="2.0.10"/>
    <import addon="script.module.t0mm0.common" version="1.1.0"/>
+   <import addon='script.module.mechanize' version='0.2.5'/>
   </requires>
   <extension point="xbmc.python.pluginsource"
              library="default.py">
@@ -1319,13 +1320,12 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
-<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="1.0.1">
+<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="1.0.2">
   <requires>
     <import addon="xbmc.python" version="2.1.0" />
-    <import addon="script.module.urlresolver" version="1.0.10"/>
+    <import addon="script.module.urlresolver" version="1.0.0"/>
 	<import addon="script.module.t0mm0.common" version="1.1.0"/>
 	<import addon="script.module.simplejson"   version="2.0.0"/>
-	<import addon="script.module.xbmcvfs"/>
 	<import addon="script.module.metahandler" version="1.0.0"/>
   </requires>
   <extension library="default.py" point="xbmc.python.pluginsource">
@@ -1334,7 +1334,7 @@ provider-name="Eldorado (originator: anarchintosh)">
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <summary>Stream TV Shows from Videobull.com Directly to your xbmc device</summary>
-    <description>Visit xbmc4xbox.org.uk/forum/ for support. Stream TV Shows from Videobull.com Directly to your xbmc device</description>
+    <description>Stream TV Shows from Videobull.com Directly to your xbmc device.		Visit the xbmchub.com site and Forums for mainbranch support, Or visit xbmc4xbox.org.uk/forum/ for XBOX 1 support.</description>
     <nofanart>true</nofanart>
     <nochangelog>true</nochangelog>
 	</extension>
@@ -1466,19 +1466,6 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<notes>The user login is broken, Search and feeds work well</notes>
 	<maintainer>skatulskijean editable feeds by Kozz</maintainer>
     </statfeed>
-</addon>
-
-<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="TheCollective" version="1.5.2">
-  <requires>
-    <import addon="xbmc.python" version="2.0" />
-  </requires>
-  <extension library="default.py" point="xbmc.service" start="startup">
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Common caching api for xbmc plugins.</summary>
-  </extension>
-  <extension library="lib" point="xbmc.python.module" />
 </addon>
 
 <addon id="script.module.buggalo" name="Buggalo Exception Collector" version="1.0.1" provider-name="twinther [tommy@winther.nu]">
