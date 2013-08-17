@@ -1701,4 +1701,26 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<maintainer>whufclee</maintainer>
   </statfeed>
 </addon>
+
+<addon id="script.notepad"
+       name="Notepad"
+       version="1.0.1"
+       provider-name="TestTeam">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <minversion>28764</minversion>
+    <summary lang="en">Noptepad</summary>
+    <description lang="en">Notepad</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>This is a text reader</notes>
+	<maintainer>DanDar3</maintainer>
+  </statfeed>
+</addon>
 </addons>
