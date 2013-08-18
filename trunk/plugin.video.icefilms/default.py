@@ -2002,7 +2002,7 @@ def MOVIEA2ZDirectories(url):
 
 def TVA2ZDirectories(url):
         setmode = '11'
-        caturl = iceurl+'tv/a-z/'
+        caturl = MainUrl +'tv-shows/'
 
         #Generate A-Z list and add directories for all letters.
         A2Z=[chr(i) for i in xrange(ord('A'), ord('Z')+1)]
