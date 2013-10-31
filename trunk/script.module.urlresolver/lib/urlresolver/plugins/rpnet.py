@@ -81,6 +81,7 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false':
             return False
+        if self.get_setting('login') == 'false': return False             
         for pattern in self.get_all_hosters():
             if pattern.findall(url):
                 return True
@@ -92,6 +93,8 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         xml += 'type="number" label="Priority" default="100"/>\n'
         xml += '<setting id="RPnetResolver_enabled" '
         xml += 'type="bool" label="Enabled" default="false"/>\n'
+        xml += '<setting id="RPnetResolver_login" '
+        xml += 'type="bool" label="Login" default="false"/>\n'
         xml += '<setting id="RPnetResolver_username" enable="eq(-1,true)" '
         xml += 'type="text" label="username" default=""/>\n'
         xml += '<setting id="RPnetResolver_password" enable="eq(-2,true)" '
