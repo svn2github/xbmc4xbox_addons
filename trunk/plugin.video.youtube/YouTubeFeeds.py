@@ -18,14 +18,7 @@
 
 import sys
 import  urllib
-import YouTubePluginSettings
-import sys
-import xbmc
-import xbmcplugin
-import xbmcaddon
-import xbmcgui
-import urllib2
-settings = xbmcaddon.Addon(id='plugin.video.youtube')
+
 
 class YouTubeFeeds:
     # YouTube General Feeds
@@ -55,29 +48,6 @@ class YouTubeFeeds:
     urls['feed_discussed'] = "http://gdata.youtube.com/feeds/api/standardfeeds/most_discussed?time=%s"
     urls['feed_responded'] = "http://gdata.youtube.com/feeds/api/standardfeeds/most_responded?time=%s"
     urls['feed_live'] = "http://gdata.youtube.com/feeds/api/charts/live/events/live_now"
-    urls['feed_UKF'] = "http://gdata.youtube.com/feeds/api/users/UKFDubstep/uploads?&orderby-published"
-    urls['feed_MyList1'] = "http://gdata.youtube.com/feeds/api/playlists/PLKSyUITbQzonv3NNc9xq1jWIAWbG-X-h8"
-    urls['feed_MyList2'] = "http://gdata.youtube.com/feeds/api/users/Hak5Darren/uploads?"
-    urls['feed_MyList3'] = "http://gdata.youtube.com/feeds/api/playlists/PLNk-UfmtfSu5YP8t3iM5ZaIfinlo3_9BX"
-    urls['feed_MyList4'] = "http://gdata.youtube.com/feeds/api/users/element14/uploads?"
-    urls['feed_MyList5'] = "http://gdata.youtube.com/feeds/api/users/twit/uploads?"
-    urls['feed_MyList6'] = "http://gdata.youtube.com/feeds/api/users/thebenheckshow/uploads?"
-    urls['feed_MyList7'] = "http://gdata.youtube.com/feeds/api/users/EEVblog/uploads?"
-    urls['feed_MyList8'] = "http://gdata.youtube.com/feeds/api/users/SassiBoB/uploads?"
-    urls['feed_MyList9'] = "http://gdata.youtube.com/feeds/api/users/NCIXcom/uploads?"
-    urls['feed_MyList10'] = "http://gdata.youtube.com/feeds/api/users/nixiedoeslinux/uploads?"
-    urls['feed_MyList11'] = "http://gdata.youtube.com/feeds/api/users/JerryLaVigneJr/uploads?"
-    urls['feed_MyList12'] = settings.getSetting("userList1")
-    urls['feed_MyList13'] = settings.getSetting("userList2")
-    urls['feed_MyList14'] = settings.getSetting("userList3")
-    urls['feed_MyList15'] = settings.getSetting("userList4")
-    urls['feed_MyList16'] = settings.getSetting("userList5")
-    urls['feed_MyList17'] = settings.getSetting("userList6")
-    urls['feed_MyList18'] = settings.getSetting("userList7")
-    urls['feed_MyList19'] = settings.getSetting("userList8")
-    urls['feed_MyList20'] = settings.getSetting("userList9")
-    urls['feed_MyList21'] = settings.getSetting("userList10")
-    
 
     # Wont work with time parameter
     urls['feed_recent'] = "http://gdata.youtube.com/feeds/api/standardfeeds/most_recent"
@@ -96,7 +66,6 @@ class YouTubeFeeds:
         self.pluginsettings = sys.modules["__main__"].pluginsettings
         self.common = sys.modules["__main__"].common
 
-		
     def createUrl(self, params={}):
         self.common.log("", 4)
         get = params.get
@@ -233,7 +202,7 @@ class YouTubeFeeds:
             if (thumbnail):
                 self.storage.store(params, thumbnail, "thumbnail")
 
-            if (len(result) > 0):
+            if (len(result) > 0 and get("fetch_all") != "true"):
                 if (per_page * (page + 1) < len(result)):
                     next = 'true'
 
@@ -327,7 +296,9 @@ class YouTubeFeeds:
         get = params.get
         result = {"content": "", "status": 303}
 
+        auth = "false"
         if get("login") == "true":
+            auth = "true"
             if (not self.core._getAuth()):
                 self.common.log("login required but auth wasn't set!")
                 return (self.language(30609), 303)
@@ -339,7 +310,7 @@ class YouTubeFeeds:
 
         ytobjects = []
 
-        result = self.core._fetchPage({"link": url, "auth": "true"})
+        result = self.core._fetchPage({"link": url, "auth": auth})
 
         if result["status"] == 200:
             if get("folder") == "true":

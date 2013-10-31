@@ -49,28 +49,6 @@ class YouTubeNavigation:
         # This list contains the main menu structure the user first encounters when running the plugin
         #     label                        , path                                          , thumbnail                    ,  login                  ,  feed / action
         self.categories = (
-            {'Title':self.language(30060)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_UKF" },
-            {'Title':self.language(30061)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList1" },
-            {'Title':self.language(30062)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList2" },
-            {'Title':self.language(30063)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList3" },
-            {'Title':self.language(30064)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList4" },
-            {'Title':self.language(30065)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList5" },
-            {'Title':self.language(30066)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList6" },
-            {'Title':self.language(30067)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList7" },
-            {'Title':self.language(30068)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList8" },
-            {'Title':self.language(30069)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList9" },
-            {'Title':self.language(30070)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList10" },
-            {'Title':self.language(30071)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"feeds"               , 'login':"false" , 'feed':"feed_MyList11" },
-            {'Title':self.language(30072)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList12" },
-            {'Title':self.language(30073)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList13" },
-            {'Title':self.language(30074)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList14" },
-            {'Title':self.language(30075)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList15" },
-            {'Title':self.language(30076)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList16" },
-            {'Title':self.language(30077)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList17" },
-            {'Title':self.language(30078)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList18" },
-            {'Title':self.language(30079)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList19" },
-            {'Title':self.language(30080)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList20" },
-            {'Title':self.language(30081)  ,'path':"/root/explore/feeds/custom"             , 'thumbnail':"playlists"               , 'login':"false" , 'feed':"feed_MyList21" },
             {'Title':self.language(30044)  ,'path':"/root/explore"                         , 'thumbnail':"explore"           , 'login':"false" },
             {'Title':self.language(30041)  ,'path':"/root/explore/categories"              , 'thumbnail':"explore"           , 'login':"false" , 'feed':'feed_categories', 'folder':'true'},
             {'Title':self.language(30001)  ,'path':"/root/explore/feeds"                   , 'thumbnail':"feeds"             , 'login':"false" },
@@ -84,13 +62,9 @@ class YouTubeNavigation:
             {'Title':self.language(30049)  ,'path':"/root/explore/feeds/trending"          , 'thumbnail':"featured"          , 'login':"false" , 'feed':"feed_trending" },
             {'Title':self.language(30015)  ,'path':"/root/explore/feeds/favorites"         , 'thumbnail':"top"               , 'login':"false" , 'feed':"feed_favorites" },
             {'Title':self.language(30016)  ,'path':"/root/explore/feeds/rated"             , 'thumbnail':"top"               , 'login':"false" , 'feed':"feed_rated" },
-            
-            #{'Title':self.language(30043)  ,'path':"/root/explore/movies"                  , 'thumbnail':"movies"            , 'login':"false" , 'scraper':'movies', 'folder':'true'},
             {'Title':self.language(30052)  ,'path':"/root/explore/music"                   , 'thumbnail':"music"             , 'login':"false" , 'store':"disco_searches", "folder":"true" },
             {'Title':self.language(30040)  ,'path':"/root/explore/music/new"               , 'thumbnail':"search"            , 'login':"false" , 'scraper':"search_disco"},
-            {'Title':self.language(30055)  ,'path':"/root/explore/music/top100"            , 'thumbnail':"music"             , 'login':"false" , 'scraper':'music_top100'},
-            #{'Title':self.language(30042)  ,'path':"/root/explore/shows"                   , 'thumbnail':"shows"             , 'login':"false" , 'scraper':'shows', 'folder':'true'},
-            {'Title':self.language(30032)  ,'path':"/root/explore/trailers"                , 'thumbnail':"trailers"          , 'login':"false" , 'scraper':'trailers'},
+            {'Title':self.language(30032)  ,'path':"/root/explore/trailers"                , 'thumbnail':"trailers"          , 'login':"false" , 'feed':'uploads', 'contact':"trailers", "external":"true"},
             {'Title':self.language(30051)  ,'path':"/root/explore/live"                    , 'thumbnail':"live"              , 'login':"false" , 'feed':"feed_live" },
             {'Title':self.language(30019)  ,'path':"/root/recommended"                     , 'thumbnail':"recommended"       , 'login':"true"  , 'user_feed':"recommended" },
             {'Title':self.language(30008)  ,'path':"/root/watch_later"                     , 'thumbnail':"watch_later"       , 'login':"true"  , 'user_feed':"watch_later" },
@@ -124,8 +98,8 @@ class YouTubeNavigation:
                     if (cat_get("path").rfind("/") <= len(path + "/")):
                         setting = self.settings.getSetting(cat_get("path").replace("/root/explore/", "").replace("/root/", ""))
                         if not setting or setting == "true":
-                            if (cat_get("feed") == "downloads"):
-                                if (self.settings.getSetting("downloadPath")):
+                            if cat_get("feed") == "downloads":
+                                if (self.settings.getSetting("download_path")):
                                     self.addListItem(params, category)
                             else:
                                 self.addListItem(params, category)
@@ -134,9 +108,6 @@ class YouTubeNavigation:
             return self.list(params)
 
         video_view = self.settings.getSetting("list_view") == "1"
-
-        if (get("scraper") == "shows" and get("category") and not video_view):
-            video_view = self.settings.getSetting("list_view") == "0"
 
         if (video_view):
             self.xbmc.executebuiltin("Container.SetViewMode(500)")
@@ -417,7 +388,7 @@ class YouTubeNavigation:
 
         listitem.setProperty("Folder", "true")
         if (item("feed") == "downloads"):
-            url = self.settings.getSetting("downloadPath")
+            url = self.settings.getSetting("download_path")
         self.xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=True, totalItems=size)
         self.common.log("Done", 5)
 
@@ -447,9 +418,7 @@ class YouTubeNavigation:
         item = item_params.get
 
         icon = item("icon", "default")
-        if (get("scraper", "").find("movies") > -1):
-            icon = "movies"
-        elif(get("scraper", "").find("music") > -1):
+        if(get("scraper", "").find("music") > -1):
             icon = "music"
         elif(get("scraper", "").find("disco") > -1):
             icon = "discoball"
@@ -599,10 +568,6 @@ class YouTubeNavigation:
             cm.append((self.language(30522), "XBMC.RunPlugin(%s?path=%s&action=play_all&user_feed=playlist&shuffle=true&playlist=%s&)" % (sys.argv[0], item("path"), item("playlist"))))
             if not get("external"):
                 cm.append((self.language(30539), "XBMC.RunPlugin(%s?path=%s&action=delete_playlist&playlist=%s&)" % (sys.argv[0], item("path"), item("playlist"))))
-
-        if (item("scraper") == "music_top100"):
-            cm.append((self.language(30520), "XBMC.RunPlugin(%s?path=%s&action=play_all&scraper=music_top100&)" % (sys.argv[0], item("path"))))
-            cm.append((self.language(30522), "XBMC.RunPlugin(%s?path=%s&action=play_all&shuffle=true&scraper=music_top100&)" % (sys.argv[0], item("path"))))
 
         if (item("scraper") == "search_disco"):
             cm.append((self.language(30520), "XBMC.RunPlugin(%s?path=%s&action=play_all&scraper=search_disco&search=%s&)" % (sys.argv[0], item("path"), item("search"))))

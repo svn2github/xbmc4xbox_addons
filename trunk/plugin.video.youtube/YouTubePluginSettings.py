@@ -36,7 +36,7 @@ class YouTubePluginSettings:
         return [5, 10, 15, 20, 25][int(self.settings.getSetting("timeout"))]
 
     def userHasProvidedValidCredentials(self):
-        return (self.settings.getSetting("username") != "" and self.settings.getSetting("oauth2_access_token"))
+        return (self.settings.getSetting("username") != "" and self.settings.getSetting("oauth2_access_token") != "")
 
     def userName(self):
         return self.settings.getSetting("username")
@@ -49,9 +49,3 @@ class YouTubePluginSettings:
 
     def authenticationRefreshRoken(self):
         return self.settings.getSetting("oauth2_refresh_token")
-		
-    def userList1(self):
-	    return self.settings.getSetting("userlist1")
-		
-    def userList10(self):
-	    return self.settings.getSetting("userlist10")

@@ -1,9 +1,5 @@
 [B]TODO:[/B]
 - Fix RTMP support.
-- Unit test new functions in storage...
-- Replace scraper with feeds for: shows.
-- Integration tests on all user actions.
-- Use extractJS and urlparse.parse_qs.
 - UTF8/16 does not work consistently(Verify failures against minidom implementation)
 - Embed playback fallback
 
@@ -12,6 +8,44 @@
 - [XBMC] When sorting items, it's impossible to get them to return to their original order
 - [XBMC] Has Excessive Memory use after running the plugin for prolonged periods of time
 - [RTMPDUMP] Doesn't support handshake type 10 which is required by youtube.
+- Youtube implemented encryption of signatures, without knowing the proper decryption method this VEVO content will remain unstable
+
+[B]Version 3.4.6[/B]
+- Fixed: Age verification working again due
+- Added: Partial hack to support youtubes new encrypted signatures, this will break again.
+- Added: Support a 5th login method.
+- Changed: Much better cookie management
+- Changed: More robust http login
+
+[B]Version 3.4.5[/B]
+- Added support for hls only streams. (Thanks to simplyintricate on github)
+- Fixed edge case where youtube video object contained an extra delimiter breakning the video player
+- Changed: Now requires valid Login to use play all on users playlists
+- Changed: Switched trailers to use youtube api
+
+[B]Version 3.4.4[/B]
+- Fixed playback after youtube javascript site changes
+- Fixed age verification, by making playback always do a full http login on restricted videos since google changed their detection algorithm
+- Fixed addition of User Agent was causing problems for Windows and IOS clients. (Thanks to m-hume on github for the fix)
+- Fixed download folder was not working for new users of the plugin. (Thanks to Ste Robinson, for pointing this out again)
+
+[B]Version 3.4.3[/B]
+- Fixed login
+
+[B]Version 3.4.2[/B]
+- Fixed playback bug cause by youtube site changes
+- Fixed bug when using unicode characters in search
+- Fixed bug in spanish translations
+
+[B]Version 3.4.1[/B]
+- Changed plugin release now controlled by release script
+
+[B]Version 3.4.0[/B]
+- Fixed Login was broken after youtube changed look
+- Fixed Playback of over 18 videos was broken with the new youtube look
+- Fixed User scraper for my liked videos
+- Fixed scraper for Top 100 Trailers, Youtube weekly Top 100 Music videos, and Youtube Disco
+- Added Translations for a multitude of languages, special thanks to the Transifex project
 
 [B]Version 3.3.0[/B]
 - Fixed playback of over 18 videos, should now work if the user is logged in.

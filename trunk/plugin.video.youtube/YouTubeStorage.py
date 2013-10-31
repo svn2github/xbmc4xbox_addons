@@ -64,30 +64,6 @@ class YouTubeStorage:
         except:
             return open(filepath, alternate)
 
-    def getStoredArtists(self, params={}):
-        self.common.log(repr(params), 5)
-        get = params.get
-
-        artists = self.retrieve(params)
-
-        result = []
-        for title, artist in artists:
-            item = {}
-            item["path"] = get("path")
-            item["Title"] = urllib.unquote_plus(title)
-            item["artist"] = artist
-            item["scraper"] = "music_artist"
-            item["icon"] = "music"
-            item["thumbnail"] = "music"
-            thumbnail = self.retrieve(params, "thumbnail", item)
-
-            if thumbnail:
-                item["thumbnail"] = thumbnail
-
-            result.append(item)
-
-        return (result, 200)
-
     def getStoredSearches(self, params={}):
         self.common.log(repr(params), 5)
         get = params.get
@@ -268,15 +244,6 @@ class YouTubeStorage:
             if iget("search"):
                 key += urllib.unquote_plus(iget("search", ""))
 
-        if get("artist") or iget("artist"):
-            key = "artist_"
-
-            if get("artist"):
-                key += get("artist")
-
-            if iget("artist"):
-                key += iget("artist")
-
         if get("user_feed"):
             key = get("user_feed")
 
@@ -343,18 +310,12 @@ class YouTubeStorage:
         if get("scraper"):
             key = "s_" + get("scraper")
 
-            if get("scraper") == "music_artist" and get("artist"):
-                key += "_" + get("artist")
-
             if get("scraper") == "disco_search":
                 key = "store_disco_searches"
 
             if get("category"):
                 key += "_category_" + get("category")
 
-            if get("show"):
-                key += "_" + get("show")
-                key += "_season_" + get("season", "0")
         if get("user_feed"):
             key = "result_" + get("user_feed")
 
@@ -373,7 +334,6 @@ class YouTubeStorage:
         if get("store"):
             key = "store_" + get("store")
 
-        self.common.log("Done : %s" % key, 5)
         return key
 
     #============================= Storage Functions =================================
@@ -411,9 +371,7 @@ class YouTubeStorage:
                 existing.append(results)
                 self.cache.set(key, repr(existing))
             else:
-                self.common.log("hit else", 5)
                 value = repr(results)
-                self.common.log(repr(key) + " - " + repr(value), 5)
                 self.cache.set(key, value)
         self.common.log("done", 5)
 
@@ -431,7 +389,6 @@ class YouTubeStorage:
 
         if results:
             value = repr(results)
-            self.common.log(repr(key) + " - " + repr(value), 5)
             self.settings.setSetting(key, value)
 
         self.common.log("done", 5)
@@ -440,8 +397,6 @@ class YouTubeStorage:
     def retrieve(self, params={}, type="", item={}):
         self.common.log(repr(params), 5)
         key = self.getStorageKey(params, type, item)
-
-        self.common.log("Got key " + repr(key))
 
         if type == "thumbnail" or type == "viewmode" or type == "value":
             return self.retrieveValue(key)

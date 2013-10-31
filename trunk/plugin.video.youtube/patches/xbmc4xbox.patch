@@ -1,0 +1,210 @@
+diff -ru plugin.video.youtube-4.4.6/addon.xml plugin.video.youtube/addon.xml
+--- plugin.video.youtube-4.4.6/addon.xml	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/addon.xml	2013-10-31 03:07:23.575674777 +0000
+@@ -5,7 +5,7 @@
+     <import addon="script.module.simplejson" version="2.0.10" />
+     <import addon="script.common.plugin.cache" version="2.5.2" />
+     <import addon="script.module.parsedom" version="2.5.1" />
+-    <import addon="script.module.simple.downloader" version="1.9.4" />
++    <import addon='script.module.xbmcvfs' version='1.0.1'/>
+   </requires>
+   <extension library="default.py" point="xbmc.python.pluginsource">
+         <provides>video</provides>
+@@ -120,4 +120,9 @@
+     <platform>all</platform>
+     <language />
+   </extension>
++  <statfeed>
++    <working>mostly</working>
++    <notes>The user login is broken due to broken ssl library in xbmc4xbox 2.4 python (Should work with python 2.7 in trunk)</notes>
++    <maintainer>buzz</maintainer>
++  </statfeed>
+ </addon>
+\ No newline at end of file
+diff -ru plugin.video.youtube-4.4.6/default.py plugin.video.youtube/default.py
+--- plugin.video.youtube-4.4.6/default.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/default.py	2013-10-31 01:29:50.768789611 +0000
+@@ -98,8 +98,6 @@
+     subtitles = YouTubeSubtitleControl.YouTubeSubtitleControl()
+     import YouTubePlayer
+     player = YouTubePlayer.YouTubePlayer()
+-    import SimpleDownloader as downloader
+-    downloader = downloader.SimpleDownloader()
+     import YouTubeScraper
+     scraper = YouTubeScraper.YouTubeScraper()
+     import YouTubePlaylistControl
+Only in plugin.video.youtube: patches
+diff -ru plugin.video.youtube-4.4.6/resources/settings.xml plugin.video.youtube/resources/settings.xml
+--- plugin.video.youtube-4.4.6/resources/settings.xml	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/resources/settings.xml	2013-10-31 01:29:50.768789611 +0000
+@@ -7,7 +7,7 @@
+     <setting id="user_password" type="text" option="hidden" label="30201" enable="!eq(-1,)" default="" />
+     <setting type="sep" />
+     <setting id="safe_search" type="enum" label="30209" lvalues="30277|30219|30220" default="1" />    
+-    <setting id="hd_videos" type="enum" label="30208" lvalues="30213|30215|30216|30217" default="2" />
++    <setting id="hd_videos" type="enum" label="30208" lvalues="30213|30215|30216|30217" default="0" />
+     <setting type="sep" />
+     <setting id="download_path" type="folder" label="30207" default="" />
+     <setting type="sep" />
+diff -ru plugin.video.youtube-4.4.6/YouTubeCore.py plugin.video.youtube/YouTubeCore.py
+--- plugin.video.youtube-4.4.6/YouTubeCore.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubeCore.py	2013-10-31 03:00:03.157573671 +0000
+@@ -47,7 +47,7 @@
+             return urllib2.Request.get_method(self)
+ 
+ 
+-class YouTubeCore():
++class YouTubeCore:
+     APIKEY = "AI39si6hWF7uOkKh4B9OEAX-gK337xbwR9Vax-cdeF9CF9iNAcQftT8NVhEXaORRLHAmHxj6GjM-Prw04odK4FxACFfKkiH9lg"
+ 
+     #===============================================================================
+@@ -824,7 +824,7 @@
+ 
+             video["Studio"] = self.getVideoCreator(node)
+             video["Title"] = self.getVideoTitle(node)
+-            video["Duration"] = self.getVideoDuration(node)
++            #video["Duration"] = self.getVideoDuration(node)
+             video["Rating"] = self.getVideoRating(node)
+             video["Genre"] = self.getVideoGenre(node)
+ 
+diff -ru plugin.video.youtube-4.4.6/YouTubeFeeds.py plugin.video.youtube/YouTubeFeeds.py
+--- plugin.video.youtube-4.4.6/YouTubeFeeds.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubeFeeds.py	2013-10-31 01:29:50.764789628 +0000
+@@ -20,7 +20,7 @@
+ import  urllib
+ 
+ 
+-class YouTubeFeeds():
++class YouTubeFeeds:
+     # YouTube General Feeds
+     urls = {}
+     urls['playlist'] = "http://gdata.youtube.com/feeds/api/playlists/%s"
+diff -ru plugin.video.youtube-4.4.6/YouTubeLogin.py plugin.video.youtube/YouTubeLogin.py
+--- plugin.video.youtube-4.4.6/YouTubeLogin.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubeLogin.py	2013-10-31 01:29:50.768789611 +0000
+@@ -29,7 +29,7 @@
+ # 500 = uncaught error
+ 
+ 
+-class YouTubeLogin():
++class YouTubeLogin:
+     APIKEY = "AI39si6hWF7uOkKh4B9OEAX-gK337xbwR9Vax-cdeF9CF9iNAcQftT8NVhEXaORRLHAmHxj6GjM-Prw04odK4FxACFfKkiH9lg"
+ 
+     urls = {}
+diff -ru plugin.video.youtube-4.4.6/YouTubeNavigation.py plugin.video.youtube/YouTubeNavigation.py
+--- plugin.video.youtube-4.4.6/YouTubeNavigation.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubeNavigation.py	2013-10-31 03:05:30.736162117 +0000
+@@ -20,7 +20,7 @@
+ import urllib
+ 
+ 
+-class YouTubeNavigation():
++class YouTubeNavigation:
+     def __init__(self):
+         self.xbmc = sys.modules["__main__"].xbmc
+         self.xbmcgui = sys.modules["__main__"].xbmcgui
+@@ -137,8 +137,6 @@
+             self.removeSubscription(params)
+         if (get("action") == "add_subscription"):
+             self.addSubscription(params)
+-        if (get("action") == "download"):
+-            self.downloadVideo(params)
+         if (get("action") == "play_video"):
+             self.player.playVideo(params)
+         if (get("action") == "queue_video"):
+@@ -523,8 +521,6 @@
+                 contact = get("contact")
+             cm.append((self.language(30521), "XBMC.RunPlugin(%s?path=%s&action=play_all&user_feed=%s&contact=%s&videoid=%s&)" % (sys.argv[0], item("path"), get("user_feed"), contact, item("videoid"))))
+ 
+-        cm.append((self.language(30501), "XBMC.RunPlugin(%s?path=%s&action=download&videoid=%s)" % (sys.argv[0], item("path"), item("videoid"))))
+-
+         if (self.settings.getSetting("username") != "" and self.settings.getSetting("oauth2_access_token")):
+             if (get("user_feed") == "favorites" and not get("contact")):
+                 cm.append((self.language(30506), 'XBMC.RunPlugin(%s?path=%s&action=remove_favorite&editid=%s&)' % (sys.argv[0], item("path"), item("editid"))))
+diff -ru plugin.video.youtube-4.4.6/YouTubePlayer.py plugin.video.youtube/YouTubePlayer.py
+--- plugin.video.youtube-4.4.6/YouTubePlayer.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubePlayer.py	2013-10-31 01:29:50.764789628 +0000
+@@ -22,7 +22,7 @@
+ try: import simplejson as json
+ except ImportError: import json
+ 
+-class YouTubePlayer():
++class YouTubePlayer:
+     fmt_value = {
+         5: "240p h263 flv container",
+         18: "360p h264 mp4 container | 270 for rtmpe?",
+diff -ru plugin.video.youtube-4.4.6/YouTubePlaylistControl.py plugin.video.youtube/YouTubePlaylistControl.py
+--- plugin.video.youtube-4.4.6/YouTubePlaylistControl.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubePlaylistControl.py	2013-10-31 01:29:50.768789611 +0000
+@@ -19,7 +19,7 @@
+ import sys
+ 
+ 
+-class YouTubePlaylistControl():
++class YouTubePlaylistControl:
+ 
+     def __init__(self):
+         self.xbmc = sys.modules["__main__"].xbmc
+diff -ru plugin.video.youtube-4.4.6/YouTubePluginSettings.py plugin.video.youtube/YouTubePluginSettings.py
+--- plugin.video.youtube-4.4.6/YouTubePluginSettings.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubePluginSettings.py	2013-10-31 01:29:50.764789628 +0000
+@@ -17,7 +17,7 @@
+ '''
+ import sys
+ 
+-class YouTubePluginSettings():
++class YouTubePluginSettings:
+ 
+     def __init__(self):
+         self.settings = sys.modules["__main__"].settings
+diff -ru plugin.video.youtube-4.4.6/YouTubeScraper.py plugin.video.youtube/YouTubeScraper.py
+--- plugin.video.youtube-4.4.6/YouTubeScraper.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubeScraper.py	2013-10-31 01:29:50.768789611 +0000
+@@ -20,7 +20,7 @@
+ import urllib
+ 
+ 
+-class YouTubeScraper():
++class YouTubeScraper:
+     urls = {}
+     urls['disco_main'] = "http://www.youtube.com/disco"
+     urls['disco_search'] = "http://www.youtube.com/disco?action_search=1&query=%s"
+diff -ru plugin.video.youtube-4.4.6/YouTubeStorage.py plugin.video.youtube/YouTubeStorage.py
+--- plugin.video.youtube-4.4.6/YouTubeStorage.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubeStorage.py	2013-10-31 01:29:50.768789611 +0000
+@@ -18,10 +18,9 @@
+ 
+ import sys
+ import urllib
+-import io
+ 
+ 
+-class YouTubeStorage():
++class YouTubeStorage:
+     def __init__(self):
+         self.xbmc = sys.modules["__main__"].xbmc
+         self.settings = sys.modules["__main__"].settings
+@@ -61,9 +60,9 @@
+             alternate = options.replace("b", "")
+ 
+         try:
+-            return io.open(filepath, options)
++            return open(filepath, options)
+         except:
+-            return io.open(filepath, alternate)
++            return open(filepath, alternate)
+ 
+     def getStoredSearches(self, params={}):
+         self.common.log(repr(params), 5)
+diff -ru plugin.video.youtube-4.4.6/YouTubeSubtitleControl.py plugin.video.youtube/YouTubeSubtitleControl.py
+--- plugin.video.youtube-4.4.6/YouTubeSubtitleControl.py	2013-07-17 22:12:30.000000000 +0100
++++ plugin.video.youtube/YouTubeSubtitleControl.py	2013-10-31 01:29:50.764789628 +0000
+@@ -25,7 +25,7 @@
+ except ImportError: import json
+ 
+ 
+-class YouTubeSubtitleControl():
++class YouTubeSubtitleControl:
+ 
+     urls = {}
+     urls['timed_text_index'] = "http://www.youtube.com/api/timedtext?type=list&v=%s"

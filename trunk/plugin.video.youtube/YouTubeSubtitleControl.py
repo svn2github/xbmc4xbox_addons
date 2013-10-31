@@ -53,7 +53,7 @@ class YouTubeSubtitleControl:
         style = u""
         result = u""
 
-        if self.settings.getSetting("annotations") == "true" and not "downloadPath" in video:
+        if self.settings.getSetting("annotations") == "true" and not "download_path" in video:
             xml = self.core._fetchPage({"link": self.urls["annotation_url"] % get('videoid')})
             if xml["status"] == 200 and xml["content"]:
                 (result, style) = self.transformAnnotationToSSA(xml["content"])
@@ -100,35 +100,25 @@ class YouTubeSubtitleControl:
                 self.common.log(u"Code list and sublist length mismatch: " + repr(codelist) + " - " + repr(sublist))
                 return ""
 
-            if len(codelist) > 0:
-                # Fallback to first in list.
-                subtitle = sublist[0].replace(u" ", u"%20")
-                code = codelist[0]
-
             lang_code = ["off", "en", "es", "de", "fr", "it", "ja"][int(self.settings.getSetting("lang_code"))]
             self.common.log(u"selected language: " + repr(lang_code))
-            if True:
-                for i in range(0, len(codelist)):
-                    data = codelist[i].lower()
-                    if data.find("-") > -1:
-                        data = data[:data.find("-")]
 
-                    if codelist[i].find(lang_code) > -1:
-                        subtitle = sublist[i].replace(" ", "%20")
-                        code = codelist[i]
-                        self.common.log(u"found subtitle specified: " + subtitle + " - " + code)
-                        break
+            for i in range(0, len(codelist)):
+                if codelist[i].find(lang_code) > -1:
+                    subtitle = sublist[i].replace(u" ", u"%20")
+                    code = codelist[i]
+                    self.common.log(u"found subtitle specified: " + subtitle + " - " + code)
+                    break
 
-                    if codelist[i].find("en") > -1:
-                        subtitle = sublist[i].replace(" ", "%20")
-                        code = "en"
-                        self.common.log(u"found subtitle default: " + subtitle + " - " + code)
+                if codelist[i].find("en") > -1:
+                    subtitle = sublist[i].replace(u" ", u"%20")
+                    code = "en"
+                    self.common.log(u"found subtitle default: " + subtitle + " - " + code)
 
             if code:
                 url = self.urls["close_caption_url"] % (get("videoid"), code)
                 if len(subtitle) > 0:
                     url += "&name=" + subtitle
-
 
         self.common.log(u"found subtitle url: " + repr(url))
         return url
@@ -156,8 +146,8 @@ class YouTubeSubtitleControl:
 
         w.close()
 
-        if "downloadPath" in video:
-            self.xbmcvfs.rename(path, os.path.join(video["downloadPath"], filename))
+        if "download_path" in video:
+            self.xbmcvfs.rename(path, os.path.join(video["download_path"], filename))
 
 
     def getTranscriptionUrl(self, video={}):
@@ -349,7 +339,7 @@ class YouTubeSubtitleControl:
 
         filename = self.getSubtitleFileName(video)
 
-        download_path = os.path.join(self.settings.getSetting("downloadPath").decode("utf-8"), filename)
+        download_path = os.path.join(self.settings.getSetting("download_path").decode("utf-8"), filename)
         path = os.path.join(self.xbmc.translatePath(self.settings.getAddonInfo("profile")).decode("utf-8"), filename)
 
         set_subtitle = False
@@ -362,7 +352,7 @@ class YouTubeSubtitleControl:
             set_subtitle = True
 
         self.common.log(u"Done trying to locate: " + path, 4)
-        if self.xbmcvfs.exists(path) and not "downloadPath" in video and set_subtitle:
+        if self.xbmcvfs.exists(path) and not "download_path" in video and set_subtitle:
             player = self.xbmc.Player()
 
             i = 0
@@ -380,7 +370,7 @@ class YouTubeSubtitleControl:
         get = params.get
         result = u""
         if (get("action", "") != "download"):
-            path = self.settings.getSetting("downloadPath")
+            path = self.settings.getSetting("download_path")
             filename = u"".join(c for c in self.common.makeUTF8(video['Title']) if c not in self.utils.INVALID_CHARS) + u"-[" + get('videoid') + u"]" + u".mp4"
             path = os.path.join(path.decode("utf-8"), filename)
             try:

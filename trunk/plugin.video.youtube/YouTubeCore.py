@@ -22,7 +22,6 @@ import time
 import socket
 import urllib
 import urllib2
-#import chardet
 
 try:
     import simplejson as json
@@ -232,12 +231,12 @@ class YouTubeCore:
             thumb = ""
             if get("user_feed") == "contacts":
                 folder["thumbnail"] = "user"
-                folder["contact"] = folder["Title"]
+                folder["contact"] = self.common.parseDOM(node, 'yt:username')[0]
                 folder["store"] = "contact_options"
                 folder["folder"] = "true"
 
             if get("user_feed") == "subscriptions":
-                folder["channel"] = folder["Title"]
+                folder["channel"] = self.common.parseDOM(node, 'yt:username')[0]
 
             if get("user_feed") == "playlists":
                 folder['playlist'] = self.common.parseDOM(node, 'yt:playlistId')[0]
@@ -430,8 +429,8 @@ class YouTubeCore:
         else:
             request.add_header('User-Agent', self.common.USERAGENT)
 
-            if get("no-language-cookie", "false") == "false":
-                cookie += "PREF=f1=50000000&hl=en;"
+            if get("no-language-cookie", "false") == "false" and False:
+                cookie += "PREF=f1=50000000&hl=en; "
 
         if get("login", "false") == "true":
             self.common.log("got login")
@@ -442,15 +441,10 @@ class YouTubeCore:
                 return ret_obj
 
             # This should be a call to self.login._httpLogin()
-            if self.settings.getSetting("login_info") == "":
+            if self.settings.getSetting("cookies_saved") != "true":
                 if isinstance(self.login, str):
                     self.login = sys.modules["__main__"].login
                 self.login._httpLogin()
-
-            if self.settings.getSetting("login_info") != "":
-                info = self.settings.getSetting("login_info")
-                SID = self.settings.getSetting("SID")
-                cookie += 'LOGIN_INFO=' + info + ';SID=' + SID + ';'
 
         if get("referer", "false") != "false":
             self.common.log("Added referer: %s" % get("referer"))
@@ -461,7 +455,6 @@ class YouTubeCore:
 
             if cookie:
                 self.common.log("Setting cookie: " + cookie)
-                request.add_header('Cookie', cookie)
 
             con = urllib2.urlopen(request)
 
@@ -475,13 +468,9 @@ class YouTubeCore:
 
             self.common.log("Result: %s " % repr(ret_obj), 9)
 
-            # Return result if it isn't age restricted
-            if (ret_obj["content"].find("verify-actions") == -1 and ret_obj["content"].find("verify-age-actions") == -1):
-                self.common.log("done")
-                ret_obj["status"] = 200
-                return ret_obj
-            else:
-                self.common.log("Youtube requires you to verify your age to view this content: " + repr(params))
+            self.common.log("done")
+            ret_obj["status"] = 200
+            return ret_obj
 
         except urllib2.HTTPError, e:
             cont = False
@@ -491,48 +480,6 @@ class YouTubeCore:
             self.common.log("HTTPError : " + err)
             if e.code == 400 or True:
                 self.common.log("Unhandled HTTPError : [%s] %s " % (e.code, msg), 1)
-
-            if msg.find("<?xml") > -1:
-                acted = False
-
-                self.common.log("REPLACE THIS MINIDOM WITH PARSEDOM: " + repr(msg))
-                import xml.dom.minidom as minidom
-                dom = minidom.parseString(msg)
-                self.common.log(str(len(msg)))
-                domains = dom.getElementsByTagName("domain")
-                codes = dom.getElementsByTagName("code")
-                for domain in domains:
-                    self.common.log(repr(domain.firstChild.nodeValue), 5)
-                    if domain.firstChild.nodeValue == "yt:quota":
-                        self.common.log("Hit quota... sleeping for 100 seconds")
-                        time.sleep(100)
-                        acted = True
-
-                if not acted:
-                    for code in codes:
-                        self.common.log(repr(code.firstChild.nodeValue), 5)
-                        if code.firstChild.nodeValue == "too_many_recent_calls":
-                            self.common.log("Hit quota... sleeping for 10 seconds")
-                            time.sleep(10)
-                            acted = True
-
-            else:  # Legacy this.
-                if msg.find("yt:quota") > 1:
-                    self.common.log("Hit quota... sleeping for 10 seconds")
-                    time.sleep(10)
-                elif msg.find("too_many_recent_calls") > 1:
-                    self.common.log("Hit quota... sleeping for 10 seconds")
-                    time.sleep(10)
-                elif err.find("Token invalid") > -1:
-                    self.common.log("refreshing token")
-                    self._oRefreshToken()
-                elif err.find("User Rate Limit Exceeded") > -1:
-                    self.common.log("Hit limit... Sleeping for 10 seconds")
-                    time.sleep(10)
-                else:
-                    if e.fp:
-                        cont = e.fp.read()
-                        self.common.log("HTTPError - Headers: " + str(e.headers) + " - Content: " + cont)
 
             params["error"] = get("error", 0) + 1
             ret_obj = self._fetchPage(params)
@@ -587,11 +534,18 @@ class YouTubeCore:
                 if error[0].find("<") > -1:
                     error[0] = error[0][0:error[0].find("<")]
 
-        if len(error) > 0:
+        if len(error) == 0:
             self.common.log("4")
-            error = error[0]
-            error = urllib.unquote(error[0:error.find("[")]).replace("&#39;", "'")
-            self.common.log("returning error : " + error.strip())
+            error = self.common.parseDOM(ret['content'], "div", attrs={"id": "watch7-player-age-gate-content"})
+
+        if len(error) > 0:
+            self.common.log("Found error: " + repr(error))
+            error = self.common.stripTags(error[0])
+            self.common.log("Found error: " + repr(error))
+            if error.find("[") > -1:
+                error = error[0:error.find("[")]
+            error = urllib.unquote(error.replace("\n", " ").replace("  ", " ")).replace("&#39;", "'")
+            self.common.log("returning error : " + repr(error.strip()))
             return error.strip()
 
         # If no error was found. But fetchPage has an error level of 3+, return the fetchPage content.
@@ -797,11 +751,12 @@ class YouTubeCore:
         return result
 
     def getVideoDuration(self, node):
-        result = ""
+        result = 1
 
         for tmp in self.common.parseDOM(node, "yt:duration", ret="seconds"):
-            tmp = int(tmp)
-            result = "%02d:%02d" % (int(tmp / 60), int(tmp % 60))
+            tmp = int(tmp) / 60
+            if tmp:
+                result = tmp
 
         return result
 
@@ -869,7 +824,7 @@ class YouTubeCore:
 
             video["Studio"] = self.getVideoCreator(node)
             video["Title"] = self.getVideoTitle(node)
-            video["Duration"] = self.getVideoDuration(node)
+            #video["Duration"] = self.getVideoDuration(node)
             video["Rating"] = self.getVideoRating(node)
             video["Genre"] = self.getVideoGenre(node)
 
