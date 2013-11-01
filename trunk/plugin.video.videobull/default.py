@@ -1,29 +1,32 @@
 import urllib,urllib2,re,cookielib,xbmcplugin,xbmcgui,xbmcaddon,socket,os,shutil,string,xbmc,stat,xbmcvfs
 import base64
-
+from operator import itemgetter
 from t0mm0.common.net import Net as net
 from t0mm0.common.addon import Addon
 from metahandler import metahandlers
 from metahandler import metacontainers
-PLUGIN='plugin.video.videobull'
-##Following 2 Lines are For DevFund not on XBOX
-#from xbmcads import ads
-#ads.ADDON_ADVERTISE(PLUGIN)
+from zipfile import ZipFile as zip
+#from BeautifulSoup import BeautifulSoup as soup
+#import script.common.plugin.cache
 pluginhandle = int(sys.argv[1])
+#SET DIRECTORIES
+local = xbmcaddon.Addon(id='plugin.video.videobull')
 addon = Addon('plugin.video.videobull', sys.argv)
+
+#grab = metahandlers.MetaData(None,preparezip = False)
 fanart = "resources/art/fanart.png"
 xbmc_skin = xbmc.getSkinDir()
-ADDON = xbmcaddon.Addon(id='plugin.video.videobull')
-grab = metahandlers.MetaData(preparezip = False)
+
+
 try:
     import StorageServer
 except:
     import storageserverdummy as StorageServer
-cache = StorageServer.StorageServer('plugin.video.videobull', 48)
+cache = StorageServer.StorageServer('plugin.video.videobull', 24)
 _VBL = Addon('plugin.video.videobull', sys.argv)
 META_ON = _VBL.get_setting('use-meta') == 'true'
 META_OFF = _VBL.get_setting('use-meta') == 'false'
-AZ_DIRECTORIES = (ltr for ltr in string.ascii_uppercase)
+
 try:
     DB_NAME = _VBL.get_setting('db_name')
     DB_USER = _VBL.get_setting('db_user')
@@ -67,11 +70,11 @@ def init_database():
         db = orm.connect(DB_NAME, DB_USER,
                          DB_PASS, DB_ADDR, buffered=True)
         cur = db.cursor()
-        cur.execute('CREATE TABLE IF NOT EXISTS tmp_tvshow_meta (url VARCHAR(255) UNIQUE, title TEXT, iconImg TEXT, year TEXT, imdbnum TEXT)')
+        cur.execute('CREATE TABLE IF NOT EXISTS tmp_tvshow_meta (season INTEGER UNIQUE, contents TEXT)')
         cur.execute(
             'CREATE TABLE IF NOT EXISTS favorites (type VARCHAR(10), name TEXT, url VARCHAR(255) UNIQUE, year VARCHAR(10))')
         cur.execute(
-            'CREATE TABLE IF NOT EXISTS subscriptions (url VARCHAR(255) UNIQUE, title TEXT, iconImg TEXT, year TEXT, imdbnum TEXT)')
+            'CREATE TABLE IF NOT EXISTS subscriptions (url VARCHAR(255) UNIQUE, title TEXT, img TEXT, year TEXT, imdbnum TEXT)')
         cur.execute(
             'CREATE TABLE IF NOT EXISTS bookmarks (video_type VARCHAR(10), title VARCHAR(255), season INTEGER, episode INTEGER, year VARCHAR(10), bookmark VARCHAR(10))')
         cur.execute('CREATE TABLE IF NOT EXISTS url_cache (url VARCHAR(255), response TEXT, timestamp TEXT)')
@@ -87,8 +90,7 @@ def init_database():
         db = orm.connect(DB_DIR)
         db.execute('CREATE TABLE IF NOT EXISTS seasons (season UNIQUE, contents)')
         db.execute('CREATE TABLE IF NOT EXISTS favorites (type, name, url, year)')
-        db.execute('CREATE TABLE IF NOT EXISTS tmp_tvshow_meta (url, title, iconImg, year, imdbnum)')
-        db.execute('CREATE TABLE IF NOT EXISTS subscriptions (url, title, iconImg, year, imdbnum)')
+        db.execute('CREATE TABLE IF NOT EXISTS subscriptions (url, title, img, year, imdbnum)')
         db.execute('CREATE TABLE IF NOT EXISTS bookmarks (video_type, title, season, episode, year, bookmark)')
         db.execute('CREATE TABLE IF NOT EXISTS url_cache (url UNIQUE, response, timestamp)')
         db.execute('CREATE UNIQUE INDEX IF NOT EXISTS unique_fav ON favorites (name, url)')
@@ -98,7 +100,17 @@ def init_database():
         db.execute('CREATE UNIQUE INDEX IF NOT EXISTS unique_url ON url_cache (url)')
     db.commit()
     db.close()
+
+
 dbg = False # Set to false if you don't want debugging
+
+#Common Cache
+#try:
+#  import StorageServer
+#except:
+#  import storageserverdummy as StorageServer
+#cache = StorageServer.StorageServer('plugin.video.videobull')
+
 ##### Queries ##########
 total = addon.queries.get('total','')
 play = addon.queries.get('play', '')
@@ -135,24 +147,29 @@ print '--- Cover URL-iconImg: ' + str(iconImg)
 print '--- Cover MetaOn_Off: ' + str(metatoggle)
 print '--- PLOT: ' + str(plot)
 print '---------------------------------------------------------------'
+
 ################### Global Constants #################################
+
 #URLS
 MainUrl = 'http://www.videobull.com/'
 SearchUrl = MainUrl + 'search/?q=%s&x=%s'
 MovieUrl = MainUrl + "movies/"
 TVUrl = MainUrl + "tv-shows/"
+
 #PATHS
-AddonPath = addon.get_path()
+AddonPath = _VBL.get_path()
 IconPath = AddonPath + "/resources/art/"
+
 #VARIABLES
 SearchMovies = 'movies'
 SearchTV = 'shows'
 SearchAll = 'all'
-TheLetter = 'theletter'
+
 VideoType_Movies = 'movie'
 VideoType_TV = 'tvshow'
 VideoType_Season = 'season'
 VideoType_Episode = 'episode'
+
 iconImg = 'tbn'
 meta = {'title': name, 'year': year, 'imdb_id': '', 'plot': plot, 'fanart': fanart, 'overlay':6}
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
@@ -160,6 +177,8 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
 'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
 'Accept-Encoding': 'none',
 'Accept-Language': 'en-US,en;q=0.8'}
+
+
 def CATEGORIES():
         addMenu('[COLOR blue][B]Latest TV Show Feed[/B][/COLOR]',MainUrl,2,IconPath +'icons/icon.png',None,'')
         addMenu('[COLOR blue][B]A-Z TV Shows[/B][/COLOR]',MainUrl +'tv-shows/',9,IconPath +'letters/AZ.png',None,'')
@@ -262,19 +281,38 @@ def search():
             if search_entered == None:
                 return False          
         return search_entered	
+        
 def getUrl(url):
+    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+    'Accept-Encoding': 'none',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Connection': 'keep-alive'}
     req = urllib2.Request(url, headers=hdr)
     response = urllib2.urlopen(req)
     link=response.read()
     response.close()
     return link        
+
 def read(url):
 #    _log("read "+url)
+
     f = urllib2.urlopen(url)
     data = f.read()
     f.close()
+    
     return data
-def VIDEOLINKS(url,name,types,meta_name):
+                
+
+
+def VIDEOLINKS(url,name):
+    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+    'Accept-Encoding': 'none',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Connection': 'keep-alive'}
     req = urllib2.Request(url, headers=hdr)
     response = urllib2.urlopen(req)
     link=response.read()
@@ -282,30 +320,31 @@ def VIDEOLINKS(url,name,types,meta_name):
     match=re.compile('''<a id='.+?' href='.*?title=(.+?)' target='_blank' rel='nofollow'>(.+?)</a>''', re.DOTALL).findall(link)
     cache.set('Vidname', name)
     for url,source in match:    
-        addDir(name+' || '+'[COLOR blue][B]'+source+'[/B][/COLOR]',url,5,iconImg,'tvshow',name)    
-    xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TITLE)
+        addDir(name+' || '+'[COLOR blue][B]'+source+'[/B][/COLOR]',url,5,iconImg,'tvshow',name)
+         
+            
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-def PLAYLINKS(url,name,types):
+                      
+def PLAYLINKS(url,name):
         regexlink = url
         url = base64.b64decode(regexlink)
         hostUrl = url
-        print hostUrl
         videoLink = urlresolver.resolve(hostUrl)      
-        artname=re.sub('\:.*','', meta_name)
-        name=meta_name		
-#        if META_OFF:
-#            infoLabels={ "Title": name, 'cover_url': iconImg }
-#        else:
-#            pass
-#        infoLabels=GRABMETA(artname,'tvshow')
-        infoLabels={ "Title": name, 'cover_url': iconImg }
+        vName=cache.get('Vidname')
+        print "VNAME:"+vName
+        if META_ON:
+            img=cache.get('Cover_url')
+            print "THUMBNAILCACHENAME"+img
+        elif META_OFF:
+            img=IconPath +'icons/icon.png'
+        name=vName
         player = xbmc.Player(xbmc.PLAYER_CORE_AUTO)
-        listitem = xbmcgui.ListItem(name, iconImg, iconImg)
-        listitem.setInfo('video', infoLabels=infoLabels)
-        listitem.setThumbnailImage(infoLabels['cover_url'])
+        listitem = xbmcgui.ListItem(name, img, img)
+        listitem.setInfo('video', {'Title': name})
+        listitem.setThumbnailImage(img)
         player.play(videoLink,listitem)
-        addLink('Restart Stream '+ name,str(videoLink),iconImg,'tvshow',name)
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))		
+        addLink('Restart Stream'+ vName,videoLink,img) 
+
 
 def get_params():
         param=[]
@@ -324,38 +363,21 @@ def get_params():
                                 param[splitparams[0]]=splitparams[1]
                                 
         return param
-		
-def GRABMETA(meta_name,types):
-    type = types
-    meta = grab.get_meta(meta_name,'tvshow','','','',overlay=6)
-    infoLabels = {'backdrop_url': meta['backdrop_url'], 'cover_url': meta['cover_url'],
-                  'plot': meta['plot'], 'title': name, 'TVShowTitle': meta['TVShowTitle']}
-    if type == None: infoLabels = {'cover_url': '','title': name}    
-    return infoLabels	
-def addLink(name,url,iconImg,types,meta_name):
-        infoLabels=GRABMETA(meta_name,types)        
+
+def addLink(name,url,iconImg):
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconImg)
-        liz.setInfo( type="Video", infoLabels=infoLabels)
-        liz.setProperty('fanart_image', infoLabels['backdrop_url'])        
+        liz.setInfo( type="Video", infoLabels={ "Title": name } )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
         return ok
+
+
+		
 def addDir(name,url,mode,iconImg,types,meta_name):
-        u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&types="+str(types)+"&meta_name="+str(meta_name)
+        u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
         ok=True
-        liz=xbmcgui.ListItem(name, iconImage=IconPath +'icons/icon.png', thumbnailImage=iconImg)
-        if META_ON==True:
-            infoLabels=GRABMETA(meta_name,types) 
-            iconImg=infoLabels['cover_url']
-            liz=xbmcgui.ListItem(name, iconImage=IconPath +'icons/icon.png', thumbnailImage=iconImg)
-            liz.setProperty('fanart_image', infoLabels['backdrop_url'])
-            liz.setInfo( type="Video", infoLabels=infoLabels)
-        else:
-            infoLabels={ "Title": name, 'cover_url': iconImg }
-            iconImg=iconImg
-            liz=xbmcgui.ListItem(name, iconImage=IconPath +'icons/icon.png', thumbnailImage=iconImg)
-            liz.setProperty('fanart_image', '')
-            liz.setInfo( type="Video", infoLabels=infoLabels)
+        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconImg)
+        liz.setInfo( type="Video", infoLabels={ "Title": name } )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok
 def addMenu(name,url,mode,iconImg,types,meta_name):
@@ -365,7 +387,7 @@ def addMenu(name,url,mode,iconImg,types,meta_name):
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         liz.setProperty('fanart_image', IconPath +'fanart2.png')
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
-        return ok		
+        return ok
 def setView(content, viewType):
         # set content type so library shows more views and info
         if content:
@@ -379,6 +401,7 @@ mode=None
 iconImg=''
 types=None
 meta_name=None
+
 try:
         url=urllib.unquote_plus(params["url"])
 except:
@@ -409,51 +432,132 @@ print "Name: "+str(name)
 print "IconImg:"+str(iconImg)
 print "TYPEs:"+str(types)
 print 'Meta_Name: '+str(meta_name)
+
 if mode==None or url==None or len(url)<1:
         print ""
         CATEGORIES()
        
+
+        
 elif mode==2:
         print ""+url
         INDEX(url,name,iconImg)
+		
 elif mode==6:
         print ""+url
-        INDEX3(url,name,iconImg)
+        INDEX3(url)
 
 elif mode==3:
         print ""+url
-        EPISODES(url,name,iconImg)
+        EPISODES(url)
 
 elif mode==4:
         print ""+url
-        VIDEOLINKS(url,name,types,meta_name)
+        VIDEOLINKS(url,name)
 
 elif mode==5:
         import urlresolver
         print ""+url
-        PLAYLINKS(url,name,types)
+        PLAYLINKS(url,name)
 elif mode==7:
         print ""+url
-        pages(url,name,iconImg)
+        pages(url)
 elif mode==8:
         print ""+url
         TvSearch(url)
 elif mode==9:
         print ""+url
-        AtoZ(url,theletter,iconImg)
+        AtoZ(url)
 elif mode==10:
         print ""+url
-        AZT(url,theletter,iconImg,types,meta_name)	
+        A(url,name)
+elif mode==11:
+        print ""+url
+        B(url)		
+elif mode==12:
+        print ""+url
+        C(url)		
+elif mode==13:
+        print ""+url
+        D(url)		
+elif mode==14:
+        print ""+url
+        E(url)		
+elif mode==15:
+        print ""+url
+        F(url)		
+elif mode==16:
+        print ""+url
+        G(url)		
+elif mode==17:
+        print ""+url
+        H(url)		
+elif mode==18:
+        print ""+url
+        I(url)		
+elif mode==19:
+        print ""+url
+        J(url)		
+elif mode==20:
+        print ""+url
+        K(url)		
+elif mode==21:
+        print ""+url
+        L(url)		
+elif mode==22:
+        print ""+url
+        M(url)		
+elif mode==23:
+        print ""+url
+        N(url)		
+elif mode==24:
+        print ""+url
+        O(url)		
+elif mode==25:
+        print ""+url
+        P(url)		
+elif mode==26:
+        print ""+url
+        Q(url)		
+elif mode==27:
+        print ""+url
+        R(url)		
+elif mode==28:
+        print ""+url
+        S(url)
+elif mode==29:
+        print ""+url
+        T(url)
+elif mode==30:
+        print ""+url
+        U(url)
+elif mode==31:
+        print ""+url
+        V(url)		
+elif mode==32:
+        print ""+url
+        W(url)		
+elif mode==33:
+        print ""+url
+        X(url)		
+elif mode==34:
+        print ""+url
+        Y(url)		
+elif mode==35:
+        print ""+url
+        Z(url)	
+
 elif mode==40:
         print ""+url
-        showEpp(url,name,types,meta_name)			
-elif mode==45: #or url==RES:
+        showEpp(url)			
+elif mode==45 or url==RES:
         import urlresolver
         print ""+url
         urlresolver.display_settings()			
-#elif mode==58:
-#        print "Metahandler Settings"
-#        import metahandler
-#        metahandler.display_settings()
-#        callEndOfDirectory = False
+
+
+
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
+
+

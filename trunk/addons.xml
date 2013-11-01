@@ -1354,10 +1354,10 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
-<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="1.1.0">
+<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="1.1.1">
   <requires>
     <import addon="xbmc.python" version="2.1.0" />
-    <import addon="script.module.urlresolver" version="2.1.0"/>
+    <import addon="script.module.urlresolver" version="2.1.1"/>
 	<import addon="script.module.t0mm0.common" version="1.1.0"/>
 	<import addon="script.module.simplejson"   version="2.0.0"/>
 	<import addon="script.module.xbmcvfs"/>
