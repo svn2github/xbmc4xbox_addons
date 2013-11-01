@@ -13,14 +13,14 @@ S'repository.xbmc4xbox'
 p6
 sS'version'
 p7
-S'1.0.1'
+S'0.2.9'
 p8
 sS'date'
 p9
 cdatetime
 datetime
 p10
-(S'\x07\xdd\x08\x06\x17\x169\n\xc9\xb8'
+(S'\x07\xd4\x01\x05\r\x113\x06=\xa8'
 p11
 tp12
 Rp13

@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
-<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="1.0.1">
-  <requires>
+<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="1.1.0">
     <import addon="xbmc.python" version="2.1.0" />
     <import addon="script.module.urlresolver" version="1.0.10"/>
 	<import addon="script.module.t0mm0.common" version="1.1.0"/>
@@ -9,6 +8,9 @@
 	<import addon="script.module.metahandler" version="1.0.0"/>
 	<import addon="script.module.elementtree" />
 	<import addon="script.module.pysqlite2" />
+<!-- REQUIRED ON XBOX ONLY
+    <import addon="script.module.xbmcvfs"/>
+-->	
   </requires>
   <extension library="default.py" point="xbmc.python.pluginsource">
         <provides>video</provides>
@@ -16,7 +18,7 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <summary>Stream TV Shows from Videobull.com Directly to your xbmc device</summary>
-    <description>Visit xbmc4xbox.org.uk/forum/ for support. Stream TV Shows from Videobull.com Directly to your xbmc device</description>
+    <description>Visit xbmc4xbox.org.uk/forum/ or xbmchub.com forum for support. Stream TV Shows from Videobull.com Directly to your xbmc device</description>
     <nofanart>true</nofanart>
     <nochangelog>true</nochangelog>
 	</extension>
