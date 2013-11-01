@@ -271,35 +271,44 @@ def read(url):
     data = f.read()
     f.close()
     return data
-def VIDEOLINKS(url,name,types,meta_name):
+def VIDEOLINKS(url,name):
+    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+    'Accept-Encoding': 'none',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Connection': 'keep-alive'}
     req = urllib2.Request(url, headers=hdr)
     response = urllib2.urlopen(req)
     link=response.read()
     response.close()
     match=re.compile('''<a id='.+?' href='.*?title=(.+?)' target='_blank' rel='nofollow'>(.+?)</a>''', re.DOTALL).findall(link)
-    cache.set('Vidname', name)
-    for url,source in match:    
-        addDir(name+' || '+'[COLOR blue][B]'+source+'[/B][/COLOR]',url,5,iconImg,'tvshow',name)    
-    xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TITLE)
+    print match
+    for url,name in match:     
+     addDir(name,url,5,'')
+         
+            
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-def PLAYLINKS(url,name,types):
+                      
+def PLAYLINKS(url,name):
         regexlink = url
         url = base64.b64decode(regexlink)
         hostUrl = url
         videoLink = urlresolver.resolve(hostUrl)      
-        artname=re.sub('\:.*','', meta_name) 
-        if META_OFF==True:
-            infoLabels={ "Title": name, 'cover_url': iconImg }
-        else:
-            pass
-        infoLabels=GRABMETA(artname,'tvshow')
+        vName=cache.get('Vidname')
+        print "VNAME:"+vName
+        if META_ON:
+            img=cache.get('Cover_url')
+            print "THUMBNAILCACHENAME"+img
+        elif META_OFF:
+            img=IconPath +'icons/icon.png'
+        name=vName
         player = xbmc.Player(xbmc.PLAYER_CORE_AUTO)
-        listitem = xbmcgui.ListItem(name, iconImg, iconImg)
-        listitem.setInfo('video', infoLabels=infoLabels)
-        listitem.setThumbnailImage(infoLabels['cover_url'])
+        listitem = xbmcgui.ListItem(name, img, img)
+        listitem.setInfo('video', {'Title': name})
+        listitem.setThumbnailImage(img)
         player.play(videoLink,listitem)
-        addLink('Restart Stream '+ name,str(videoLink),iconImg,'tvshow',artname)
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))		
+        addLink('Restart Stream',videoLink,img) 	
 
 def get_params():
         param=[]
