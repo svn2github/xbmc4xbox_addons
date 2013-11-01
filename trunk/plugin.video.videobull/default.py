@@ -5,7 +5,10 @@ from t0mm0.common.net import Net as net
 from t0mm0.common.addon import Addon
 from metahandler import metahandlers
 from metahandler import metacontainers
-
+PLUGIN='plugin.video.videobull'
+##Following 2 Lines are For DevFund not on XBOX
+#from xbmcads import ads
+#ads.ADDON_ADVERTISE(PLUGIN)
 pluginhandle = int(sys.argv[1])
 addon = Addon('plugin.video.videobull', sys.argv)
 fanart = "resources/art/fanart.png"
@@ -271,44 +274,38 @@ def read(url):
     data = f.read()
     f.close()
     return data
-def VIDEOLINKS(url,name):
-    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-    'Accept-Encoding': 'none',
-    'Accept-Language': 'en-US,en;q=0.8',
-    'Connection': 'keep-alive'}
+def VIDEOLINKS(url,name,types,meta_name):
     req = urllib2.Request(url, headers=hdr)
     response = urllib2.urlopen(req)
     link=response.read()
     response.close()
     match=re.compile('''<a id='.+?' href='.*?title=(.+?)' target='_blank' rel='nofollow'>(.+?)</a>''', re.DOTALL).findall(link)
-    print match
-    for url,name in match:     
-     addDir(name,url,5,'')
-         
-            
+    cache.set('Vidname', name)
+    for url,source in match:    
+        addDir(name+' || '+'[COLOR blue][B]'+source+'[/B][/COLOR]',url,5,iconImg,'tvshow',name)    
+    xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TITLE)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-                      
-def PLAYLINKS(url,name):
+def PLAYLINKS(url,name,types):
         regexlink = url
         url = base64.b64decode(regexlink)
         hostUrl = url
+        print hostUrl
         videoLink = urlresolver.resolve(hostUrl)      
-        vName=cache.get('Vidname')
-        print "VNAME:"+vName
-        if META_ON:
-            img=cache.get('Cover_url')
-            print "THUMBNAILCACHENAME"+img
-        elif META_OFF:
-            img=IconPath +'icons/icon.png'
-        name=vName
+        artname=re.sub('\:.*','', meta_name)
+        name=meta_name		
+#        if META_OFF:
+#            infoLabels={ "Title": name, 'cover_url': iconImg }
+#        else:
+#            pass
+#        infoLabels=GRABMETA(artname,'tvshow')
+        infoLabels={ "Title": name, 'cover_url': iconImg }
         player = xbmc.Player(xbmc.PLAYER_CORE_AUTO)
-        listitem = xbmcgui.ListItem(name, img, img)
-        listitem.setInfo('video', {'Title': name})
-        listitem.setThumbnailImage(img)
+        listitem = xbmcgui.ListItem(name, iconImg, iconImg)
+        listitem.setInfo('video', infoLabels=infoLabels)
+        listitem.setThumbnailImage(infoLabels['cover_url'])
         player.play(videoLink,listitem)
-        addLink('Restart Stream',videoLink,img) 	
+        addLink('Restart Stream '+ name,str(videoLink),iconImg,'tvshow',name)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))		
 
 def get_params():
         param=[]
@@ -330,7 +327,7 @@ def get_params():
 		
 def GRABMETA(meta_name,types):
     type = types
-    meta = grab.get_meta('tvshow',meta_name,None,None,None,overlay=6)
+    meta = grab.get_meta(meta_name,'tvshow','','','',overlay=6)
     infoLabels = {'backdrop_url': meta['backdrop_url'], 'cover_url': meta['cover_url'],
                   'plot': meta['plot'], 'title': name, 'TVShowTitle': meta['TVShowTitle']}
     if type == None: infoLabels = {'cover_url': '','title': name}    
