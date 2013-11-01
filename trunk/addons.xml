@@ -1363,6 +1363,7 @@ provider-name="Eldorado (originator: anarchintosh)">
 	<import addon="script.module.xbmcvfs"/>
 	<import addon="script.module.metahandler" version="1.0.0"/>
 	<import addon="script.module.elementtree" />
+	<import addon="script.module.pysqlite2" />
   </requires>
   <extension library="default.py" point="xbmc.python.pluginsource">
         <provides>video</provides>
