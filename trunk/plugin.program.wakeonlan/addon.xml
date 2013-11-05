@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.program.xbmcsvninstaller"
-       name="XBMC SVN Installer"
-       version="2.2.0"
+       name="Wake on Lan"
+       version="1.0.0"
        provider-name="Dan Dar3">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -11,8 +11,8 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>   
-    <summary lang="en">XBMC news, skins and builds installer from XBMCSVN.com</summary>
-    <description lang="en">XBMC news, skins and builds installer from XBMCSVN.com</description>
+    <summary lang="en">Wake on Lan</summary>
+    <description lang="en">Wake network devices on your lan</description>
   </extension>
   <statfeed>
     <working>yes</working>

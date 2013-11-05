@@ -253,29 +253,7 @@
 </addon>
 
 <addon id="plugin.program.xbmcsvninstaller"
-       name="XBMC SVN Installer"
-       version="2.2.0"
-       provider-name="Dan Dar3">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>program</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">XBMC news, skins and builds installer from XBMCSVN.com</summary>
-    <description lang="en">XBMC news, skins and builds installer from XBMCSVN.com</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>Dan Dar3</maintainer>
-  </statfeed>
-</addon>
-
-<addon id="plugin.program.wakeonlan"
-       name="Wake on LAN"
+       name="Wake on Lan"
        version="1.0.0"
        provider-name="Dan Dar3">
   <requires>
@@ -286,12 +264,34 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">Wake your PC(s) from XBMC</summary>
-    <description lang="en">Wake your PC(s) from XBMC</description>
+    <summary lang="en">Wake on Lan</summary>
+    <description lang="en">Wake network devices on your lan</description>
   </extension>
   <statfeed>
     <working>yes</working>
 	<notes>none</notes>
+	<maintainer>Dan Dar3</maintainer>
+  </statfeed>
+</addon>
+
+<addon id="plugin.program.xbmcsvninstaller"
+       name="XBMC4Xbox Installer (Gets latest xbmc4xbox for you)"
+       version="2.2.0"
+       provider-name="Dan Dar3">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>program</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Update your xbox with this plugin from within xbmc</summary>
+    <description lang="en">Easily update your xbox to the latest build of xbmc4xbox from within xbmc</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>Easily update your xbox to the latest build of xbmc4xbox from within xbmc</notes>
 	<maintainer>Dan Dar3</maintainer>
   </statfeed>
 </addon>
