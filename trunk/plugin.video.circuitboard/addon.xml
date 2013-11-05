@@ -2,7 +2,7 @@
 <addon id="plugin.video.circuitboard" name="Circuit Board TV" version="0.0.2" provider-name="dethfeet">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
-    <import addon="xbmc.gui" version="2.11"/>
+    <!-- <import addon="xbmc.gui" version="2.11"/> -->
     <import addon="plugin.video.youtube" version="3.3.0"/>
     <import addon="plugin.video.bliptv" version="0.7.0"/>
     <import addon="script.module.urlresolver" version="1.0.3"/>
