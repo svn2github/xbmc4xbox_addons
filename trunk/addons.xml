@@ -275,7 +275,7 @@
 </addon>
 
 <addon id="plugin.program.xbmcsvninstaller"
-       name="XBMC4Xbox Installer (Gets latest xbmc4xbox for you)"
+       name="XBMC4Xbox Installer"
        version="2.2.0"
        provider-name="Dan Dar3">
   <requires>
