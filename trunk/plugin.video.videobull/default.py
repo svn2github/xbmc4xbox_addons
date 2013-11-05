@@ -467,7 +467,7 @@ elif mode==8:
         TvSearch(url)
 elif mode==9:
         print ""+url
-        AtoZ(url)
+        AtoZ(url,theletter,iconImg)
 elif mode==10:
         print ""+url
         A(url,name)
