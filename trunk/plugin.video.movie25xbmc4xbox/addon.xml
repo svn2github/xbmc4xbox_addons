@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
-  id="plugin.video.movie25.com"
-  version="1.0.1"
-  name="Movie25.com"
+  id="plugin.video.movie25xbmc4xbox"
+  version="1.0.3"
+  name="Movie25XBMC4XBOX"
   provider-name="skatulskijean">
   <requires>
    <import addon="xbmc.python" version="2.0"/>
