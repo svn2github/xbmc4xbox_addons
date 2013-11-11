@@ -1,0 +1,578 @@
+diff --git a/lib/urlresolver/plugins/alldebrid.py b/lib/urlresolver/plugins/alldebrid.py
+index cd450f9..c404271 100644
+--- a/lib/urlresolver/plugins/alldebrid.py
++++ b/lib/urlresolver/plugins/alldebrid.py
+@@ -173,7 +173,10 @@ class AllDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+ 
+     #PluginSettings methods
+     def get_settings_xml(self):
+-        xml = PluginSettings.get_settings_xml(self)
++        xml  = '<setting id="AllDebridResolver_priority" '
++        xml += 'type="number" label="Priority" default="100"/>\n'
++        xml += '<setting id="AllDebridResolver_enabled" '
++        xml += 'type="bool" label="Enabled" default="false"/>\n'
+         xml += '<setting id="AllDebridResolver_login" '
+         xml += 'type="bool" label="login" default="false"/>\n'
+         xml += '<setting id="AllDebridResolver_username" enable="eq(-1,true)" '
+diff --git a/lib/urlresolver/plugins/bayfiles.py b/lib/urlresolver/plugins/bayfiles.py
+index 03bf627..89496d1 100644
+--- a/lib/urlresolver/plugins/bayfiles.py
++++ b/lib/urlresolver/plugins/bayfiles.py
+@@ -20,7 +20,7 @@ from t0mm0.common.net import Net
+ from urlresolver.plugnplay.interfaces import UrlResolver
+ from urlresolver.plugnplay.interfaces import PluginSettings
+ from urlresolver.plugnplay import Plugin
+-import re,urllib2,os,json,time,sys
++import re,urllib2,os,simplejson as json,time,sys
+ from urlresolver import common
+ from time import time as wait
+ 
+diff --git a/lib/urlresolver/plugins/billionuploads.py b/lib/urlresolver/plugins/billionuploads.py
+index 5863a53..0a8f9e0 100644
+--- a/lib/urlresolver/plugins/billionuploads.py
++++ b/lib/urlresolver/plugins/billionuploads.py
+@@ -40,168 +40,169 @@ class billionuploads(Plugin, UrlResolver, PluginSettings):
+ 
+     def get_media_url(self, host, media_id):
+         try:
+-                url = self.get_url(host, media_id)
+-                
+-                #########
+-                dialog = xbmcgui.DialogProgress()
+-                dialog.create('Resolving', 'Resolving BillionUploads Link...')       
+-                dialog.update(0)
+-            
+-                common.addon.log( self.name + ' - Requesting GET URL: %s' % url )
+-                
+-                cj = cookielib.CookieJar()
+-                normal = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+-                normal.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
+-                
+-                ########################################################
+-                ######## CLOUD FLARE STUFF
+-                #######################################################
+-                class NoRedirection(urllib2.HTTPErrorProcessor):
+-                    # Stop Urllib2 from bypassing the 503 page.    
+-                    def http_response(self, request, response):
+-                        code, msg, hdrs = response.code, response.msg, response.info()
+-
+-                        return response
+-                    https_response = http_response
+-
+-                opener = urllib2.build_opener(NoRedirection, urllib2.HTTPCookieProcessor(cj))
+-                opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
+-                response = opener.open(url).read()
++            try:
++                    url = self.get_url(host, media_id)
+                     
+-                jschl=re.compile('name="jschl_vc" value="(.+?)"/>').findall(response)
+-                if jschl:
+-                    jschl = jschl[0]    
++                    #########
++                    dialog = xbmcgui.DialogProgress()
++                    dialog.create('Resolving', 'Resolving BillionUploads Link...')       
++                    dialog.update(0)
+                 
+-                    maths=re.compile('value = (.+?);').findall(response)[0].replace('(','').replace(')','')
+-
+-                    domain_url = re.compile('(https?://.+?/)').findall(url)[0]
+-                    domain = re.compile('https?://(.+?)/').findall(domain_url)[0]
+-                    
+-                    time.sleep(5)
++                    common.addon.log( self.name + ' - Requesting GET URL: %s' % url )
+                     
+-                    final= normal.open(domain_url+'cdn-cgi/l/chk_jschl?jschl_vc=%s&jschl_answer=%s'%(jschl,eval(maths)+len(domain))).read()
++                    cj = cookielib.CookieJar()
++                    normal = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
++                    normal.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
+                     
+-                    html = normal.open(url).read()
+-                else:
+-                    html = response
+-                ################################################################################
+-                   
+-                #Check page for any error msgs
+-                if re.search('This server is in maintenance mode', html):
+-                    common.addon.log_error(self.name + ' - Site reported maintenance mode')
+-                    xbmc.executebuiltin('XBMC.Notification([B][COLOR white]BILLIONUPLOADS[/COLOR][/B],[COLOR red]Site reported maintenance mode[/COLOR],8000,'+logo+')')
+-                    return self.unresolvable(code=2, msg='Site reported maintenance mode')
++                    ########################################################
++                    ######## CLOUD FLARE STUFF
++                    #######################################################
++                    class NoRedirection(urllib2.HTTPErrorProcessor):
++                        # Stop Urllib2 from bypassing the 503 page.    
++                        def http_response(self, request, response):
++                            code, msg, hdrs = response.code, response.msg, response.info()
++
++                            return response
++                        https_response = http_response
++
++                    opener = urllib2.build_opener(NoRedirection, urllib2.HTTPCookieProcessor(cj))
++                    opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')]
++                    response = opener.open(url).read()
++                        
++                    jschl=re.compile('name="jschl_vc" value="(.+?)"/>').findall(response)
++                    if jschl:
++                        jschl = jschl[0]    
+                     
+-                # Check for file not found
+-                if re.search('File Not Found', html):
+-                    common.addon.log_error(self.name + ' - File Not Found')
+-                    xbmc.executebuiltin('XBMC.Notification([B][COLOR white]BILLIONUPLOADS[/COLOR][/B],[COLOR red]File Not Found[/COLOR],8000,'+logo+')')
+-                    return self.unresolvable(code=1, msg='File Not Found')                
+-
+-                data = {}
+-                r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
+-                for name, value in r:
+-                    data[name] = value
+-                    
+-                captchaimg = re.search('<img src="((?:http://|www\.)?BillionUploads.com/captchas/.+?)"', html)
+-        
+-                if captchaimg:
+-                    dialog.close()
+-                    img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
+-                    wdlg = xbmcgui.WindowDialog()
+-                    wdlg.addControl(img)
+-                    wdlg.show()
+-            
+-                    time.sleep(3)
+-            
+-                    kb = xbmc.Keyboard('', 'Type the letters in the image', False)
+-                    kb.doModal()
+-                    capcode = kb.getText()
+-            
+-                    if (kb.isConfirmed()):
+-                        userInput = kb.getText()
+-                        if userInput != '':
+-                            capcode = kb.getText()
+-                        elif userInput == '':
+-                            common.addon.show_error_dialog("You must enter the text from the image to access video")
+-                            return False
++                        maths=re.compile('value = (.+?);').findall(response)[0].replace('(','').replace(')','')
++
++                        domain_url = re.compile('(https?://.+?/)').findall(url)[0]
++                        domain = re.compile('https?://(.+?)/').findall(domain_url)[0]
++                        
++                        time.sleep(5)
++                        
++                        final= normal.open(domain_url+'cdn-cgi/l/chk_jschl?jschl_vc=%s&jschl_answer=%s'%(jschl,eval(maths)+len(domain))).read()
++                        
++                        html = normal.open(url).read()
+                     else:
+-                        return False
+-                    wdlg.close()
+-                    dialog.close() 
+-                    dialog.create('Resolving', 'Resolving BillionUploads Link...') 
+-                    dialog.update(50)
+-                    data.update({'code':capcode})
+-
+-                else:  
+-                    dialog.create('Resolving', 'Resolving BillionUploads Link...') 
+-                    dialog.update(50)
+-                
+-                data.update({'submit_btn':''})
+-                r = re.search('document\.getElementById\(\'.+\'\)\.innerHTML=decodeURIComponent\(\"(.+?)\"\);', html)
+-                if r:
+-                    r = re.findall('type="hidden" name="(.+?)" value="(.+?)">', urllib.unquote(r.group(1)).decode('utf8') )
++                        html = response
++                    ################################################################################
++                       
++                    #Check page for any error msgs
++                    if re.search('This server is in maintenance mode', html):
++                        common.addon.log_error(self.name + ' - Site reported maintenance mode')
++                        xbmc.executebuiltin('XBMC.Notification([B][COLOR white]BILLIONUPLOADS[/COLOR][/B],[COLOR red]Site reported maintenance mode[/COLOR],8000,'+logo+')')
++                        return self.unresolvable(code=2, msg='Site reported maintenance mode')
++                        
++                    # Check for file not found
++                    if re.search('File Not Found', html):
++                        common.addon.log_error(self.name + ' - File Not Found')
++                        xbmc.executebuiltin('XBMC.Notification([B][COLOR white]BILLIONUPLOADS[/COLOR][/B],[COLOR red]File Not Found[/COLOR],8000,'+logo+')')
++                        return self.unresolvable(code=1, msg='File Not Found')                
++
++                    data = {}
++                    r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
+                     for name, value in r:
+-                        data.update({name:value})
++                        data[name] = value
++                        
++                    captchaimg = re.search('<img src="((?:http://|www\.)?BillionUploads.com/captchas/.+?)"', html)
++            
++                    if captchaimg:
++                        dialog.close()
++                        img = xbmcgui.ControlImage(550,15,240,100,captchaimg.group(1))
++                        wdlg = xbmcgui.WindowDialog()
++                        wdlg.addControl(img)
++                        wdlg.show()
+                 
+-                html = normal.open(url, urllib.urlencode(data)).read()
++                        time.sleep(3)
+                 
+-                dialog.update(100)
++                        kb = xbmc.Keyboard('', 'Type the letters in the image', False)
++                        kb.doModal()
++                        capcode = kb.getText()
+                 
+-                def custom_range(start, end, step):
+-                    while start <= end:
+-                        yield start
+-                        start += step
+-
+-                def checkwmv(e):
+-                    s = ""
++                        if (kb.isConfirmed()):
++                            userInput = kb.getText()
++                            if userInput != '':
++                                capcode = kb.getText()
++                            elif userInput == '':
++                                common.addon.show_error_dialog("You must enter the text from the image to access video")
++                                return False
++                        else:
++                            return False
++                        wdlg.close()
++                        dialog.close() 
++                        dialog.create('Resolving', 'Resolving BillionUploads Link...') 
++                        dialog.update(50)
++                        data.update({'code':capcode})
++
++                    else:  
++                        dialog.create('Resolving', 'Resolving BillionUploads Link...') 
++                        dialog.update(50)
+                     
+-                    # Create an array containing A-Z,a-z,0-9,+,/
+-                    i=[]
+-                    u=[[65,91],[97,123],[48,58],[43,44],[47,48]]
+-                    for z in range(0, len(u)):
+-                        for n in range(u[z][0],u[z][1]):
+-                            i.append(chr(n))
+-                    #print i
+-
+-                    # Create a dict with A=0, B=1, ...
+-                    t = {}
+-                    for n in range(0, 64):
+-                        t[i[n]]=n
+-                    #print t
+-
+-                    for n in custom_range(0, len(e), 72):
+-
+-                        a=0
+-                        h=e[n:n+72]
+-                        c=0
+-
+-                        #print h
+-                        for l in range(0, len(h)):            
+-                            f = t.get(h[l], 'undefined')
+-                            if f == 'undefined':
+-                                continue
+-                            a= (a<<6) + f
+-                            c = c + 6
+-
+-                            while c >= 8:
+-                                c = c - 8
+-                                s = s + chr( (a >> c) % 256 )
+-
+-                    return s
++                    data.update({'submit_btn':''})
++                    r = re.search('document\.getElementById\(\'.+\'\)\.innerHTML=decodeURIComponent\(\"(.+?)\"\);', html)
++                    if r:
++                        r = re.findall('type="hidden" name="(.+?)" value="(.+?)">', urllib.unquote(r.group(1)).decode('utf8') )
++                        for name, value in r:
++                            data.update({name:value})
++                    
++                    html = normal.open(url, urllib.urlencode(data)).read()
++                    
++                    dialog.update(100)
++                    
++                    def custom_range(start, end, step):
++                        while start <= end:
++                            yield start
++                            start += step
++
++                    def checkwmv(e):
++                        s = ""
++                        
++                        # Create an array containing A-Z,a-z,0-9,+,/
++                        i=[]
++                        u=[[65,91],[97,123],[48,58],[43,44],[47,48]]
++                        for z in range(0, len(u)):
++                            for n in range(u[z][0],u[z][1]):
++                                i.append(chr(n))
++                        #print i
++
++                        # Create a dict with A=0, B=1, ...
++                        t = {}
++                        for n in range(0, 64):
++                            t[i[n]]=n
++                        #print t
++
++                        for n in custom_range(0, len(e), 72):
++
++                            a=0
++                            h=e[n:n+72]
++                            c=0
++
++                            #print h
++                            for l in range(0, len(h)):            
++                                f = t.get(h[l], 'undefined')
++                                if f == 'undefined':
++                                    continue
++                                a= (a<<6) + f
++                                c = c + 6
++
++                                while c >= 8:
++                                    c = c - 8
++                                    s = s + chr( (a >> c) % 256 )
++
++                        return s
+ 
+-            
+-                dll = re.compile('<input type="hidden" id="dl" value="(.+?)">').findall(html)[0]
+-                dl = dll.split('GvaZu')[1]
+-                dl = checkwmv(dl)
+-                dl = checkwmv(dl)
+-                common.addon.log(self.name + ' - Link Found: %s' % dl)                
++                
++                    dll = re.compile('<input type="hidden" id="dl" value="(.+?)">').findall(html)[0]
++                    dl = dll.split('GvaZu')[1]
++                    dl = checkwmv(dl)
++                    dl = checkwmv(dl)
++                    common.addon.log(self.name + ' - Link Found: %s' % dl)                
+ 
+-                return dl
++                    return dl
+ 
+-        except Exception, e:
+-            common.addon.log_error(self.name + ' - Exception: %s' % e)
+-            return self.unresolvable(code=0, msg='Exception: %s' % e)
++            except Exception, e:
++                common.addon.log_error(self.name + ' - Exception: %s' % e)
++                return self.unresolvable(code=0, msg='Exception: %s' % e)
+         finally:
+             dialog.close()
+ 
+diff --git a/lib/urlresolver/plugins/lemuploads.py b/lib/urlresolver/plugins/lemuploads.py
+index d2eabc8..f3ccdaf 100644
+--- a/lib/urlresolver/plugins/lemuploads.py
++++ b/lib/urlresolver/plugins/lemuploads.py
+@@ -42,48 +42,49 @@ class LemuploadsResolver(Plugin, UrlResolver, PluginSettings):
+ 
+     def get_media_url(self, host, media_id):
+         try:
+-            dialog = xbmcgui.DialogProgress()
+-            dialog.create('Resolving', 'Resolving Lemuploads Link...')       
+-            dialog.update(0)
+-            
+-            url = self.get_url(host, media_id)
+-            html = self.net.http_GET(url).content
+-    
+-            dialog.update(50)
+-            
+-            #Check page for any error msgs
+-            if re.search('This server is in maintenance mode', html):
+-                common.addon.log_error(self.name + ' - Site reported maintenance mode')
+-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]LEMUPLOADS[/COLOR][/B],[COLOR red]Site reported maintenance mode[/COLOR],8000,'+logo+')')
+-                return self.unresolvable(code=2, msg='Site reported maintenance mode')                
++            try:
++                dialog = xbmcgui.DialogProgress()
++                dialog.create('Resolving', 'Resolving Lemuploads Link...')       
++                dialog.update(0)
+                 
+-            if re.search('<b>File Not Found</b>', html):
+-                common.addon.log_error(self.name + ' - File Not Found')
+-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]LEMUPLOADS[/COLOR][/B],[COLOR red]File Not Found[/COLOR],8000,'+logo+')')
+-                return self.unresolvable(code=1, msg='File Not Found')    
++                url = self.get_url(host, media_id)
++                html = self.net.http_GET(url).content
++        
++                dialog.update(50)
+                 
+-            filename = re.search('<h2>(.+?)</h2>', html).group(1)
+-            extension = re.search('(\.[^\.]*$)', filename).group(1)
+-            guid = re.search('http://lemuploads.com/(.+)$', url).group(1)
+-            
+-            vid_embed_url = 'http://lemuploads.com/vidembed-%s%s' % (guid, extension)
+-            
+-            import urllib2
+-            request = urllib2.Request(vid_embed_url)
+-            request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36')
+-            request.add_header('Referer', url)
+-            response = urllib2.urlopen(request)
+-            redirect_url = re.search('(http://.+?)video', response.geturl()).group(1)
+-            download_link = redirect_url + filename
+-            
+-            dialog.update(100)
+-            
+-            return download_link
+-                                
+-        except Exception, e:
+-            common.addon.log('**** Lemuploads Error occured: %s' % e)
+-            common.addon.show_small_popup('Error', str(e), 5000, '')
+-            return self.unresolvable(code=0, msg='Exception: %s' % e)
++                #Check page for any error msgs
++                if re.search('This server is in maintenance mode', html):
++                    common.addon.log_error(self.name + ' - Site reported maintenance mode')
++                    xbmc.executebuiltin('XBMC.Notification([B][COLOR white]LEMUPLOADS[/COLOR][/B],[COLOR red]Site reported maintenance mode[/COLOR],8000,'+logo+')')
++                    return self.unresolvable(code=2, msg='Site reported maintenance mode')                
++                    
++                if re.search('<b>File Not Found</b>', html):
++                    common.addon.log_error(self.name + ' - File Not Found')
++                    xbmc.executebuiltin('XBMC.Notification([B][COLOR white]LEMUPLOADS[/COLOR][/B],[COLOR red]File Not Found[/COLOR],8000,'+logo+')')
++                    return self.unresolvable(code=1, msg='File Not Found')    
++                    
++                filename = re.search('<h2>(.+?)</h2>', html).group(1)
++                extension = re.search('(\.[^\.]*$)', filename).group(1)
++                guid = re.search('http://lemuploads.com/(.+)$', url).group(1)
++                
++                vid_embed_url = 'http://lemuploads.com/vidembed-%s%s' % (guid, extension)
++                
++                import urllib2
++                request = urllib2.Request(vid_embed_url)
++                request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36')
++                request.add_header('Referer', url)
++                response = urllib2.urlopen(request)
++                redirect_url = re.search('(http://.+?)video', response.geturl()).group(1)
++                download_link = redirect_url + filename
++                
++                dialog.update(100)
++                
++                return download_link
++                                    
++            except Exception, e:
++                common.addon.log('**** Lemuploads Error occured: %s' % e)
++                common.addon.show_small_popup('Error', str(e), 5000, '')
++                return self.unresolvable(code=0, msg='Exception: %s' % e)
+         
+         finally:
+             dialog.close()
+diff --git a/lib/urlresolver/plugins/playwire.py b/lib/urlresolver/plugins/playwire.py
+index 88a4f9b..dfcff08 100644
+--- a/lib/urlresolver/plugins/playwire.py
++++ b/lib/urlresolver/plugins/playwire.py
+@@ -25,7 +25,7 @@ from urlresolver.plugnplay import Plugin
+ import re
+ import urllib2, urllib
+ from urlresolver import common
+-import xml.etree.ElementTree as ET
++import elementtree.ElementTree as ET
+ 
+ logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+ 
+diff --git a/lib/urlresolver/plugins/premiumize_me.py b/lib/urlresolver/plugins/premiumize_me.py
+index 4320dc3..8699fd5 100644
+--- a/lib/urlresolver/plugins/premiumize_me.py
++++ b/lib/urlresolver/plugins/premiumize_me.py
+@@ -97,7 +97,10 @@ class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+ 
+     #PluginSettings methods
+     def get_settings_xml(self):
+-        xml = PluginSettings.get_settings_xml(self)
++        xml  = '<setting id="PremiumizeMeResolver_priority" '
++        xml += 'type="number" label="Priority" default="100"/>\n'
++        xml += '<setting id="PremiumizeMeResolver_enabled" '
++        xml += 'type="bool" label="Enabled" default="false"/>\n'
+         xml += '<setting id="PremiumizeMeResolver_login" '
+         xml += 'type="bool" label="login" default="false"/>\n'        
+         xml += '<setting id="PremiumizeMeResolver_username" enable="eq(-1,true)" '
+diff --git a/lib/urlresolver/plugins/purevid.py b/lib/urlresolver/plugins/purevid.py
+index 9dcaf96..ad7bb7a 100644
+--- a/lib/urlresolver/plugins/purevid.py
++++ b/lib/urlresolver/plugins/purevid.py
+@@ -21,7 +21,6 @@ import os
+ import random
+ import re
+ import urllib, urllib2
+-import ast
+ import xbmc
+ import time
+ from urlresolver.plugnplay.interfaces import UrlResolver
+@@ -32,7 +31,7 @@ from urlresolver import common
+ import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
+ import cookielib
+ from t0mm0.common.net import Net
+-import json
++import simplejson as json
+ 
+ #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+diff --git a/lib/urlresolver/plugins/realdebrid.py b/lib/urlresolver/plugins/realdebrid.py
+index 2ff5231..a625679 100644
+--- a/lib/urlresolver/plugins/realdebrid.py
++++ b/lib/urlresolver/plugins/realdebrid.py
+@@ -154,7 +154,10 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+ 
+     #PluginSettings methods
+     def get_settings_xml(self):
+-        xml = PluginSettings.get_settings_xml(self)
++        xml  = '<setting id="RealDebridResolver_priority" '
++        xml += 'type="number" label="Priority" default="100"/>\n'
++        xml += '<setting id="RealDebridResolver_enabled" '
++        xml += 'type="bool" label="Enabled" default="false"/>\n'
+         xml += '<setting id="RealDebridResolver_login" '
+         xml += 'type="bool" label="login" default="false"/>\n'
+         xml += '<setting id="RealDebridResolver_username" enable="eq(-1,true)" '
+diff --git a/lib/urlresolver/plugins/rpnet.py b/lib/urlresolver/plugins/rpnet.py
+index 55cd3e6..1d65e7f 100644
+--- a/lib/urlresolver/plugins/rpnet.py
++++ b/lib/urlresolver/plugins/rpnet.py
+@@ -85,7 +85,10 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+ 
+     #PluginSettings methods
+     def get_settings_xml(self):
+-        xml = PluginSettings.get_settings_xml(self)
++        xml  = '<setting id="RPnetResolver_priority" '
++        xml += 'type="number" label="Priority" default="100"/>\n'
++        xml += '<setting id="RPnetResolver_enabled" '
++        xml += 'type="bool" label="Enabled" default="false"/>\n'
+         xml += '<setting id="RPnetResolver_login" '
+         xml += 'type="bool" label="Login" default="false"/>\n'
+         xml += '<setting id="RPnetResolver_username" enable="eq(-1,true)" '
+diff --git a/lib/urlresolver/plugins/sharerepo.py b/lib/urlresolver/plugins/sharerepo.py
+index c8a9230..a258d88 100644
+--- a/lib/urlresolver/plugins/sharerepo.py
++++ b/lib/urlresolver/plugins/sharerepo.py
+@@ -23,6 +23,7 @@ from urlresolver.plugnplay import Plugin
+ import re, xbmcgui, os, urllib2
+ from urlresolver import common
+ from lib import jsunpack
++import urllib2
+ 
+ #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+diff --git a/lib/urlresolver/plugins/vimeo.py b/lib/urlresolver/plugins/vimeo.py
+index bc80f1b..ddcc5cf 100644
+--- a/lib/urlresolver/plugins/vimeo.py
++++ b/lib/urlresolver/plugins/vimeo.py
+@@ -34,7 +34,7 @@ class VimeoResolver(Plugin, UrlResolver, PluginSettings):
+ 
+     def get_media_url(self, host, media_id):
+         #just call vimeo addon
+-        plugin = 'plugin://plugin.video.vimeo/?action=play_video&videoid=' +\
++        plugin = 'plugin://video/Vimeo/?action=play_video&videoid=' +\
+                  media_id
+         return plugin
+ 
+diff --git a/lib/urlresolver/plugins/youtube.py b/lib/urlresolver/plugins/youtube.py
+index 3cd08f4..5a38317 100644
+--- a/lib/urlresolver/plugins/youtube.py
++++ b/lib/urlresolver/plugins/youtube.py
+@@ -34,7 +34,7 @@ class YoutubeResolver(Plugin, UrlResolver, PluginSettings):
+ 
+     def get_media_url(self, host, media_id):
+         #just call youtube addon
+-        plugin = 'plugin://plugin.video.youtube/?action=play_video&videoid=' +\
++        plugin = 'plugin://video/YouTube/?action=play_video&videoid=' +\
+                  media_id
+         return plugin
+ 
+diff --git a/lib/urlresolver/plugnplay/interfaces.py b/lib/urlresolver/plugnplay/interfaces.py
+index 30b55e8..8607767 100644
+--- a/lib/urlresolver/plugnplay/interfaces.py
++++ b/lib/urlresolver/plugnplay/interfaces.py
+@@ -74,7 +74,7 @@ class UrlResolver(Interface):
+     first.
+     '''    
+ 
+-    class unresolvable():
++    class unresolvable:
+         '''
+         An object returned to indicate that the url could not be resolved
+         
