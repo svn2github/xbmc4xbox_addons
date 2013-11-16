@@ -19,7 +19,11 @@ import re
 import sys
 import os
 import traceback
-import json
+try:							#We try importing json module, if fail we use simplejson for xbox compatibility 
+	import simplejson as json   
+except:
+    import json
+
 
 HEADER = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.1) Gecko/20090715 Firefox/3.5.1'
 BASE_CACHE_PATH = os.path.join( xbmc.translatePath( "special://profile/" ), "Thumbnails", "Video" )
@@ -302,11 +306,11 @@ def playVideo(url, name, thumb, plot):
 	
 	rtsp_url = jdata['url']
 	rtsp_url = re.compile('(.+?)\\?').findall(rtsp_url)[0]	# Find the mp4 rtsp link
-	rtsp_url = rtsp_url.replace('_800.', '_1200.');			# We want the best quality...
-
-	item = xbmcgui.ListItem(label=name,iconImage="DefaultVideo.png",thumbnailImage=thumb)
-	item.setInfo( type="Video", infoLabels={ "Title": name, "Plot": plot } )
-	xbmc.Player(xbmc.PLAYER_CORE_DVDPLAYER).play(rtsp_url, item)
+	rtsp_url = rtsp_url.replace('_800.', '_800.');			# We want the best quality...
+	player = xbmc.Player(xbmc.PLAYER_CORE_AUTO)
+	listitem = xbmcgui.ListItem(label=name,iconImage="DefaultVideo.png",thumbnailImage=thumb)
+	listitem.setInfo('video', infoLabels={ "Title": name, "Plot": plot } )
+	player.play(rtsp_url, listitem)
 
 
 def get_params():

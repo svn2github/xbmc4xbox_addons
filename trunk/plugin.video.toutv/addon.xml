@@ -17,9 +17,4 @@
     <description>Play all episodes from Radio-Canada replay site Tou.TV. Most videos can only be accessed in Canada.</description>
 	<description lang="fr">Ce plugin vous donne accès aux émissions proposées sur le site Tou.TV de Radio-Canada. La plupart du contenu est disponible seulement au Canada.</description>
   </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>Xphazer</maintainer>
-    </statfeed>
 </addon>
