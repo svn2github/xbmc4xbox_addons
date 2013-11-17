@@ -1,4 +1,3 @@
-<<<<<<< .mine
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 	<addon id="plugin.video.toutv"
        name="TouTv"
@@ -24,25 +23,3 @@
   <maintainer>Xphazer</maintainer>
   </statfeed>
 </addon>
-=======
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-	<addon id="plugin.video.toutv"
-       name="TouTv"
-       version="0.1.5"
-       provider-name="">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary>Plugin for the Radio-Canada site Tou.TV</summary>
-	<summary lang="fr">Plugin vidéo donnant accès à toutes les vidéos du site Tou.TV de Radio-Canada</summary>
-    <description>Play all episodes from Radio-Canada replay site Tou.TV. Most videos can only be accessed in Canada.</description>
-	<description lang="fr">Ce plugin vous donne accès aux émissions proposées sur le site Tou.TV de Radio-Canada. La plupart du contenu est disponible seulement au Canada.</description>
-  </extension>
-</addon>
->>>>>>> .r662
