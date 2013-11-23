@@ -60,7 +60,7 @@ except:
 
 PREPARE_ZIP = False
 __metaget__ = metahandlers.MetaData(preparezip=PREPARE_ZIP)
-	
+    
 if not xbmcvfs.exists(_VBL.get_profile()):
     xbmcvfs.mkdirs(_VBL.get_profile())
 
@@ -164,12 +164,12 @@ IconPath = AddonPath + "/resources/art/"
 SearchMovies = 'movies'
 SearchTV = 'shows'
 SearchAll = 'all'
-
+AZ_DIRECTORIES = (ltr for ltr in string.ascii_uppercase)
 VideoType_Movies = 'movie'
 VideoType_TV = 'tvshow'
 VideoType_Season = 'season'
 VideoType_Episode = 'episode'
-
+TheLetter = 'theletter'
 iconImg = 'tbn'
 meta = {'title': name, 'year': year, 'imdb_id': '', 'plot': plot, 'fanart': fanart, 'overlay':6}
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
@@ -177,8 +177,6 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
 'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
 'Accept-Encoding': 'none',
 'Accept-Language': 'en-US,en;q=0.8'}
-
-
 def CATEGORIES():
         addMenu('[COLOR blue][B]Latest TV Show Feed[/B][/COLOR]',MainUrl,2,IconPath +'icons/icon.png',None,'')
         addMenu('[COLOR blue][B]A-Z TV Shows[/B][/COLOR]',MainUrl +'tv-shows/',9,IconPath +'letters/AZ.png',None,'')
@@ -213,7 +211,7 @@ def INDEX(url,name,iconImg):
                     iconImg=thumb
                     pDialog.update(42, 'Metadata is turned off, not grabbing extra tvdb art...')
                 else:
-				    pass
+                    pass
                 pDialog.update(53, 'Parsing links...')
                 addDir(name,url,4,iconImg,'tvshow',artname)
                 cache.set('Vidname', name)
@@ -221,7 +219,6 @@ def INDEX(url,name,iconImg):
             xbmcplugin.endOfDirectory(int(sys.argv[1]))
             pDialog.update(2,'Closing Dialog')
             pDialog.close()                      
-
 def showEpp(url,name,types,meta_name):
     req = urllib2.Request(url, headers=hdr)
     response = urllib2.urlopen(req)
@@ -255,7 +252,7 @@ def AZT(url,theletter,iconImg,types,meta_name):
             addDir(title,url,40,iconImg,'tvshow',title) 
         xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TITLE)
         setView('movies', 'default')
-        xbmcplugin.endOfDirectory(int(sys.argv[1]))	
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))    
 def TvSearch(url):
     search_entered =search()
     name=str(search_entered).replace('+','')
@@ -280,8 +277,7 @@ def search():
             search_entered = keyboard.getText() .replace(' ','+')  # sometimes you need to replace spaces with + or %20
             if search_entered == None:
                 return False          
-        return search_entered	
-        
+        return search_entered    
 def getUrl(url):
     hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -294,7 +290,6 @@ def getUrl(url):
     link=response.read()
     response.close()
     return link        
-
 def read(url):
 #    _log("read "+url)
 
@@ -303,9 +298,6 @@ def read(url):
     f.close()
     
     return data
-                
-
-
 def VIDEOLINKS(url,name):
     hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -324,7 +316,6 @@ def VIDEOLINKS(url,name):
          
             
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-                      
 def PLAYLINKS(url,name):
         regexlink = url
         url = base64.b64decode(regexlink)
@@ -344,8 +335,6 @@ def PLAYLINKS(url,name):
         listitem.setThumbnailImage(img)
         player.play(videoLink,listitem)
         addLink('Restart Stream'+ vName,videoLink,img) 
-
-
 def get_params():
         param=[]
         paramstring=sys.argv[2]
@@ -363,16 +352,12 @@ def get_params():
                                 param[splitparams[0]]=splitparams[1]
                                 
         return param
-
 def addLink(name,url,iconImg):
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconImg)
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
         return ok
-
-
-		
 def addDir(name,url,mode,iconImg,types,meta_name):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
         ok=True
@@ -401,7 +386,6 @@ mode=None
 iconImg=''
 types=None
 meta_name=None
-
 try:
         url=urllib.unquote_plus(params["url"])
 except:
@@ -432,29 +416,21 @@ print "Name: "+str(name)
 print "IconImg:"+str(iconImg)
 print "TYPEs:"+str(types)
 print 'Meta_Name: '+str(meta_name)
-
 if mode==None or url==None or len(url)<1:
         print ""
-        CATEGORIES()
-       
-
-        
+        CATEGORIES()        
 elif mode==2:
         print ""+url
-        INDEX(url,name,iconImg)
-		
+        INDEX(url,name,iconImg)        
 elif mode==6:
         print ""+url
         INDEX3(url)
-
 elif mode==3:
         print ""+url
         EPISODES(url)
-
 elif mode==4:
         print ""+url
         VIDEOLINKS(url,name)
-
 elif mode==5:
         import urlresolver
         print ""+url
@@ -470,93 +446,14 @@ elif mode==9:
         AtoZ(url,theletter,iconImg)
 elif mode==10:
         print ""+url
-        A(url,name)
-elif mode==11:
-        print ""+url
-        B(url)		
-elif mode==12:
-        print ""+url
-        C(url)		
-elif mode==13:
-        print ""+url
-        D(url)		
-elif mode==14:
-        print ""+url
-        E(url)		
-elif mode==15:
-        print ""+url
-        F(url)		
-elif mode==16:
-        print ""+url
-        G(url)		
-elif mode==17:
-        print ""+url
-        H(url)		
-elif mode==18:
-        print ""+url
-        I(url)		
-elif mode==19:
-        print ""+url
-        J(url)		
-elif mode==20:
-        print ""+url
-        K(url)		
-elif mode==21:
-        print ""+url
-        L(url)		
-elif mode==22:
-        print ""+url
-        M(url)		
-elif mode==23:
-        print ""+url
-        N(url)		
-elif mode==24:
-        print ""+url
-        O(url)		
-elif mode==25:
-        print ""+url
-        P(url)		
-elif mode==26:
-        print ""+url
-        Q(url)		
-elif mode==27:
-        print ""+url
-        R(url)		
-elif mode==28:
-        print ""+url
-        S(url)
-elif mode==29:
-        print ""+url
-        T(url)
-elif mode==30:
-        print ""+url
-        U(url)
-elif mode==31:
-        print ""+url
-        V(url)		
-elif mode==32:
-        print ""+url
-        W(url)		
-elif mode==33:
-        print ""+url
-        X(url)		
-elif mode==34:
-        print ""+url
-        Y(url)		
-elif mode==35:
-        print ""+url
-        Z(url)	
-
+        AZT(url,theletter,iconImg,types,meta_name)
 elif mode==40:
         print ""+url
-        showEpp(url)			
+        showEpp(url,name,types,meta_name)            
 elif mode==45 or url==RES:
         import urlresolver
         print ""+url
-        urlresolver.display_settings()			
-
-
-
+        urlresolver.display_settings()            
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
