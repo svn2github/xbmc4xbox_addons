@@ -22,4 +22,9 @@
         <website>http://code.google.com/p/xbmc-iplayerv2/</website>
         <source>http://code.google.com/p/xbmc-iplayerv2/source/checkout</source>
     </extension>
+    <statfeed>
+        <working>yes</working>
+        <notes></notes>
+        <maintainer>BuZz</maintainer>
+    </statfeed>
 </addon>
