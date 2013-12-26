@@ -2,7 +2,7 @@
 
 # Python libs
 import re, time, os, string, sys
-import urllib2
+import urllib, urllib2
 import logging
 import xml.dom.minidom as dom
 import md5
@@ -305,8 +305,8 @@ class media(object):
         provider = get_provider()
 
         # force akamai for live video streams (limelight seems to be non working at least via the credentials from the current mediaselector)
-        if self.kind == 'video' and self.live:
-            provider = 'akamai'
+        #if self.kind == 'video' and self.live:
+        #    provider = 'akamai'
 
         if provider != "":
             for c in media.findall('connection'):
