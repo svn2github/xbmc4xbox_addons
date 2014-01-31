@@ -24,8 +24,8 @@
     <nochangelog>true</nochangelog>
 	</extension>
 	<statfeed>
-      <working>yes</working>
-	  <notes>none</notes>
+      <working>no</working>
+	  <notes>resolvers need work for new links</notes>
       <maintainer>kozz</maintainer>
     </statfeed>
 </addon>
