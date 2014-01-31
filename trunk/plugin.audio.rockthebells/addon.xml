@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="plugin.audio.rockthebells" name="RockTheBells Radio" provider-name="Kozz" version="1.0.0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+    <import addon="script.module.simplejson" version="2.0.10" />
+  </requires>
+  <extension library="default.py" point="xbmc.python.pluginsource">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary>Listen to Rock The Bells Radio your xbmc enabled devics</summary>
+    <description>Listen to Rock The Bells Radio your xbmc enabled devics</description>
+
+  </extension>
+  <statfeed>
+      <working>yes</working>
+	  <notes>none</notes>
+      <maintainer>kozz</maintainer>
+      <thumbnailurl>http://</thumbnailurl>
+  </statfeed>
+</addon>
