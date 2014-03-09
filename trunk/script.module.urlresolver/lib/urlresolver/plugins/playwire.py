@@ -25,7 +25,11 @@ from urlresolver.plugnplay import Plugin
 import re
 import urllib2, urllib
 from urlresolver import common
-import elementtree.ElementTree as ET
+
+try:
+    import elementtree.ElementTree as ET
+except:
+    import xml.etree.ElementTree as ET
 
 logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
