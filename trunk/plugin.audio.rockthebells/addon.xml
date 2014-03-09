@@ -3,6 +3,7 @@
   <requires>
     <import addon="xbmc.python" version="2.1.0" />
     <import addon="script.module.simplejson" version="2.0.10" />
+    <import addon="script.module.t0mm0.common" version="1.0.0" />
   </requires>
   <extension library="default.py" point="xbmc.python.pluginsource">
         <provides>audio</provides>
@@ -17,6 +18,5 @@
       <working>yes</working>
 	  <notes>none</notes>
       <maintainer>kozz</maintainer>
-      <thumbnailurl>http://</thumbnailurl>
   </statfeed>
 </addon>
