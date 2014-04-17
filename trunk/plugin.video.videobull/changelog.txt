@@ -1,5 +1,0 @@
-[B]Version 0.1.7[/B]
-- Bumped version
-
-[B]Version 1.0.1[/B]
-- Initial version
