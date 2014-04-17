@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.videobull" name="VideoBull" provider-name="Kozz" version="1.1.1">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0" />
-    <import addon="script.module.urlresolver" version="2.1.1"/>
-	<import addon="script.module.t0mm0.common" version="1.1.0"/>
-	<import addon="script.module.simplejson"   version="2.0.0"/>
-	<import addon="script.module.xbmcvfs"/>
-	<import addon="script.module.metahandler" version="1.0.0"/>
-	<import addon="script.module.elementtree" />
-	<import addon="script.module.pysqlite2" version="1.0.0"/>
-<!-- REQUIRED ON XBOX ONLY
-    <import addon="script.module.xbmcvfs"/>
--->
-  </requires>
-  <extension library="default.py" point="xbmc.python.pluginsource">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary>Stream TV Shows from Videobull.com Directly to your xbmc device</summary>
-    <description>Visit xbmc4xbox.org.uk/forum/ or xbmchub.com forum for support. Stream TV Shows from Videobull.com Directly to your xbmc device</description>
-    <nofanart>true</nofanart>
-    <nochangelog>true</nochangelog>
-	</extension>
-	<statfeed>
-      <working>no</working>
-	  <notes>resolvers need work for new links</notes>
-      <maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
 <addon id="plugin.video.drnu" version="2.1.7" name="DR NU Player" provider-name="twinther [tommy@winther.nu]">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
@@ -532,32 +501,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.streamallthis"
-       version="1.0.5"
-       name="StreamAllThis"
-       provider-name="skatulskijean">
-  <requires>
-   <import addon="xbmc.python" version="2.0"/>
-   <import addon="script.module.urlresolver" version="1.0.0" />
-   <import addon="script.module.simplejson"   version="2.0.10"/>
-   <import addon="script.module.t0mm0.common" version="1.1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-             library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>access series from streamallthis on your xbmc4xbox</summary>
-    <description>Watch Series from StreamAllThis</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-  <working>yes</working>
-  <notes>none</notes>
-  <maintainer>skatulskijean</maintainer>
-  </statfeed>
-</addon>
-
 <addon id="script.module.metahandler"
 	     name="metahandler"
 	     version="1.1.0"
@@ -621,29 +564,6 @@
     <summary lang="en">Resolve common video host URL's to be playable in XBMC.</summary>
     <description lang="en">Resolve common video host URL's to be playable in XBMC, simplify addon development of video plugins requiring multi video hosts.</description>
   </extension>
-</addon>
-
-<addon id="plugin.video.canada.on.demand" name="Canada On Demand" version="0.7.4" provider-name="andre">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.beautifulsoup"	version="3.0.8"/>
-    <import addon="script.module.simplejson" version="2.0.10"/>
-	<import addon="script.module.pysqlite2"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Video On Demand From Canada</summary>
-    <description>Stream content from tons of Canadian providers including CTV, CBC, TSN, Global and MANY More!</description>
-    <platform>all</platform>
-    <disclaimer></disclaimer>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>Many links for short clips few full eppisodes</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
 </addon>
 
 <addon id="plugin.video.aljazeera" name="Al Jazeera" version="0.9.2" provider-name="Jonathan Beluch (jbel)">
@@ -874,35 +794,6 @@ Raadpleeg de lokale wetgeving voordat u deze plugin installeert.</disclaimer>
   <extension library="lib" point="xbmc.python.module" />
 </addon>
 
-<addon id="plugin.video.icefilms" name="Icefilms" version="1.1.31"
-provider-name="Eldorado (originator: anarchintosh)">
-  <requires>
-    <import addon="xbmc.python" version="2.0" />
-    <import addon="script.module.simplejson" />
-    <import addon="script.module.elementtree" />
-    <import addon="script.module.beautifulsoup" />
-    <import addon="script.module.metahandler" version="1.0.0" />
-    <import addon="script.module.t0mm0.common" version="1.1.0" />
-    <import addon="script.common.plugin.cache" version="0.9.0" />
-    <import addon="script.module.pysqlite2" version="1.0.0" />
-    <import addon="script.module.xbmcvfs" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary>Stream and download scene releases from the links
-    listed on Icefilms.info</summary>
-    <description>Turns your XBMC into an instant free on-demand media-center. Stream and download to your library pure AVI scene releases, in DVD and HD720p quality. Browse and search the library of over 77,000 videos with metadata and posters. Never experience thefrustration of dead video links! Visit www.xbmchub.com for support.</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-    <notes>Metadata must remain disabled in plugin-settings</notes>
-    <maintainer>kozz</maintainer>
-  </statfeed>
-</addon>
-
 <addon
     id="plugin.video.iplayer"
     name="iPlayer"
@@ -1082,32 +973,6 @@ provider-name="Eldorado (originator: anarchintosh)">
   </statfeed>
 </addon>
 
-<addon id="plugin.video.jtv.archives"
-       name="Jtv"
-       version="0.3.6"
-       provider-name="divingmule">
-  <requires>
-    <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.common.plugin.cache" version="1.0.0"/>
-    <import addon="script.module.simplejson"/>
-	<import addon='script.module.xbmcvfs' version='1.0.1'/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Justin.tv</summary>
-    <description>Watch live and archived videos from justin.tv</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>no</working>
-	<notes>Might show script error on first listing</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
 <addon id="plugin.audio.tuneinradio"
        name="TuneIn Radio"
        version="1.0.7"
@@ -1135,35 +1000,6 @@ provider-name="Eldorado (originator: anarchintosh)">
   </statfeed>
 </addon>
 
-<addon id="plugin.video.icelibrary24xbox" name="IceLibrary24Xbox" version="2.0.14" provider-name="DudeHere">
-    <requires>
-        <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson"/>
-        <import addon="script.module.elementtree"/>
-        <import addon="script.module.beautifulsoup"/>
-        <import addon="script.module.metahandler" version="1.0.0"/>
-        <import addon="script.module.t0mm0.common" version="1.1.0"/>
-	    <import addon="script.module.myconnpy"     version="0.3.2"/>
-	    <import addon="script.module.urlresolver"  version="0.0.1"/>
-        <import addon="script.common.plugin.cache" version="0.9.0"/>
-        <import addon="script.module.pysqlite2" version="1.0.0" />
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary>Stream links listed on Icefilms.info</summary>
-        <description>Turns your Xbox Console into an instant free on-demand media-center. Browse the play movies and series found on Icefilms directly from your library.</description>
-    </extension>
-	<statfeed>
-    <working>mostly</working>
-	<notes>TV Shows will only get scanned into xbmc library not movies</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
-</addon>
-
 <addon id="plugin.video.wimp" name="Wimp.com" version="2.0.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
@@ -1186,30 +1022,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     </statfeed>
 </addon>
 
-<addon id="plugin.video.toutv"
-       name="TouTv"
-       version="0.1.5"
-       provider-name="misil michaelsillslavoie@gmail.com">
-	<requires>
-		<import addon="xbmc.python" version="1.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary>Plugin for the Radio-Canada site Tou.TV</summary>
-		<summary lang="fr">Plugin vidéo donnant accès à toutes les vidéos du site Tou.TV de Radio-Canada</summary>
-		<description>Play all episodes from Radio-Canada replay site Tou.TV. Most videos can only be accessed in Canada.</description>
-		<description lang="fr">Ce plugin vous donne accès aux émissions proposées sur le site Tou.TV de Radio-Canada. La plupart du contenu est disponible seulement au Canada.</description>
-	</extension>
-	<statfeed>
-		<working>no</working>
-		<notes>Bug in xbmc is preventing playback</notes>
-		<maintainer>Xphazer</maintainer>
-	</statfeed>
-</addon>
-
 <addon id="script.module.xbmcvfs" name="xbmcvfs emulator"
        version="1.0.2" provider-name="Frost (passion-xbmc.org)">
     <requires>
@@ -1222,33 +1034,6 @@ provider-name="Eldorado (originator: anarchintosh)">
         <description lang="en">Module emulates XBMC xbmcvfs module.</description>
         <platform>all</platform>
     </extension>
-</addon>
-
-<addon id="plugin.video.freecable"
-       name="Free Cable"
-       version="0.5.2"
-       provider-name="BlueCop">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.beautifulsoup" version="3.0.8"/>
-    <import addon="script.module.demjson" version="1.4"/>
-    <import addon="script.module.coveapi" version="0.2"/>
-	<import addon="script.module.pysqlite2" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>US station aggregator</summary>
-    <description>Free Cable is the ultimate aphrodisiac - The Cable Guy</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>kozz</maintainer>
-    </statfeed>
 </addon>
 
 <addon id="script.module.mechanize"
@@ -1267,28 +1052,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <license>BSD</license>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="plugin.video.navi-x" name="Navi-X"
-	version="0.3.6" provider-name="cbb">
-	<requires>
-		<import addon="xbmc.python" version="1.0" />
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-	<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary lang="en">Media browser</summary>
-		<description lang="en">
-			Media browser
-		</description>
-	</extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>This is the plugin version with whufclee's Playlist as Home - Requires xbmc4xbox Build - r31660 or newer (B4K3D PI Latest Stable)</notes>
-	<maintainer>whufclee</maintainer>
-  </statfeed>
 </addon>
 
 <addon id="plugin.video.borsentv.dk" version="1.0.4" name="Borsen TV" provider-name="twinther [tommy@winther.nu]">
@@ -1363,34 +1126,6 @@ provider-name="Eldorado (originator: anarchintosh)">
         <language>da</language>
     </extension>
 	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon
-  id="plugin.video.movie25xbmc4xbox"
-  version="1.0.3"
-  name="Movie25XBMC4XBOX"
-  provider-name="skatulskijean">
-  <requires>
-   <import addon="xbmc.python" version="2.0"/>
-   <import addon="script.module.urlresolver" version="1.0.0" />
-   <import addon="script.module.simplejson"   version="2.0.0"/>
-   <import addon="script.module.t0mm0.common" version="1.1.0"/>
-  </requires>
-  <extension
-    point="xbmc.python.pluginsource"
-    library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>access the resources from Movies25.com on your xbmc4xbox</summary>
-    <description>Play Movies from Movies25.com</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
@@ -1499,33 +1234,6 @@ provider-name="Eldorado (originator: anarchintosh)">
   </extension>
 </addon>
 
-<addon id="plugin.video.xstream"
-	name="xStream"
-	version="2.0.17"
-	provider-name="MaxMustermann">
-  <requires>
-    <import addon="script.module.urlresolver" version="1.0.0" />
-	<import addon="script.module.t0mm0.common" version="1.1.0" />
-	<import addon='script.module.simplejson' version='2.0.10'/>
-	<import addon='script.module.mechanize' version='0.2.5'/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">xStream</summary>
-    <description lang="de">xStream ist ein Plugin, welches mit eigenen Plugins erweitert werden kann. Hiermit kann man Filme, Serien, etc. per Stream anschauen</description>
-    <summary lang="en">xStream</summary>
-    <description lang="en">Plugin to watch streams from various film an series sites.</description>
-    <platform>all</platform>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
 <addon id="plugin.program.xbmcsvninstaller"
        name="XBMC4Xbox Installer"
        version="2.2.0"
@@ -1571,26 +1279,6 @@ provider-name="Eldorado (originator: anarchintosh)">
     <working>yes</working>
 	<notes>none</notes>
 	<maintainer>skatulskijean</maintainer>
-    </statfeed>
-</addon>
-
-<addon id="plugin.video.ustvnow" version="0.3.0" name="ustvnow" provider-name="t0mm0">
-    <requires>
-        <import addon="xbmc.python" version="1.0"/>
-		<import addon="script.module.t0mm0.common" version="1.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>Plays live streams and recordings from ustvnow.com</summary>
-        <description>Live streaming US TV. You MUST log in to view streams (see addon settings). You can also play any recordings you have made on ustvnow.com</description>
-        <platform>all</platform>
-    </extension>
-	<statfeed>
-    <working>yes</working>
-	<notes>none</notes>
-	<maintainer>kozz</maintainer>
     </statfeed>
 </addon>
 
