@@ -1,4 +1,0 @@
-<settings>
-   <setting id="location" type="enum" lvalues="30005|30006|30007" label="30004" default="2"/>
-   <setting id="quality" type="enum" lvalues="30009|30010|30011" label="30008" default="2"/>
-</settings>

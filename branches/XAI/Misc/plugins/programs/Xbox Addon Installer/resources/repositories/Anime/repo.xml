@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<repo>
-    <url>http://addons4xbox.googlecode.com/svn</url>
-    <root>/trunk/Anime</root>
-    <structure name="plugins" noffset="-2" install="" ioffset="3" voffset="0" />
-</repo>
