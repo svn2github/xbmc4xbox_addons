@@ -1,0 +1,38 @@
+diff -ru ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/common.py script.module.xbmcswift/lib/xbmcswift/common.py
+--- ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/common.py	2014-05-04 04:43:14.554205063 +0100
++++ script.module.xbmcswift/lib/xbmcswift/common.py	2014-05-04 06:21:07.015699589 +0100
+@@ -39,8 +39,8 @@
+ def urlparse(url):
+     '''Takes a url and returns a 3 tuple of scheme, netloc and path'''
+     scheme, remainder = url.split('://', 1)
+-    netloc, path = remainder.split('/', 1)
+-    return scheme, netloc, '/' + path
++    plugtype, netloc, path = remainder.split('/', 2)
++    return scheme, netloc, path
+ 
+ def clean_dict(d):
+     '''Verifies none of the values are None, otherwise XBMC wll break'''
+diff -ru ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/plugin.py script.module.xbmcswift/lib/xbmcswift/plugin.py
+--- ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/plugin.py	2014-05-04 04:43:14.554205063 +0100
++++ script.module.xbmcswift/lib/xbmcswift/plugin.py	2014-05-04 06:29:41.725024457 +0100
+@@ -38,9 +38,9 @@
+         self._argv0, self._argv1, self._argv2 = args
+         self.handle = int(self._argv1)
+ 
+-        self.qs_args = parse_qs(self._argv2.lstrip('?'))
++        self._argv2 = self._argv2[1:] + '/'
+ 
+-        self.scheme, self.netloc, self.path = urlparse(self._argv0)
++        self.scheme, self.netloc, self.path = urlparse(self._argv0 + self._argv2)
+ 
+         self._cache_path = xbmc.translatePath('special://profile/addon_data/%s/.cache' % self._plugin_id)
+ 
+@@ -118,7 +118,7 @@
+             raise AmbiguousUrlException
+ 
+         pathqs = rule.make_path_qs(items)
+-        return 'plugin://%s%s' % (self._plugin_id, pathqs)
++        return '%s?%s' % (self._argv0, pathqs)
+ 
+     def dispatch(self, path):
+         for rule in self._routes:
