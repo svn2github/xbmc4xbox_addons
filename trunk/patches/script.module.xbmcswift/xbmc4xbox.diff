@@ -1,6 +1,6 @@
 diff -ru ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/common.py script.module.xbmcswift/lib/xbmcswift/common.py
---- ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/common.py	2014-05-04 04:43:14.554205063 +0100
-+++ script.module.xbmcswift/lib/xbmcswift/common.py	2014-05-04 06:21:07.015699589 +0100
+--- a/lib/xbmcswift/common.py	2014-05-04 04:43:14.554205063 +0100
++++ b/lib/xbmcswift/common.py	2014-05-04 06:21:07.015699589 +0100
 @@ -39,8 +39,8 @@
  def urlparse(url):
      '''Takes a url and returns a 3 tuple of scheme, netloc and path'''
@@ -13,8 +13,8 @@ diff -ru ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/common.p
  def clean_dict(d):
      '''Verifies none of the values are None, otherwise XBMC wll break'''
 diff -ru ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/plugin.py script.module.xbmcswift/lib/xbmcswift/plugin.py
---- ../../../../xbmc-scripts/script.module.xbmcswift/lib/xbmcswift/plugin.py	2014-05-04 04:43:14.554205063 +0100
-+++ script.module.xbmcswift/lib/xbmcswift/plugin.py	2014-05-04 06:29:41.725024457 +0100
+--- a/script.module.xbmcswift/lib/xbmcswift/plugin.py	2014-05-04 04:43:14.554205063 +0100
++++ b/lib/xbmcswift/plugin.py	2014-05-04 06:29:41.725024457 +0100
 @@ -38,9 +38,9 @@
          self._argv0, self._argv1, self._argv2 = args
          self.handle = int(self._argv1)
