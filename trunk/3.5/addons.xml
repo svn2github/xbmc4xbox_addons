@@ -11,6 +11,28 @@
   </extension>
 </addon>
 
+<addon id="plugin.program.xbmc4xboxinstaller"
+       name="XBMC4Xbox Installer"
+       version="2.2.0"
+       provider-name="Dan Dar3">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>program</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">XBMC news, skins and builds installer</summary>
+    <description lang="en">Easily update your xbox to the latest build of xbmc4xbox from within xbmc</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>XBMC news, skins and builds installer from XBMCSVN.com, Easily update your xbox to the latest build of xbmc4xbox from within xbmc</notes>
+	<maintainer>Dan Dar3</maintainer>
+  </statfeed>
+</addon>
+
 <addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.2" provider-name="Jonathan Beluch (jbel)">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
