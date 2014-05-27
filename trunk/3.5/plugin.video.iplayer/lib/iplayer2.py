@@ -4,7 +4,6 @@
 import re, time, os, string, sys
 import urllib, urllib2
 import xml.dom.minidom as dom
-import md5
 import traceback
 from socket import timeout as SocketTimeoutError
 
@@ -527,7 +526,7 @@ class item(object):
 
         # If nothing found, get next highest bitrate
         if len(media) == 0:
-            above_limit = true
+            above_limit = True
             i = streams.index(rate)
             while len(media) == 0 and i > 0:
                 i -= 1
