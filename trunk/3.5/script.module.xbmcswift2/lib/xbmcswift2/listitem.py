@@ -194,31 +194,28 @@ class ListItem(object):
         '''
         listitem = cls(label, label2, icon, thumbnail, path)
 
-        try:
-            if selected is not None:
-                listitem.select(selected)
+        if selected is not None:
+            listitem.select(selected)
 
-            if info:
-                listitem.set_info(info_type, info)
+        if info:
+            listitem.set_info(info_type, info)
 
-            if is_playable:
-                listitem.set_is_playable(True)
+        if is_playable:
+            listitem.set_is_playable(True)
 
-            if properties:
-                # Need to support existing tuples, but prefer to have a dict for
-                # properties.
-                if hasattr(properties, 'items'):
-                    properties = properties.items()
-                for key, val in properties:
-                    listitem.set_property(key, val)
+        if properties:
+            # Need to support existing tuples, but prefer to have a dict for
+            # properties.
+            if hasattr(properties, 'items'):
+                properties = properties.items()
+            for key, val in properties:
+                listitem.set_property(key, val)
 
-            if stream_info:
-                for stream_type, stream_values in stream_info.items():
-                    listitem.add_stream_info(stream_type, stream_values)
+        if stream_info:
+            for stream_type, stream_values in stream_info.items():
+                listitem.add_stream_info(stream_type, stream_values)
 
-            if context_menu:
-                listitem.add_context_menu_items(context_menu, replace_context_menu)
-        except:
-            pass
+        if context_menu:
+            listitem.add_context_menu_items(context_menu, replace_context_menu)
 
         return listitem

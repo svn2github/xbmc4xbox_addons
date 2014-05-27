@@ -1,107 +1,50 @@
-Only in ./lib/xbmcswift2: common.py.orig
-Only in ./lib/xbmcswift2: common.py.rej
-diff -ru ./lib/xbmcswift2/listitem.py /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/listitem.py
---- ./lib/xbmcswift2/listitem.py	2014-05-06 03:24:39.860219718 +0100
-+++ /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/listitem.py	2014-05-04 07:28:50.038322328 +0100
-@@ -194,31 +194,28 @@
-         '''
-         listitem = cls(label, label2, icon, thumbnail, path)
- 
--        try:
--            if selected is not None:
--                listitem.select(selected)
--
--            if info:
--                listitem.set_info(info_type, info)
--
--            if is_playable:
--                listitem.set_is_playable(True)
--
--            if properties:
--                # Need to support existing tuples, but prefer to have a dict for
--                # properties.
--                if hasattr(properties, 'items'):
--                    properties = properties.items()
--                for key, val in properties:
--                    listitem.set_property(key, val)
--
--            if stream_info:
--                for stream_type, stream_values in stream_info.items():
--                    listitem.add_stream_info(stream_type, stream_values)
--
--            if context_menu:
--                listitem.add_context_menu_items(context_menu, replace_context_menu)
--        except:
--            pass
-+        if selected is not None:
-+            listitem.select(selected)
-+
-+        if info:
-+            listitem.set_info(info_type, info)
-+
-+        if is_playable:
-+            listitem.set_is_playable(True)
-+
-+        if properties:
-+            # Need to support existing tuples, but prefer to have a dict for
-+            # properties.
-+            if hasattr(properties, 'items'):
-+                properties = properties.items()
-+            for key, val in properties:
-+                listitem.set_property(key, val)
-+
-+        if stream_info:
-+            for stream_type, stream_values in stream_info.items():
-+                listitem.add_stream_info(stream_type, stream_values)
-+
-+        if context_menu:
-+            listitem.add_context_menu_items(context_menu, replace_context_menu)
- 
-         return listitem
-diff -ru ./lib/xbmcswift2/plugin.py /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/plugin.py
---- ./lib/xbmcswift2/plugin.py	2014-05-06 02:35:10.048966030 +0100
-+++ /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/plugin.py	2014-05-04 07:28:50.038322328 +0100
-@@ -293,7 +293,7 @@
+diff --git a/script.module.xbmcswift2/lib/xbmcswift2/plugin.py b/script.module.xbmcswift2/lib/xbmcswift2/plugin.py
+index 7b635aa6..6120896 100644
+--- a/script.module.xbmcswift2/lib/xbmcswift2/plugin.py
++++ b/script.module.xbmcswift2/lib/xbmcswift2/plugin.py
+@@ -293,7 +293,7 @@ class Plugin(XBMCMixin):
              raise AmbiguousUrlException
  
          pathqs = rule.make_path_qs(items)
--        return '%s%s' % (sys.argv[0], pathqs)
-+        return 'plugin://%s%s' % (self._addon_id, pathqs)
+-        return 'plugin://%s%s' % (self._addon_id, pathqs)
++        return '%s%s' % (sys.argv[0], pathqs)
  
      def _dispatch(self, path):
          for rule in self._routes:
-diff -ru ./lib/xbmcswift2/request.py /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/request.py
---- ./lib/xbmcswift2/request.py	2014-05-06 02:34:15.709114638 +0100
-+++ /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/request.py	2014-05-04 07:28:50.038322328 +0100
-@@ -38,8 +38,6 @@
+diff --git a/script.module.xbmcswift2/lib/xbmcswift2/request.py b/script.module.xbmcswift2/lib/xbmcswift2/request.py
+index 2a8a7c3..3fed660 100644
+--- a/script.module.xbmcswift2/lib/xbmcswift2/request.py
++++ b/script.module.xbmcswift2/lib/xbmcswift2/request.py
+@@ -38,6 +38,8 @@ class Request(object):
          # relative url, e.g. //plugin.video.helloxbmc/path
          self.scheme, remainder = url.split(':', 1)
          parts = urlparse.urlparse(remainder)
--        pathqs = parse_qs(parts[4])
--        self.netloc = parts[1]
--        self.path = pathqs.get('path', ['/'])[0]
--        self.query_string = pathqs.get('qs', [''])[0]
-+        self.netloc, self.path, self.query_string = (
-+            parts[1], parts[2], parts[4])
+-        self.netloc, self.path, self.query_string = (
+-            parts[1], parts[2], parts[4])
++        pathqs = parse_qs(parts[4])
++        self.netloc = parts[1]
++        self.path = pathqs.get('path', ['/'])[0]
++        self.query_string = pathqs.get('qs', [''])[0]
          self.args = unpickle_args(parse_qs(self.query_string))
-diff -ru ./lib/xbmcswift2/urls.py /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/urls.py
---- ./lib/xbmcswift2/urls.py	2014-05-06 02:36:25.640757588 +0100
-+++ /home/jools/Repos/Public/xbmc/xbmc-scripts/script.module.xbmcswift2/lib/xbmcswift2/urls.py	2014-05-04 07:28:50.038322328 +0100
-@@ -157,7 +157,7 @@
+diff --git a/script.module.xbmcswift2/lib/xbmcswift2/urls.py b/script.module.xbmcswift2/lib/xbmcswift2/urls.py
+index 472d7a2..50f4b72 100644
+--- a/script.module.xbmcswift2/lib/xbmcswift2/urls.py
++++ b/script.module.xbmcswift2/lib/xbmcswift2/urls.py
+@@ -157,7 +157,7 @@ class UrlRule(object):
                           if key in self._keywords)
  
          # Create the path
--        path = '?path=%s' % quote_plus(self._make_path(url_items))
-+        path = self._make_path(url_items)
+-        path = self._make_path(url_items)
++        path = '?path=%s' % quote_plus(self._make_path(url_items))
  
          # Extra arguments get tacked on to the query string
          qs_items = dict((key, val) for key, val in items.items()
-@@ -165,7 +165,7 @@
+@@ -165,7 +165,7 @@ class UrlRule(object):
          qs = self._make_qs(qs_items)
  
          if qs:
--            return '&qs='.join([path, qs])
-+            return '?'.join([path, qs])
+-            return '?'.join([path, qs])
++            return '&qs='.join([path, qs])
          return path
  
      @property
