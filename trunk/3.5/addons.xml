@@ -110,4 +110,27 @@
         <maintainer>BuZz</maintainer>
     </statfeed>
 </addon>
+
+<addon id="plugin.program.notepad"
+       name="Notepad"
+       version="1.4.0"
+       provider-name="Dan Dar3">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>program</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <minversion>28764</minversion>
+    <summary lang="en">Noptepad</summary>
+    <description lang="en">Notepad</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes>This is a text reader</notes>
+	<maintainer>Dan Dar3</maintainer>
+  </statfeed>
+</addon>
 </addons>
