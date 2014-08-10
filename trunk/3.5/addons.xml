@@ -124,13 +124,13 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <minversion>28764</minversion>
-    <summary lang="en">Noptepad</summary>
-    <description lang="en">Notepad</description>
+    <summary lang="en">Notepad</summary>
+    <description lang="en">Simple text editor.</description>
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>This is a text reader</notes>
-	<maintainer>Dan Dar3</maintainer>
+	<notes></notes>
+	<maintainer></maintainer>
   </statfeed>
 </addon>
 </addons>
