@@ -835,7 +835,7 @@ Raadpleeg de lokale wetgeving voordat u deze plugin installeert.</disclaimer>
 <addon id="plugin.program.notepad"
        name="Notepad"
        version="1.4.0"
-       provider-name="TestTeam">
+       provider-name="Dan Dar3">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>
@@ -845,13 +845,13 @@ Raadpleeg de lokale wetgeving voordat u deze plugin installeert.</disclaimer>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <minversion>28764</minversion>
-    <summary lang="en">Noptepad</summary>
-    <description lang="en">Notepad</description>
+    <summary lang="en">Notepad</summary>
+    <description lang="en">Simple text editor.</description>
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>This is a text reader</notes>
-	<maintainer>DanDar3</maintainer>
+	<notes></notes>
+	<maintainer></maintainer>
   </statfeed>
 </addon>
 
@@ -981,5 +981,29 @@ Raadpleeg de lokale wetgeving voordat u deze plugin installeert.</disclaimer>
 	<notes>none</notes>
 	<maintainer>kozz</maintainer>
     </statfeed>
+</addon>
+
+<addon id="plugin.program.thumbnails"
+       name="Thumbnails"
+       version="1.2.0"
+       provider-name="Dan Dar3">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>program</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <minversion>30559</minversion>
+    <summary lang="en">Thumbnails</summary>
+    <description lang="en">Thumbnails cleaner. Removes cached thumbnails for entries not in your library anymore.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes></notes>
+	<maintainer></maintainer>
+  </statfeed>
 </addon>
 </addons>
