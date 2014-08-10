@@ -2,7 +2,7 @@
 <addon id="plugin.program.notepad"
        name="Notepad"
        version="1.4.0"
-       provider-name="TestTeam">
+       provider-name="Dan Dar3">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>
@@ -12,12 +12,12 @@
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <minversion>28764</minversion>
-    <summary lang="en">Noptepad</summary>
-    <description lang="en">Notepad</description>
+    <summary lang="en">Notepad</summary>
+    <description lang="en">Simple text editor.</description>
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>This is a text reader</notes>
-	<maintainer>DanDar3</maintainer>
+	<notes></notes>
+	<maintainer></maintainer>
   </statfeed>
 </addon>
