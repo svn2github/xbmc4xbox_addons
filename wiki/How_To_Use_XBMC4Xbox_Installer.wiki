@@ -6,41 +6,41 @@
 
 Go to Programs > select XBMC4Xbox Installer plugin > White button > Plugin Settings > Choose install location (e.g. E:\Apps\)
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.1.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.1.png]
 
 ===1.2. Download and install a new build===
 
 Run XBMC4Xbox Installer > Builds > select a build (entry at the top).
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2.png]
 
 ... choose Install. 
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2a.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2a.png]
 
 That should start the download, depending on your internet connection might take 5-10 minutes...
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2b.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2b.png]
 
 ... once download finished it will display the download location.
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2c.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2c.png]
 
 Press OK to continue with the extraction (note the build was downloaded in the install location) - the extraction will happen in the same folder. 
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2d.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2d.png]
 
 Extraction finished you will be presented with a choice - *upgrade* install (transfer your [http://www.xbmc4xbox.org.uk/wiki/UserData UserData], skins, scripts and plugins) or a *fresh* install (no data is transfered, you will be running a bare build).
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2e.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2e.png]
 
 If you choose for upgrade method, you will get a progress indicator on the data transfer...
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2f.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2f.png]
 
 Installation finished you will be prompted to run the new build...
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%201.2g.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%201.2g.png]
 
 ==2. Setting new XBMC4Xbox to start as a default dashboard==
 
@@ -59,11 +59,11 @@ Go to Programs > XBMC4Xbox Installer > Builds > Set running XBMC4Xbox as default
     * E:\
     * F:\
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%202a.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%202a.png]
 
 When one found, you will be asked to confirm update - note the path to the new build.
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%202b.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%202b.png]
 
 IMPORTANT: 
 
@@ -71,7 +71,7 @@ IMPORTANT:
 
 Go to System Info and check that you are running the new build (meaning the shortcut configuration was updated succesfully). Notice the build version at the bottom of the screen.
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%202c.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%202c.png]
 
 ==3. Deleting older XBMC4Xbox installations==
 
@@ -79,12 +79,12 @@ You should not proceed to this step without going through step 2. Now running th
 
 Run XBMC4Xbox Installer > Builds > Delete old installations
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%203a.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%203a.png]
 
 Choose an older installation / zip file you want to delete - note the dialog presents entries from installation path (e.g. E:\apps). 
 
 It should not present you with the new build (that you are running now, succesfully going first through Step 1 and Step 2 above).
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%203b.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%203b.png]
 
-[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC%20SVN%20Installer/Builds%20-%20Step%203c.png]
+[http://addons4xbox.googlecode.com/svn/wiki/images/XBMC4Xbox%20Installer/Builds%20-%20Step%203c.png]
