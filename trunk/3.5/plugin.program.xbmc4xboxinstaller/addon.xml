@@ -11,12 +11,12 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>   
-    <summary lang="en">XBMC news, skins and builds installer</summary>
-    <description lang="en">Easily update your xbox to the latest build of xbmc4xbox from within xbmc</description>
+    <summary lang="en">XBMC4Xbox Installer.</summary>
+    <description lang="en">Easily update your Xbox to the latest build of XBMC4Xbox.</description>
   </extension>
   <statfeed>
     <working>yes</working>
-	<notes>XBMC news, skins and builds installer from XBMCSVN.com, Easily update your xbox to the latest build of xbmc4xbox from within xbmc</notes>
-	<maintainer>Dan Dar3</maintainer>
+	<notes></notes>
+	<maintainer></maintainer>
   </statfeed>
 </addon>
