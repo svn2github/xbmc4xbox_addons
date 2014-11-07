@@ -70,8 +70,8 @@ def get_plugin_thumbnail(image):
     userpng = os.path.join(iplayer.get_thumb_dir(), image + '.png')
     if os.path.isfile(userpng):
         return userpng
-
-    return None
+    else:
+        return os.path.join(iplayer.get_thumb_dir(), 'bbc.png')
 
 def get_feed_thumbnail(feed):
     thumbfn = ''
@@ -291,8 +291,11 @@ def list_radio_types():
 
     for i, (label, tn, url) in enumerate(folders):
         listitem = xbmcgui.ListItem(label=label)
-        listitem.setIconImage(get_plugin_thumbnail('bbc_radio'))
-        listitem.setThumbnailImage(get_plugin_thumbnail('bbc_radio'))
+        listitem.setIconImage('defaultFolder.png')
+        if tn in [ 'national', 'regional', 'local' ]:
+            listitem.setThumbnailImage(get_plugin_thumbnail('bbc_radio'))
+        else:
+            listitem.setThumbnailImage(get_plugin_thumbnail(tn))
         folder=True
         ok = xbmcplugin.addDirectoryItem(
             handle=__plugin_handle__,
