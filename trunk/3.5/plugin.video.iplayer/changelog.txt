@@ -1,5 +1,40 @@
 Changes
 
+2.6.9
+  * restored xbmc4xbox compatibility (since setresolvedurl changes)
+  * removed old custom resume functionality as native resume now works for
+    video playback (and watched flags set)
+  * allow starting screen with radio and tv - useful for audio programme
+    information which works only from video view
+  * added bbc school radio ondemand streams
+  * added bbc sport ondemand streams
+  * use self hosted cache for ondemand streams. Fixes performance and 
+    timeout issues for channels and brings back radio 4 / world service
+    lists.
+
+2.6.8
+  * use json format for api output to speed up data parsing
+  * various code changes / cleanups
+
+2.6.7
+  * support for mediaselector v5 (and settings to fallback to 4)
+  * fixed live radio
+  * new elementtree based listparser to replace horrible regexp hackery
+  * fixed radio shows missing summary info
+  * include aired / episode number for episodes
+  * drop script.module.elementtree dependency and python 2.4 support
+  * various code cleanups / fixes
+
+2.6.6
+  * use SetResolvedUrl for playback - fixes playback from information window
+    and will allow easier calling from other plugins / web service etc
+  * various code cleanups / fixes
+
+2.6.5
+  * genre missing from programme information - thanks to blaise
+  * live streaming are working again. Thanks to dlake for the hints
+  * use getiterator for backward compatibility with old python/elementtree - thanks to streetsy
+
 2.6.3
   * added fallback icon for channels that miss one
   * added icon for latest

@@ -3,16 +3,9 @@
 # Python libs
 import re, time, os, string, sys
 import urllib, urllib2
-import xml.dom.minidom as dom
 import traceback
 from socket import timeout as SocketTimeoutError
-
-# XBMC libs
-import xbmc, xbmcgui
-
-# external libs
-import listparser
-import stations
+from xml.etree import ElementTree as ET
 
 try:
     from hashlib import md5 as _md5
@@ -21,15 +14,20 @@ except:
     import md5
     _md5 = md5.new
 
-try:
-    # python >= 2.5
-    from xml.etree import ElementTree as ET
-except:
-    # python 2.4 has to use the plugin's version of elementtree
-    from elementtree import ElementTree as ET
+if sys.version_info >= (2, 7):
+    import json as _json
+else:
+    import simplejson as _json
+
+# XBMC libs
+import xbmc, xbmcgui
+
+# external libs
+import listparser
+import stations
+import utils
 import httplib2
 
-import utils
 __addoninfo__ = utils.get_addoninfo()
 __addon__ = __addoninfo__["addon"]
 
@@ -68,8 +66,6 @@ rss_cache = {}
 self_closing_tags = ['alternate', 'mediator']
 
 re_selfclose = re.compile('<([a-zA-Z0-9]+)( ?.*)/>', re.M | re.S)
-#re_pips = re.compile('PIPS:([0-9a-z]{8})')
-re_pips = re.compile('([0-9a-z]{8})')
 re_concept_id = re.compile('concept_pid:([a-z0-9]{8})')
 
 def get_proxy():
@@ -174,18 +170,6 @@ def httpget(url):
 
     return data
 
-# ElementTree addes {namespace} as a prefix for each element tag
-# This function removes these prefixes
-def xml_strip_namespace(tree):
-    for elem in tree.getiterator():
-        elem.tag = elem.tag.split('}')[1]
-
-def parse_entry_id(entry_id):
-    # tag:bbc.co.uk,2008:PIPS:b00808sc
-    matches = re_pips.findall(entry_id)
-    if not matches: return None
-    return matches[0]
-
 def get_provider():
     provider = None
     try:
@@ -256,6 +240,41 @@ def get_setting_videostream():
 
     utils.log("Video stream prefs %s - %s" % (stream_prefs, stream),xbmc.LOGINFO)
     return stream
+    
+def get_setting_videostream_live():
+
+    stream = '3628'
+
+    stream_prefs = '0'
+    try:
+        stream_prefs = __addon__.getSetting('video_stream_live')
+    except:
+        pass
+
+    if stream_prefs == '0':
+        environment = os.environ.get( "OS" )
+        if environment == 'xbox':
+            stream = '923'
+        else:
+            # play full HD if the screen is large enough (not all programmes have this resolution)
+            Y = int(xbmc.getInfoLabel('System.ScreenHeight'))
+            X = int(xbmc.getInfoLabel('System.ScreenWidth'))
+            # if the screen is large enough for HD
+            if Y > 832 and X > 468:
+                stream = '3628'
+    elif stream_prefs == '1':
+        stream = '345'
+    elif stream_prefs == '2':
+        stream = '501'
+    elif stream_prefs == '3':
+        stream = '923'
+    elif stream_prefs == '4':
+        stream = '1470'
+    elif stream_prefs == '5':
+        stream = '2128'
+
+    utils.log("Video stream prefs %s - %s" % (stream_prefs, stream), xbmc.LOGINFO)
+    return stream
 
 def get_setting_audiostream():
     stream = 'Auto'
@@ -317,7 +336,11 @@ class media(object):
         self.method    = None
         self.width, self.height = None, None
         self.bitrate   = None
-        self.read_media_node(media_node, connection)
+        self.mimetype  = None
+        self.encoding  = None
+        self.connection_protocol = None
+        if media_node is not None:
+            self.read_media_node(media_node, connection)
 
     @staticmethod
     def create_from_media_xml(item, xml):
@@ -329,16 +352,7 @@ class media(object):
 
     @property
     def url(self):
-        # no longer used. will remove later
-        if self.connection_method == 'resolve':
-            utils.log("Resolving URL %s" % self.connection_href,xbmc.LOGINFO)
-            page = urllib2.urlopen(self.connection_href)
-            page.close()
-            url = page.geturl()
-            utils.log("URL resolved to %s" % url,xbmc.LOGINFO)
-            return page.geturl()
-        else:
-            return self.connection_href
+        return self.connection_href
 
     @property
     def application(self):
@@ -374,6 +388,8 @@ class media(object):
         self.connection_method = None
 
         self.connection_kind = conn.get('kind')
+        if not self.connection_kind:
+            self.connection_kind = conn.get('supplier')
         self.connection_protocol = conn.get('protocol')
 
         # some akamai rtmp streams (radio) don't specify rtmp protocol
@@ -538,10 +554,36 @@ class item(object):
 
         return (media, above_limit)
 
-    def mediaselector_url(self, suffix):
-        if suffix == None:
-            return "http://open.live.bbc.co.uk/mediaselector/4/mtis/stream/%s" % self.identifier
-        return "http://open.live.bbc.co.uk/mediaselector/4/mtis/stream/%s/%s" % (self.identifier, suffix)
+    def get_available_streams_live(self):
+        url = "http://www.bbc.co.uk/mediaselector/playlists/hds/pc/ak/%s.f4m" % stations.channels_tv_live_mapping[self.programme.pid]
+        
+        rate = get_setting_videostream_live()
+
+        xml = httpget(url)
+
+        # remove namespace
+        xml = re.sub(' xmlns="[^"]+"', '', xml, count=1)
+
+        root = ET.fromstring(xml)
+        medias = []
+        for media_node in root.getiterator('media'):
+            if int(media_node.attrib['bitrate']) <= int(rate):
+                live_media = media(self, None, media_node.attrib['bitrate'])
+                live_media.connection_href = media_node.attrib['href'].replace('.f4m', '.m3u8')
+                live_media.connection_kind = "hls"
+                medias.append(live_media)
+
+        medias.reverse()
+        return [ medias, False ]
+
+    def mediaselector_url(self):
+        v = __addon__.getSetting('mediaselector')
+        if v == '0':
+            url = "http://open.live.bbc.co.uk/mediaselector/5/select/version/2.0/mediaset/pc/vpid/%s"
+        else:
+            url = "http://open.live.bbc.co.uk/mediaselector/4/mtis/stream/%s"
+
+        return url % self.identifier
 
     def get_media_list_for(self, stream, provider_pref):
         """
@@ -549,11 +591,11 @@ class item(object):
         preferred provider first if it exists
         """
         if not self.medias:
-            url = self.mediaselector_url(None)
+            url = self.mediaselector_url()
             utils.log("Stream XML URL: %s" % url,xbmc.LOGINFO)
             xml = httpget(url)
+            xml = utils.xml_strip_namespace(xml)
             tree = ET.XML(xml)
-            xml_strip_namespace(tree)
             self.medias = []
             for m in tree.findall('media'):
                 self.medias.extend(media.create_from_media_xml(self, m))
@@ -599,13 +641,8 @@ class programme(object):
             raise
 
     def parse_playlist(self, xmlstr):
-        #utils.log('Parsing playlist XML... %s' % xml,xbmc.LOGINFO)
-        #xml.replace('<summary/>', '<summary></summary>')
-        #xml = fix_selfclosing(xml)
-
-        #soup = BeautifulStoneSoup(xml, selfClosingTags=self_closing_tags)
+        xmlstr = utils.xml_strip_namespace(xmlstr)
         tree = ET.XML(xmlstr)
-        xml_strip_namespace(tree)
 
         self.meta = {}
         self._items = []
@@ -614,10 +651,15 @@ class programme(object):
         utils.log('Found programme: %s' % tree.find('title').text,xbmc.LOGINFO)
         self.meta['title'] = tree.find('title').text
         self.meta['summary'] = tree.find('summary').text
-        self.meta['thumbnail'] = re.findall("<link rel=\"holding\" href=\"(.*?)\".*?/>", xmlstr, re.DOTALL)[0]
+
+        for link in tree.findall('link'):
+            if link.attrib['rel'] == 'holding':
+                self.meta['thumbnail'] = link.attrib['href']
+                break
+
         # Live radio feeds have no text node in the summary node
-        if self.meta['summary']:
-            self.meta['summary'] = string.lstrip(self.meta['summary'], ' ')
+        if self.meta['summary'] is not None:
+            self.meta['summary'].lstrip(' ')
         self.meta['updated'] = tree.find('updated').text
 
         if tree.find('noitems'):
@@ -714,7 +756,8 @@ class programme_simple(object):
         self.pid = pid
         self.meta = {}
         self.meta['title'] = entry.title
-        self.meta['summary'] = string.lstrip(entry.summary, ' ')
+        if entry.summary is not None:
+            self.meta['summary'] = string.lstrip(entry.summary, ' ')
         self.meta['updated'] = entry.updated
         self.meta['thumbnail'] = entry.thumbnail
         self.categories = []
@@ -810,7 +853,7 @@ class programme_simple(object):
 
 
 class feed(object):
-    def __init__(self, tvradio=None, channel=None, category=None, searchcategory=None, atoz=None, searchterm=None, radio=None):
+    def __init__(self, tvradio=None, channel=None, category=None, searchcategory=None, atoz=None, searchterm=None, radio=None, live=False, listing=None):
         """
         Creates a feed for the specified channel/category/whatever.
         tvradio: type of channel - 'tv' or 'radio'. If a known channel is specified, use 'auto'.
@@ -833,29 +876,29 @@ class feed(object):
             self.tvradio = tvradio
         else:
             self.tvradio = None
+
+        self.format = 'json'
         self.channel = channel
         self.category = category
         self.searchcategory = searchcategory
         self.atoz = atoz
         self.searchterm = searchterm
         self.radio = radio
+        self.live = live
+        self.listing = listing
 
-    def create_url(self, listing):
-        """
-        <channel>/['list'|'popular'|'highlights']
-        'categories'/<category>(/<subcategory>)(/['tv'/'radio'])/['list'|'popular'|'highlights']
-        """
-        assert listing in ['list', 'popular', 'highlights', 'latest'], "Unknown listing type"
+    def create_url(self):
 
-        if listing == 'popular':
+        params = []
+        if self.listing == 'categories':
+            params = [ 'categorynav' ] 
+        if self.listing == 'popular':
             params = [ 'mostpopular' ]
-        if listing == 'highlights':
+        elif self.listing == 'highlights':
             params = [ 'featured' ]
-        if listing == 'latest':
+        elif self.listing == 'latest':
             params = [ 'latest' ]
             params += [ 'limit', '20' ]
-        if self.searchcategory:
-            params = [ 'categorynav' ]
         elif self.category:
             params = [ 'listview' ]
             params += [ 'category', self.category ]
@@ -864,13 +907,19 @@ class feed(object):
         elif self.searchterm:
             params = [ 'search' ]
             params += [ 'q', urllib.quote_plus(self.searchterm) ]
-        elif self.channel:
+        elif self.listing == 'list' and self.channel:
             params = [ 'listview' ]
             params += [ 'masterbrand', self.channel]
+            if __addon__.getSetting('listings_cache_disable') == 'false':
+                return "http://iplayer.xbmc4xbox.org.uk/" + self.channel + '.json'
+
+        if self.channel:
+            params += [ 'masterbrand', self.channel ]
 
         if self.tvradio:
             params += [ 'service_type', self.tvradio]
-        params = params + [ 'format', 'xml' ]
+        params = params + [ 'block_type', 'episode' ]
+        params = params + [ 'format', self.format ]
         url = "http://www.bbc.co.uk/iplayer/ion/" + '/'.join(params)
         return url
 
@@ -931,10 +980,16 @@ class feed(object):
         Return a list of available channels as a list of feeds.
         """
         if self.channel:
-            utils.log("%s doesn\'t have any channels!" % self.channel,xbmc.LOGSEVERE)
             return None
         if self.tvradio == 'tv':
-            return [feed('tv', channel=ch) for (ch, title) in stations.channels_tv_list]
+            if self.live:
+                channels = []
+                for (ch, title) in stations.channels_tv_list:
+                    if ch in stations.channels_tv_live_mapping:
+                        channels.append(feed('tv', channel=ch))
+                return channels
+            else:
+                return [feed('tv', channel=ch) for (ch, title) in stations.channels_tv_list]
         if self.tvradio == 'radio':
             if self.radio:
                 return [feed('radio', channel=ch) for (ch, title) in stations.channels_radio_type_list[self.radio]]
@@ -1007,56 +1062,58 @@ class feed(object):
         # TODO handle properly oh pants
         return None
 
-    @classmethod
     def read_rss(self, url):
-        utils.log('Read RSS: %s' % url,xbmc.LOGINFO)
+        utils.log('Read File: %s' % url,xbmc.LOGINFO)
         if url not in rss_cache:
-            utils.log('Feed URL not in cache, requesting...',xbmc.LOGINFO)
+            utils.log('File not in cache, requesting...',xbmc.LOGINFO)
             xml = httpget(url)
-            # utils.log("Received xml: %s" % xml,xbmc.LOGDEBUG)
-            progs = listparser.parse(xml)
+            progs = listparser.parse(xml, self.format)
             if not progs: return []
             d = []
             for entry in progs.entries:
-                pid = parse_entry_id(entry.id)
-                p = programme_simple(pid, entry)
+                p = programme_simple(entry.id, entry)
                 d.append(p)
             utils.log('Found %d entries' % len(d),xbmc.LOGINFO)
             rss_cache[url] = d
         else:
-            utils.log('RSS found in cache',xbmc.LOGINFO)
+            utils.log('File found in cache',xbmc.LOGINFO)
         return rss_cache[url]
 
-    def popular(self):
-        return self.read_rss(self.create_url('popular'))
-
-    def highlights(self):
-        return self.read_rss(self.create_url('highlights'))
-
     def list(self):
-        return self.read_rss(self.create_url('list'))
-
-    def latest(self):
-        return self.read_rss(self.create_url('latest'))
+        return self.read_rss(self.create_url())
 
     def categories(self):
-        # quick and dirty category extraction and count
-        url = self.create_url('list')
-
-        xml = httpget(url)
-
-        # remove namespace
-        xml = re.sub(' xmlns="[^"]+"', '', xml, count=1)
-
-        root = ET.fromstring(xml)
         categories = []
-        for category in root.iter('category'):
-            id = category.find('id').text
-            text = category.find('text').text
-            categories.append([ text, id ])
+        url = self.create_url()
+        data = httpget(url)
+
+        if self.format == 'xml':
+            # remove namespace
+            data = utils.xml_strip_namespace(data)
+
+            root = ET.fromstring(data)
+            categories = []
+            for category in root.getiterator('category'):
+                id = category.find('id').text
+                text = category.find('text').text
+                categories.append([ text, id ])
+
+        if self.format == 'json':
+            json = _json.loads(data)
+
+            for parent in json['blocklist']:
+                id = parent['id']
+                text = parent['text']
+                categories.append([ text, id ])
+                if 'child_categories' in parent:
+                    for child in parent['child_categories']:
+                        id = child['id']
+                        text = child['text']
+                        categories.append([ text, id ])
 
         return categories
 
+    
     @property
     def is_radio(self):
         """ True if this feed is for radio. """
@@ -1068,304 +1125,6 @@ class feed(object):
         return self.tvradio == 'tv'
 
     name = property(get_name)
-
-if os.environ.get( "OS" ) != "xbox":
-    import threading
-
-class IPlayerLockException(Exception):
-    """
-    Exception raised when IPlayer fails to obtain a resume lock
-    """
-    pass
-
-class IPlayer(xbmc.Player):
-    """
-    An XBMC player object, for supporting iPlayer features suring playback of iPlayer programmes
-    """
-
-    # Static constants for resume db and lockfile paths, set by default.py on plugin startup
-    RESUME_FILE = None
-    RESUME_LOCK_FILE = None
-
-    # WATCHED_MIN from beginning, WATCHED_MAX before end
-    # Currently, resume point min/max is calculated as follows:
-    #   WATCHED_MIN: 5% from the start of playback (no more than 180 secs after start)
-    #   WATCHED_MAX: 5% before the end of playback (no more than 180 secs before end).
-    WATCHED_MIN = {"pcnt": 5.0, "cap_secs": 180}
-    WATCHED_MAX = {"pcnt": 5.0, "cap_secs": 180}
-
-    resume = None
-    dates_added = None
-
-    def __init__( self, core_player, pid, live ):
-        utils.log("IPlayer initialised (core_player: %d, pid: %s, live: %s)" % (core_player, pid, live),xbmc.LOGINFO)
-        self.paused = False
-        self.live = live
-        self.pid = pid
-
-        # Stash self.GetTotalTime() when it becomes available on start of playback or later during heartbeat
-        # as sometimes it won't always be available on start of playback but should be on a heartbeat
-        self.duration = 0
-
-        # Remember if we've got a resume point to avoid loading the resume file to see if it needs to be deleted
-        self.has_resume_point = False
-
-        if os.environ.get( "OS" ) != "xbox":
-            self.cancelled = threading.Event()
-        if live:
-            # Live feed - no resume
-            # Setup scheduling?
-            pass
-        else:
-            if os.environ.get( "OS" ) != "xbox":
-                # Acquire the resume lock, store the pid and load the resume file
-                self._acquire_lock()
-
-    def __del__( self ):
-        utils.log("De-initialising...",xbmc.LOGINFO)
-        # If resume is enabled, try to release the resume lock
-        if os.environ.get( "OS" ) != "xbox":
-            if not self.live:
-                try: self.heartbeat.cancel()
-                except: utils.log('No heartbeat on destruction',xbmc.LOGSEVERE)
-                self._release_lock()
-            # Refresh container to ensure '(resumeable)' is added if necessary
-            xbmc.executebuiltin('Container.Refresh')
-
-
-    def _acquire_lock( self ):
-        if os.path.isfile(IPlayer.RESUME_LOCK_FILE):
-            raise IPlayerLockException("Only one instance of iPlayer can be run at a time. Please stop any other streams you may be watching before opening a new stream")
-        else:
-            lock_fh = open(IPlayer.RESUME_LOCK_FILE, 'w')
-            try:
-                lock_fh.write("%s" % self)
-            finally:
-                lock_fh.close()
-
-    def _release_lock( self ):
-        self_has_lock = False
-        lock_fh = open(IPlayer.RESUME_LOCK_FILE)
-        try:
-            self_has_lock = (lock_fh.read() == "%s" % self)
-        finally:
-            lock_fh.close()
-
-        utils.log("Lock owner test: %s" % self_has_lock,xbmc.LOGDEBUG)
-        if self_has_lock:
-            utils.log("Removing lock file.",xbmc.LOGINFO)
-            try:
-                os.remove(IPlayer.RESUME_LOCK_FILE)
-            except Exception, e:
-                utils.log("Error removing iPlayer resume lock file! (%s)" % e,xbmc.LOGSEVERE)
-
-    @staticmethod
-    def force_release_lock():
-        """
-        If something goes wrong and the lock file is present after the IPlayer object that made it dies,
-        it can be force deleted here (accessible from advanced plugin options)
-        """
-        try:
-            os.remove(IPlayer.RESUME_LOCK_FILE)
-            dialog = xbmcgui.Dialog()
-            dialog.ok('Lock released', 'Successfully released lock')
-        except:
-            dialog = xbmcgui.Dialog()
-            dialog.ok('Failed to force release lock', 'Failed to release lock')
-
-    def run_heartbeat( self ):
-        """
-        Method is run every second to perform housekeeping tasks, e.g. updating the current seek time of the player.
-        Heartbeat will continue until player stops playing.
-        """
-        utils.log("Heartbeat %d" % time.time(),xbmc.LOGDEBUG)
-        self.heartbeat = threading.Timer(1.0, self.run_heartbeat)
-        self.heartbeat.setDaemon(True)
-        self.heartbeat.start()
-        if not self.live and not self.cancelled.is_set():
-            if not self.duration: self.duration = self.getTotalTime()
-            self.current_seek_time = self.getTime()
-            utils.log("current_seek_time %s" % self.current_seek_time,xbmc.LOGDEBUG)
-        elif self.cancelled.is_set():
-            self.onPlayBackEnded()
-
-    def onPlayBackStarted( self ):
-        # Will be called when xbmc starts playing the stream
-        utils.log("Begin playback of pid %s" % self.pid,xbmc.LOGINFO)
-        self.paused = False
-        if not self.live:
-          self.duration = self.getTotalTime()
-        if os.environ.get( "OS" ) != "xbox":
-            self.run_heartbeat()
-
-    def onPlayBackEnded( self ):
-        # Will be called when xbmc stops playing the stream
-        if self.heartbeat: self.heartbeat.cancel()
-        utils.log("Playback ended.",xbmc.LOGINFO)
-        self.save_or_delete_resume_point()
-        self.__del__()
-
-    def onPlayBackStopped( self ):
-        if self.heartbeat: self.heartbeat.cancel()
-        # Will be called when user stops xbmc playing the stream
-        # The player needs to be unloaded to release the resume lock
-        utils.log("Playback stopped.",xbmc.LOGINFO)
-        self.save_or_delete_resume_point()
-        self.__del__()
-
-    def onPlayBackPaused( self ):
-        # Will be called when user pauses playback on a stream
-        utils.log("Playback paused.",xbmc.LOGINFO)
-        self.save_or_delete_resume_point()
-        self.paused = True
-
-    @staticmethod
-    def resume_point_required( resume_point, duration ):
-      """
-      Determine if a resume point is required. Calculate the minimum and maximum points
-      at which a resume point should be saved, initially using minimum and maximum percentages
-      then clamped by a specific number of seconds.
-      """
-      min_limit = (duration / 100.0) * IPlayer.WATCHED_MIN["pcnt"]
-      if min_limit > IPlayer.WATCHED_MIN["cap_secs"]:
-          min_limit = IPlayer.WATCHED_MIN["cap_secs"]
-
-      max_limit = (duration / 100.0) * IPlayer.WATCHED_MAX["pcnt"]
-      if max_limit > IPlayer.WATCHED_MAX["cap_secs"]:
-          max_limit = IPlayer.WATCHED_MAX["cap_secs"]
-      max_limit = duration - max_limit
-
-      if resume_point >= min_limit and resume_point <= max_limit:
-        utils.log("Current resume point %.2f secs within limits (%.2f - %.2f) and will be saved" % \
-            (resume_point, min_limit, max_limit),xbmc.LOGINFO)
-        return True
-      else:
-        utils.log("Current resume point %.2f secs outside limits (%.2f - %.2f) and will not be saved" % \
-            (resume_point, min_limit, max_limit),xbmc.LOGINFO)
-        return False
-
-    def save_or_delete_resume_point( self, resume_point=None ):
-      """
-      Saves the resume point if more than MIN_WATCHED% and less than MAX_WATCHED% of the stream has been watched, otherwise it
-      deletes (or just doesn't save) the resume point.
-      This avoids saving a resume point just a few seconds from the end of a stream, or if you start a stream by mistake.
-      """
-      if os.environ.get( "OS" ) != "xbox":
-          if not self.live:
-              if resume_point == None:
-                resume_point = self.current_seek_time
-
-              if resume_point > 0 and self.duration >= resume_point:
-                  if IPlayer.resume_point_required(resume_point, self.duration):
-                      self.save_resume_point( resume_point )
-                      return
-              else:
-                  utils.log("Unable to determine watched_percent (duration: %d, resume_point: %f) - saving resume point anyway" % (self.duration, resume_point),xbmc.LOGNOTICE)
-                  self.save_resume_point( resume_point )
-                  return
-
-      if self.has_resume_point:
-        IPlayer.delete_resume_point( self.pid )
-        self.has_resume_point = False
-
-    def save_resume_point( self, resume_point ):
-        """
-        Updates the current resume point for the currently playing pid to resume_point, and commits the result to the resume db file
-        """
-        resume, dates_added = IPlayer.load_resume_file()
-        resume[self.pid] = resume_point
-        dates_added[self.pid] = time.time()
-        utils.log("Saving resume point (pid %s, seekTime %fs, dateAdded %d) to resume file" % (self.pid, resume[self.pid], dates_added[self.pid]),xbmc.LOGNOTICE)
-        IPlayer.save_resume_file(resume, dates_added)
-        self.has_resume_point = True
-
-    @staticmethod
-    def load_resume_file():
-        """
-        Loads and parses the resume file, and returns a dictionary mapping pid -> resume_point
-        Resume file format is three columns, separated by a single space, with platform dependent newlines
-        First column is pid (string), second column is resume point (float), third column is date added
-        If date added is more than thirty days ago, the pid entry will be ignored for cleanup
-        Will only actually load the file once, caching the result for future calls.
-        """
-
-        if not IPlayer.resume:
-            # Load resume file
-            IPlayer.resume = {}
-            IPlayer.dates_added = {}
-            if os.path.isfile(IPlayer.RESUME_FILE):
-                utils.log("Loading resume file: %s" % (IPlayer.RESUME_FILE),xbmc.LOGINFO)
-                with open(IPlayer.RESUME_FILE, 'rU') as resume_fh:
-                    resume_str = resume_fh.read()
-                tokens = resume_str.split()
-                # Three columns, pid, seekTime (which is a float) and date added (which is an integer, datetime in seconds), per line
-                pids = tokens[0::3]
-                seekTimes = [float(seekTime) for seekTime in tokens[1::3]]
-                datesAdded = [int(dateAdded) for dateAdded in tokens[2::3]]
-                pid_to_resume_point_map = []
-                pid_to_date_added_map = []
-                # if row was added less than days_to_keep days ago, add it to valid_mappings
-                try: days_to_keep = int(__addon__.getSetting('resume_days_to_keep'))
-                except: days_to_keep = 40
-                limit_time = time.time() - 60*60*24*days_to_keep
-                for i in range(len(pids)):
-                    if datesAdded[i] > limit_time:
-                        pid_to_resume_point_map.append( (pids[i], seekTimes[i]) )
-                        pid_to_date_added_map.append( (pids[i], datesAdded[i]) )
-                IPlayer.resume = dict(pid_to_resume_point_map)
-                IPlayer.dates_added = dict(pid_to_date_added_map)
-                utils.log("Found %d resume entries" % (len(IPlayer.resume.keys())),xbmc.LOGINFO)
-
-        return IPlayer.resume, IPlayer.dates_added
-
-    @staticmethod
-    def delete_resume_point(pid_to_delete):
-        utils.log("Deleting resume point for pid %s" % pid_to_delete,xbmc.LOGNOTICE)
-        resume, dates_added = IPlayer.load_resume_file()
-        del resume[pid_to_delete]
-        del dates_added[pid_to_delete]
-        IPlayer.save_resume_file(resume, dates_added)
-
-    @staticmethod
-    def save_resume_file(resume, dates_added):
-        """
-        Saves the current resume dictionary to disk. See load_resume_file for file format
-        """
-
-        IPlayer.resume = resume
-        IPlayer.dates_added = dates_added
-
-        str = ""
-        utils.log("Saving %d entries to %s" % (len(resume.keys()), IPlayer.RESUME_FILE),xbmc.LOGINFO)
-        resume_fh = open(IPlayer.RESUME_FILE, 'w')
-        try:
-            for pid, seekTime in resume.items():
-                str += "%s %f %d%s" % (pid, seekTime, dates_added[pid], os.linesep)
-            resume_fh.write(str)
-        finally:
-             resume_fh.close()
-
-    def resume_and_play( self, url, listitem, is_tv, playresume=False ):
-        """
-        Intended to replace xbmc.Player.play(playlist), this method begins playback and seeks to any recorded resume point.
-        XBMC is muted during seeking, as there is often a pause before seeking begins.
-        """
-
-        if os.environ.get( "OS" ) != "xbox" and not self.live and playresume:
-            resume, dates_added = IPlayer.load_resume_file()
-            if self.pid in resume.keys():
-                utils.log("Resume point found for pid %s at %f, seeking..." % (self.pid, resume[self.pid]),xbmc.LOGNOTICE)
-                self.has_resume_point = True
-                listitem.setProperty('StartOffset', '%d' % resume[self.pid])
-
-        if is_tv:
-            play = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        else:
-            play = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
-        play.clear()
-        play.add(url, listitem)
-
-        self.play(play)
 
 tv = feed('tv')
 radio = feed('radio')

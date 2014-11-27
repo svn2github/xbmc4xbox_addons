@@ -15,7 +15,20 @@ channels_tv_list = [
     ('bbc_parliament', 'BBC Parliament'),
     ('bbc_alba', 'BBC Alba'),
     ('s4cpbs', 'S4C'),
+    ('bbc_sport', 'BBC Sport'),
 ]
+
+channels_tv_live_mapping = {
+    'bbc_one': 'bbc_one_hd',
+    'bbc_two': 'bbc_two_hd',
+    'bbc_three': 'bbc_three_hd',
+    'bbc_four': 'bbc4',
+    'cbbc': 'cbbc',
+    'cbeebies': 'cbeebies',
+    'bbc_news24': 'news_ch',
+    'bbc_parliament': 'parliament',
+    'bbc_alba': 'alba',
+}
 
 radio_station_info = [
     {'id': 'bbc_radio_one',
@@ -73,6 +86,16 @@ radio_station_info = [
      'logo': None,
      'type': 'national',
      'webcam': 'http://www.bbc.co.uk/asiannetwork/webcams/birmingham.jpg'},
+     
+    {'id': 'bbc_world_service',
+     'name': 'World Service',
+     'logo': None,
+     'type': 'national'},
+
+    {'id': 'bbc_school_radio',
+     'name': 'School Radio',
+     'logo': None,
+     'type': 'national'},
 
     {'id': 'bbc_radio_scotland',
      'name': 'BBC Scotland',
@@ -98,11 +121,6 @@ radio_station_info = [
      'name': 'BBC Cymru',
      'logo': None,
      'type': 'regional'},
-
-    {'id': 'bbc_world_service',
-     'name': 'World Service',
-     'logo': None,
-     'type': 'national'},
 
     {'id': 'bbc_radio_nan_gaidheal',
      'name': 'BBC nan Gaidheal',
