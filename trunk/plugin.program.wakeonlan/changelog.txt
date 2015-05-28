@@ -1,5 +1,0 @@
-Changelog:
-~~~~~~~~~~
-
-v1.0 (Tuesday, 28 September 2010):
-- initial release (confirmed working - thanks to Skater4599); 
