@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.2" provider-name="Jonathan Beluch (jbel)">
+<addon
+  id="plugin.audio.relive"
+  version="0.11.0"
+  name="reLive"
+  provider-name="BuZz">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
-  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+     <provides>audio</provides>
+  </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <source>https://github.com/jbeluch/xbmcswift</source>
+    <summary lang="en">reLive</summary>
+    <description lang="en">
+      Listen to archives of demoscene related radio shows and podcasts - and primarily scenesat.com - an excellent demo scene orientated radio station - http://www.scenesat.com. It allows you to see all the tracks for a show and skip to a part of your choice. It also features some preset streams for the live broadcasts.
+    </description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <email>buzz at exotica org uk</email>
+    <website>https://github.com/joolswills/plugin.audio.relive</website>
+    <source>https://github.com/joolswills/plugin.audio.relive</source>
   </extension>
-</addon>
-
-<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel)" version="2.4.0">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0" />
-  </requires>
-  <extension library="lib" point="xbmc.python.module" />
-  <extension point="xbmc.addon.metadata">
-    <language />
-    <platform>all</platform>
-  </extension>
+    <statfeed>
+        <working>yes</working>
+        <notes></notes>
+        <maintainer>BuZz</maintainer>
+    </statfeed>
 </addon>
 
 <addon id="plugin.program.notepad"
@@ -37,41 +44,6 @@
     <minversion>28764</minversion>
     <summary lang="en">Notepad</summary>
     <description lang="en">Simple text editor.</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes></notes>
-	<maintainer></maintainer>
-  </statfeed>
-</addon>
-
-<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="TheCollective" version="1.5.2">
-  <requires>
-    <import addon="xbmc.python" version="2.0" />
-  </requires>
-  <extension library="default.py" point="xbmc.service" start="startup">
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Common caching api for xbmc plugins.</summary>
-  </extension>
-  <extension library="lib" point="xbmc.python.module" />
-</addon>
-
-<addon id="plugin.program.xbmc4xboxinstaller"
-       name="XBMC4Xbox Installer"
-       version="2.2.0"
-       provider-name="Dan Dar3">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>program</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">XBMC4Xbox Installer.</summary>
-    <description lang="en">Easily update your Xbox to the latest build of XBMC4Xbox.</description>
   </extension>
   <statfeed>
     <working>yes</working>
@@ -104,28 +76,51 @@
   </statfeed>
 </addon>
 
-<addon
-  id="plugin.audio.relive"
-  version="0.11.0"
-  name="reLive"
-  provider-name="BuZz">
+<addon id="plugin.program.xbmc4xboxinstaller"
+       name="XBMC4Xbox Installer"
+       version="2.2.0"
+       provider-name="Dan Dar3">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="1.0"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
-     <provides>audio</provides>
+    <provides>program</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">reLive</summary>
-    <description lang="en">
-      Listen to archives of demoscene related radio shows and podcasts - and primarily scenesat.com - an excellent demo scene orientated radio station - http://www.scenesat.com. It allows you to see all the tracks for a show and skip to a part of your choice. It also features some preset streams for the live broadcasts.
-    </description>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <email>buzz at exotica org uk</email>
-    <website>https://github.com/joolswills/plugin.audio.relive</website>
-    <source>https://github.com/joolswills/plugin.audio.relive</source>
+    <summary lang="en">XBMC4Xbox Installer.</summary>
+    <description lang="en">Easily update your Xbox to the latest build of XBMC4Xbox.</description>
   </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes></notes>
+	<maintainer></maintainer>
+  </statfeed>
+</addon>
+
+<addon
+    id="plugin.video.iplayer"
+    name="iPlayer"
+    version="2.7.1"
+    provider-name="Alastair, BuZz, Dink, dlake02">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0" />
+        <import addon="script.module.simplejson" version="3.3.0" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Watch TV and listen to radio from the BBC's iPlayer website</summary>
+        <description lang="en">
+            This XBMC plugin enables (UK only) the playing of TV and Radio catchup content from the BBC IPlayer website. Live radio and TV feeds are also supported.
+        </description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <email>buzz at exotica org uk</email>
+        <website>https://github.com/joolswills/plugin.video.iplayer</website>
+        <source>https://github.com/joolswills/plugin.video.iplayer.git</source>
+    </extension>
     <statfeed>
         <working>yes</working>
         <notes></notes>
@@ -157,32 +152,71 @@
     </statfeed>
 </addon>
 
-<addon
-    id="plugin.video.iplayer"
-    name="iPlayer"
-    version="2.6.9"
-    provider-name="Alastair, BuZz, Dink, dlake02">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Watch TV and listen to radio from the BBC's iPlayer website</summary>
-        <description lang="en">
-            This XBMC plugin enables (UK only) the playing of TV and Radio catchup content from the BBC IPlayer website. Live radio and TV feeds are also supported.
-        </description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <email>buzz at exotica org uk</email>
-        <website>http://code.google.com/p/xbmc-iplayerv2/</website>
-        <source>http://code.google.com/p/xbmc-iplayerv2/source/checkout</source>
-    </extension>
-    <statfeed>
-        <working>yes</working>
-        <notes></notes>
-        <maintainer>BuZz</maintainer>
-    </statfeed>
+<addon id="plugin.video.youtube" name="YouTube" version="5.1.4" provider-name="bromix">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Plugin for YouTube</summary>
+        <description lang="en">YouTube is a one of the biggest video-sharing websites of the world.</description>
+		<summary lang="de">Plugin für YouTube</summary>
+        <description lang="de">YouTube ist ein eines der größten Video-Sharing-Websites der Welt.</description>
+        <summary lang="pl">Wtyczka YouTube</summary>
+        <description lang="pl">YouTube jest jednym z największych na świecie serwisów udostępniania wideo.</description>
+		<summary lang="hu">Kiegészítő  a YouTube-hoz</summary>
+        <description lang="hu">A YouTube a világ egyik legnagyobb videómegosztó weboldala.</description>
+        <summary lang="es">Plugin para YouTube</summary>
+        <description lang="es">YouTube es un uno de los mayores sitios web de intercambio de vídeos del mundo.</description>
+        <summary lang="ru">Видеодополнение YouTube</summary>
+        <description lang="ru">Данное дополнение позволяет находить и смотреть видео на всеми любимом сайте.</description>
+        <summary lang="fr">Plugin pour YouTube</summary>
+        <description lang="fr">YouTube est l'un des plus grands sites de partage vidéos du monde.</description>
+		<disclaimer lang="en"></disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=200735</forum>
+		<website>http://www.youtube.com/</website>
+		<email>bromix at gmx dot net</email>
+		<source>https://github.com/bromix/plugin.video.youtube</source>
+	</extension>
+</addon>
+
+<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="TheCollective" version="1.5.2">
+  <requires>
+    <import addon="xbmc.python" version="2.0" />
+  </requires>
+  <extension library="default.py" point="xbmc.service" start="startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Common caching api for xbmc plugins.</summary>
+  </extension>
+  <extension library="lib" point="xbmc.python.module" />
+</addon>
+
+<addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.2" provider-name="Jonathan Beluch (jbel)">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <source>https://github.com/jbeluch/xbmcswift</source>
+  </extension>
+</addon>
+
+<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel)" version="2.4.0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+  </requires>
+  <extension library="lib" point="xbmc.python.module" />
+  <extension point="xbmc.addon.metadata">
+    <language />
+    <platform>all</platform>
+  </extension>
 </addon>
 </addons>
