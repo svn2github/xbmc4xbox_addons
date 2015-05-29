@@ -318,13 +318,16 @@ class media(object):
         ('video', 'video/x-flv', 'spark', 'rtmp', 800) : 'flashwii',
         ('video', 'video/mpeg', 'h264', 'http', 184)   : 'mobile',
         ('audio', 'audio/mpeg', 'mp3', 'rtmp', 80)     : 'mp3 80',
+        ('audio', 'audio/x-scpls', 'mp3', 'http', 48 ) : 'mp3 48',
+        ('audio', 'audio/x-scpls', 'mp3', 'http', 128 ): 'mp3 128',
         ('audio', 'audio/mp4',  'aac', 'rtmp', None)   : 'aac',
         ('audio', 'audio/wma',  'wma', 'http', None)   : 'wma',
         ('audio', 'audio/mp4', 'aac', 'rtmp', 320)     : 'aac320',
         ('audio', 'audio/mp4', 'aac', 'rtmp', 128)     : 'aac128',
+        ('audio', 'audio/mp4', 'aac', 'rtmp', 64)      : 'aac64',
         ('audio', 'audio/wma', 'wma9', 'http', 96)     : 'wma9 96',
         ('audio', 'audio/wma', 'wma9', 'http', 48)     : 'wma9 48',
-        ('audio', 'audio/x-ms-asf', 'wma', 'http', 128) : 'wma+asx',
+        ('audio', 'audio/x-ms-asf', 'wma', 'http', 128): 'wma+asx',
         ('audio', 'audio/mp4', 'aac', 'rtmp', 48)      : 'aac48',
         ('audio', 'audio/mp4', 'aac', 'rtmp', 32)      : 'aac32',
         ('video', 'video/mp4', 'h264', 'http', 516)    : 'iphonemp3'}
@@ -396,9 +399,25 @@ class media(object):
         if self.connection_protocol == None and self.connection_kind == 'akamai':
             self.connection_protocol = 'rtmp'
 
-        if self.connection_kind in ['http', 'sis', 'asx']:
+        if self.connection_kind == 'll_icy':
             self.connection_href = conn.get('href')
             self.connection_protocol = 'http'
+
+
+        if self.connection_kind in ['http', 'sis', 'asx', 'll_icy']:
+            self.connection_href = conn.get('href')
+            self.connection_protocol = 'http'
+            # world service returns a list to a pls file
+            if "worldservice" in self.connection_href:
+                pls = httpget(self.connection_href)
+                match = re.search("^File1=(.+)$", pls, re.MULTILINE)
+                if match:
+                    self.connection_href = match.group(1)
+                    self.connection_protocol = 'http'
+                else:
+                    self.connection_href = None
+                    self.connection_protocol = None
+
             if self.kind == 'captions':
                 self.connection_method = None
 
@@ -528,7 +547,7 @@ class item(object):
             streams = ['h264 2800', 'h264 1520', 'h264 1500', 'h264 820', 'h264 800', 'h264 480', 'h264 400']
             rate = get_setting_videostream()
         else:
-            streams = ['aac320', 'aac128', 'wma9 96', 'mp3 80', 'wma+asx', 'aac48', 'wma9 48', 'aac32' ]
+            streams = ['aac320', 'aac128', 'wma9 96', 'mp3 128', 'mp3 80', 'mp3 48', 'wma+asx', 'aac64', 'aac48', 'wma9 48', 'aac32' ]
             rate = get_setting_audiostream()
 
         provider = get_provider()
@@ -579,7 +598,12 @@ class item(object):
     def mediaselector_url(self):
         v = __addon__.getSetting('mediaselector')
         if v == '0':
-            url = "http://open.live.bbc.co.uk/mediaselector/5/select/version/2.0/mediaset/pc/vpid/%s"
+            mediaset="pc"
+            if self.is_live and self.is_radio:
+                mediaset="http-icy-mp3-a"
+
+            url = "http://open.live.bbc.co.uk/mediaselector/5/select/version/2.0/mediaset/%s/vpid/%s"
+            return url % (mediaset, self.identifier)
         else:
             url = "http://open.live.bbc.co.uk/mediaselector/4/mtis/stream/%s"
 
@@ -610,7 +634,27 @@ class item(object):
 
         return result
 
-class programme(object):
+class programme_base(object):
+
+    def __init__(self, pid):
+        self.pid = pid
+
+    def get_thumbnail(self, size='large'):
+        """
+        Returns the URL of a thumbnail.
+        size: '640x360'/'biggest'/'largest' or '512x288'/'big'/'large' or None
+        """
+        template = self.image_base + "%s_%s.jpg"
+        if size in ['640x360', '640x', 'x360', 'biggest', 'largest']:
+            return template % (self.pid, '640_360')
+        elif size in ['512x288', '512x', 'x288', 'big', 'large']:
+            return template % (self.pid, '512_288')
+        elif size in ['178x100', '178x', 'x100', 'small']:
+            return template % (self.pid, '178_100')
+        elif size in ['150x84', '150x', 'x84', 'smallest']:
+            return template % (self.pid, '150_84')
+
+class programme(programme_base):
     """
     Represents an individual iPlayer programme, as identified by an 8-letter PID,
     and contains the programme title, subtitle, broadcast time and list of playlist
@@ -618,12 +662,10 @@ class programme(object):
     """
 
     def __init__(self, pid):
-        self.pid = pid
+        super(programme, self).__init__(pid)
         self.meta = {}
         self._items = []
         self._related = []
-
-        self.re_newbaseurl = re.compile("^(.*?)_.*?_.*?.jpg", re.DOTALL)
 
     @call_once
     def read_playlist(self):
@@ -660,7 +702,7 @@ class programme(object):
         # Live radio feeds have no text node in the summary node
         if self.meta['summary'] is not None:
             self.meta['summary'].lstrip(' ')
-        self.meta['updated'] = tree.find('updated').text
+        self.meta['date'] = tree.find('updated').text
 
         if tree.find('noitems'):
             utils.log('No playlist items: %s' % tree.find('noitems').get('reason'),xbmc.LOGINFO)
@@ -676,29 +718,17 @@ class programme(object):
             i['programme'] = programme(i['pid'])
             self._related.append(i)
 
-    def get_thumbnail(self, size='large', tvradio='tv'):
-        """
-        Returns the URL of a thumbnail.
-        size: '640x360'/'biggest'/'largest' or '512x288'/'big'/'large' or None
-        """
-        newbaseurl = self.re_newbaseurl.findall(self.meta['thumbnail'])[0]
-        if size in ['640x360', '640x', 'x360', 'biggest', 'largest']:
-            return "%s_640_360.jpg" % newbaseurl
-        elif size in ['512x288', '512x', 'x288', 'big', 'large']:
-            return "%s_512_288.jpg" % newbaseurl
-        elif size in ['178x100', '178x', 'x100', 'small']:
-            return "%s_178_100.jpg" % newbaseurl
-        elif size in ['150x84', '150x', 'x84', 'smallest']:
-            return "%s_150_84.jpg" % newbaseurl
-        else:
-            return os.path.join(get_thumb_dir(), '%s.png' % tvradio)
-
-
     def get_url(self):
         """
         Returns the programmes episode page.
         """
         return "http://www.bbc.co.uk/iplayer/episode/%s" % (self.pid)
+
+    def get_thumbnail(self, size='large'):
+        if self.meta['thumbnail']:
+            return self.meta['thumbnail'] 
+        else:
+            return super(programme, self).get_thumbnail(size)
 
     @property
     def playlist_url(self):
@@ -708,8 +738,8 @@ class programme(object):
     def playlist(self):
         return self.get_playlist_xml()
 
-    def get_updated(self):
-        return self.meta['updated']
+    def get_date(self):
+        return self.meta['date']
 
     @loaded_by(read_playlist)
     def get_title(self):
@@ -738,7 +768,7 @@ class programme(object):
 
     title = property(get_title)
     summary = property(get_summary)
-    updated = property(get_updated)
+    date = property(get_date)
     thumbnail = property(get_thumbnail)
     related = property(get_related)
     items = property(get_items)
@@ -746,20 +776,19 @@ class programme(object):
 #programme = memoize(programme)
 
 
-class programme_simple(object):
+class programme_simple(programme_base):
     """
     Represents an individual iPlayer programme, as identified by an 8-letter PID,
     and contains the programme pid, title, subtitle etc
     """
 
     def __init__(self, pid, entry):
-        self.pid = pid
+        super(programme_simple, self).__init__(pid)
         self.meta = {}
         self.meta['title'] = entry.title
         if entry.summary is not None:
             self.meta['summary'] = string.lstrip(entry.summary, ' ')
-        self.meta['updated'] = entry.updated
-        self.meta['thumbnail'] = entry.thumbnail
+        self.meta['date'] = entry.date
         self.categories = []
         for c in entry.categories:
             #if c != 'TV':
@@ -768,8 +797,7 @@ class programme_simple(object):
         self._related = []
         self.series = entry.series
         self.episode = entry.episode
-
-        self.re_newbaseurl = re.compile("^(.*?)_.*?_.*?.jpg", re.DOTALL)
+        self.image_base = entry.image_base
 
     @call_once
     def read_playlist(self):
@@ -781,26 +809,6 @@ class programme_simple(object):
     def parse_playlist(self, xml):
         pass
 
-    def get_thumbnail(self, size='large', tvradio='tv'):
-        """
-        Returns the URL of a thumbnail.
-        size: '640x360'/'biggest'/'largest' or '512x288'/'big'/'large' or None
-        """
-
-        newbaseurl = self.re_newbaseurl.findall(self.meta['thumbnail'])[0]
-        if size in ['640x360', '640x', 'x360', 'biggest', 'largest']:
-            return "%s_640_360.jpg" % newbaseurl
-        elif size in ['512x288', '512x', 'x288', 'big', 'large']:
-            return "%s_512_288.jpg" % newbaseurl
-        elif size in ['178x100', '178x', 'x100', 'small']:
-            return "%s_178_100.jpg" % newbaseurl
-        elif size in ['150x84', '150x', 'x84', 'smallest']:
-            return "%s_150_84.jpg" % newbaseurl
-
-        else:
-            return os.path.join(get_thumb_dir(), '%s.png' % tvradio)
-
-
     def get_url(self):
         """
         Returns the programmes episode page.
@@ -815,8 +823,11 @@ class programme_simple(object):
     def playlist(self):
         return self.get_playlist_xml()
 
-    def get_updated(self):
-        return self.meta['updated']
+    def get_thumbnail(self, size='large'):
+        return super(programme_simple, self).get_thumbnail(size)
+
+    def get_date(self):
+        return self.meta['date']
 
     @loaded_by(read_playlist)
     def get_title(self):
@@ -845,15 +856,14 @@ class programme_simple(object):
 
     title = property(get_title)
     summary = property(get_summary)
-    updated = property(get_updated)
+    date = property(get_date)
     thumbnail = property(get_thumbnail)
-    #thumbnail = "http://http://ichef.bbci.co.uk/images/ic/640x360/p029dgg5.jpg"
     related = property(get_related)
     items = property(get_items)
 
 
 class feed(object):
-    def __init__(self, tvradio=None, channel=None, category=None, searchcategory=None, atoz=None, searchterm=None, radio=None, live=False, listing=None):
+    def __init__(self, tvradio=None, channel=None, category=None, atoz=None, date=None, searchterm=None, radio=None, live=False, listing=None):
         """
         Creates a feed for the specified channel/category/whatever.
         tvradio: type of channel - 'tv' or 'radio'. If a known channel is specified, use 'auto'.
@@ -880,8 +890,8 @@ class feed(object):
         self.format = 'json'
         self.channel = channel
         self.category = category
-        self.searchcategory = searchcategory
         self.atoz = atoz
+        self.date = date
         self.searchterm = searchterm
         self.radio = radio
         self.live = live
@@ -889,37 +899,42 @@ class feed(object):
 
     def create_url(self):
 
+        if __addon__.getSetting('listings_cache_disable') == 'false':
+            if self.listing == 'list' and self.channel:
+                return "http://iplayer.xbmc4xbox.org.uk/" + self.channel + '.json'
+
         params = []
         if self.listing == 'categories':
             params = [ 'categorynav' ] 
-        if self.listing == 'popular':
+        elif self.listing == 'atoz':
+            params = [ 'atoz']
+            params += [ 'letter', self.atoz ]
+        elif self.listing == 'bydate':
+            params = [ 'schedule']
+            params += [ 'date', self.date ]
+            params += [ 'allow_unavailable', '0' ]
+        elif self.listing == 'popular':
             params = [ 'mostpopular' ]
         elif self.listing == 'highlights':
             params = [ 'featured' ]
         elif self.listing == 'latest':
             params = [ 'latest' ]
             params += [ 'limit', '20' ]
-        elif self.category:
-            params = [ 'listview' ]
-            params += [ 'category', self.category ]
-            if self.channel:
-                params += [ 'masterbrand', self.channel ]
         elif self.searchterm:
             params = [ 'search' ]
             params += [ 'q', urllib.quote_plus(self.searchterm) ]
-        elif self.listing == 'list' and self.channel:
+        elif self.listing == 'list':
             params = [ 'listview' ]
-            params += [ 'masterbrand', self.channel]
-            if __addon__.getSetting('listings_cache_disable') == 'false':
-                return "http://iplayer.xbmc4xbox.org.uk/" + self.channel + '.json'
+            if self.category:
+                params += [ 'category', self.category ]
+            if self.date:
+                params += [ 'date', self.category ]
 
-        if self.channel:
-            params += [ 'masterbrand', self.channel ]
+        if self.channel: params += [ 'masterbrand', self.channel ]
+        if self.tvradio: params += [ 'service_type', self.tvradio ]
 
-        if self.tvradio:
-            params += [ 'service_type', self.tvradio]
-        params = params + [ 'block_type', 'episode' ]
         params = params + [ 'format', self.format ]
+
         url = "http://www.bbc.co.uk/iplayer/ion/" + '/'.join(params)
         return url
 
@@ -934,28 +949,10 @@ class feed(object):
         # if got a channel, don't need tv/radio distinction
         if self.channel:
             assert self.channel in stations.channels_tv or self.channel in stations.channels_radio, 'Unknown channel'
-            #print self.tvradio
             if self.tvradio == 'tv':
                 path.append(stations.channels_tv.get(self.channel, '(TV)'))
             else:
                 path.append(stations.channels_radio.get(self.channel, '(Radio)'))
-        elif self.tvradio:
-            # no channel
-            medium = 'TV'
-            if self.tvradio == 'radio': medium = 'Radio'
-            path.append(medium)
-
-        if self.searchterm:
-            path += ['Search results for %s' % self.searchterm]
-
-        if self.searchcategory:
-            if self.category:
-                path += ['Category %s' % self.category]
-            else:
-                path += ['Categories']
-
-        if self.atoz:
-            path.append("beginning with %s" % self.atoz.upper())
 
         if separator != None:
             return separator.join(path)
@@ -979,7 +976,7 @@ class feed(object):
         """
         Return a list of available channels as a list of feeds.
         """
-        if self.channel:
+        if self.channel or self.atoz:
             return None
         if self.tvradio == 'tv':
             if self.live:
@@ -995,71 +992,6 @@ class feed(object):
                 return [feed('radio', channel=ch) for (ch, title) in stations.channels_radio_type_list[self.radio]]
             else:
                 return [feed('radio', channel=ch) for (ch, title) in stations.channels_radio_list]
-        return None
-
-
-    def subcategories(self):
-        raise NotImplementedError('Sub-categories not yet supported')
-
-    @classmethod
-    def is_atoz(self, letter):
-        """
-        Return False if specified letter is not a valid 'A to Z' directory entry.
-        Otherwise returns the directory name.
-
-        >>> feed.is_atoz('a'), feed.is_atoz('z')
-        ('a', 'z')
-        >>> feed.is_atoz('0'), feed.is_atoz('9')
-        ('0-9', '0-9')
-        >>> feed.is_atoz('123'), feed.is_atoz('abc')
-        (False, False)
-        >>> feed.is_atoz('big british castle'), feed.is_atoz('')
-        (False, False)
-        """
-        l = letter.lower()
-        if len(l) != 1 and l != '0-9':
-            return False
-        if l in '0123456789': l = "0-9"
-        if l not in 'abcdefghijklmnopqrstuvwxyz0-9':
-            return False
-        return l
-
-    def sub(self, *args, **kwargs):
-        """
-        Clones this feed, altering the specified parameters.
-
-        >>> feed('tv').sub(channel='bbc_one').channel
-        'bbc_one'
-        >>> feed('tv', channel='bbc_one').sub(channel='bbc_two').channel
-        'bbc_two'
-        >>> feed('tv', channel='bbc_one').sub(category='drama').category
-        'drama'
-        >>> feed('tv', channel='bbc_one').sub(channel=None).channel
-        >>>
-        """
-        d = self.__dict__.copy()
-        d.update(kwargs)
-        return feed(**d)
-
-    def get(self, subfeed):
-        """
-        Returns a child/subfeed of this feed.
-        child: can be channel/cat/subcat/letter, e.g. 'bbc_one'
-        """
-        if self.channel and subfeed in categories:
-            # no children: channel feeds don't support categories
-            return None
-        elif self.category:
-            # no children: TODO support subcategories
-            return None
-        elif subfeed in categories:
-            return self.sub(category=subfeed)
-        elif self.is_atoz(subfeed):
-            return self.sub(atoz=self.is_atoz(subfeed))
-        else:
-            if subfeed in stations.channels_tv: return feed('tv', channel=subfeed)
-            if subfeed in stations.channels_radiot: return feed('radio', channel=subfeed)
-        # TODO handle properly oh pants
         return None
 
     def read_rss(self, url):

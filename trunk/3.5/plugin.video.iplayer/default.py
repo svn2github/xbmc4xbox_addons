@@ -5,6 +5,7 @@ import urllib, cgi
 from socket import setdefaulttimeout
 import traceback
 import operator
+import datetime
 
 import xbmc, xbmcgui, xbmcplugin
 import utils
@@ -49,9 +50,9 @@ def file_write(filename, data):
     finally:
         fh.close()
 
-def sort_by_attr(seq, attr):
+def sort_by_attr(seq, attr, reverse =  False):
     intermed = map(None, map(getattr, seq, (attr,)*len(seq)), xrange(len(seq)), seq)
-    intermed.sort()
+    intermed.sort(reverse = reverse)
     return map(operator.getitem, intermed, (-1,) * len(intermed))
 
 def get_plugin_thumbnail(image):
@@ -89,15 +90,12 @@ def get_feed_thumbnail(feed):
 
     return url
 
-def make_url(feed=None, listing=None, pid=None, tvradio=None, category=None, series=None, url=None, label=None, radio=None):
+def make_url(feed=None, listing=None, pid=None, tvradio=None, category=None, series=None, url=None, label=None, radio=None, atoz=None, date=None):
     base = sys.argv[0]
     d = {}
     if series: d['series'] = series
-    if feed:
-        if feed.channel:
-            d['feed_channel'] = feed.channel
-        if feed.atoz:
-            d['feed_atoz'] = feed.atoz
+    if feed and feed.channel:
+        d['feed_channel'] = feed.channel
     if category: d['category'] = category
     if listing: d['listing'] = listing
     if pid: d['pid'] = pid
@@ -105,17 +103,20 @@ def make_url(feed=None, listing=None, pid=None, tvradio=None, category=None, ser
     if url: d['url'] = url
     if label: d['label'] = label
     if radio: d['radio'] = radio
+    if atoz: d['atoz'] = atoz
+    if date: d['date'] = date
     params = urllib.urlencode(d, True)
     return base + '?' + params
 
 def read_url():
     args = cgi.parse_qs(sys.argv[2][1:])
     feed_channel = args.get('feed_channel', [None])[0]
-    feed_atoz    = args.get('feed_atoz', [None])[0]
     listing      = args.get('listing', [None])[0]
     pid          = args.get('pid', [None])[0]
     tvradio      = args.get('tvradio', [None])[0]
     category     = args.get('category', [None])[0]
+    atoz         = args.get('atoz', [None])[0]
+    date         = args.get('date', [None])[0]
     series       = args.get('series', [None])[0]
     url          = args.get('url', [None])[0]
     label        = args.get('label', [None])[0]
@@ -125,7 +126,7 @@ def read_url():
 
     feed = None
     if listing:
-        feed = iplayer.feed(tvradio=tvradio, channel=feed_channel, atoz=feed_atoz,  radio=radio, listing=listing)
+        feed = iplayer.feed(tvradio=tvradio, channel=feed_channel, atoz=atoz, date=date, radio=radio, listing=listing)
 
     section = __addon__.getSetting('start_section')
     if content_type and section != '3':
@@ -138,7 +139,7 @@ def read_url():
         if   section == '1': tvradio = 'tv'
         elif section == '2': tvradio = 'radio'
 
-    return (feed, listing, pid, tvradio, category, series, url, label, deletesearch, radio)
+    return (feed, listing, pid, tvradio, category, series, url, label, deletesearch, radio, atoz, date)
 
 def list_feeds(feeds, tvradio='tv', radio=None):
     xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_TRACKNUM )
@@ -184,6 +185,7 @@ def list_feeds(feeds, tvradio='tv', radio=None):
     xbmcplugin.endOfDirectory(handle=__plugin_handle__, succeeded=True)
 
 def add_featured_feeds(folders, tvradio):
+    folders.append(('A to Z', 'atoz', make_url(listing='atoz', tvradio=tvradio)))
     folders.append(('Categories', 'categories', make_url(listing='categories', tvradio=tvradio)))
     folders.append(('Highlights', 'highlights', make_url(listing='highlights', tvradio=tvradio)))
     folders.append(('Popular', 'popular', make_url(listing='popular', tvradio=tvradio)))
@@ -329,7 +331,7 @@ def get_setting_subtitles():
 
 def add_programme(feed, programme, totalItems=None, tracknumber=None, thumbnail_size='large', tvradio='tv'):
     title     = programme.title
-    thumbnail = programme.get_thumbnail(thumbnail_size, tvradio)
+    thumbnail = programme.get_thumbnail(thumbnail_size)
     summary   = programme.summary
 
     utils.log("Adding program: %s" % programme.__dict__,xbmc.LOGDEBUG)
@@ -339,7 +341,7 @@ def add_programme(feed, programme, totalItems=None, tracknumber=None, thumbnail_
                                 iconImage='defaultVideo.png',
                                 thumbnailImage=thumbnail)
 
-    datestr = programme.updated[:10]
+    datestr = programme.date[:10]
     date = datestr[8:10] + '/' + datestr[5:7] + '/' +datestr[:4]#date ==dd/mm/yyyy
     aired = datestr[:4] + '-' + datestr[5:7] + '-' + datestr[8:10]
     
@@ -405,6 +407,52 @@ def list_categories(tvradio='tv', feed=None, channels=None, progcount=True):
 
     xbmcplugin.endOfDirectory(handle=__plugin_handle__, succeeded=True)
 
+def list_atoz(tvradio='tv'):
+    xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_NONE)
+    letters = ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    for label in letters:
+        url = make_url(listing='atoz', tvradio=tvradio, atoz=label)
+        listitem = xbmcgui.ListItem(label=label)
+        if tvradio == 'tv':
+            listitem.setThumbnailImage(get_plugin_thumbnail('tv'))
+        else:
+            listitem.setThumbnailImage(get_plugin_thumbnail('radio'))
+        ok = xbmcplugin.addDirectoryItem(
+            handle=__plugin_handle__,
+            url=url,
+            listitem=listitem,
+            isFolder=True,
+        )
+
+    xbmcplugin.endOfDirectory(handle=__plugin_handle__, succeeded=True)
+
+
+def list_bydate(tvradio, channel):
+    xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_NONE)
+
+    for day in range(0, 14):
+        date = datetime.date.today() - datetime.timedelta(day)
+        date = date.strftime('%Y-%m-%d')
+        if day == 0:
+            label = "Today"
+        elif day == 1:
+            label = "Yesterday"
+        else:
+            label = date
+        url = make_url(feed, listing='bydate', tvradio=tvradio, date=date)
+        listitem = xbmcgui.ListItem(label=label)
+        if tvradio == 'tv':
+            listitem.setThumbnailImage(get_plugin_thumbnail('tv'))
+        else:
+            listitem.setThumbnailImage(get_plugin_thumbnail('radio'))
+        ok = xbmcplugin.addDirectoryItem(
+            handle=__plugin_handle__,
+            url=url,
+            listitem=listitem,
+            isFolder=True,
+        )
+
+    xbmcplugin.endOfDirectory(handle=__plugin_handle__, succeeded=True)
 
 re_series_match = [re.compile('^(Late\s+Kick\s+Off\s+)'), \
                    re.compile('^(Inside\s+Out\s+)'), \
@@ -429,6 +477,15 @@ def list_series(feed, listing, category=None, progcount=True):
     d = {}
     programmes = feed.list()
 
+    if feed.channel:
+        listitem = xbmcgui.ListItem(label='By Date')
+        ok = xbmcplugin.addDirectoryItem(
+            handle=__plugin_handle__,
+            url=make_url(feed, listing='bydate', tvradio=tvradio),
+            listitem=listitem,
+            isFolder=True
+        )
+
     ## filter by category
     if category:
         temp_prog = []
@@ -451,7 +508,7 @@ def list_series(feed, listing, category=None, progcount=True):
     for p in programmes:
 
         match = series_match(p.title)
-        thumb = p.get_thumbnail(thumbnail_size, feed.tvradio)
+        thumb = p.get_thumbnail(thumbnail_size)
 
         if match:
             seriesname = match.group(1)
@@ -460,7 +517,7 @@ def list_series(feed, listing, category=None, progcount=True):
             seriesname = p.title
 
         series[seriesname] = thumb
-        datestr = p.updated[:10]
+        datestr = p.date[:10]
         if not episodes.has_key(seriesname):
             episodes[seriesname] = 0
             dates[seriesname] = datestr
@@ -555,8 +612,6 @@ def search_list(tvradio):
     xbmcplugin.endOfDirectory(handle=__plugin_handle__, succeeded=True)
 
 def list_feed_listings(feed, listing, category=None, series=None, channels=None):
-    xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_NONE)
-
     d = {}
     programmes = feed.list()
 
@@ -576,8 +631,26 @@ def list_feed_listings(feed, listing, category=None, series=None, channels=None)
                 temp_prog.append(p)
         programmes = temp_prog
 
-    if listing == 'list':
-        programmes = sort_by_attr(programmes, 'episode')
+    if listing == 'latest':
+        programmes = sort_by_attr(programmes, 'date', True)
+    elif listing == 'highlights' or listing == 'popular':
+        programmes = sort_by_attr(programmes, 'title')
+
+    if feed.date:
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+    elif feed.atoz:
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_DATE)
+    elif listing == 'list' and series:
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_UNSORTED)
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+    elif feed.searchterm is not None:
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_TITLE)
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_DATE)
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_EPISODE)
+    else:
+        xbmcplugin.addSortMethod(handle=__plugin_handle__, sortMethod=xbmcplugin.SORT_METHOD_NONE)
 
     # add each programme
     total = len(programmes)
@@ -711,7 +784,7 @@ def watch(feed, pid):
     thumbnail = item.programme.thumbnail
     title     = item.programme.title
     summary   = item.programme.summary
-    updated   = item.programme.updated
+    date      = item.programme.date
     channel   = None
     thumbfile = None
     if feed and feed.name:
@@ -776,7 +849,7 @@ def watch(feed, pid):
             if not item.live:
                 listitem.setInfo('video', {
                                            "TVShowTitle": title,
-                                           'Plot': summary + ' ' + updated,
+                                           'Plot': summary + ' ' + date,
                                            'PlotOutline': summary,})
             play=xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 
@@ -870,8 +943,8 @@ if __name__ == "__main__":
         if __addon__.getSetting('progcount') == 'false':  progcount = False
 
         # get current state parameters
-        (feed, listing, pid, tvradio, category, series, url, label, deletesearch, radio) = read_url()
-        utils.log( str((feed, listing, pid, tvradio, category, series, url, label, deletesearch, radio)),xbmc.LOGINFO )
+        (feed, listing, pid, tvradio, category, series, url, label, deletesearch, radio, atoz, date) = read_url()
+        utils.log( str((feed, listing, pid, tvradio, category, series, url, label, deletesearch, radio, atoz, date)),xbmc.LOGINFO )
 
         # update feed category
         if feed and category:
@@ -893,9 +966,11 @@ if __name__ == "__main__":
                 feed = iplayer.feed(tvradio, radio=radio).channels_feed()
                 list_feeds(feed, tvradio, radio)
         elif listing == 'categories':
-            channels = None
-            feed = feed or iplayer.feed(tvradio or 'tv',  searchcategory=True, category=category, radio=radio)
             list_categories(tvradio, feed)
+        elif listing == 'atoz' and atoz is None:
+            list_atoz(tvradio)
+        elif listing == 'bydate' and date is None:
+            list_bydate(tvradio, feed.channel)
         elif listing == 'searchlist':
             search_list(tvradio or 'tv')
         elif listing == 'search':
@@ -904,15 +979,17 @@ if __name__ == "__main__":
             tvradio = tvradio or 'tv'
             channels = iplayer.feed(tvradio or 'tv', radio=radio, live=True).channels_feed()
             list_live_feeds(channels, tvradio)
-        elif listing == 'list' and not series and not category:
+        elif listing == 'list' and not series and not category and not date:
             feed = feed or iplayer.feed(tvradio or 'tv', category=category, radio=radio)
             list_series(feed, listing, category=category, progcount=progcount)
         elif listing:
             if not feed:
-                feed = feed or iplayer.feed(tvradio or 'tv', category=category, radio=radio, listing=listing)
+                feed = feed or iplayer.feed(tvradio or 'tv', category=category, date=date, radio=radio, listing=listing)
             
             channels=feed.channels_feed()
             list_feed_listings(feed, listing, category=category, series=series, channels=channels)
+            if xbmc.getSkinDir() == 'skin.confluence':
+                xbmc.executebuiltin('Container.SetViewMode(504)')
 
     except:
         # Make sure the text from any script errors are logged
