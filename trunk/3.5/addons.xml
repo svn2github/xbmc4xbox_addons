@@ -1,85 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.2" provider-name="Jonathan Beluch (jbel)">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.python.module" library="lib"/>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <source>https://github.com/jbeluch/xbmcswift</source>
-  </extension>
-</addon>
-
-<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel)" version="2.4.0">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0" />
-  </requires>
-  <extension library="lib" point="xbmc.python.module" />
-  <extension point="xbmc.addon.metadata">
-    <language />
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.program.notepad"
-       name="Notepad"
-       version="1.4.0"
-       provider-name="Dan Dar3">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>program</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <minversion>28764</minversion>
-    <summary lang="en">Notepad</summary>
-    <description lang="en">Simple text editor.</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes></notes>
-	<maintainer></maintainer>
-  </statfeed>
-</addon>
-
-<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="TheCollective" version="1.5.2">
-  <requires>
-    <import addon="xbmc.python" version="2.0" />
-  </requires>
-  <extension library="default.py" point="xbmc.service" start="startup">
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Common caching api for xbmc plugins.</summary>
-  </extension>
-  <extension library="lib" point="xbmc.python.module" />
-</addon>
-
-<addon id="plugin.program.xbmc4xboxinstaller"
-       name="XBMC4Xbox Installer"
-       version="2.2.0"
-       provider-name="Dan Dar3">
-  <requires>
-    <import addon="xbmc.python" version="1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>program</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">XBMC4Xbox Installer.</summary>
-    <description lang="en">Easily update your Xbox to the latest build of XBMC4Xbox.</description>
-  </extension>
-  <statfeed>
-    <working>yes</working>
-	<notes></notes>
-	<maintainer></maintainer>
-  </statfeed>
-</addon>
-
 <addon id="plugin.program.thumbnails"
        name="Thumbnails"
        version="1.2.0"
@@ -102,6 +22,17 @@
 	<notes></notes>
 	<maintainer></maintainer>
   </statfeed>
+</addon>
+
+<addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.2" provider-name="Jonathan Beluch (jbel)">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <source>https://github.com/jbeluch/xbmcswift</source>
+  </extension>
 </addon>
 
 <addon
@@ -157,33 +88,72 @@
     </statfeed>
 </addon>
 
-<addon
-    id="plugin.video.iplayer"
-    name="iPlayer"
-    version="2.7.1"
-    provider-name="Alastair, BuZz, Dink, dlake02">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0" />
-        <import addon="script.module.simplejson" version="3.3.0" />
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Watch TV and listen to radio from the BBC's iPlayer website</summary>
-        <description lang="en">
-            This XBMC plugin enables (UK only) the playing of TV and Radio catchup content from the BBC IPlayer website. Live radio and TV feeds are also supported.
-        </description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <email>buzz at exotica org uk</email>
-        <website>https://github.com/joolswills/plugin.video.iplayer</website>
-        <source>https://github.com/joolswills/plugin.video.iplayer.git</source>
-    </extension>
-    <statfeed>
-        <working>yes</working>
-        <notes></notes>
-        <maintainer>BuZz</maintainer>
-    </statfeed>
+<addon id="plugin.program.notepad"
+       name="Notepad"
+       version="1.4.0"
+       provider-name="Dan Dar3">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>program</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <minversion>28764</minversion>
+    <summary lang="en">Notepad</summary>
+    <description lang="en">Simple text editor.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes></notes>
+	<maintainer></maintainer>
+  </statfeed>
+</addon>
+
+<addon id="script.module.xbmcswift2" name="xbmcswift2" provider-name="Jonathan Beluch (jbel)" version="2.4.0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+  </requires>
+  <extension library="lib" point="xbmc.python.module" />
+  <extension point="xbmc.addon.metadata">
+    <language />
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.program.xbmc4xboxinstaller"
+       name="XBMC4Xbox Installer"
+       version="2.2.0"
+       provider-name="Dan Dar3">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>program</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">XBMC4Xbox Installer.</summary>
+    <description lang="en">Easily update your Xbox to the latest build of XBMC4Xbox.</description>
+  </extension>
+  <statfeed>
+    <working>yes</working>
+	<notes></notes>
+	<maintainer></maintainer>
+  </statfeed>
+</addon>
+
+<addon id="script.common.plugin.cache" name="Common plugin cache" provider-name="TheCollective" version="1.5.2">
+  <requires>
+    <import addon="xbmc.python" version="2.0" />
+  </requires>
+  <extension library="default.py" point="xbmc.service" start="startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Common caching api for xbmc plugins.</summary>
+  </extension>
+  <extension library="lib" point="xbmc.python.module" />
 </addon>
 </addons>
